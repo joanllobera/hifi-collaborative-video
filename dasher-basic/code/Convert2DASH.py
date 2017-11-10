@@ -1,27 +1,34 @@
-'''
-Created on 24 January 2017
-Last update 06 November 2017
+#  RUMBA
+#  Copyright (C) 2017  Fundacio i2CAT, Internet i Innovacio digital a Catalunya
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#  Authors:  Joan Llobera <joan.llobera@i2cat.net>, David Gómez <david.gomez@i2cat.net>
 
-@author: David Gomez, modified by Joan Llobera
-'''
+
 import os
 import platform
 import shutil
 import sys 
 
-#import JsonToolBox
-#import Logger
-#import MPDSeed
-#import MediaCheckpoint
-#import MediaInfo
-#import ConvertAudio
+
 import ProgressConversion
-#import XmlTooLBox
 import config as Config
 import PIL
 from PIL import Image,ImageDraw,ImageOps
 from distutils.command.config import config
-#import Tiler
+
 
 LevelProfile_264 = {'720p': '3.1', '1080p': '4', '2k': '4.2','4k': '5.1','8k': '6'}
 
@@ -30,7 +37,6 @@ LevelProfile_264 = {'720p': '3.1', '1080p': '4', '2k': '4.2','4k': '5.1','8k': '
 def progress(count, total):
     bar_len = 30
     filled_len = int(round(bar_len * count / float(total)))
-    #percents = round(100.0 * count / float(total), 1)
     bar = '=' * filled_len + '-' * (bar_len - filled_len)
     print ('[%s] \r' % (bar)),
     #sys.stdout.write('[%s] %s%s -> %s\r' % (bar, percents, '%', status))
@@ -56,8 +62,7 @@ def convertVideo(inputPath, inputSource, outputSource, resolution, bitrate, segm
     
     resolution_size = [int(x) for x in resolution.split('x')]
     h264level = str(h264LevelProfile(resolution_size[0]))
-#     logger = Logger.get_logger()
-#     logger.info("ENCODING:VIDEO:%s"% inputSource) 
+
     print ("ENCODING:VIDEO:%s") % inputSource
      #=================================================================
     # FFmpeg parameters Configuration in Constant Rate Factor (CRF):
@@ -76,7 +81,7 @@ def convertVideo(inputPath, inputSource, outputSource, resolution, bitrate, segm
         video_opts = "-force_key_frames expr:eq(mod(n,%s),0)" % segment
     else:
         video_opts = "-force_key_frames 'expr:eq(mod(n,%s),0)'" % segment
-    #bufsize = (int(bitrate)*3 / int(Config.VIDEOSAMPLINGRATE))
+
     video_opts += " -bufsize %dk -maxrate %dk" % (int(bitrate), int(bitrate)*1.5)
     
     if Config.VIDEOCODEC == 'libx264':
