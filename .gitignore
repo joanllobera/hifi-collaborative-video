@@ -1,1 +1,9 @@
 rumba-front/node_modules
+
+## python && IDE
+.idea
+*.pyc
+*/venv/
+
+## ansible
+*.retry
