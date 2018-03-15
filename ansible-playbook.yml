@@ -1,0 +1,17 @@
+---
+- hosts: rumba
+  remote_user: seg
+  vars_files:
+    - etc/variables.yml
+  tasks:
+    - name: test connection
+      ping:
+    - name: NGINX installation
+      apt: pkg=nginx state=installed update_cache=true
+      become: true
+    - name: NGINX setup
+      template: src=etc/nginx.conf.tpl dest=/etc/nginx/nginx.conf
+      become: true
+    - name: restart NGINX
+      service: name=nginx state=restarted
+      become: true
