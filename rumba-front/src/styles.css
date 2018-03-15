@@ -1,1 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* fonts for all app*/
+.title, .subtitle {
+  font-family: 'Roboto Slab', serif;
+}
+.bodytext {
+  font-family: 'Roboto', sans-serif;
+}
+
+/*  font */
+.regular  {
+  font-weight: 400;
+}
+.light {
+  font-weight: 300;
+}
+
+
+
+/* font sizes */
+.size18 {
+  font-size: 18px;
+}
+.size24 {
+  font-size: 24px;
+}
+
+
+/* app colors */
+.bg-red {
+  background-color: rgba(234, 2, 11, 1);
+}
+
+.bg-yellow {
+  background-color: rgba(255, 241, 115, 1);
+}
+
+.bg-white {
+  background-color: rgba(255, 255, 255, 1);
+  border: solid 1px lightgrey
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.bg-dgrey {
+  background-color: rgba(189, 189, 189, 1);
+}
+
+.bg-lgrey {
+  background-color: rgba(238, 238, 238, 1);
+}
+
+
+.box-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.box-container > div {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  text-align: center;
+}
