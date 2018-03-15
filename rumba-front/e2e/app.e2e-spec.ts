@@ -1,10 +1,10 @@
-import { RumbaGuiPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('rumba-gui App', () => {
-  let page: RumbaGuiPage;
+describe('rumba-front App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new RumbaGuiPage();
+    page = new AppPage();
   });
 
   it('should display welcome message', () => {
