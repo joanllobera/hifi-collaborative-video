@@ -1,0 +1,77 @@
+---
+- hosts: rumba
+  remote_user: seg
+  vars_files:
+    - ../etc/variables.yml
+  tasks:
+#    - name: Test connection
+#      ping:
+#
+#      ###########################
+#      ### FFMPEG installation ###
+#      ###########################
+#
+#    - name: Install pip
+#      become: true
+#      apt:
+#        package: python-pip
+#        state: installed
+#        update_cache: true
+#    - name: Install virtualenv
+#      become: true
+#      pip:
+#        name: virtualenv
+#    - name: Create ffmpeg folders
+#      file:
+#        path: "{{ item }}"
+#        state: directory
+#      with_items:
+#        - ~/code/ffmpeg
+#        - ~/code/ffmpeg/code
+#        - ~/code/ffmpeg/venv
+#    - name: Create virtual environment
+#      command: virtualenv ~/code/ffmpeg/venv -p python2.7
+#    - name: Install dependencies
+#      pip:
+#        name: pillow
+#        virtualenv: ~/code/ffmpeg/venv
+#    - name: Download ffmpeg
+#      get_url:
+#        url: "http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.gz"
+#        dest: ~/code/ffmpeg/ffmpeg.tar.gz
+#    - name: Extract ffmpeg.tar. gz
+#      unarchive:
+#        src: ~/code/ffmpeg/ffmpeg.tar.gz
+#        dest: ~/code/ffmpeg/code/
+#        remote_src: yes
+#    - name: Install yasm
+#      become: true
+#      apt:
+#        package: yasm
+#        state: installed
+#        update_cache: true
+#    - name: Configure ffmpeg installation
+#      command: ./configure
+#      args:
+#        chdir: "~/code/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+#    - name: Compile ffmpeg
+#      command: make
+#      args:
+#        chdir: "~/code/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+#    - name: Install ffmpeg
+#      command: "make install"
+#      become: true
+#      args:
+#       chdir: "/home/seg/code/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+
+      ###########################
+      ### GPAC installation ###
+      ###########################
+    - name: Download GPAC
+      get_url:
+        url: "https://download.tsi.telecom-paristech.fr/gpac/release/0.7.0/gpac_0.7.0_amd64.deb"
+        dest: ~/code/gpac.deb
+    - name: Install GPAC
+      apt:
+        deb: /home/seg/code/gpac.deb
+      become: true

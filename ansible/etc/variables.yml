@@ -1,0 +1,2 @@
+- nginx_port: 8080
+- ffmpeg_version: 3.2.3
