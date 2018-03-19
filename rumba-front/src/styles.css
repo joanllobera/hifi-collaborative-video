@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+* {
+  font-family:arial;
+}
+
+
 /* fonts for all app*/
 .title, .subtitle {
   font-family: 'Roboto Slab', serif;
@@ -63,4 +69,9 @@
   height: 200px;
   margin: 10px;
   text-align: center;
+}
+
+.info-icon {
+  background-color: #fff173;
+  color: black;
 }
