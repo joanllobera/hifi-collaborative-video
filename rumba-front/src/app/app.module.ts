@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { StylesComponent } from './styles/styles.component';
 import { HeaderComponent } from './header/header.component';
 import { SessionComponent } from './session/session.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StylesComponent,
     HeaderComponent,
-    SessionComponent
+    SessionComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

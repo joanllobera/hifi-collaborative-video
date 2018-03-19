@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { StylesComponent } from './styles/styles.component';
 import { SessionComponent } from './session/session.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/styles', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'styles', component: StylesComponent },
   { path: 'sessio', component: SessionComponent }
 ];
