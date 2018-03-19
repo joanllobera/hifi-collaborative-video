@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionComponent implements OnInit {
 
+  activatedHelp: boolean = true;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  setHelpStatus() {
+    this.activatedHelp = !this.activatedHelp;
+  }
+
+
 
 }

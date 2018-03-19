@@ -1,36 +1,44 @@
-<div class="container w-85 p-3" style="margin-top:3em;">
+<div class="container w-85 p-3" style="margin-top:1em;">
   <div class="row">
     <div class="col">
+      <!-- <span>
+        Help Status  <span class="badge badge-secondary">{{activatedHelp}}</span>
+      </span> -->
       <span class="float-right">
         <span class="btn-group-sm">
           <button
             id="activeHelp"
             type="button"
             class="btn btn-xs btn-primary bmd-btn-fab"
-            data-toggle="popover"
-            data-placement="left"
-            data-trigger="focus"
-            title="Ajuda"
-            data-content="L'ajuda ha estat activada"
-            style="background-color: #fff173; color:black;">
+            title="activar help"
+            style="background-color: #fff173; color:black;"
+            (click)="setHelpStatus()">
               <i class="fas fa-question"></i>
+          </button>
+          <button
+            id="desactiveHelp"
+            type="button"
+            class="btn btn-xs btn-primary bmd-btn-fab"
+            title="desactivar help"
+            style="background-color: #fff173; color:black;"
+            (click)="setHelpStatus()">
+              <i class="fas fa-question-circle"></i>
           </button>
         </span>
 
       </span>
     </div>
   </div>
-
   <div class="row">
     <div class="col">
     <form action="">
-      <div class="form-group top2">
+      <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
         <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?"  type="text" class="form-control" id="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
-      <div class="form-group top2">
+      <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
         <input type="text" class="form-control" id="banda" required>
@@ -41,17 +49,17 @@
         <input type="file" class="form-control" id="logo">
       </div>
 
-      <div class="form-group top2">
+      <div class="form-group top1">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
         <input type="date" class="form-control" id="data" required>
       </div>
 
-      <div class="form-group top2">
+      <div class="form-group top1">
         <label for="localitzacio" class="bmd-label-floating">Localització</label>
         <input type="text" class="form-control" id="localitzacio">
       </div>
 
-      <div class="form-group top2">
+      <div class="form-group top1">
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
         <input type="text" class="form-control" id="vimeo_user" name="vimeo_user">
         <input type="text" class="form-control" id="vimeo_password" name="vimeo_user">
@@ -60,11 +68,44 @@
     </form>
     </div>
   </div>
+</div>
 
-  <div class="row">
-    <div class="well well-lg top2">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div class="container w-95 p-3">
+  <div class="row top2">
+    <div class="alert alert-secondary" role="alert" style="width:100%;">
+      <p class="bodytext red size20">Qui pot gravar</p>
+      <div class="row">
+        <div class="col-3">
+          <div class="radio">
+            <label class="quipotgravar">
+              <input type="radio" name="quipotgravar" value="tothom" checked>
+              Tothom
+            </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="radio">
+            <label class="quipotgravar">
+              <input type="radio" name="quipotgravar" value="editors" >
+              Editors
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
+  <div class="row">
+    <div class="col">
+      <div class="float-right">
+        <button type="button" class="btn btn-secondary">Audio OFF</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="float-right">
+        <button type="button" class="btn btn-raised btn-secondary">INICIAR LA SESSIÓ</button>
+      </div>
+    </div>
+  </div>
 </div>
