@@ -1,10 +1,22 @@
-<div class="container">
+<div class="container w-85 p-3" style="margin-top:3em;">
   <div class="row">
     <div class="col">
       <span class="float-right">
-        <button type="button" class="btn btn-primary bmd-btn-fab" style="background-color: #fff173; color:black;">
-          <i class="material-icons">?</i>
-        </button>
+        <span class="btn-group-sm">
+          <button
+            id="activeHelp"
+            type="button"
+            class="btn btn-xs btn-primary bmd-btn-fab"
+            data-toggle="popover"
+            data-placement="left"
+            data-trigger="focus"
+            title="Ajuda"
+            data-content="L'ajuda ha estat activada"
+            style="background-color: #fff173; color:black;">
+              <i class="fas fa-question"></i>
+          </button>
+        </span>
+
       </span>
     </div>
   </div>
@@ -12,12 +24,46 @@
   <div class="row">
     <div class="col">
     <form action="">
-      <div class="form-group">
-        <label for="exampleInputEmail1" class="bmd-label-floating">Concert</label>
-        <input type="email" class="form-control" id="exampleInputEmail1">
+      <div class="form-group top2">
+        <label for="concert" class="bmd-label-floating">Concert</label>
+        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?"  type="text" class="form-control" id="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
+
+      <div class="form-group top2">
+
+        <label for="banda" class="bmd-label-floating">Banda *</label>
+        <input type="text" class="form-control" id="banda" required>
+      </div>
+
+      <div class="form-group top2">
+        <label for="logo" class="bmd-label-floating">Logo</label>
+        <input type="file" class="form-control" id="logo">
+      </div>
+
+      <div class="form-group top2">
+        <label for="data" class="bmd-label-floating">Data *</label><br/>
+        <input type="date" class="form-control" id="data" required>
+      </div>
+
+      <div class="form-group top2">
+        <label for="localitzacio" class="bmd-label-floating">Localització</label>
+        <input type="text" class="form-control" id="localitzacio">
+      </div>
+
+      <div class="form-group top2">
+        <label for="vimeo" class="bmd-label-floating">Vimeo</label>
+        <input type="text" class="form-control" id="vimeo_user" name="vimeo_user">
+        <input type="text" class="form-control" id="vimeo_password" name="vimeo_user">
+      </div>
+
     </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="well well-lg top2">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </div>
   </div>
 
