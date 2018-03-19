@@ -1,0 +1,33 @@
+---
+- hosts: rumba
+  remote_user: seg
+  vars_files:
+    - ../etc/variables.yml
+  tasks:
+    - name: test connection
+      ping:
+    - name: Install dependencies
+      become: true
+      apt:
+        package: "{{ item }}"
+        state: installed
+        update_cache: true
+      with_items:
+        - build-essential
+        - python-dev
+    - name: Install pip
+      become: true
+      apt:
+        package: python-pip
+        state: installed
+        update_cache: true
+    - name: Install pymongo
+      pip:
+        name: pymongo
+      become: true
+    - name: Install mongo db
+      become: true
+      apt:
+        package: mongodb
+        state: installed
+        update_cache: true

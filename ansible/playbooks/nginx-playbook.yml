@@ -2,7 +2,7 @@
 - hosts: rumba
   remote_user: seg
   vars_files:
-    - etc/variables.yml
+    - ../etc/variables.yml
   tasks:
     - name: test connection
       ping:
