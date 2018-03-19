@@ -2,7 +2,7 @@
 - hosts: rumba
   remote_user: seg
   vars_files:
-    - etc/variables.yml
+    - ../etc/variables.yml
   tasks:
     - name: test connection
       ping:
@@ -11,7 +11,9 @@
       become: true
     - name: NGINX setup
       template: src=etc/nginx.conf.tpl dest=/etc/nginx/nginx.conf
+      notify:
+        - restart nginx
       become: true
-    - name: restart NGINX
+  handlers:
+    - name: restart nginx
       service: name=nginx state=restarted
-      become: true

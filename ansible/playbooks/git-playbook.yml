@@ -1,0 +1,17 @@
+---
+- hosts: rumba
+  remote_user: seg
+  tasks:
+    - name: Test connection
+      ping:
+    - name: Git installation
+      apt:
+        pkg: git
+        state: installed
+        update_cache: true
+      become: true
+    - name: Clone repository
+      git:
+        repo: https://github.com/ua-i2cat/rumba.git
+        dest: ~/code/rumba
+        version: develop
