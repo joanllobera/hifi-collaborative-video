@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SessionComponent implements OnInit {
 
+  activatedHelp: boolean = true;
+  audioStatus: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  setHelpStatus() {
+    this.activatedHelp = !this.activatedHelp;
+  }
+
+  setAudioStatus() {
+    this.audioStatus = !this.audioStatus;
+  }
+
 
 }
