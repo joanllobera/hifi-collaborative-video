@@ -46,7 +46,7 @@
       ##########################
       ## Backend installation ##
       ##########################
-      
+
     - name: Install virtualenv
       become: true
       pip:
