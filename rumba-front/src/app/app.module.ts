@@ -9,6 +9,7 @@ import { StylesComponent } from './styles/styles.component';
 import { HeaderComponent } from './header/header.component';
 import { SessionComponent } from './session/session.component';
 import { HomeComponent } from './home/home.component';
+import { OrientationComponent } from './orientation/orientation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomeComponent } from './home/home.component';
     StylesComponent,
     HeaderComponent,
     SessionComponent,
-    HomeComponent
+    HomeComponent,
+    OrientationComponent
   ],
   imports: [
     BrowserModule,
