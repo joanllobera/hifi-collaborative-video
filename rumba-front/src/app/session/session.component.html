@@ -10,18 +10,16 @@
             id="activeHelp"
             type="button"
             class="btn btn-xs btn-primary bmd-btn-fab"
-            title="activar help"
-            style="background-color: #fff173; color:black;"
-            (click)="setHelpStatus()">
+            title="Activar ajuda"
+            style="background-color: #fff173; color:black;">
               <i class="fas fa-question"></i>
           </button>
           <button
             id="desactiveHelp"
             type="button"
-            class="btn btn-xs btn-primary bmd-btn-fab"
-            title="desactivar help"
-            style="background-color: #fff173; color:black;"
-            (click)="setHelpStatus()">
+            class="btn btn-xs btn-primary bmd-btn-fab hidden"
+            title="Desactivar ajuda"
+            style="background-color: #fff173; color:black;">
               <i class="fas fa-question-circle"></i>
           </button>
         </span>
@@ -34,14 +32,14 @@
     <form action="">
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="And here's some amazing content. It's very engaging. Right?"  type="text" class="form-control" id="concert">
+        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..."  type="text" class="form-control" id="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
       <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <input type="text" class="form-control" id="banda" required>
+        <input placeholder="Nom de la banda" data-trigger="focus" data-placement="top" data-toggle="popover" data-content="* Són camps obligatoris" type="text" class="form-control" id="banda" required>
       </div>
 
       <div class="form-group top2">
@@ -61,8 +59,8 @@
 
       <div class="form-group top1">
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
-        <input type="text" class="form-control" id="vimeo_user" name="vimeo_user">
-        <input type="text" class="form-control" id="vimeo_password" name="vimeo_user">
+        <input type="text" placeholder="Usuari" class="form-control" id="vimeo_user" name="vimeo_user">
+        <input type="password" placeholder="Password" class="form-control" id="vimeo_password" name="vimeo_user">
       </div>
 
     </form>
@@ -76,28 +74,36 @@
       <p class="bodytext red size20">Qui pot gravar</p>
       <div class="row">
         <div class="col-3">
-          <div class="radio">
+          <!-- <div class="radio">
             <label class="quipotgravar">
-              <input type="radio" name="quipotgravar" value="tothom" checked>
+              <input type="radio" name="quipotgravar" value="tothom" checked />
+              Tothom
+            </label>
+          </div> -->
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="quipotgravar" id="tothom" value="tothom" checked />
+            <label class="form-check-label radiobutton" for="quipotgravar">
               Tothom
             </label>
           </div>
         </div>
         <div class="col-3">
-          <div class="radio">
-            <label class="quipotgravar">
-              <input type="radio" name="quipotgravar" value="editors" >
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="quipotgravar" id="tothom" value="tothom" />
+            <label class="form-check-label radiobutton" for="quipotgravar">
               Editors
             </label>
           </div>
         </div>
+
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <div class="float-right">
-        <button type="button" class="btn btn-secondary">Audio OFF</button>
+        <button *ngIf="!audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-secondary"><i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF </button>
+        <button *ngIf="audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-success"><i class="fas fa-microphone"></i>&nbsp;Audio ON</button>
       </div>
     </div>
   </div>

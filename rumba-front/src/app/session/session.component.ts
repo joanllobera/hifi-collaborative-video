@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class SessionComponent implements OnInit {
 
   activatedHelp: boolean = true;
+  audioStatus: boolean = false;
 
   constructor() { }
 
@@ -18,6 +19,9 @@ export class SessionComponent implements OnInit {
     this.activatedHelp = !this.activatedHelp;
   }
 
+  setAudioStatus() {
+    this.audioStatus = !this.audioStatus;
+  }
 
 
 }
