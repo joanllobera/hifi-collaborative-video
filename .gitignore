@@ -4,6 +4,13 @@ rumba-front/node_modules
 .idea
 *.pyc
 */venv/
+venv/*
+*/build/*
+*/dist/
+*.egg-info
 
 ## ansible
 *.retry
+
+## logs
+*/logs

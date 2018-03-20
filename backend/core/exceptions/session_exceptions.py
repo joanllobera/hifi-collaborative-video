@@ -1,0 +1,3 @@
+
+class SessionValidationException(Exception):
+    pass
