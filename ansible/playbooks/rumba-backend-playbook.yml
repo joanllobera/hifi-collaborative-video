@@ -21,6 +21,11 @@
         package: python-pip
         state: installed
         update_cache: true
+
+      ###########################
+      ###  Mongo installation ###
+      ###########################
+
     - name: Install pymongo
       pip:
         name: pymongo
@@ -37,3 +42,24 @@
         package: mongodb-org
         state: installed
         update_cache: true
+
+      ##########################
+      ## Backend installation ##
+      ##########################
+      
+    - name: Install virtualenv
+      become: true
+      pip:
+        name: virtualenv
+    - name: Create virtual environment
+      command: virtualenv ~/code/rumba/backend/venv -p python3.4
+    - name: Install python dependencies
+      pip:
+        name: egg
+        chdir: "~/code/rumba/backend"
+        extra_args: "-e ."
+        virtualenv: "~/code/rumba/backend/venv"
+    - name: Create logs directory
+      file:
+        path: "~/code/rumba/backend/logs"
+        state: directory
