@@ -12,10 +12,10 @@ from api.routes.rumba_session_api import SESSION_MANAGER_API
 APP = Flask(__name__)
 APP.register_blueprint(SESSION_MANAGER_API)
 
-@APP.after_request
-def apply_response_headers(response):
-    response.headers['Content-Type'] = "application/json"
-    return response
+# @APP.after_request
+# def apply_response_headers(response):
+#     response.headers['Content-Type'] = "application/json"
+#     return response
 
 if __name__ == '__main__':
     connect("rumba")

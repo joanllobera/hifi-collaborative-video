@@ -9,6 +9,7 @@ This API has been implemented using Flask Blueprints.
 import json
 
 from flask import Blueprint, request
+from flask.json import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
 from core.exceptions.session_exceptions import SessionValidationException, \
@@ -54,7 +55,7 @@ def create_session():
         SessionValidator.validate_new_session(session)
         session_id = SessionManager.get_instance().create_session(session)
         LOGGER.info("Session creation request successfully finished.")
-        return json.dumps({'id': session_id}), 201
+        return jsonify({'id': session_id}), 201
     except SessionValidationException as sv:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(sv)
@@ -86,7 +87,7 @@ def get_session(session_id):
     try:
         session = SessionManager.get_instance().get_session(session_id)
         LOGGER.info("Session retrieval request successfully finished.")
-        return json.dumps(session),200
+        return jsonify(session),200
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
@@ -117,7 +118,7 @@ def list_sessions():
     LOGGER.info("Received request for listing all sessions.")
     session_list = SessionManager.get_instance().list_sessions()
     LOGGER.info("Sessions retrieval request successfully finished.")
-    return json.dumps(session_list),200
+    return jsonify(session_list),200
 
 @SESSION_MANAGER_API.route("/<session_id>", methods=["DELETE"])
 def delete_session(session_id):
@@ -136,7 +137,7 @@ def delete_session(session_id):
     try:
         SessionManager.get_instance().delete_session(session_id)
         LOGGER.info("Session removal request sucessfully finished.")
-        return None,204
+        return "",204
     except ValueError as ve:
         LOGGER.exception("Session removal request finished with errors: ")
         raise BadRequest(ve)
