@@ -2,5 +2,5 @@
 class SessionValidationException(Exception):
     pass
 
-class IlegalSessionStateException(Exception):
+class IllegalSessionStateException(Exception):
     pass

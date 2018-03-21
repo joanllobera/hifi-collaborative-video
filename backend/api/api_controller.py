@@ -14,4 +14,4 @@ APP.register_blueprint(SESSION_MANAGER_API)
 
 if __name__ == '__main__':
     connect("rumba")
-    APP.run(port=8081)
+    APP.run(host="0.0.0.0", port=8081)

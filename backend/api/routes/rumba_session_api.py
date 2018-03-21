@@ -12,7 +12,7 @@ from flask import Blueprint, request
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
 from core.exceptions.session_exceptions import SessionValidationException, \
-    IlegalSessionStateException
+    IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import SessionValidator
 from core.services.session_manager import SessionManager
@@ -127,6 +127,10 @@ def delete_session(session_id):
     Rumba sessions can only be removed if they are no longer active. Active sessions should be
     stopped before calling to this method.
     :param session_id: Id of the session to remove.
+    :return:
+        - HTTP 400, if the provided id is not valid
+        - HTTP 404, if there's no network with such id.
+        - HTTP 409, if the network is active and can not be deleted.
     """
     LOGGER.info("Received request for deleting a session.")
     try:
@@ -136,9 +140,29 @@ def delete_session(session_id):
     except ValueError as ve:
         LOGGER.exception("Session removal request finished with errors: ")
         raise BadRequest(ve)
-    except IlegalSessionStateException as ie:
+    except IllegalSessionStateException as ie:
         LOGGER.exception("Session removal request finished with errors: ")
         raise Conflict(ie)
     except SessionValidationException as se:
         LOGGER.exception("Session removal request finished with errors: ")
         raise NotFound(se)
+
+@SESSION_MANAGER_API.route("/<session_id>/stop", methods=["PUT"])
+def stop_session(session_id):
+    """
+    Endpoint for stopping an active session.
+    :param session_id: Id of the session to stop.
+    :return:
+        -
+    """
+    LOGGER.info("Received requestg for stopping a session.")
+    try:
+        SessionManager.get_instance().stop_session(session_id)
+        LOGGER.info("Stop request successfully finished.")
+        return "",204
+    except ValueError as ve:
+        LOGGER.exception("Stop request finished with errors: ")
+        raise BadRequest(ve)
+    except IllegalSessionStateException as ie:
+        LOGGER.exception("Stop request finished with errors: ")
+        raise Conflict(ie)
