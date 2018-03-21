@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { SessionComponent } from './session/session.component';
 import { HomeComponent } from './home/home.component';
 import { OrientationComponent } from './orientation/orientation.component';
+import { VideosComponent } from './videos/videos.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { OrientationComponent } from './orientation/orientation.component';
     HeaderComponent,
     SessionComponent,
     HomeComponent,
-    OrientationComponent
+    OrientationComponent,
+    VideosComponent
   ],
   imports: [
     BrowserModule,

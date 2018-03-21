@@ -5,13 +5,15 @@ import { StylesComponent } from './styles/styles.component';
 import { SessionComponent } from './session/session.component';
 import { HomeComponent } from './home/home.component';
 import { OrientationComponent } from './orientation/orientation.component';
+import { VideosComponent } from './videos/videos.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'orientation', component: OrientationComponent},
   { path: 'styles', component: StylesComponent },
-  { path: 'sessio', component: SessionComponent }
+  { path: 'sessio', component: SessionComponent },
+  { path: 'videos', component: VideosComponent }
 ];
 
 @NgModule({

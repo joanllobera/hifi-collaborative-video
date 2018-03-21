@@ -45,10 +45,7 @@ label.radiobutton {
   color: black;
 }
 
-.hidden {
-  visibility: hidden;
-  display:none;
-}
+
 
 div.float-right button {
   cursor:pointer;
