@@ -60,11 +60,19 @@ body, html {
 .size24 {
   font-size: 24px;
 }
+.size26 {
+  font-size: 26px;
+}
+
 
 
 /* app colors */
 .bg-red {
   background-color: rgba(234, 2, 11, 1);
+}
+
+.color-red {
+  color: rgba(234, 2, 11, 1);
 }
 
 .bg-yellow {
@@ -128,4 +136,9 @@ body, html {
 
 .top6 {
   margin-top:6em;
+}
+
+.hidden {
+  visibility: hidden;
+  display:none;
 }
