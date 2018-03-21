@@ -1,0 +1,79 @@
+<div class="container w-100 p-3 top2">
+  <div class="row">
+    <div class="col clearfix">
+      <!-- <span>
+        Help Status  <span class="badge badge-secondary">{{activatedHelp}}</span>
+      </span> -->
+      <span class="float-right">
+        <span class="btn-group-sm">
+          <button
+            id="activeHelp"
+            type="button"
+            class="btn btn-xs btn-primary bmd-btn-fab"
+            title="Activar ajuda"
+            style="background-color: #fff173; color:black;">
+              <i class="fas fa-question"></i>
+          </button>
+          <button
+            id="desactiveHelp"
+            type="button"
+            class="btn btn-xs btn-primary bmd-btn-fab hidden"
+            title="Desactivar ajuda"
+            style="background-color: #fff173; color:black;">
+              <i class="fas fa-question-circle"></i>
+          </button>
+        </span>
+
+      </span>
+      <span class="float-left color-red size24">
+          <i class="fas fa-angle-left"></i>
+      </span>
+    </div>
+  </div>
+  <div class="row top2">
+    <div class="col">
+      <h3 class="title regular color-red">
+        Els meus videos
+      </h3>
+    </div>
+  </div>
+  <div class="row top1">
+
+      <div *ngFor="let video of allVideos">
+        <div class="card col" style="width: 18rem; margin:1em;">
+          <img class="card-img-top" src="http://lorempixel.com/400/200" alt="Card image cap">
+          <div class="card-body">
+            <p class="card-text text text-primary">{{ video.name}}</p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="row top2">
+    <div class="col">
+      <h3 class="title regular color-red">
+        Descarrega't els teus videos ara!
+      </h3>
+    </div>
+  </div>
+  <div class="row top6">
+    <div class="col">
+      <div class="text-center title size24 color-red">
+        <div class="">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="">
+          ATENCIÓ!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row top1">
+    <div class="col">
+      <div class="top4 text-center subtitle regular color-red">
+        La funció de gravació només funcionarà amb el mòbil en orientació horitzontal
+      </div>
+    </div>
+  </div>
+</div>
