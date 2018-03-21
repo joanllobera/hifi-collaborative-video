@@ -23,5 +23,9 @@ export class SessionComponent implements OnInit {
     this.audioStatus = !this.audioStatus;
   }
 
+  onSubmit() {
+    console.log('submitted');
+  }
+
 
 }
