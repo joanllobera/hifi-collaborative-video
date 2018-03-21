@@ -11,4 +11,4 @@
         state: installed
         update_cache: true
     - name: Deploy software
-      command: sh ~/code/rumba/backend/utils/scripts/deploy_on_byobu.sh
+      command: sh ~/code/rumba/utils/scripts/deploy_on_byobu.sh
