@@ -1,5 +1,5 @@
 from core.exceptions.session_exceptions import SessionValidationException, \
-    IlegalSessionStateException
+    IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator
@@ -114,6 +114,26 @@ class SessionManager(object):
         GenericValidator.validate_id(session_id)
         session = self.get_session(session_id)
         if session['active']:
-           raise IlegalSessionStateException("Session is active: it should be stopped first.")
+           raise IllegalSessionStateException("Session is active: it should be stopped first.")
         RumbaSession.objects(id=session_id).delete()
         LOGGER.info("Session successfully removed: [id={}]".format(session_id))
+
+    def stop_session(self, session_id):
+        """
+        Stops an active session.
+
+        Stopping a session means that no more users would be able to stream video to the server.
+        Of course, only active sessions could be stopped.
+        :param session_id: Id of the session to stop.
+        :raises:
+            - ValueError, if the specified id is not valid.
+            - IllegalSessionStateException: If the session was not active.
+        """
+        LOGGER.info("Stopping session: [id={}]".format(session_id))
+        GenericValidator.validate_id(session_id)
+        session = self.get_session(session_id)
+        if not session['active']:
+            raise IllegalSessionStateException("Only active sessions can be stopped.")
+        db_session = RumbaSession.objects(id=session_id).first()
+        db_session.update(set__active=False)
+        LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
