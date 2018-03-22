@@ -63,3 +63,40 @@
       file:
         path: "~/code/rumba/backend/logs"
         state: directory
+
+      ##########################
+      ## Microphone detection ##
+      ##########################
+
+    - name: Register to microphone events
+      become: true
+      copy:
+        src: /home/seg/code/rumba/utils/scripts/microphone/microphone_state.sh
+        dest: /etc/acpi/microphone_state.sh
+        owner: root
+        group: root
+        mode: 0755
+        remote_src: yes
+    - name: Add microphone_plug event
+      become: true
+      copy:
+        src: /home/seg/code/rumba/utils/scripts/microphone/mic_pluged
+        dest: /etc/acpi/events/mic_pluged
+        owner: root
+        group: root
+        mode: 0644
+        remote_src: yes
+    - name: Add microphone_unplug event
+      become: true
+      copy:
+        src: /home/seg/code/rumba/utils/scripts/microphone/mic_unpluged
+        dest: /etc/acpi/events/mic_unpluged
+        owner: root
+        group: root
+        mode: 0644
+        remote_src: yes
+    - name: Restart ACPID service
+      become: true
+      service:
+        name: acpid
+        state: restarted
