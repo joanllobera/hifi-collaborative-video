@@ -16,10 +16,10 @@ class LoggerHelper(object):
             return prev_logger
         formatter = logging.Formatter(CONFIG.get('logging', 'format'))
 
-        handler = logging.FileHandler(filename='logs/' + filename)
+        handler = logging.FileHandler(filename=CONFIG.get('logging', 'folder') + filename)
         handler.setFormatter(formatter)
 
-        allHandler = logging.FileHandler(filename='logs/all.log')
+        allHandler = logging.FileHandler(filename=CONFIG.get('logging', 'folder') + '/all.log')
         allHandler.setFormatter(formatter)
 
         logger = logging.getLogger(name)
