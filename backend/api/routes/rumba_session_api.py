@@ -59,6 +59,9 @@ def create_session():
     except SessionValidationException as sv:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(sv)
+    except ValueError as ve:
+        LOGGER.exception("Session creation request finished with errors: ")
+        raise BadRequest(sv)
 
 @SESSION_MANAGER_API.route("/<session_id>", methods=["GET"])
 def get_session(session_id):
