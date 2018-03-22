@@ -28,7 +28,7 @@ class MongoHelper(object):
         :param mongo_object:
         :return:
         """
-        dict_object = mongo_object.to_mongo()
+        dict_object = mongo_object.to_mongo().to_dict()
         dict_object['id'] = str(dict_object['_id'])
         dict_object.pop('_id')
         return dict_object

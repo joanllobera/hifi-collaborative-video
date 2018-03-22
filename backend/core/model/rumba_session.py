@@ -18,6 +18,6 @@ class RumbaSession(Document):
     concert = StringField(required=True, unique=True, null=False, max_length=100)
     band = StringField(required=True, null=False, max_length=50)
     date = LongField(required=True, null=False)
-    logo_url = StringField(required=False, null=True, max_length=255)
+    folder_url = StringField(required=False, null=True, max_length=255)
     is_public = BooleanField(required=True, null=False, default=True)
     active = BooleanField(required=True, null=False, default=True)
