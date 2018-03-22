@@ -1,0 +1,18 @@
+label, input, textarea {
+
+font-family: 'Roboto', sans-serif;
+}
+
+.red {
+  color: rgba(234, 2, 11, 1);
+}
+
+label {
+  color: rgba(234, 2, 11, 1);
+  font-size: 20px;
+}
+
+.bottomline {
+  padding-top: .5em;
+  border-bottom:1px solid lightgrey;
+}
