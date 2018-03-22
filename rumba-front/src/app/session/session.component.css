@@ -8,7 +8,9 @@ font-family: 'Roboto', sans-serif;
   color: rgba(234, 2, 11, 1);
 }
 
-
+/* .form-control.ng-invalid {
+  background-color: rgba(234, 2, 11, 0.1);
+} */
 
 
 label {
