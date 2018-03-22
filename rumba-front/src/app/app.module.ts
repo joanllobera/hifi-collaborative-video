@@ -15,6 +15,7 @@ import { OrientationComponent } from './orientation/orientation.component';
 import { VideosComponent } from './videos/videos.component';
 
 import { SessionService } from './session/session.service';
+import { SessionCloseComponent } from './session-close/session-close.component';
 
 
 
@@ -26,7 +27,8 @@ import { SessionService } from './session/session.service';
     SessionComponent,
     HomeComponent,
     OrientationComponent,
-    VideosComponent
+    VideosComponent,
+    SessionCloseComponent
   ],
   imports: [
     BrowserModule,
