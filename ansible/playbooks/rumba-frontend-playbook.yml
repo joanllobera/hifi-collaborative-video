@@ -1,0 +1,18 @@
+---
+- hosts: rumba
+  remote_user: seg
+  vars_files:
+    - ../etc/variables.yml
+  tasks:
+    - name: Test connection
+      ping:
+    - name: Install NVM
+      shell: >
+        curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | sh
+        creates=~/.nvm/nvm.sh
+    - name: Install node v.7.8.0
+      shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install v7.8.0"
+    - name: Install node modules
+      shell: /bin/bash -c "cd ~/code/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install"
+    - name: Install angular/cli
+      shell: /bin/bash -c "cd ~/code/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install -g @angular/cli"e
