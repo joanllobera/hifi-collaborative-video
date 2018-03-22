@@ -19,7 +19,7 @@ class LoggerHelper(object):
         handler = logging.FileHandler(filename=CONFIG.get('logging', 'folder') + filename)
         handler.setFormatter(formatter)
 
-        allHandler = logging.FileHandler(filename=CONFIG.get('logging', 'folder') + '/all.log')
+        allHandler = logging.FileHandler(filename=CONFIG.get('logging', 'folder') + 'all.log')
         allHandler.setFormatter(formatter)
 
         logger = logging.getLogger(name)

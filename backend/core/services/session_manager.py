@@ -4,12 +4,12 @@ from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator
 from core.model.rumba_session import RumbaSession
+from core.services.fs_manager import FileSystemService
 
 LOGGER = LoggerHelper.get_logger("session_manager", "session_manager.log")
 
 
 class SessionManager(object):
-
     __instance = None
 
     def __init__(self):
@@ -31,7 +31,10 @@ class SessionManager(object):
         A session is composed by information about the event, such as the concert name, the band
         and the concert's date.
 
-        A session can only be created if there's no other active session.
+        A session can only be created if there's no other active session. If the session could be
+        successfully created, a directory will be created in the FS for storing all the files
+        associated to this new RUMBA session.
+        
         :param session_info: Dictionary containing the information of the session. Mandatory fields
         are:
             - concert: String containing the name of the concert.
@@ -45,19 +48,34 @@ class SessionManager(object):
         """
         LOGGER.info("Creating new session.")
         LOGGER.debug("Validating user input: {}".format(session_info))
-        SessionValidator.validate_new_session(session_info)
-        LOGGER.info("Checking if there's any active sessions..")
-        active_sessions = RumbaSession.objects(active=True).count()
-        if active_sessions > 0:
-            LOGGER.error("Error creating session: There's already an active session.")
-            raise SessionValidationException("There's already an active session.")
-        print("aqui estamos")
-        session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
-                               date=session_info['date'], is_public=session_info['is_public'],
-                               active=True).save()
-        LOGGER.info("Session successfully created: [id={0}, name={1}]".format(str(session['id']),
-                                                                              session['concert']))
-        return str(session['id'])
+        try:
+            # First we validate user input
+            SessionValidator.validate_new_session(session_info)
+            LOGGER.info("Checking if there's any active sessions..")
+            active_sessions = RumbaSession.objects(active=True).count()
+            if active_sessions > 0:
+                LOGGER.error("Error creating session: There's already an active session.")
+                raise SessionValidationException("There's already an active session.")
+            # Secondly we create the working directory.
+            dir_path = FileSystemService.get_instance().create_session_directory(
+                session_name=session_info['concert'])
+        except Exception as ex:
+            LOGGER.exception("Error creating session  - ")
+            raise ex
+        try:
+            # Store the information int the DB.
+            session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
+                                   date=session_info['date'], is_public=session_info['is_public'],
+                                   folder_url=dir_path, active=True).save()
+            LOGGER.info(
+                "Session successfully created: [id={0}, name={1}]".format(str(session['id']),
+                                                                          session['concert']))
+            return str(session['id'])
+        except Exception as ex:
+            LOGGER.exception("Error storing session in DB - Executing rollback...")
+            FileSystemService.get_instance().delete_session_directory(
+                session_name=session_info['concert'])
+            raise ex
 
     def get_session(self, session_id):
         """
@@ -79,7 +97,9 @@ class SessionManager(object):
             raise SessionValidationException("There's no session with such id.")
         LOGGER.info("Session sucessfully retrieved: [id={}]".format(session_id))
         LOGGER.debug("Session information: {}".format(session))
-        return MongoHelper.to_dict(session)
+        view_sess = MongoHelper.to_dict(session)
+        view_sess.pop('folder_url')
+        return view_sess
 
     def list_sessions(self):
         """
@@ -94,7 +114,9 @@ class SessionManager(object):
         session_list = []
         sessions = RumbaSession.objects()
         for session in sessions:
-            session_list.append(MongoHelper.to_dict(session))
+            view_sess = MongoHelper.to_dict(session)
+            view_sess.pop('folder_url')
+            session_list.append(view_sess)
         LOGGER.info("Sessions sucessfully retrived: [lenght={}]".format(len(session_list)))
         return session_list
 
@@ -114,7 +136,8 @@ class SessionManager(object):
         GenericValidator.validate_id(session_id)
         session = self.get_session(session_id)
         if session['active']:
-           raise IllegalSessionStateException("Session is active: it should be stopped first.")
+            raise IllegalSessionStateException("Session is active: it should be stopped first.")
+        FileSystemService.get_instance().delete_session_directory(session_name=session['concert'])
         RumbaSession.objects(id=session_id).delete()
         LOGGER.info("Session successfully removed: [id={}]".format(session_id))
 
