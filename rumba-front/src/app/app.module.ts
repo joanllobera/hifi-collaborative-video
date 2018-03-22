@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing-module';
-
 
 import { AppComponent } from './app.component';
 import { StylesComponent } from './styles/styles.component';
@@ -12,6 +14,11 @@ import { HomeComponent } from './home/home.component';
 import { OrientationComponent } from './orientation/orientation.component';
 import { VideosComponent } from './videos/videos.component';
 
+import { SessionService } from './session/session.service';
+import { SessionCloseComponent } from './session-close/session-close.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,16 +27,19 @@ import { VideosComponent } from './videos/videos.component';
     SessionComponent,
     HomeComponent,
     OrientationComponent,
-    VideosComponent
+    VideosComponent,
+    SessionCloseComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpModule
   ],
   exports: [
     HeaderComponent
   ],
-  providers: [],
+  providers: [SessionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

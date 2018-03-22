@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { SessionService } from './session.service';
 
 @Component({
   selector: 'app-session',
@@ -10,7 +12,7 @@ export class SessionComponent implements OnInit {
   activatedHelp: boolean = true;
   audioStatus: boolean = false;
 
-  constructor() { }
+  constructor(private sessionSrv: SessionService) { }
 
   ngOnInit() {
   }
@@ -21,6 +23,18 @@ export class SessionComponent implements OnInit {
 
   setAudioStatus() {
     this.audioStatus = !this.audioStatus;
+  }
+
+  onSubmit(form: NgForm) {
+    // console.log('submitted');
+    // console.log(form.value);
+
+    this.sessionSrv.startSession(form.value)
+      .subscribe(
+        (response) => console.log('response::', response),
+        (error) => console.log('error::',error)
+      );
+
   }
 
 

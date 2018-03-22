@@ -27,19 +27,23 @@
       </span>
     </div>
   </div>
+</div>
+
+<form (ngSubmit)="onSubmit(sessionF)" #sessionF="ngForm">
+<div class="container w-85 p-3">
   <div class="row">
     <div class="col">
-    <form action="">
+
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..."  type="text" class="form-control" id="concert">
+        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
       <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <input placeholder="Nom de la banda" data-trigger="focus" data-placement="top" data-toggle="popover" data-content="* Són camps obligatoris" type="text" class="form-control" id="banda" required>
+        <input placeholder="Nom de la banda" data-trigger="focus" data-placement="top" data-toggle="popover" data-content="* Són camps obligatoris" type="text" class="form-control" id="band" ngModel name="band" required>
       </div>
 
       <div class="form-group top2">
@@ -49,69 +53,70 @@
 
       <div class="form-group top1">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
-        <input type="date" class="form-control" id="data" required>
+        <input type="date" class="form-control" id="date" ngModel name="date" required>
       </div>
 
       <div class="form-group top1">
         <label for="localitzacio" class="bmd-label-floating">Localització</label>
-        <input type="text" class="form-control" id="localitzacio">
+        <input type="text" class="form-control" id="location" ngModel name="location">
       </div>
 
-      <div class="form-group top1">
+      <div class="form-group top1" ngModelGroup="vimeo">
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
-        <input type="text" placeholder="Usuari" class="form-control" id="vimeo_user" name="vimeo_user">
-        <input type="password" placeholder="Password" class="form-control" id="vimeo_password" name="vimeo_user">
+        <input type="text" placeholder="Usuari" class="form-control" id="username" ngModel name="username">
+        <input type="password" placeholder="Password" class="form-control" id="password" ngModel name="password">
       </div>
-
-    </form>
     </div>
   </div>
 </div>
 
-<div class="container w-95 p-3">
-  <div class="row top2">
-    <div class="alert alert-secondary" role="alert" style="width:100%;">
-      <p class="bodytext red size20">Qui pot gravar</p>
-      <div class="row">
-        <div class="col-3">
-          <!-- <div class="radio">
+
+
+  <div class="container w-95 p-3">
+    <div class="row top1">
+      <div class="alert alert-secondary" role="alert" style="width:100%;">
+        <p class="bodytext red size20">Qui pot gravar</p>
+        <div class="row">
+          <div class="col-3">
+            <!-- <div class="radio">
             <label class="quipotgravar">
               <input type="radio" name="quipotgravar" value="tothom" checked />
               Tothom
             </label>
           </div> -->
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="quipotgravar" id="tothom" value="tothom" checked />
-            <label class="form-check-label radiobutton" for="quipotgravar">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="is_public" value="true" ngModel checked/>
+              <label class="form-check-label radiobutton">
               Tothom
             </label>
+            </div>
           </div>
-        </div>
-        <div class="col-3">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="quipotgravar" id="tothom" value="tothom" />
-            <label class="form-check-label radiobutton" for="quipotgravar">
+          <div class="col-3">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="is_public" value="false" ngModel />
+              <label class="form-check-label radiobutton">
               Editors
             </label>
+            </div>
           </div>
-        </div>
 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="float-right">
+          <button *ngIf="!audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-secondary"><i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF </button>
+          <button *ngIf="audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-success"><i class="fas fa-microphone"></i>&nbsp;Audio ON</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="float-right">
+          <button type="submit" class="btn btn-raised btn-warning" [disabled]="!sessionF.valid">INICIAR LA SESSIÓ</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="float-right">
-        <button *ngIf="!audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-secondary"><i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF </button>
-        <button *ngIf="audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-success"><i class="fas fa-microphone"></i>&nbsp;Audio ON</button>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="float-right">
-        <button type="button" class="btn btn-raised btn-secondary">INICIAR LA SESSIÓ</button>
-      </div>
-    </div>
-  </div>
-</div>
+</form>
