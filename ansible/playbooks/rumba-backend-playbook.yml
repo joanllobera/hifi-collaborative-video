@@ -65,6 +65,21 @@
         state: directory
 
       ##########################
+      ##   Rumba FS creation  ##
+      ##########################
+    - name: Create Rumba directories
+      become: true
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: seg
+        group: seg
+      with_items:
+        - /var/rumba
+        - /var/rumba/logs
+        - /var/rumba/sessions
+
+      ##########################
       ## Microphone detection ##
       ##########################
 
