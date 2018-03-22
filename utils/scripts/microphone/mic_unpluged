@@ -1,0 +1,4 @@
+
+event=jack/microphone MICROPHONE plug
+action=sh /etc/acpi/microphone_state.sh on
+
