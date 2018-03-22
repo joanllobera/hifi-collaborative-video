@@ -1,0 +1,8 @@
+{
+  "/sessions/*": {
+    "target": "http://192.168.10.252:8081",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}
