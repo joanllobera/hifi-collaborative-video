@@ -6,7 +6,7 @@
       </span> -->
       <span class="float-right">
         <span class="btn-group-sm">
-          <button
+          <!-- <button
             id="activeHelp"
             type="button"
             class="btn btn-xs btn-primary bmd-btn-fab"
@@ -21,7 +21,12 @@
             title="Desactivar ajuda"
             style="background-color: #fff173; color:black;">
               <i class="fas fa-question-circle"></i>
+          </button> -->
+          <button id="popovertoggle" type="button" class="btn btn-xs btn-primary bmd-btn-fab" name="button" style="background-color: #fff173; color:black;">
+            <i class="fa fa-question-circle"></i>
           </button>
+
+
         </span>
 
       </span>
@@ -36,7 +41,7 @@
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <input data-trigger="focus" data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert">
+        <input data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
@@ -85,7 +90,7 @@
             </label>
           </div> -->
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="is_public" value="true" ngModel checked/>
+              <input class="form-check-input" type="radio" name="is_public" value=true ngModel checked/>
               <label class="form-check-label radiobutton">
               Tothom
             </label>
@@ -93,7 +98,7 @@
           </div>
           <div class="col-3">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="is_public" value="false" ngModel />
+              <input class="form-check-input" type="radio" name="is_public" value=false ngModel />
               <label class="form-check-label radiobutton">
               Editors
             </label>

@@ -139,6 +139,6 @@ body, html {
 }
 
 .hidden {
-  visibility: hidden;
+  /* visibility: hidden; */
   display:none;
 }
