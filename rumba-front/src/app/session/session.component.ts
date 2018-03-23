@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { SessionService } from './session.service';
+
 
 @Component({
   selector: 'app-session',
@@ -9,10 +12,12 @@ import { SessionService } from './session.service';
 })
 export class SessionComponent implements OnInit {
 
-  activatedHelp: boolean = true;
+  activatedHelp: boolean = false;
   audioStatus: boolean = false;
 
-  constructor(private sessionSrv: SessionService) { }
+  //5ab3b192c94b4c5d9db67110
+
+  constructor(private sessionSrv: SessionService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,14 +31,24 @@ export class SessionComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // console.log('submitted');
-    // console.log(form.value);
+    form.value.date = (new Date(form.value.date)).getTime();
 
+    if (form.value.is_public == 'true') {
+      form.value.is_public = true;
+    } else {
+      form.value.is_public = false;
+    }
     this.sessionSrv.startSession(form.value)
       .subscribe(
-        (response) => console.log('response::', response),
+        (response) => {
+          console.log('response::', response);
+          console.log(JSON.parse(response.body));
+          this.router.navigate(['/sessionclose', JSON.parse(response.body)]);
+        },
         (error) => console.log('error::',error)
       );
+
+
 
   }
 

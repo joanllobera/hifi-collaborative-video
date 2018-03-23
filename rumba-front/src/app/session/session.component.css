@@ -39,7 +39,3 @@ label.radiobutton {
 div.float-right button {
   cursor:pointer;
 }
-
-[data-toggle="tooltip"] {
-  background-color: yellow;
-}
