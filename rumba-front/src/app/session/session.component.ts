@@ -42,8 +42,8 @@ export class SessionComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('response::', response);
-          console.log(JSON.parse(response['_body']['id']));
-          this.router.navigate(['/sessionclose', JSON.parse(response['_body']['id'])]);
+          var a = response.json();
+          this.router.navigate(['/sessionclose', a.id]);
         },
         (error) => console.log('error::',error)
       );
