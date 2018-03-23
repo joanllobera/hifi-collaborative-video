@@ -14,8 +14,8 @@ export class SessionComponent implements OnInit {
 
   activatedHelp: boolean = false;
   audioStatus: boolean = false;
+  selectedFile: any = null;
 
-  //5ab3b192c94b4c5d9db67110
 
   constructor(private sessionSrv: SessionService, private router: Router) { }
 
@@ -30,6 +30,14 @@ export class SessionComponent implements OnInit {
     this.audioStatus = !this.audioStatus;
   }
 
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUploadLogo() {
+
+  }
+
   onSubmit(form: NgForm) {
     form.value.date = (new Date(form.value.date)).getTime();
 
@@ -42,15 +50,16 @@ export class SessionComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('response::', response);
-          console.log(JSON.parse(response['_body']['id']));
-          this.router.navigate(['/sessionclose', JSON.parse(response['_body']['id'])]);
+          var a = response.json();
+          this.router.navigate(['/sessionClose', a.id]);
         },
         (error) => console.log('error::',error)
       );
-
-
-
   }
+
+
+
+
 
 
 }

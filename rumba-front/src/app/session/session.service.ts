@@ -15,6 +15,13 @@ export class SessionService {
     return this.http.post(AppConfig.API_ENDPOINT + this.url, session);
   }
 
+  closeSession (id: string) {
+    return this.http.put(AppConfig.API_ENDPOINT + '/sessions/' + id + '/stop', {});
+  }
+
+  getSessionById (id: string) {
+    return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id);
+  }
 
 
 }
