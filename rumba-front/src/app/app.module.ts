@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 
@@ -16,6 +17,7 @@ import { VideosComponent } from './videos/videos.component';
 
 import { SessionService } from './session/session.service';
 import { SessionCloseComponent } from './session-close/session-close.component';
+
 
 
 
@@ -34,7 +36,8 @@ import { SessionCloseComponent } from './session-close/session-close.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   exports: [
     HeaderComponent

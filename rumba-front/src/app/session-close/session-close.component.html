@@ -34,13 +34,13 @@
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <p class="bodytext bottomline">Concert de Nadal</p>
+        <p *ngIf="currentSession.concert" class="bodytext bottomline">{{ currentSession.concert }}</p>
       </div>
 
       <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <p class="bodytext bottomline">Magic Band</p>
+        <p *ngIf="currentSession.band" class="bodytext bottomline">{{ currentSession.band }}</p>
       </div>
 
       <div class="form-group top2">
@@ -52,19 +52,14 @@
 
       <div class="form-group top2">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
-        <p class="bodytext bottomline">12/3/2018</p>
+        <p *ngIf="currentSession.date" class="bodytext bottomline">{{ currentSession.date | date:'dd-MM-yyyy'}}</p>
       </div>
 
       <div class="form-group top1">
-        <label for="localitzacio" class="bmd-label-floating">Localització</label>
-        <p class="bodytext bottomline">Barcelona, Parc del Fòrum</p>
+        <label for="isPublic" class="bmd-label-floating">Sessió pública</label>
+        <p *ngIf="currentSession.is_public" class="bodytext bottomline">{{ currentSession.is_public }}</p>
       </div>
 
-      <div class="form-group top1">
-        <label for="vimeo" class="bmd-label-floating">Vimeo</label>
-        <p class="bodytext bottomline">Username </p>
-        <p class="bodytext bottomline">Password </p>
-      </div>
     </div>
   </div>
 </div>
