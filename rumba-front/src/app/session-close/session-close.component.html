@@ -34,13 +34,13 @@
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <p *ngIf="currentSession.concert" class="bodytext bottomline">{{ currentSession.concert }}</p>
+        <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.concert }}</p>
       </div>
 
       <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <p *ngIf="currentSession.band" class="bodytext bottomline">{{ currentSession.band }}</p>
+        <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.band }}</p>
       </div>
 
       <div class="form-group top2">
@@ -52,12 +52,12 @@
 
       <div class="form-group top2">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
-        <p *ngIf="currentSession.date" class="bodytext bottomline">{{ currentSession.date | date:'dd-MM-yyyy'}}</p>
+        <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.date | date:'dd-MM-yyyy'}}</p>
       </div>
 
       <div class="form-group top1">
         <label for="isPublic" class="bmd-label-floating">Sessió pública</label>
-        <p *ngIf="currentSession.is_public" class="bodytext bottomline">{{ currentSession.is_public }}</p>
+        <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.is_public }}</p>
       </div>
 
     </div>
@@ -72,7 +72,7 @@
   <div class="row">
     <div class="col">
       <div class="float-right">
-        <button class="btn btn-raised btn-danger" type="button" name="button">TANCAR LA SESSIÓ</button>
+        <button class="btn btn-raised btn-danger" type="button" name="button" (click)="onCloseSession()">TANCAR LA SESSIÓ</button>
       </div>
     </div>
   </div>

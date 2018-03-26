@@ -29,4 +29,13 @@ export class SessionCloseComponent implements OnInit {
       );
   }
 
+  onCloseSession() {
+    this.sessionSrv.closeSession(this.sessionId)
+      .subscribe(
+        (response) => {
+          console.log('close session', response);
+        }
+      )
+  }
+
 }
