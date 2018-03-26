@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { HttpClient } from '@angular/common/http';
+
 import { SessionService } from './session.service';
+
+import { AppConfig } from '../app-config';
+
 
 @Component({
   selector: 'app-session',
@@ -9,10 +16,12 @@ import { SessionService } from './session.service';
 })
 export class SessionComponent implements OnInit {
 
-  activatedHelp: boolean = true;
+  activatedHelp: boolean = false;
   audioStatus: boolean = false;
+  selectedFile: File = null;
 
-  constructor(private sessionSrv: SessionService) { }
+
+  constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -25,17 +34,42 @@ export class SessionComponent implements OnInit {
     this.audioStatus = !this.audioStatus;
   }
 
-  onSubmit(form: NgForm) {
-    // console.log('submitted');
-    // console.log(form.value);
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+  }
 
+  onUploadLogo() {
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
+
+    this.http.post(AppConfig.API_ENDPOINT + '/sessions/logo', fd)
+      .subscribe(res => {
+        console.log(res);
+      });
+  }
+
+  onSubmit(form: NgForm) {
+    form.value.date = (new Date(form.value.date)).getTime();
+
+    if (form.value.is_public == 'true') {
+      form.value.is_public = true;
+    } else {
+      form.value.is_public = false;
+    }
     this.sessionSrv.startSession(form.value)
       .subscribe(
-        (response) => console.log('response::', response),
+        (response) => {
+          console.log('response::', response);
+          var a = response.json();
+          this.router.navigate(['/sessionClose', a.id]);
+        },
         (error) => console.log('error::',error)
       );
-
   }
+
+
+
+
 
 
 }

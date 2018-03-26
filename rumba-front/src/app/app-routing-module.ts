@@ -14,7 +14,7 @@ const appRoutes: Routes = [
   { path: 'orientation', component: OrientationComponent},
   { path: 'styles', component: StylesComponent },
   { path: 'session', component: SessionComponent },
-  { path: 'sessionClose', component: SessionCloseComponent},
+  { path: 'sessionClose/:id', component: SessionCloseComponent},
   { path: 'videos', component: VideosComponent }
 ];
 
