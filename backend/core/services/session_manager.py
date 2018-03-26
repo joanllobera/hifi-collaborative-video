@@ -2,7 +2,7 @@ from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
-from core.helpers.validators import SessionValidator, GenericValidator
+from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
 from core.services.fs_manager import FileSystemService
 
@@ -160,3 +160,22 @@ class SessionManager(object):
         db_session = RumbaSession.objects(id=session_id).first()
         db_session.update(set__active=False)
         LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
+
+    def set_session_logo(self, session_id, image_file):
+        """
+
+        :param session_id:
+        :param image_file:
+        :return:
+        """
+        LOGGER.info("Setting session logo: [session_id={}]".format(session_id))
+        try:
+            GenericValidator.validate_id(session_id)
+            FilesValidator.validate_image_format(image_file)
+            session = self.get_session(session_id=session_id)
+            FileSystemService.get_instance().save_session_logo(session_name=session['concert'],
+                                                               logo=image_file)
+            LOGGER.info("Session logo successfully stored: [session_id={}]".format(session_id))
+        except Exception as ex:
+            LOGGER.exception("Error setting session logo: ")
+            raise ex

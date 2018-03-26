@@ -15,12 +15,13 @@ from werkzeug.exceptions import BadRequest, NotFound, Conflict
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
-from core.helpers.validators import SessionValidator
+from core.helpers.validators import SessionValidator, FilesValidator
 from core.services.session_manager import SessionManager
 
 SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/sessions")
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
+
 
 @SESSION_MANAGER_API.route("/", methods=["POST"])
 def create_session():
@@ -61,7 +62,7 @@ def create_session():
         raise BadRequest(sv)
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
-        raise BadRequest(sv)
+        raise BadRequest(ve)
 
 @SESSION_MANAGER_API.route("/<session_id>", methods=["GET"])
 def get_session(session_id):
@@ -170,3 +171,30 @@ def stop_session(session_id):
     except IllegalSessionStateException as ie:
         LOGGER.exception("Stop request finished with errors: ")
         raise Conflict(ie)
+
+@SESSION_MANAGER_API.route("/<session_id>/logo", methods=["POST"])
+def upload_session_logo(session_id):
+    """
+    Endpoint for uploading the logo of a session.
+
+    :param session_id: Id of the session.
+    :return:
+        - HTTP 204, if the session logo could be stored.
+        - HTTP 400, if the uploaded image is not supported, if the user didn't specify a logo or
+            if the session id is not valid.
+        - HTTP 404, if the session does not exist.
+    """
+    LOGGER.info("Received request for uploading session logo.")
+    if 'file' not in request.files:
+        raise BadRequest("Expected a file.")
+    file = request.files[ 'file']
+    try:
+        FilesValidator.validate_image_format(file)
+        SessionManager.get_instance().set_session_logo(session_id=session_id, image_file=file)
+        return "", 204
+    except ValueError as ve:
+        LOGGER.exception("Upload logo request finished with errors: ")
+        raise BadRequest(ve)
+    except SessionValidationException as sv:
+        LOGGER.exception("Upload logo request finished with errors: ")
+        raise NotFound(sv)
