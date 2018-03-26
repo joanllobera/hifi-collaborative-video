@@ -37,11 +37,11 @@ export class SessionComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 
-  onUploadLogo() {
+  onUploadLogo(id: string) {
     const fd = new FormData();
     fd.append('image', this.selectedFile, this.selectedFile.name);
 
-    this.http.post(AppConfig.API_ENDPOINT + '/sessions/logo', fd)
+    this.http.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd)
       .subscribe(res => {
         console.log(res);
       });
@@ -61,6 +61,11 @@ export class SessionComponent implements OnInit {
           console.log('response::', response);
           var a = response.json();
           this.router.navigate(['/sessionClose', a.id]);
+
+          if (this.selectedFile) {
+              this.onUploadLogo(a.id);
+          }
+
         },
         (error) => console.log('error::',error)
       );
