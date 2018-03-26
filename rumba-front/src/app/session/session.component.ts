@@ -38,10 +38,8 @@ export class SessionComponent implements OnInit {
   }
 
   onUploadLogo(id: string) {
-    const fd = new FormData();
-    fd.append('image', this.selectedFile, this.selectedFile.name);
 
-    this.http.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd)
+    this.sessionSrv.uploadLogo(id, this.selectedFile)
       .subscribe(res => {
         console.log(res);
       });
@@ -67,7 +65,9 @@ export class SessionComponent implements OnInit {
           }
 
         },
-        (error) => console.log('error::',error)
+        (error) => {
+          console.log('error::',error);
+        }
       );
   }
 

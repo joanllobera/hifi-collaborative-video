@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
+import { HttpClient } from '@angular/common/http';
 
 import { AppConfig } from '../app-config';
 
@@ -8,7 +9,7 @@ export class SessionService {
 
   url: string;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private httpClient: HttpClient) {}
 
   startSession(session: any) {
     this.url = AppConfig.START_SESSON;
@@ -23,5 +24,10 @@ export class SessionService {
     return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id);
   }
 
+  uploadLogo (id: string, selectedFile: File) {
+    const fd = new FormData();
+    fd.append('image', selectedFile, selectedFile.name);
+    return this.httpClient.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd)
+  }
 
 }
