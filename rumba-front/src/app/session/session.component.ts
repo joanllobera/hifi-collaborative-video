@@ -20,7 +20,6 @@ export class SessionComponent implements OnInit {
   audioStatus: boolean = false;
   selectedFile: File = null;
 
-
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {

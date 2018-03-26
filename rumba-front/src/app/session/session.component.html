@@ -22,7 +22,7 @@
             style="background-color: #fff173; color:black;">
               <i class="fas fa-question-circle"></i>
           </button> -->
-          <button id="popovertoggle" type="button" class="btn btn-xs btn-primary bmd-btn-fab" name="button" style="background-color: #fff173; color:black;">
+          <button (click)="setHelpStatus()" id="popovertoggle" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black;">
             <i class="fa fa-question-circle"></i>
           </button>
 
@@ -41,7 +41,9 @@
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <input data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert">
+        <!-- <input data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert"> -->
+
+        <input  placement="top-left" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." type="text" class="form-control" popover-toggle="activatedHelp" id="concert" ngModel name="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 

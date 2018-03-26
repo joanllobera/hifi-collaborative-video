@@ -142,3 +142,12 @@ body, html {
   /* visibility: hidden; */
   display:none;
 }
+
+
+.popover-body {
+  background-color: rgba(255, 241, 115, 1);;
+}
+
+.arrow {
+  color:yellow;
+}
