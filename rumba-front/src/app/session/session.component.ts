@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { HttpClient } from '@angular/common/http';
+
 import { SessionService } from './session.service';
+
+import { AppConfig } from '../app-config';
 
 
 @Component({
@@ -14,10 +18,10 @@ export class SessionComponent implements OnInit {
 
   activatedHelp: boolean = false;
   audioStatus: boolean = false;
-  selectedFile: any = null;
+  selectedFile: File = null;
 
 
-  constructor(private sessionSrv: SessionService, private router: Router) { }
+  constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -31,11 +35,17 @@ export class SessionComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    this.selectedFile = event.target.files[0];
+    this.selectedFile = <File>event.target.files[0];
   }
 
   onUploadLogo() {
+    const fd = new FormData();
+    fd.append('image', this.selectedFile, this.selectedFile.name);
 
+    this.http.post(AppConfig.API_ENDPOINT + '/sessions/logo', fd)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   onSubmit(form: NgForm) {
