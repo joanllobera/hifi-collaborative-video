@@ -8,7 +8,7 @@ This API has been implemented using Flask Blueprints.
 """
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, send_file
 from flask.json import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
@@ -198,3 +198,17 @@ def upload_session_logo(session_id):
     except SessionValidationException as sv:
         LOGGER.exception("Upload logo request finished with errors: ")
         raise NotFound(sv)
+
+@SESSION_MANAGER_API.route("/<session_id>/logo", methods=["GET"])
+def download_logo(session_id):
+    LOGGER.info("Received request for downloading session logo.")
+    try:
+        image_url = SessionManager.get_instance().get_session_logo_url(session_id=session_id)
+        return send_file(image_url), 200
+    except ValueError as ve:
+        LOGGER.exception("Download logo request finished with errors: ")
+        raise BadRequest(ve)
+    except SessionValidationException as sv:
+        LOGGER.exception("Download logo request finished with errors: ")
+        raise NotFound(sv)
+

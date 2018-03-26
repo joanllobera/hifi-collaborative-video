@@ -179,3 +179,21 @@ class SessionManager(object):
         except Exception as ex:
             LOGGER.exception("Error setting session logo: ")
             raise ex
+
+    def get_session_logo_url(self, session_id):
+        """
+
+        :param session_id:
+        :return:
+        """
+        LOGGER.info("Getting session logo: [session_id={}]".format(session_id))
+        try:
+            GenericValidator.validate_id(session_id)
+            session = self.get_session(session_id=session_id)
+            url = FileSystemService.get_instance().get_session_logo_url(
+                session_name=session['concert'])
+            LOGGER.info("Session logo URL successfully retrieved.")
+            return url
+        except Exception as ex:
+            LOGGER.exception("Error getting session logo: ")
+            raise ex

@@ -2,12 +2,16 @@
 This module contains the classes that will interact with the File System.
 """
 import configparser
+import glob
 
 import os
 
 import shutil
 
-from core.exceptions.session_exceptions import IllegalSessionStateException
+import re
+
+from core.exceptions.session_exceptions import IllegalSessionStateException, \
+    SessionValidationException
 from core.helpers.files import FilesHelper
 from core.helpers.loggers import LoggerHelper
 
@@ -53,7 +57,7 @@ class FileSystemService(object):
         LOGGER.info("Creating session directory: [session_name={}]".format(session_name))
         if session_name is None or type(session_name) != str or not session_name:
             raise ValueError("Expected a valid name for the session.")
-        path = self.directory + session_name
+        path = self.__build_session_directory_path__(session_name)
         if not os.path.exists(path):
             os.mkdir(path=path, mode=0o755)
         LOGGER.info("Session directory created: [path={}]".format(path))
@@ -72,7 +76,7 @@ class FileSystemService(object):
         LOGGER.info("Removing session directory: [session_name={}]".format(session_name))
         if session_name is None or type(session_name) !=str or not session_name:
             raise ValueError("Expected a valid name for the session.")
-        path = self.directory + session_name
+        path = self.__build_session_directory_path__(session_name)
         if os.path.exists(path):
             shutil.rmtree(path=path)
         LOGGER.info("Session directory removed: [path={}]".format(path))
@@ -89,8 +93,30 @@ class FileSystemService(object):
         LOGGER.info("Saving logo in session directory: [session_name={}]".format(session_name))
         if session_name is None or type(session_name) != str or not session_name:
             raise ValueError("Expected a valid session name.")
-        path = self.directory + session_name
+        path = self.__build_session_directory_path__(session_name)
         if not os.path.exists(path):
             raise IllegalSessionStateException("Session folder does not exist.")
         ext = FilesHelper.get_file_extension(file=logo)
         logo.save(os.path.join(path, "logo." + ext))
+        LOGGER.info("Logo saved in session directory: [session_name={}]".format(session_name))
+
+
+    def get_session_logo_url(self, session_name):
+        """
+
+        :param session_name:
+        :return:
+        """
+        LOGGER.info("Reading logo from session directory: [session_name={}]".format(session_name))
+        if session_name is None or type(session_name) != str or not session_name:
+            raise ValueError("Expected a valid session name.")
+        path = self.__build_session_directory_path__(session_name)
+        for filename in glob.glob(path + "/logo.*"):
+            LOGGER.info("Session logo URL sucessfully built: [path={}]".format(filename))
+            return filename
+        raise SessionValidationException("No logo for that session.")
+
+    def __build_session_directory_path__(self, session_name):
+        if session_name is None or type(session_name) != str or not session_name:
+            raise ValueError("Expected a valid session name.")
+        return self.directory + session_name
