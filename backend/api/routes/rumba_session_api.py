@@ -185,9 +185,9 @@ def upload_session_logo(session_id):
         - HTTP 404, if the session does not exist.
     """
     LOGGER.info("Received request for uploading session logo.")
-    if 'file' not in request.files:
+    if 'image' not in request.files:
         raise BadRequest("Expected a file.")
-    file = request.files[ 'file']
+    file = request.files[ 'image']
     try:
         FilesValidator.validate_image_format(file)
         SessionManager.get_instance().set_session_logo(session_id=session_id, image_file=file)
