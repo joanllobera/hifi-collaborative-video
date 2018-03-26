@@ -20,7 +20,6 @@ export class SessionComponent implements OnInit {
   audioStatus: boolean = false;
   selectedFile: File = null;
 
-
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
@@ -38,11 +37,9 @@ export class SessionComponent implements OnInit {
     this.selectedFile = <File>event.target.files[0];
   }
 
-  onUploadLogo() {
-    const fd = new FormData();
-    fd.append('image', this.selectedFile, this.selectedFile.name);
+  onUploadLogo(id: string) {
 
-    this.http.post(AppConfig.API_ENDPOINT + '/sessions/logo', fd)
+    this.sessionSrv.uploadLogo(id, this.selectedFile)
       .subscribe(res => {
         console.log(res);
       });
@@ -62,8 +59,15 @@ export class SessionComponent implements OnInit {
           console.log('response::', response);
           var a = response.json();
           this.router.navigate(['/sessionClose', a.id]);
+
+          if (this.selectedFile) {
+              this.onUploadLogo(a.id);
+          }
+
         },
-        (error) => console.log('error::',error)
+        (error) => {
+          console.log('error::',error);
+        }
       );
   }
 

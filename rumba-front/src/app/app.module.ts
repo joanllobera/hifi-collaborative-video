@@ -18,6 +18,8 @@ import { VideosComponent } from './videos/videos.component';
 import { SessionService } from './session/session.service';
 import { SessionCloseComponent } from './session-close/session-close.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -37,7 +39,8 @@ import { SessionCloseComponent } from './session-close/session-close.component';
     AppRoutingModule,
     FormsModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot(),
   ],
   exports: [
     HeaderComponent
