@@ -32,7 +32,7 @@ setup(
     #license='MIT',
 
     # What does your project relate to?
-    keywords='vnf ns slicing',
+    keywords='live-streaming',
 
     # List of packages
     packages=find_packages(),
