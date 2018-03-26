@@ -7,6 +7,8 @@ import os
 
 import shutil
 
+from core.exceptions.session_exceptions import IllegalSessionStateException
+from core.helpers.files import FilesHelper
 from core.helpers.loggers import LoggerHelper
 
 CONFIG = configparser.RawConfigParser()
@@ -74,3 +76,21 @@ class FileSystemService(object):
         if os.path.exists(path):
             shutil.rmtree(path=path)
         LOGGER.info("Session directory removed: [path={}]".format(path))
+
+    def save_session_logo(self, session_name, logo):
+        """
+        Stores in the session directory the provided logo.
+        :param session_name: Name of the session.
+        :param logo: File containing the logo.
+        :rtype:
+            - ValueError, if the provided path is has a wrong format.
+            - IllegalSessionStateException, if the session folder does not exist.
+        """
+        LOGGER.info("Saving logo in session directory: [session_name={}]".format(session_name))
+        if session_name is None or type(session_name) != str or not session_name:
+            raise ValueError("Expected a valid session name.")
+        path = self.directory + session_name
+        if not os.path.exists(path):
+            raise IllegalSessionStateException("Session folder does not exist.")
+        ext = FilesHelper.get_file_extension(file=logo)
+        logo.save(os.path.join(path, "logo." + ext))

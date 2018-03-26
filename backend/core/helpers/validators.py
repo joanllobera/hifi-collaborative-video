@@ -59,3 +59,43 @@ class GenericValidator(object):
         if type(id) != str or not id:
             raise ValueError("Id should be a string.")
 
+
+class FilesValidator(object):
+    """
+    Class containing validators for the image files upload by the user, such as the session logo.
+    """
+    ALLOWED_EXTENSIONS = ["png", "jpeg", "jpg", "ico"]
+
+    @staticmethod
+    def validate_image_format(image_file):
+        """
+
+        :param image_file:
+        :return:
+        """
+        if image_file is None:
+            raise ValueError("Expected a file.")
+        if not image_file.filename:
+            raise ValueError("Expected a not empty file")
+        if not FilesValidator.is_a_valid_image_format(image_file.filename):
+            raise ValueError("Unvalid file format. Allowed formats are: {}".format(
+                FilesValidator.ALLOWED_EXTENSIONS))
+
+    @staticmethod
+    def is_a_valid_image_format(filename):
+        """
+        Check if a file (given its name) has an allowed image extension.
+
+        The list of allowed extensions is defined by the ALLOWED_EXTENSIONS list, which is a
+        constant of this class.
+
+        :param filename: Name of the file to check.
+        :return: True, if the image has an allowed extension. False, otherwise.
+        :rtype: bool
+        :raises: ValueError, if the parameter is not a valid filename.
+        """
+        if filename is None or type(filename) != str or not filename:
+            raise ValueError("Expected a valid filename.")
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1].lower() in FilesValidator.ALLOWED_EXTENSIONS
+
