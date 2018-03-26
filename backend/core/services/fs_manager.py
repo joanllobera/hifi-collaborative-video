@@ -103,9 +103,13 @@ class FileSystemService(object):
 
     def get_session_logo_url(self, session_name):
         """
-
-        :param session_name:
-        :return:
+        Method for retrieving the path where the session logo is stored.
+        :param session_id: Id of the session.
+        :return: URL containing the FS path where the logo is located.
+        :rtype: str
+        :raises:
+            - SessionValidationException, if the session has no stored logo.
+            - ValueError, if provided parameter is not a valid session name.
         """
         LOGGER.info("Reading logo from session directory: [session_name={}]".format(session_name))
         if session_name is None or type(session_name) != str or not session_name:

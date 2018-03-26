@@ -182,9 +182,13 @@ class SessionManager(object):
 
     def get_session_logo_url(self, session_id):
         """
-
-        :param session_id:
-        :return:
+        Method for retrieving the path where the session logo is stored.
+        :param session_id: Id of the session.
+        :return: URL containing the FS path where the logo is located.
+        :rtype: str
+        :raises:
+            - SessionValidationException, if the session has no stored logo.
+            - ValueError, if provided parameter is not a valid session name.
         """
         LOGGER.info("Getting session logo: [session_id={}]".format(session_id))
         try:
