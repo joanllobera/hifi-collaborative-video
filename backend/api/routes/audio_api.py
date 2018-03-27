@@ -8,7 +8,7 @@ from core.helpers.loggers import LoggerHelper
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
-AUDIO_API = Blueprint("audio_api", __name__, url_prefix="/audio")
+AUDIO_API = Blueprint("audio_api", __name__, url_prefix="/api/audio")
 CLIENT = MongoClient()
 DB = CLIENT['rumba']
 

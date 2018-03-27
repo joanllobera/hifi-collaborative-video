@@ -18,7 +18,7 @@ from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import SessionValidator, FilesValidator
 from core.services.session_manager import SessionManager
 
-SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/sessions")
+SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/api/sessions")
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
@@ -201,6 +201,15 @@ def upload_session_logo(session_id):
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["GET"])
 def download_logo(session_id):
+    """
+    Endpoint for downloading the logo of a session.
+
+    :param session_id: Id of the session.
+    :return:
+        - HTTP 200, if the logo could be retrieved. The logo is sent in the body of the message.
+        - HTTP 400, if the given session is not a valid session id.
+        - HTTP 404, if the session does not exist or it exists but has no associated logo.
+    """
     LOGGER.info("Received request for downloading session logo.")
     try:
         image_url = SessionManager.get_instance().get_session_logo_url(session_id=session_id)
@@ -211,4 +220,3 @@ def download_logo(session_id):
     except SessionValidationException as sv:
         LOGGER.exception("Download logo request finished with errors: ")
         raise NotFound(sv)
-
