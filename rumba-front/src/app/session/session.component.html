@@ -124,7 +124,7 @@
     <div class="row">
       <div class="col">
         <div class="float-right">
-          <button *ngIf="!audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-xs btn-secondary" style="padding:1px 3px;border-radius:3px"><i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF </button>
+          <button *ngIf="!audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-xs btn-secondary audioState" style="padding:1px 3px;border-radius:3px"><i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF </button>
           <button *ngIf="audioStatus" (click)="setAudioStatus()" type="button" class="btn btn-xs btn-success" style="padding:1px 3px;border-radius:3px"><i class="fas fa-microphone"></i>&nbsp;Audio ON</button>
         </div>
       </div>
