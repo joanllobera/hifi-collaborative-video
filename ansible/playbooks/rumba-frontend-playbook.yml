@@ -15,4 +15,4 @@
     - name: Install node modules
       shell: /bin/bash -c "cd ~/code/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install"
     - name: Install angular/cli
-      shell: /bin/bash -c "cd ~/code/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install -g @angular/cli"e
+      shell: /bin/bash -c "cd ~/code/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install -g @angular/cli"
