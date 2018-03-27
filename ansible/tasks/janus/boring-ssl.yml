@@ -1,0 +1,47 @@
+---
+  - name: Install BoringSSL dependencies
+    become: true
+    apt:
+      package: "{{ item }}"
+      state: present
+      update_cache: true
+    with_items:
+      - cmake
+      - golang
+  - name: Remove clone of BoringSSL repo (if it already exists)
+    file:
+      path: /tmp/boringssl
+      state: absent
+  - name: Git clone boringssl (openssl replacement)
+    git:
+      repo: https://boringssl.googlesource.com/boringssl
+      dest: /tmp/boringssl
+  - name: Prepare BoringSSL build
+    shell: "{{ item }}"
+    args:
+      chdir: /tmp/boringssl
+    with_items:
+      - sed -i s/" -Werror"//g CMakeLists.txt
+      - mkdir -p build
+  - name: Build BoringSSL
+    shell: "{{ item }}"
+    args:
+      chdir: /tmp/boringssl/build
+    with_items:
+      - cmake -DCMAKE_CXX_FLAGS="-lrt" ..
+      - make
+  - name: Install BoringSSL
+    become: yes
+    shell: "{{ item }}"
+    args:
+      chdir: /tmp/boringssl/build
+    with_items:
+      - mkdir -p /opt/boringssl
+      - cp -R ../include /opt/boringssl/
+      - mkdir -p /opt/boringssl/lib
+      - cp ssl/libssl.a /opt/boringssl/lib/
+      - cp crypto/libcrypto.a /opt/boringssl/lib/
+  - name: Remove clone of BoringSSL repo
+    file:
+      path: /tmp/boringssl
+      state: absent
