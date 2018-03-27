@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { Http , Response } from "@angular/http";
 import { HttpClient } from '@angular/common/http';
+
+import 'rxjs/Rx';
 
 import { AppConfig } from '../app-config';
 
@@ -27,7 +29,19 @@ export class SessionService {
   uploadLogo (id: string, selectedFile: File) {
     const fd = new FormData();
     fd.append('image', selectedFile, selectedFile.name);
-    return this.httpClient.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd)
+    return this.httpClient.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd);
   }
+
+  getLogoById (id: string) {
+    return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo')
+      .map(
+        (response: Response) => {
+          return response;
+        }
+      );
+  }
+
+
+
 
 }
