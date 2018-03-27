@@ -11,6 +11,7 @@ import { SessionService } from '../session/session.service';
 export class SessionCloseComponent implements OnInit {
 
   sessionId: string;
+  src: string;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean} = undefined;
 
@@ -27,6 +28,17 @@ export class SessionCloseComponent implements OnInit {
           this.currentSession = response.json();
         }
       );
+
+    this.sessionSrv.getLogoById(this.sessionId)
+      .subscribe(
+        (logo) => {
+          console.log('getLogoById::', logo);
+          
+        }
+      )
+
+
+
   }
 
   onCloseSession() {
