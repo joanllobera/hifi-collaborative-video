@@ -58,12 +58,12 @@ export class SessionComponent implements OnInit {
         (response) => {
           console.log('response::', response);
           var a = response.json();
-          this.router.navigate(['/sessionClose', a.id]);
+
 
           if (this.selectedFile) {
               this.onUploadLogo(a.id);
           }
-
+          this.router.navigate(['/sessionClose', a.id]);
         },
         (error) => {
           console.log('error::',error);
