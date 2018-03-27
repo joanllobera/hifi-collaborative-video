@@ -74,7 +74,13 @@ http {
 	## server
 	server {
 		listen {{ nginx_port }};
-		index index.html index.htm;
+        location / {
+                proxy_pass http://localhost:4200;
+        }
+        location /api {
+                proxy_pass http://localhost:8081;
+        }
+
     }
 
 }
