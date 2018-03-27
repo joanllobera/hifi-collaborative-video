@@ -1,0 +1,7 @@
+---
+- hosts: rumba
+  remote_user: seg
+  vars_files:
+    - etc/variables.yml
+  tasks:
+    - include: tasks/janus/janus.yml
