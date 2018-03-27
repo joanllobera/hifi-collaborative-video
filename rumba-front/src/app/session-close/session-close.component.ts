@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
 
 
@@ -14,7 +14,7 @@ export class SessionCloseComponent implements OnInit {
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean} = undefined;
 
-  constructor(private route: ActivatedRoute, private sessionSrv: SessionService) { }
+  constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
 
   ngOnInit() {
     this.sessionId = this.route.snapshot.params['id'];
@@ -34,6 +34,7 @@ export class SessionCloseComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('close session', response);
+          this.router.navigate(['/home']);
         }
       )
   }
