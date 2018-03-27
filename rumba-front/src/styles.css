@@ -1,18 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 * {
   font-family:arial;
 }
-
 
 body, html {
    padding: 0;
    width: 100vw;
    height: 100vh;
  }
-
-
 
 /* fonts for all app*/
 .title, .subtitle {
@@ -29,8 +25,6 @@ body, html {
 .light {
   font-weight: 300;
 }
-
-
 
 /* @media (orientation: portrait) {
   .portrait {
@@ -151,4 +145,9 @@ body, html {
 
 .arrow {
   color:yellow;
+}
+
+button.audioState, button.startSession {
+  padding:1px 3px;
+  border-radius:3px
 }

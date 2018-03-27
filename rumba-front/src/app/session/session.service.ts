@@ -15,30 +15,31 @@ export class SessionService {
 
   startSession(session: any) {
     this.url = AppConfig.START_SESSON;
-    return this.http.post(AppConfig.API_ENDPOINT + this.url, session);
+    return this.http.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/', session);
   }
 
   closeSession (id: string) {
-    return this.http.put(AppConfig.API_ENDPOINT + '/sessions/' + id + '/stop', {});
+    return this.http.put(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id + '/stop', {});
   }
 
   getSessionById (id: string) {
-    return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id);
+    return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id);
   }
 
   uploadLogo (id: string, selectedFile: File) {
     const fd = new FormData();
     fd.append('image', selectedFile, selectedFile.name);
-    return this.httpClient.post(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo', fd);
+    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id + '/logo', fd);
   }
 
   getLogoById (id: string) {
-    return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo')
-      .map(
-        (response: Response) => {
-          return response;
-        }
-      );
+    // return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo')
+    //   .map(
+    //     (response: Response) => {
+    //       return response;
+    //     }
+    //   );
+    return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id + '/logo');
   }
 
 
