@@ -18,7 +18,7 @@ from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import SessionValidator, FilesValidator
 from core.services.session_manager import SessionManager
 
-SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/api/sessions")
+SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/sessions")
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
