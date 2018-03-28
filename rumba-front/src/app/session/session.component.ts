@@ -26,12 +26,7 @@ export class SessionComponent implements OnInit {
     this.sessionSrv.getAudioStatus()
       .subscribe(
         (response) => {
-          console.log(response);
-          if (response['state'] === 'off') {
-            this.audioStatus = false;
-          } else {
-            this.audioStatus = true;
-          }
+          (response['state'] === 'off') ? this.audioStatus = false : this.audioStatus = true;
         }
       )
   }

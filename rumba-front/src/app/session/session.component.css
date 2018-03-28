@@ -34,8 +34,18 @@ label.radiobutton {
   color: black;
 }
 
-
-
 div.float-right button {
   cursor:pointer;
+}
+
+.audio-off {
+  background-color: #6c757d;
+  padding: 4px 4px;
+  color: white;
+}
+
+.audio-on {
+  background-color: green;
+  padding: 4px 4px;
+  color: white;
 }

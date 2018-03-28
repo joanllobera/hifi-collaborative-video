@@ -146,8 +146,3 @@ body, html {
 .arrow {
   color:yellow;
 }
-
-button.audioState, button.startSession {
-  padding:1px 3px;
-  border-radius:3px
-}
