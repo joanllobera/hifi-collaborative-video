@@ -54,7 +54,7 @@ class FileSystemService(object):
         :rtype: str
         :raises: ValueError, if the given parameter is not a valid band name.
         """
-        LOGGER.info("Creating session directory: [session_name={}]".format(band))
+        LOGGER.info("Creating session directory: [band={}]".format(band))
         if band is None or type(band) != str or not band:
             raise ValueError("Expected a valid band name for the session.")
         path = self.__build_session_directory_path__(band)
