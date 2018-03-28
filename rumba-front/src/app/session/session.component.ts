@@ -23,14 +23,21 @@ export class SessionComponent implements OnInit {
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
+    this.sessionSrv.getAudioStatus()
+      .subscribe(
+        (response) => {
+          console.log(response);
+          if (response['state'] === 'off') {
+            this.audioStatus = false;
+          } else {
+            this.audioStatus = true;
+          }
+        }
+      )
   }
 
   setHelpStatus() {
     this.activatedHelp = !this.activatedHelp;
-  }
-
-  setAudioStatus() {
-    this.audioStatus = !this.audioStatus;
   }
 
   onFileSelected(event) {

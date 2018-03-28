@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http , Response } from "@angular/http";
 import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/Rx';
+import 'rxjs/Rx';  //needed for .map()
 
 import { AppConfig } from '../app-config';
 
@@ -42,6 +42,9 @@ export class SessionService {
     return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id + '/logo');
   }
 
+  getAudioStatus () {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/audio/microphone/state');
+  }
 
 
 
