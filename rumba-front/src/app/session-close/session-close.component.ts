@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../session/session.service';
 
+import { Vimeo } from '../model/vimeo.model';
+
 
 @Component({
   selector: 'app-session-close',
@@ -13,7 +15,7 @@ export class SessionCloseComponent implements OnInit {
   sessionId: string;
   binaryData = null;
 
-  currentSession: {concert: string, band: string, date:number, is_public: boolean} = undefined;
+  currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
 
   constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
 
@@ -33,7 +35,7 @@ export class SessionCloseComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('getLogoById::', response);
-          this.binaryData = response['_body'];           
+          this.binaryData = response['_body'];
         }
       )
 

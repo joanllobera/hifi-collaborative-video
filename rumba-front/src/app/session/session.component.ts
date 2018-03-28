@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs';
+
 import { SessionService } from './session.service';
 
 import { AppConfig } from '../app-config';
@@ -19,6 +22,8 @@ export class SessionComponent implements OnInit {
   activatedHelp: boolean = false;
   audioStatus: boolean = false;
   selectedFile: File = null;
+  currentDate = Date.now();
+
 
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
 
@@ -28,7 +33,8 @@ export class SessionComponent implements OnInit {
         (response) => {
           (response['state'] === 'off') ? this.audioStatus = false : this.audioStatus = true;
         }
-      )
+      );
+
   }
 
   setHelpStatus() {
@@ -40,7 +46,6 @@ export class SessionComponent implements OnInit {
   }
 
   onUploadLogo(id: string) {
-
     this.sessionSrv.uploadLogo(id, this.selectedFile)
       .subscribe(res => {
         console.log(res);
@@ -48,8 +53,8 @@ export class SessionComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    form.value.date = (new Date(form.value.date)).getTime();
-
+    // form.value.date = (new Date(form.value.date)).getTime();
+    form.value.date = this.currentDate;
     if (form.value.is_public == 'true') {
       form.value.is_public = true;
     } else {
