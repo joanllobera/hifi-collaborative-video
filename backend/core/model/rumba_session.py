@@ -15,7 +15,7 @@ class RumbaSession(Document):
     name of the band and the concert's date.
     """
 
-    concert = StringField(required=True, unique=True, null=False, max_length=100)
+    concert = StringField(required=False, max_length=100)
     band = StringField(required=True, null=False, max_length=50)
     date = LongField(required=True, null=False)
     folder_url = StringField(required=False, null=True, max_length=255)
