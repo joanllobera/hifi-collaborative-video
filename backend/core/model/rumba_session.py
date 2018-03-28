@@ -2,7 +2,7 @@
 Module defining the schema of the Session class, that will be stored as Documents in the MongoDB
 instance.
 """
-from mongoengine import Document, StringField, LongField, BooleanField
+from mongoengine import Document, StringField, LongField, BooleanField, DictField
 
 
 class RumbaSession(Document):
@@ -21,3 +21,4 @@ class RumbaSession(Document):
     folder_url = StringField(required=False, null=True, max_length=255)
     is_public = BooleanField(required=True, null=False, default=True)
     active = BooleanField(required=True, null=False, default=True)
+    vimeo = DictField(required=False)
