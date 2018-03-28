@@ -5,7 +5,7 @@
       state: absent
   - name: Git clone libwebsockets (to support WebRTC Data Channels)
     git:
-      repo: git://git.libwebsockets.org/libwebsockets
+      repo: rumba-code://rumba-code.libwebsockets.org/libwebsockets
       dest: /tmp/libwebsockets
   - name: Configure livewebsockets build
     shell: cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr

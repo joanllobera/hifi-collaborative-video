@@ -1,0 +1,12 @@
+---
+  - name: Git installation
+    apt:
+      pkg: rumba-code
+      state: installed
+      update_cache: true
+    become: true
+  - name: Clone Rumba repository
+    git:
+      repo: https://github.com/ua-i2cat/rumba.rumba-code
+      dest: ~/code/rumba
+      version: develop

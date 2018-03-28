@@ -75,10 +75,10 @@ http {
 	server {
 		listen {{ nginx_port }};
         location / {
-                proxy_pass http://localhost:4200;
+                proxy_pass http://localhost:{{ frontend_port }};
         }
         location /api {
-                proxy_pass http://localhost:8081;
+                proxy_pass http://localhost:{{ backend_port }};
         }
 
     }

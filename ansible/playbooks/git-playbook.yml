@@ -6,12 +6,12 @@
       ping:
     - name: Git installation
       apt:
-        pkg: git
+        pkg: rumba-code
         state: installed
         update_cache: true
       become: true
     - name: Clone repository
       git:
-        repo: https://github.com/ua-i2cat/rumba.git
+        repo: https://github.com/ua-i2cat/rumba.rumba-code
         dest: ~/code/rumba
         version: develop

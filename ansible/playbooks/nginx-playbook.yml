@@ -10,7 +10,7 @@
       apt: pkg=nginx state=installed update_cache=true
       become: true
     - name: Configure NGINX proxy
-      template: src=etc/nginx.conf.tpl dest=/etc/nginx/nginx.conf
+      template: src=etc/nginx.yml.tpl dest=/etc/nginx/nginx.yml
       become: true
     - name: Configure NGINX for Janus
       template:
