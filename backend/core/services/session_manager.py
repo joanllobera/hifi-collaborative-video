@@ -58,7 +58,7 @@ class SessionManager(object):
                 raise SessionValidationException("There's already an active session.")
             # Secondly we create the working directory.
             dir_path = FileSystemService.get_instance().create_session_directory(
-                session_name=session_info['concert'])
+                session_name=session_info['band'])
         except Exception as ex:
             LOGGER.exception("Error creating session  - ")
             raise ex
@@ -68,13 +68,13 @@ class SessionManager(object):
                                    date=session_info['date'], is_public=session_info['is_public'],
                                    folder_url=dir_path, active=True).save()
             LOGGER.info(
-                "Session successfully created: [id={0}, name={1}]".format(str(session['id']),
-                                                                          session['concert']))
+                "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
+                                                                          session['band']))
             return str(session['id'])
         except Exception as ex:
             LOGGER.exception("Error storing session in DB - Executing rollback...")
             FileSystemService.get_instance().delete_session_directory(
-                session_name=session_info['concert'])
+                session_name=session_info['band'])
             raise ex
 
     def get_session(self, session_id):
@@ -137,7 +137,7 @@ class SessionManager(object):
         session = self.get_session(session_id)
         if session['active']:
             raise IllegalSessionStateException("Session is active: it should be stopped first.")
-        FileSystemService.get_instance().delete_session_directory(session_name=session['concert'])
+        FileSystemService.get_instance().delete_session_directory(session_name=session['band'])
         RumbaSession.objects(id=session_id).delete()
         LOGGER.info("Session successfully removed: [id={}]".format(session_id))
 
@@ -173,7 +173,7 @@ class SessionManager(object):
             GenericValidator.validate_id(session_id)
             FilesValidator.validate_image_format(image_file)
             session = self.get_session(session_id=session_id)
-            FileSystemService.get_instance().save_session_logo(session_name=session['concert'],
+            FileSystemService.get_instance().save_session_logo(session_name=session['band'],
                                                                logo=image_file)
             LOGGER.info("Session logo successfully stored: [session_id={}]".format(session_id))
         except Exception as ex:
@@ -195,7 +195,7 @@ class SessionManager(object):
             GenericValidator.validate_id(session_id)
             session = self.get_session(session_id=session_id)
             url = FileSystemService.get_instance().get_session_logo_url(
-                session_name=session['concert'])
+                session_name=session['band'])
             LOGGER.info("Session logo URL successfully retrieved.")
             return url
         except Exception as ex:
