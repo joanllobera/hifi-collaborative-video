@@ -1,0 +1,14 @@
+---
+  - name: NTP server installation
+    become: true
+    apt:
+      pkg: ntp
+      state: present
+      update_cache: true
+  - name: Configure NTP server
+    become: true
+    copy:
+      src: ../../files/ntp.conf
+      dest: /etc/ntp.conf
+    notify:
+      - restart ntp

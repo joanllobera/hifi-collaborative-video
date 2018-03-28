@@ -1,0 +1,12 @@
+---
+  - name: Git installation
+    apt:
+      pkg: git
+      state: present
+      update_cache: true
+    become: true
+  - name: Clone Rumba repository
+    git:
+      repo: https://github.com/ua-i2cat/rumba
+      dest: "{{ rumba_src_folder }}/rumba"
+      version: develop

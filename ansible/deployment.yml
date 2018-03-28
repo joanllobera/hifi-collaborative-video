@@ -1,6 +1,8 @@
 ---
 - hosts: rumba
   remote_user: seg
+  vars_files:
+    - vars/variables.yml
   tasks:
     - name: Test connection
       ping:
@@ -11,4 +13,4 @@
         state: installed
         update_cache: true
     - name: Deploy software
-      command: sh ~/code/rumba/utils/scripts/deployment/deploy_on_byobu.sh
+      command: "sh {{ rumba_src_folder }}/rumba/utils/scripts/deployment/deploy_on_byobu.sh"

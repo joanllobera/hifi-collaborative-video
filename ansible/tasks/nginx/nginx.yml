@@ -1,0 +1,19 @@
+---
+  - name: NGINX installation
+    become: true
+    apt:
+      pkg: nginx
+      state: installed
+      update_cache: true
+  - name: Configure NGINX proxy
+    become: true
+    template:
+      src: ../../templates/nginx.conf.tpl
+      dest: /etc/nginx/nginx.conf
+  - name: Configure NGINX for Janus
+    become: true
+    template:
+      src: ../../files/nginx-default-site
+      dest: /etc/nginx/sites-available/default
+    notify:
+      - restart nginx

@@ -1,0 +1,67 @@
+---
+    ###########################
+    ### FFMPEG installation ###
+    ###########################
+  - name: Install pip
+    become: true
+    apt:
+      package: python-pip
+      state: present
+      update_cache: true
+  - name: Install virtualenv
+    become: true
+    pip:
+      name: virtualenv
+  - name: Create directory for ffmpeg code
+    file:
+      path: "{{ item }}"
+      state: directory
+    with_items:
+      - /tmp/ffmpeg
+      - /tmp/ffmpeg/code
+      - /tmp/ffmpeg/venv
+  - name: Create virtual environment
+    command: virtualenv /tmp/ffmpeg/venv -p python2.7
+  - name: Install dependencies
+    pip:
+      name: pillow
+      virtualenv: /tmp/ffmpeg/venv
+  - name: Download ffmpeg
+    get_url:
+      url: "http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.gz"
+      dest: /tmp/ffmpeg/ffmpeg.tar.gz
+  - name: Extract ffmpeg.tar. gz
+    unarchive:
+      src: /tmp/ffmpeg/ffmpeg.tar.gz
+      dest: /tmp/ffmpeg/code/
+      remote_src: yes
+  - name: Install yasm
+    become: true
+    apt:
+      package: yasm
+      state: present
+      update_cache: true
+  - name: Configure ffmpeg installation
+    command: ./configure
+    args:
+      chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+  - name: Compile ffmpeg
+    command: make
+    args:
+      chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+  - name: Install ffmpeg
+    command: "make install"
+    become: true
+    args:
+     chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
+    ###########################
+    ### GPAC installation ###
+    ###########################
+  - name: Download GPAC
+    get_url:
+      url: "https://download.tsi.telecom-paristech.fr/gpac/release/0.7.0/gpac_0.7.0_amd64.deb"
+      dest: /tmp/gpac.deb
+  - name: Install GPAC
+    apt:
+      deb: /tmp/gpac.deb
+    become: true

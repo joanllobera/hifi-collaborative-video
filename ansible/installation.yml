@@ -2,6 +2,14 @@
 - hosts: rumba
   remote_user: seg
   vars_files:
-    - etc/variables.yml
+    - vars/variables.yml
   tasks:
-    - include: tasks/janus/janus.yml
+    - include_tasks: tasks/rumba-code/code.yml
+    - include_tasks: tasks/rumba-code/rumba-backend.yml
+    - include_tasks: tasks/rumba-code/rumba-frontend.yml
+    - include_tasks: tasks/nginx/nginx.yml
+    - include_tasks: tasks/dasher/dasher.yml
+    - include_tasks: tasks/janus/janus.yml
+    - include_tasks: tasks/ntp/ntp.yml
+  handlers:
+    - include: handlers/handlers.yml
