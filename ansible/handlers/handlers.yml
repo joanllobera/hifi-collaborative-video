@@ -1,12 +1,11 @@
 ---
-  handlers:
-    - name: restart nginx
-      become: true
-      service:
-        name: nginx
-        state: restarted
-    - name: restart ntp
-      become: true
-      service:
-        name: ntp
-        state: restarted
+  - name: restart nginx
+    become: true
+    service:
+      name: nginx
+      state: restarted
+  - name: restart ntp
+    become: true
+    service:
+      name: ntp
+      state: restarted

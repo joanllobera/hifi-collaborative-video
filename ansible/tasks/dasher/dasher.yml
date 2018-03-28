@@ -6,7 +6,7 @@
     become: true
     apt:
       package: python-pip
-      state: installed
+      state: present
       update_cache: true
   - name: Install virtualenv
     become: true
@@ -15,6 +15,7 @@
   - name: Create directory for ffmpeg code
     file:
       path: "{{ item }}"
+      state: directory
     with_items:
       - /tmp/ffmpeg
       - /tmp/ffmpeg/code
@@ -38,7 +39,7 @@
     become: true
     apt:
       package: yasm
-      state: installed
+      state: present
       update_cache: true
   - name: Configure ffmpeg installation
     command: ./configure
