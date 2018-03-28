@@ -66,7 +66,8 @@ class SessionManager(object):
             # Store the information int the DB.
             session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
                                    date=session_info['date'], is_public=session_info['is_public'],
-                                   folder_url=dir_path, active=True).save()
+                                   folder_url=dir_path, active=True, vimeo=session_info['vimeo']
+                                   ).save()
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))
