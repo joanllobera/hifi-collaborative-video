@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #  RUMBA
 #  Copyright (C) 2017  Fundacio i2CAT, Internet i Innovacio digital a Catalunya
 #
