@@ -22,10 +22,16 @@
       - /tmp/ffmpeg/venv
   - name: Create virtual environment
     command: virtualenv /tmp/ffmpeg/venv -p python2.7
-  - name: Install dependencies
+  - name: Install Dasher dependencies
     pip:
       name: pillow
       virtualenv: /tmp/ffmpeg/venv
+  - name: Install FFMPEG dependencies
+    become: true
+    apt:
+	package: libx264-dev
+	state: present
+	update_cache: true
   - name: Download ffmpeg
     get_url:
       url: "http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.gz"
@@ -42,7 +48,7 @@
       state: present
       update_cache: true
   - name: Configure ffmpeg installation
-    command: ./configure
+    command: ./configure --enable-libx264 --enable-gpl
     args:
       chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
   - name: Compile ffmpeg
