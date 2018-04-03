@@ -6,6 +6,7 @@ class ThumbsCreatorThread(Thread):
 
     video_path = None
     command = None
+    code = None
 
     def __init__(self, video_path):
         self.video_path = video_path
@@ -14,3 +15,4 @@ class ThumbsCreatorThread(Thread):
     def run(self):
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
         process.wait(timeout=180)
+        self.code = process.returncode
