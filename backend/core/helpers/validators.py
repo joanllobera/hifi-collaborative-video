@@ -2,6 +2,7 @@
 Module containing helper classes for validating user input.
 """
 from core.exceptions.session_exceptions import SessionValidationException
+from validators.url import url as is_valid_url
 
 
 class SessionValidator(object):
@@ -53,14 +54,27 @@ class GenericValidator(object):
     def validate_id(id):
         """
         Method for validating that a given id is valid.
-        :param id:
-        :return:
+        :param id: Id to validate.
+        :raises ValueError, if the id is not a valid id.
         """
         if id is None:
             raise ValueError("Id should not be null.")
         if type(id) != str or not id:
             raise ValueError("Id should be a string.")
 
+    @staticmethod
+    def validate_url(url):
+        """
+        Method for validating that a given url is valid.
+        :param url: URL to validate.
+        :raises ValidationError: if the passed parameter is not a valid url.
+        """
+        if url is None:
+            raise ValueError("URL should not be null.")
+        if type(url) != str or not url:
+            raise ValueError("URL should be a string.")
+        if not is_valid_url(url):
+            raise ValueError("URL has not a valid format.")
 
 class FilesValidator(object):
     """
