@@ -1,9 +1,11 @@
+from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
+from core.model.video import Video
 from core.services.fs_manager import FileSystemService
 
 LOGGER = LoggerHelper.get_logger("session_manager", "session_manager.log")
@@ -201,4 +203,34 @@ class SessionManager(object):
             return url
         except Exception as ex:
             LOGGER.exception("Error getting session logo: ")
+            raise ex
+
+    def list_session_videos(self, session_id):
+        """
+        Retrieves all videos of the session and returns their main information.
+        :param session_id: Id of the session.
+        :return: List of dictionaries. Each dictionary contains the information of one of the
+        videos. The json representation of the returned value would be the following:
+            [
+                {
+                    "id": "5ac3a2bc578384adb8fe4ed4",
+                    "name": "Concert de Nadal"
+                }
+            ]
+        :rtype: list
+        """
+        LOGGER.info("Listing session videos information: [session_id={}]".format(session_id))
+        videos_info = []
+        try:
+            GenericValidator.validate_id(session_id)
+            session = RumbaSession.objects(id=session_id).first()
+            if session is None:
+                raise NotExistingResource("No session with such id.")
+            videos = Video.objects(session=session)
+            for video in videos:
+                videos_info.append({'id': str(video['id']), 'name': video['name']})
+            LOGGER.info("Videos from session sucessfully retrieved: [session_id={}]".format(session_id))
+            return videos_info
+        except Exception as ex:
+            LOGGER.exception("Error getting session videos information: ")
             raise ex
