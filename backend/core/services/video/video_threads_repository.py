@@ -18,7 +18,7 @@ class VideoThreadsRepository(object):
 
     __instance = None
     thumbs_threads = []
-    thumbs_mutex = Lock
+    thumbs_mutex = Lock()
 
     def __init__(self):
         if VideoThreadsRepository.__instance is not None:
@@ -59,7 +59,7 @@ class VideoThreadsRepository(object):
             LOGGER.info("Locking Thumbs mutex.")
             self.thumbs_mutex.acquire()
             t_thread = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
-            if t_thread > 0:
+            if len(t_thread) > 0:
                 raise IllegalResourceState("There's already a thread creathing thumbs for this video.")
             self.thumbs_threads.append({'thread': t_thread, 'video_id': video_id})
             LOGGER.info("ThumbsCreator thread sucessfully added: [video_id={}]".format(video_id))
@@ -82,7 +82,7 @@ class VideoThreadsRepository(object):
             LOGGER.info("Locking Thumbs mutex.")
             self.thumbs_mutex.acquire()
             t_thread = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
-            if t_thread == 0:
+            if len(t_thread) == 0:
                 raise NotExistingResource("There's no ThumbsCreator thread for this video.")
             self.thumbs_threads.remove(t_thread[0])
             LOGGER.info("ThumbsCreator thread sucessfully removed: [video_id={}]".format(video_id))
@@ -104,7 +104,7 @@ class VideoThreadsRepository(object):
             LOGGER.info("Locking Thumbs mutex.")
             self.thumbs_mutex.acquire()
             t_thread = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
-            if t_thread == 0:
+            if len(t_thread) == 0:
                 raise NotExistingResource("There's no ThumbsCreator thread for this video.")
             LOGGER.info("ThumbsCreator thread sucessfully retrieved: [video_id={}]".format(video_id))
             return t_thread[0]['thread']
