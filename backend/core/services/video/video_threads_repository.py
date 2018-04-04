@@ -58,10 +58,11 @@ class VideoThreadsRepository(object):
         try:
             LOGGER.info("Locking Thumbs mutex.")
             self.thumbs_mutex.acquire()
-            t_thread = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
-            if len(t_thread) > 0:
+            t_thread_list = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
+            if len(t_thread_list) > 0:
                 raise IllegalResourceState("There's already a thread creathing thumbs for this video.")
             self.thumbs_threads.append({'thread': t_thread, 'video_id': video_id})
+            LOGGER.info(self.thumbs_threads)
             LOGGER.info("ThumbsCreator thread sucessfully added: [video_id={}]".format(video_id))
         finally:
             LOGGER.debug("Unlocking Thumbs mutex.")
