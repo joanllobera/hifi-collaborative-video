@@ -21,4 +21,5 @@ class Video(Document):
     """
     video_path = StringField(required=True, max_length=255)
     session = ReferenceField(RumbaSession, required=True)
+    name = StringField(required=True, null=False, max_length=255)
     thumbs_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)

@@ -1,4 +1,6 @@
-from flask import Blueprint
+import zipfile
+
+from flask import Blueprint, send_file
 from pymongo import MongoClient
 
 from core.helpers.loggers import LoggerHelper
@@ -14,3 +16,8 @@ DB = CLIENT['rumba']
 def create_video_thumbs(video_id):
     VideoManager.get_instance().create_video_thumbs(video_id=video_id)
     return "",204
+
+@VIDEO_API.route("/<video_id>/thumbs", methods=["GET"])
+def get_video_thumbs(video_id):
+    zipbuffer = VideoManager.get_instance().zip_video_thumbs(video_id=video_id)
+    return send_file(zipbuffer, mimetype='application/zip'), 200
