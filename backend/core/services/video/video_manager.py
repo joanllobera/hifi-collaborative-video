@@ -41,7 +41,7 @@ class VideoManager(object):
                 raise NotExistingResource("No video with such id.")
             video_path = video['video_path']
             t_thumbs_creator = ThumbsCreatorThread(video_path=video_path)
-            t_thumbs_creator.run()
+            t_thumbs_creator.start()
             VideoThreadsManager.get_instance().add_thumbs_thread(t_thread=t_thumbs_creator,
                                                                  video_id=video_id)
         except ValueError as ve:
