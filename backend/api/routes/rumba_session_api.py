@@ -12,6 +12,7 @@ from flask import Blueprint, request, send_file
 from flask.json import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
+from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
@@ -220,3 +221,34 @@ def download_logo(session_id):
     except SessionValidationException as sv:
         LOGGER.exception("Download logo request finished with errors: ")
         raise NotFound(sv)
+
+@SESSION_MANAGER_API.route("/<session_id>/videos", methods=["GET"])
+def list_session_videos(session_id):
+    """
+    Endpoint for listing all the videos from a session.
+
+    :param session_id: Id of the session
+    :return:
+        - HTTP 200, if the information could be sucessfully retrieved. The info is returned in
+        the body of the message.
+        - HTTP 400, if the given session id is not a valid session id.
+        - HTTP 404, if the session does not exist.
+    The body response of the HTTP 200 will have following format:
+        [
+            {
+                "id": "5ac3a2bc578384adb8fe4ed4",
+                "name": "Concert de Nadal"
+            }
+        ]
+    """
+    LOGGER.info("Received request for listing session videos.")
+    try:
+        videos_info = SessionManager.get_instance().list_session_videos(session_id=session_id)
+        LOGGER.info("Listing session videos request succesfully finished.")
+        return jsonify(videos_info),200
+    except ValueError as ve:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ve)
