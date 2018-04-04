@@ -9,11 +9,15 @@ import os
 import shutil
 
 import re
+import zipfile
+from io import BytesIO
 
+from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException, \
     SessionValidationException
 from core.helpers.files import FilesHelper
 from core.helpers.loggers import LoggerHelper
+from core.helpers.validators import GenericValidator
 
 CONFIG = configparser.RawConfigParser()
 CONFIG.read('backend.cfg')
@@ -119,6 +123,37 @@ class FileSystemService(object):
             LOGGER.info("Session logo URL sucessfully built: [path={}]".format(filename))
             return filename
         raise SessionValidationException("No logo for that session.")
+
+    def zip_directory(self, dir_url, zip_name):
+        """
+        Creates a ZIP file with the content of a directory. The zip file will have the provided
+        name.
+
+        :param dir_url: Absolute path to the directory that will be zipped.
+        :param zip_name: Name that the zip will have once is created.
+        :return: Buffer containing the zip content.
+        """
+        LOGGER.info("Creating zip of directory: [url={}]".format(dir_url))
+        if not os.path.exists(dir_url):
+            raise NotExistingResource("This directory does not exist")
+        if dir_url[:-1] == "/":
+            zip_path = "{}{}.zip".format(dir_url, zip_name)
+        else:
+            zip_path = "{}/{}.zip".format(dir_url, zip_name)
+        try:
+            LOGGER.info("Creating zip file: [path={}]".format(zip_path))
+            zip_buffer = BytesIO()
+            zf = zipfile.ZipFile(zip_buffer, "w")
+            for dirname,dubdirs,files in os.walk(dir_url):
+                for filename in files:
+                    LOGGER.info(filename)
+                    if filename != (zip_name + ".zip"):
+                        zf.write(os.path.join(dirname, filename), arcname=filename)
+        finally:
+            zf.close()
+            zip_buffer.seek(0)
+        LOGGER.info("Zip containing directory sucessfully created: [name={}]".format(zf.filename))
+        return zip_buffer
 
     def __build_session_directory_path__(self, band):
         if band is None or type(band) != str or not band:
