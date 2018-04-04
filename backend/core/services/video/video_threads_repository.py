@@ -3,6 +3,7 @@ from multiprocessing import Lock
 from core.exceptions.generic_exceptions import IllegalResourceState, NotExistingResource
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import GenericValidator
+from core.threads.dasher_splitter_thread import DasherSplitterThread
 from core.threads.thumbs_thread import ThumbsCreatorThread
 
 LOGGER = LoggerHelper.get_logger("video_manager", "video_manager.log")
@@ -19,6 +20,8 @@ class VideoThreadsRepository(object):
     __instance = None
     thumbs_threads = []
     thumbs_mutex = Lock()
+    dasher_spliter_threads = []
+    dasher_spliter_mutex = Lock()
 
     def __init__(self):
         if VideoThreadsRepository.__instance is not None:
@@ -31,6 +34,10 @@ class VideoThreadsRepository(object):
         if not VideoThreadsRepository.__instance:
             VideoThreadsRepository()
         return VideoThreadsRepository.__instance
+
+    ################################
+    #####   THUMBS CREATION     ####
+    ################################
 
     def get_all_thumbs_threads(self):
         """
@@ -47,7 +54,7 @@ class VideoThreadsRepository(object):
         :param t_thread: ThumbsCreator thread to be added.
         :param video_id: Id of the video which thumbs are being created by the thread.
         :raises
-            - ValueError, If the provided thread is not a valid ThumbsCreator thread of
+            - ValueError, If the provided thread is not a valid ThumbsCreator thread or
             the id of the video is not valid.
             - IllegalResourceState: If there's already a thread creating thumbs for this video.
         """
@@ -60,9 +67,8 @@ class VideoThreadsRepository(object):
             self.thumbs_mutex.acquire()
             t_thread_list = list(filter(lambda x: x['video_id'] == video_id, self.thumbs_threads))
             if len(t_thread_list) > 0:
-                raise IllegalResourceState("There's already a thread creathing thumbs for this video.")
+                raise IllegalResourceState("There's already a thread creating thumbs for this video.")
             self.thumbs_threads.append({'thread': t_thread, 'video_id': video_id})
-            LOGGER.info(self.thumbs_threads)
             LOGGER.info("ThumbsCreator thread sucessfully added: [video_id={}]".format(video_id))
         finally:
             LOGGER.debug("Unlocking Thumbs mutex.")
@@ -113,3 +119,86 @@ class VideoThreadsRepository(object):
             LOGGER.debug("Unlocking Thumbs mutex.")
             self.thumbs_mutex.release()
 
+    ################################
+    #####   DASHER SPLITTER     ####
+    ################################
+
+    def get_all_dasher_splitter_threads(self):
+        """
+        Returns all the threads instances of DasherSplitterThread managed by this class.
+        :rtype: list
+        """
+        LOGGER.info("Returning all dasher-splitter threads.")
+        return self.dasher_spliter_threads
+
+    def get_dasher_splitter_thread(self, video_id):
+        """
+        Method for retrieving the DasherSplitter thread that is using the dasher-basic to
+        split the video in portions of 1 second.
+
+        :param video_id: Id of the video.
+        :rtype: DasherSplitterThread
+        """
+        LOGGER.info("Getting DasherSplitter thread: [video_id={}]".format(video_id))
+        GenericValidator.validate_id(video_id)
+        try:
+            LOGGER.info("Locking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.acquire()
+            d_thread = list(filter(lambda x: x['video_id'] == video_id, self.dasher_spliter_threads))
+            if len(d_thread) == 0:
+                raise NotExistingResource("There's no DasherSplitter thread for this video.")
+            LOGGER.info("DasherSplitter thread sucessfully retrieved: [video_id={}]".format(video_id))
+            return d_thread[0]['thread']
+        finally:
+            LOGGER.debug("Unlocking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.release()
+
+    def add_dasher_splitter_thread(self, d_thread, video_id):
+        """
+        Method for adding a DashetSplitter thread to the list of managed threads.
+
+        :param d_thread: DasherSplitter thread to be added.
+        :param video_id: Id of the video that is being splitted by the DasherSplitter thread.
+        :raises:
+            - ValueError, if the provided thread is not a valid DasherSplitter thread or
+            the id of the video is not valid.
+            - IllegalResourceState, if there's already a thread splitting the video.
+        """
+        LOGGER.info("Adding DasherSplitter thread: [video_id={}]".format(video_id))
+        if d_thread is None or type(d_thread) != DasherSplitterThread:
+            raise ValueError("Parameter is not insfance of DasherSplitterThread")
+        GenericValidator.validate_id(video_id)
+        try:
+            LOGGER.info("Locking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.acquire()
+            d_thread_list = list(filter(lambda x: x['video_id'] == video_id, self.dasher_spliter_threads))
+            if len(d_thread_list) > 0:
+                raise IllegalResourceState("There's already a thread splitting the video.")
+            self.dasher_spliter_threads.append({'thread': d_thread, 'video_id': video_id})
+            LOGGER.info("DasherSplitterThread thread sucessfully added: [video_id={}]".format(video_id))
+        finally:
+            LOGGER.debug("Unlocking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.release()
+
+    def remove_dasher_splitter_thread(self, video_id):
+        """
+        Method for removing DasherSplitter thread from the list of managed threads.
+
+        :param video_id: Id of the video to remove.
+        :return:
+            - ValueError, if the video id is not a valid id.
+            - NotExistingResource: If there's no thread splitting this video.
+        """
+        LOGGER.info("Removing DasherSplitter thread: [video_id={}]".format(video_id))
+        GenericValidator.validate_id(video_id)
+        try:
+            LOGGER.info("Locking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.acquire()
+            d_thread = list(filter(lambda x: x['video_id'] == video_id, self.dasher_spliter_threads))
+            if len(d_thread) == 0:
+                raise NotExistingResource("There's no DasherSplitter thread for this video.")
+            self.dasher_spliter_threads.remove(d_thread[0])
+            LOGGER.info("DasherSplitter thread sucessfully removed: [video_id={}]".format(video_id))
+        finally:
+            LOGGER.debug("Unlocking DasherSplitter mutex.")
+            self.dasher_spliter_mutex.release()

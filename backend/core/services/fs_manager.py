@@ -17,7 +17,6 @@ from core.exceptions.session_exceptions import IllegalSessionStateException, \
     SessionValidationException
 from core.helpers.files import FilesHelper
 from core.helpers.loggers import LoggerHelper
-from core.helpers.validators import GenericValidator
 
 CONFIG = configparser.RawConfigParser()
 CONFIG.read('backend.cfg')

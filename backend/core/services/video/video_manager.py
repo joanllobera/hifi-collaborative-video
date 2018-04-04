@@ -9,13 +9,14 @@ from core.helpers.validators import GenericValidator
 from core.model.video import Video
 from core.services.fs_manager import FileSystemService
 from core.services.video.video_threads_manager import VideoThreadsManager
+from core.threads.dasher_splitter_thread import DasherSplitterThread
 from core.threads.thumbs_thread import ThumbsCreatorThread
 
 LOGGER = LoggerHelper.get_logger("video_manager", "video_manager.log")
 THUMBS_OUTPUT_DIR_NAME = "thumbs"
 
-class VideoManager(object):
 
+class VideoManager(object):
     __instance = None
 
     def __init__(self):
@@ -66,7 +67,30 @@ class VideoManager(object):
             raise NotExistingResource("There's no video with such id.")
         thumbs_path = path.dirname(video['video_path']) + "/thumbs"
         zipbuffer = FileSystemService.get_instance().zip_directory(dir_url=thumbs_path,
-                                                                  zip_name=video['name'])
+                                                                   zip_name=video['name'])
         LOGGER.info("Video Thumbs successfully collected in ZIP file")
         return zipbuffer
 
+    def split_video(self, video_id):
+        """
+
+        :param video_id:
+        :return:
+        """
+        LOGGER.info("Splitting video in fragments: [id={}]".format(video_id))
+        try:
+            GenericValidator.validate_id(video_id)
+            video = Video.objects(id=video_id).first()
+            if video is None:
+                raise NotExistingResource("No video with such id.")
+            video_path = video['video_path']
+            t_splitter = DasherSplitterThread(video_path=video_path)
+            t_splitter.start()
+            VideoThreadsManager.get_instance().add_dasher_splitter_thread(d_thread=t_splitter,
+                                                                          video_id=video_id)
+        except ValueError as ve:
+            LOGGER.exception("Error validating video path: ")
+            raise ve
+        except Exception as ex:
+            LOGGER.exception("Error trying to split video: ")
+            raise ex

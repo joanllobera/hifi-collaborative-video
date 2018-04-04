@@ -21,3 +21,8 @@ def create_video_thumbs(video_id):
 def get_video_thumbs(video_id):
     zipbuffer = VideoManager.get_instance().zip_video_thumbs(video_id=video_id)
     return send_file(zipbuffer, mimetype='application/zip'), 200
+
+@VIDEO_API.route("/<video_id>/split", methods=["PUT"])
+def get_video_thumbs(video_id):
+    VideoManager.get_instance().split_video(video_id=video_id)
+    return "",204
