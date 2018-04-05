@@ -11,6 +11,7 @@ import { SessionService } from './session.service';
 
 import { AppConfig } from '../app-config';
 
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-session',
@@ -24,8 +25,18 @@ export class SessionComponent implements OnInit {
   selectedFile: File = null;
   currentDate = Date.now();
 
+  dateOk = new Date(this.currentDate);
+
+  niceDate = moment(this.dateOk).locale('es').format('L');
+  console.log(this.niceDate);
+
 
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
+
+
+
+
+
 
   ngOnInit() {
     this.sessionSrv.getAudioStatus()

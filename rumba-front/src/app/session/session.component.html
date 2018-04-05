@@ -3,10 +3,10 @@
     <div class="col">
       <span class="float-right">
         <span class="btn-group-sm">
-          <button *ngIf="!activatedHelp" (click)="p.open();q.open(); setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
+          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
             <i class="fa fa-question-circle"></i>
           </button>
-          <button *ngIf="activatedHelp" (click)="p.close();q.close();setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
+          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
             <i class="fa fa-question-circle"></i>
           </button>
         </span>
@@ -23,14 +23,16 @@
       <div class="form-group top1">
 
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <input #q="ngbPopover" placeholder="Nom de la banda" placement="top-left" ngbPopover="* Són camps obligatoris" type="text" class="form-control" id="band" ngModel name="band" required>
+        <input *ngIf="activatedHelp" placeholder="Nom de la banda" placement="top-left" ngbPopover="* Són camps obligatoris" type="text" class="form-control" ngModel name="band" required>
+
+        <input *ngIf="!activatedHelp" placeholder="Nom de la banda" type="text" class="form-control" ngModel name="band" required>
       </div>
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <!-- <input data-placement="top" data-toggle="popover" data-content="Preguntar text ajuda..." type="text" class="form-control" id="concert" ngModel name="concert"> -->
 
-        <input #p="ngbPopover" placement="top-left" ngbPopover="Introdueix el nom de la banda." type="text" class="form-control" id="concert" ngModel name="concert">
+        <input *ngIf="!activatedHelp" type="text" class="form-control" ngModel name="concert">
+        <input *ngIf="activatedHelp" #p="ngbPopover" placement="top-left" ngbPopover="Introdueix el nom de la banda." type="text" class="form-control" ngModel name="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
@@ -41,7 +43,7 @@
 
       <div class="form-group">
         <label for="data" class="bmd-label-floating">Data *</label>
-        <input type="text" class="form-control" id="date" [(ngModel)]="currentDate" name="date" disabled required>
+        <input type="text" class="form-control" id="date" [(ngModel)]="niceDate" name="date" disabled required>
       </div>
 
       <div class="form-group top1">
