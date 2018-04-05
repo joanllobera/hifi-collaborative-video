@@ -23,3 +23,4 @@ class Video(Document):
     session = ReferenceField(RumbaSession, required=True)
     name = StringField(required=True, null=False, max_length=255)
     thumbs_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)
+    splitter_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)
