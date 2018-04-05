@@ -50,7 +50,7 @@ def convertVideo(inputFile, outputSource, resolution, bitrate, segmentLength):
     resolution_size = [int(x) for x in resolution.split('x')]
     h264level = str(h264LevelProfile(resolution_size[0]))
 
-    print ("ENCODING:VIDEO:%s") % inputSource
+    print("ENCODING:VIDEO:{}".format(inputSource))
     # =================================================================
     # FFmpeg parameters Configuration in Constant Rate Factor (CRF):
     # =================================================================
@@ -58,7 +58,7 @@ def convertVideo(inputFile, outputSource, resolution, bitrate, segmentLength):
 
     if Config.VIDEOCODEC == 'libx264':
         base_cmd += ' -profile:v baseline -level ' + h264level + ' -map 0'
-    segment = str(int(Config.VIDEOSAMPLINGRATE) * int(segmentLength) / 1000)
+    segment = str(int(int(Config.VIDEOSAMPLINGRATE) * int(segmentLength) / 1000))
     if (platform.system() == "Windows"):
         video_opts = "-force_key_frames expr:eq(mod(n,%s),0)" % segment
     else:
@@ -67,7 +67,7 @@ def convertVideo(inputFile, outputSource, resolution, bitrate, segmentLength):
     video_opts += " -bufsize %dk -maxrate %dk" % (int(bitrate), int(bitrate) * 1.5)
 
     if Config.VIDEOCODEC == 'libx264':
-        lookahead = str(int(Config.VIDEOSAMPLINGRATE) * int(segmentLength) / 1000)
+        lookahead = str(int(int(Config.VIDEOSAMPLINGRATE) * int(segmentLength) / 1000))
         video_opts += " -x264opts rc-lookahead=%s" % lookahead
 
     str_res = ("%sx%s") % (str(resolution_size[0]), str(resolution_size[1]))
