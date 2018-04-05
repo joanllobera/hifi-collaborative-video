@@ -3,10 +3,10 @@
     <div class="col">
       <span class="float-right">
         <span class="btn-group-sm">
-          <button *ngIf="!activatedHelp" (click)="p.open();q.open(); setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
+          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
             <i class="fa fa-question-circle"></i>
           </button>
-          <button *ngIf="activatedHelp" (click)="p.close();q.close();setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
+          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
             <i class="fa fa-question-circle"></i>
           </button>
         </span>
@@ -55,10 +55,10 @@
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
         <div class="row">
           <div class="col">
-              <input type="text" placeholder="Usuari" class="form-control" id="username" ([ngModel])="currentSession.vimeo.username" name="username">
+              <input type="text" placeholder="Usuari" class="form-control" id="username" ([ngModel])="vimeoUser" name="username">
           </div>
           <div class="col">
-              <input type="password" placeholder="Password" class="form-control" id="password" ([ngModel])="currentSession.vimeo.password" name="password">
+              <input type="password" placeholder="Password" class="form-control" id="password" ([ngModel])="vimeoPassword" name="password">
           </div>
         </div>
       </div>

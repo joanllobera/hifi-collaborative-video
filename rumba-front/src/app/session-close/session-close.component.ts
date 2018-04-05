@@ -14,6 +14,9 @@ export class SessionCloseComponent implements OnInit {
 
   sessionId: string;
   binaryData = null;
+  vimeoUser: string;
+  vimeoPassword: string;
+
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
 
@@ -28,6 +31,8 @@ export class SessionCloseComponent implements OnInit {
         (response) => {
           console.log(response);
           this.currentSession = response.json();
+          this.vimeoUser = this.currentSession.vimeo['username'];
+          this.vimeoPassword = this.currentSession.vimeo['password'];
         }
       );
 
