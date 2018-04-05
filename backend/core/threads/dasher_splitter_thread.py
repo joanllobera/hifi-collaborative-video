@@ -3,6 +3,8 @@ import subprocess
 from os import path, mkdir
 from threading import Thread
 
+from lib.dasher.Convert2DASH import Dasher
+
 CONFIG = configparser.RawConfigParser()
 CONFIG.read('backend.cfg')
 
@@ -25,6 +27,10 @@ class DasherSplitterThread(Thread):
 
     def run(self):
         mkdir(self.output_path)
-        process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-        process.wait(timeout=600)
-        self.code = process.returncode
+        try:
+            dasher = Dasher(inputFile=self.video_path, outputFolder=self.output_path)
+            dasher.dash_video()
+            self.code = 0
+        except Exception as ex:
+            print(ex)
+            self.code = 1
