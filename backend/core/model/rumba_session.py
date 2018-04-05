@@ -22,3 +22,4 @@ class RumbaSession(Document):
     is_public = BooleanField(required=True, null=False, default=True)
     active = BooleanField(required=True, null=False, default=True)
     vimeo = DictField(required=False)
+    location = StringField(required=False, null=True, max_length=255)
