@@ -19,6 +19,7 @@ import { SessionService } from './session/session.service';
 import { SessionCloseComponent } from './session-close/session-close.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CameraComponent } from './camera/camera.component';
 
 
 
@@ -32,7 +33,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     OrientationComponent,
     VideosComponent,
-    SessionCloseComponent
+    SessionCloseComponent,
+    CameraComponent
   ],
   imports: [
     BrowserModule,
