@@ -117,8 +117,8 @@ class VideoThreadsManager(object):
             - ValueError, if the provided thread is not a valid DasherSplitterThread or if
             the video id has a wrong format.
         """
-        LOGGER.info("Adding dasher splitter thread to VideoThreadsManager: [video_id={}]").format(
-            video_id)
+        LOGGER.info("Adding dasher splitter thread to VideoThreadsManager: [video_id={}]".format(
+            video_id))
         try:
             if d_thread is None or type(d_thread) != DasherSplitterThread:
                 raise ValueError("parameter is not instance of VideoThreadsManager")
