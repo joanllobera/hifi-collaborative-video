@@ -8,7 +8,7 @@ This API has been implemented using Flask Blueprints.
 """
 import json
 
-from flask import Blueprint, request, send_file
+from flask import Blueprint, request, send_file, session
 from flask.json import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
@@ -18,6 +18,7 @@ from core.exceptions.session_exceptions import SessionValidationException, \
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import SessionValidator, FilesValidator
 from core.services.session_manager import SessionManager
+from core.services.video.video_manager import VideoManager
 
 SESSION_MANAGER_API = Blueprint("session_api", __name__, url_prefix="/api/sessions")
 
@@ -251,4 +252,29 @@ def list_session_videos(session_id):
         raise BadRequest(ve)
     except NotExistingResource as ne:
         LOGGER.exception("Listing session videos request finished with errors: ")
-        raise NotFound(ve)
+        raise NotFound(ne)
+
+@SESSION_MANAGER_API.route("/<session_id>/videos", methods=["PUT"])
+def add_video_to_session(session_id):
+    """
+    Endpoint for adding a video to a live session.
+
+    :param session_id: Id of the session
+    :return:
+        - HTTP 200, if the video could be successfully added. The id is returned in the body of the
+        message.
+        - HTTP 400, if the given session id is not a valid session id.
+        - HTTP 404, if the session does not exist.
+    """
+    LOGGER.info("Received request for adding a video [session_id=[]}".format(session_id))
+    try:
+        user_id = session['user_id']
+        video_id = VideoManager.add_video(session_id=session_id, user_id=user_id)
+        LOGGER.info("Adding video to session request succesfully finished.")
+        return jsonify({"id": video_id}), 201
+    except ValueError as ve:
+        LOGGER.exception("Adding video to session request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Adding video to session request finished with errors: ")
+        raise NotFound(ne)
