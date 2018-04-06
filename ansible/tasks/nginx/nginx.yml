@@ -13,7 +13,7 @@
   - name: Configure NGINX for Janus
     become: true
     template:
-      src: ../../files/nginx-default-site
+      src: ../../templates/nginx-default-site.tpl
       dest: /etc/nginx/sites-available/default
     notify:
       - restart nginx
