@@ -1,8 +1,8 @@
-import zipfile
-
-from flask import Blueprint, send_file, session
+from flask import Blueprint, send_file, session, jsonify
 from pymongo import MongoClient
+from werkzeug.exceptions import Conflict
 
+from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.services.video.video_manager import VideoManager
 
@@ -26,4 +26,21 @@ def get_video_thumbs(video_id):
 def split_video(video_id):
     VideoManager.get_instance().split_video(video_id=video_id)
     return "",204
+
+@VIDEO_API.route("/", methods=["POST"])
+def add_video_to_active_session():
+    """
+    Endpoint for adding a new video to the actrive session.
+
+    :return:
+    """
+    LOGGER.info("Received request for adding a video to the active session.")
+    user_id = session['user_id']
+    try:
+        video_id = VideoManager.get_instance().add_video_to_active_session(user_id=user_id)
+        LOGGER.info("Request for adding a video to the active session successfully finished.")
+        return jsonify({'id': video_id}), 200
+    except IllegalSessionStateException as ie:
+        LOGGER.info("Request for adding a video to the active session finished with errors -")
+        raise Conflict(ie)
 

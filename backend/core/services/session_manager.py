@@ -174,7 +174,7 @@ class SessionManager(object):
         LOGGER.info("Retrieveing active session")
         session = RumbaSession.objects(active=True).first()
         if session is None:
-            return {}
+            return None
         LOGGER.info("Session sucessfully retrieved: [id={}]".format(session['id']))
         LOGGER.debug("Session information: {}".format(session))
         view_sess = MongoHelper.to_dict(session)

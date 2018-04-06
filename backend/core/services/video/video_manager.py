@@ -2,7 +2,7 @@
 TODO license
 """
 import configparser
-from os import path, makedirs
+from os import path
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException
@@ -42,6 +42,21 @@ class VideoManager(object):
     ##########################
     ##      Video CRUD      ##
     ##########################
+
+    def add_video_to_active_session(self, user_id):
+        """
+
+        :param user_id:
+        :return:
+        """
+        LOGGER.info("Adding video to active session.")
+        session = SessionManager.get_instance().get_active_session()
+        if session is None:
+            raise IllegalSessionStateException("There's no active session.")
+        video_id = self.add_video(session_id=session['id'], user_id=user_id)
+        LOGGER.info("Video successfully added to active session")
+        return video_id
+
 
     def add_video(self, session_id, user_id):
         """

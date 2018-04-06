@@ -30,4 +30,4 @@ if __name__ == '__main__':
     thread_monitoring = MonitoringThread()
     thread_monitoring.start()
     APP.secret_key = "5458af56-6bfe-4520-a4cc-d7de5220d7d1"
-    APP.run(host="0.0.0.0", port=8081)
+    APP.run(host="0.0.0.0", port=8081, threaded=True)
