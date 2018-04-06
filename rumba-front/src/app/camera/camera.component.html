@@ -15,13 +15,12 @@
   </div>
 </div>
 <script>
-  window.addEventListener("orientationchange", function() {
-    if (window.orientation == 90 || window.orientation == -90) {
-      alert('landscape mode');
-    } else {
-      alert('portrait mode');
-    }
-  });
+
+// Listen for orientation changes
+window.addEventListener("orientationchange", function() {
+  // Announce the new orientation number
+  alert(window.orientation);
+}, false);
 
 
 
