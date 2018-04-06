@@ -28,7 +28,6 @@ export class SessionComponent implements OnInit {
   dateOk = new Date(this.currentDate);
 
   niceDate = moment(this.dateOk).locale('es').format('L');
-  console.log(this.niceDate);
 
 
   constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
