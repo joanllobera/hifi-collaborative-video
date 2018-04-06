@@ -14,3 +14,10 @@
     <div *ngIf="isRecording" (click)="checkButton()" class="stop"></div>
   </div>
 </div>
+<script>
+  var lockFunction = window.screen.orientation.lock;
+  if($.isFunction(lockFunction)){
+    lockFunction.call(window.screen.orientation, 'portrait');
+  }
+
+</script>
