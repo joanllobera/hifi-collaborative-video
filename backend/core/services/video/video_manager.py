@@ -63,6 +63,28 @@ class VideoManager(object):
         LOGGER.info("Video successfully added: [id={}]".format(video))
         return str(video['id'])
 
+    def list_all_session_videos(self, session_id):
+        """
+
+        :param session_id:
+        :return:
+        """
+        LOGGER.info("Listing all session videos. [session_id={}]".format(session_id))
+        GenericValidator.validate_id(session_id)
+        session = SessionManager.get_instance().get_session(session_id=session_id)
+        session_videos = []
+        videos = Video.objects(session=session['id'])
+        for video in videos:
+            session_video = {'session_id': session['id'],
+                             'band': session['band'],
+                             'video_name': video['name'],
+                             'video_id': str(video['id'])
+                             }
+            session_videos.append(session_video)
+        LOGGER.info("Retrieved {} videos for session {}".format(len(session_videos), session_id))
+        return session_videos
+
+
     ##########################
     ##      THREADS         ##
     ##########################

@@ -265,6 +265,7 @@ def add_video_to_session(session_id):
         message.
         - HTTP 400, if the given session id is not a valid session id.
         - HTTP 404, if the session does not exist.
+        - HTTP 409, if the session is no longer active.
     """
     LOGGER.info("Received request for adding a video [session_id={}]".format(session_id))
     try:
@@ -278,3 +279,31 @@ def add_video_to_session(session_id):
     except NotExistingResource as ne:
         LOGGER.exception("Adding video to session request finished with errors: ")
         raise NotFound(ne)
+    except IllegalSessionStateException as ie:
+        LOGGER.exception("Adding video to session request finished with errors: ")
+        raise Conflict(ie)
+
+@SESSION_MANAGER_API.route("/<session_id>/videos/all", methods=["GET"])
+def list_all_session_videos(session_id):
+    """
+    Endpoint for listing all the videos of a session.
+
+    :param session_id: Id of the session
+    :return:
+        - HTTP 200, if the videos could be successfully retrieved. The list of videos are returned
+        in the body of the response with json format.
+        - HTTP 400, if the given session id is not a valid session id.
+        - HTTP 404, if the session does not exist.
+    """
+    LOGGER.info("Received request for listing all session videos. [session_id={}]".format(session_id))
+    try:
+        videos = VideoManager.get_instance().list_all_session_videos(session_id=session_id)
+        LOGGER.info("Listing session videos sucessfully finished.")
+        return jsonify(videos), 200
+    except ValueError as ve:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ne)
+
