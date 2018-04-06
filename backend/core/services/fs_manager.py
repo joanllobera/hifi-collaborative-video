@@ -162,7 +162,7 @@ class FileSystemService(object):
         return self.directory + band
 
 
-    def create_video_directory(self, user_id, video_name):
+    def create_video_directory(self, session_folder, user_id, video_name):
         """
         Cretes the folder in the FS for a new video.
 
@@ -176,12 +176,13 @@ class FileSystemService(object):
 
         if video_name is None or type(video_name) != str or not video_name:
             raise ValueError("Expected a valid video name.")
+        if session_folder is None or type(session_folder) != str or not session_folder:
+            raise ValueError("Expected a valid session folder.")
         GenericValidator.validate_id(user_id)
         try:
-            session_path = CONFIG.get("sessions", "directory")
-            if session_path[-1] != "/":
-                session_path = session_path + "/"
-            video_path = session_path + user_id + "/" + video_name
+            if session_folder[-1] != "/":
+                session_folder = session_folder + "/"
+            video_path = session_folder + user_id + "/" + video_name
             LOGGER.debug("Built path for new video: [path={}]".format(video_path))
             makedirs(video_path, exist_ok=True)
             LOGGER.info("Successfully created directory for video [path={}]".format(video_path))

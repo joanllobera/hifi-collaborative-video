@@ -266,10 +266,10 @@ def add_video_to_session(session_id):
         - HTTP 400, if the given session id is not a valid session id.
         - HTTP 404, if the session does not exist.
     """
-    LOGGER.info("Received request for adding a video [session_id=[]}".format(session_id))
+    LOGGER.info("Received request for adding a video [session_id={}]".format(session_id))
     try:
         user_id = session['user_id']
-        video_id = VideoManager.add_video(session_id=session_id, user_id=user_id)
+        video_id = VideoManager.get_instance().add_video(session_id=session_id, user_id=user_id)
         LOGGER.info("Adding video to session request succesfully finished.")
         return jsonify({"id": video_id}), 201
     except ValueError as ve:

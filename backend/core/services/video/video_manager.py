@@ -5,8 +5,10 @@ import configparser
 from os import path, makedirs
 
 from core.exceptions.generic_exceptions import NotExistingResource
+from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import GenericValidator
+from core.model.rumba_session import RumbaSession
 from core.model.video import Video
 from core.services.fs_manager import FileSystemService
 from core.services.session_manager import SessionManager
@@ -36,8 +38,6 @@ class VideoManager(object):
             VideoManager()
         return VideoManager.__instance
 
-
-
     ##########################
     ##      Video CRUD      ##
     ##########################
@@ -51,11 +51,15 @@ class VideoManager(object):
         """
         LOGGER.info("Adding video to session.")
         session = SessionManager.get_instance().get_session(session_id=session_id)
-        user_videos = Video.objects(session=session, user_id=user_id).count()
+        if not session['active']:
+            raise IllegalSessionStateException("Can only add videos to active sessions.")
+        user_videos = Video.objects(session=session['id'], user_id=user_id).count()
         video_name = "video{}".format(user_videos)
-        video_path = FileSystemService.get_instance().create_video_directory(user_id, video_name)
-        video = Video(session=session, user_id=user_id, name=video_name, video_path=video_path).\
-            save()
+        session = RumbaSession.objects(id=session_id).first()
+        video_path = FileSystemService.get_instance().create_video_directory(
+            session_folder=session['folder_url'], user_id=user_id, video_name=video_name)
+        video = Video(session=session['id'], user_id=user_id, name=video_name,
+                      video_path=video_path).save()
         LOGGER.info("Video successfully added: [id={}]".format(video))
         return str(video['id'])
 
