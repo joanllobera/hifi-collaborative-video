@@ -1,6 +1,6 @@
 import zipfile
 
-from flask import Blueprint, send_file
+from flask import Blueprint, send_file, session
 from pymongo import MongoClient
 
 from core.helpers.loggers import LoggerHelper
@@ -26,3 +26,9 @@ def get_video_thumbs(video_id):
 def split_video(video_id):
     VideoManager.get_instance().split_video(video_id=video_id)
     return "",204
+
+@VIDEO_API.route("/", methods=["POST"])
+def create_video():
+    LOGGER.info("Received request for creating a video.")
+    user_id = session['session_id']
+    video_id = VideoManager.create_video()

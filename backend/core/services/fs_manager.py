@@ -11,12 +11,14 @@ import shutil
 import re
 import zipfile
 from io import BytesIO
+from os import makedirs
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException, \
     SessionValidationException
 from core.helpers.files import FilesHelper
 from core.helpers.loggers import LoggerHelper
+from core.helpers.validators import GenericValidator
 
 CONFIG = configparser.RawConfigParser()
 CONFIG.read('backend.cfg')
@@ -158,3 +160,32 @@ class FileSystemService(object):
         if band is None or type(band) != str or not band:
             raise ValueError("Expected a valid session name.")
         return self.directory + band
+
+
+    def create_video_directory(self, user_id, video_name):
+        """
+        Cretes the folder in the FS for a new video.
+
+        :param user_id: Id of the user.
+        :param video_name: Name of the video.
+        :return: Absolute path of the video folder.
+        :rtype: str
+        :raises: ValueError: If the provided parameters has no valid formats.
+        """
+        LOGGER.info("Creating directory for video [video_name={}]".format(video_name))
+
+        if video_name is None or type(video_name) != str or not video_name:
+            raise ValueError("Expected a valid video name.")
+        GenericValidator.validate_id(user_id)
+        try:
+            session_path = CONFIG.get("sessions", "directory")
+            if session_path[-1] != "/":
+                session_path = session_path + "/"
+            video_path = session_path + user_id + "/" + video_name
+            LOGGER.debug("Built path for new video: [path={}]".format(video_path))
+            makedirs(video_path, exist_ok=True)
+            LOGGER.info("Successfully created directory for video [path={}]".format(video_path))
+            return video_path
+        except Exception as ex:
+            LOGGER.exception("Error creating video directory: ")
+            raise ex
