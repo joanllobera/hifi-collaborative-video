@@ -166,7 +166,7 @@ def stop_session(session_id):
     :return:
         -
     """
-    LOGGER.info("Received requestg for stopping a session.")
+    LOGGER.info("Received request for stopping a session.")
     try:
         SessionManager.get_instance().stop_session(session_id)
         LOGGER.info("Stop request successfully finished.")
@@ -178,6 +178,16 @@ def stop_session(session_id):
         LOGGER.exception("Stop request finished with errors: ")
         raise Conflict(ie)
 
+@SESSION_MANAGER_API.route("/active", methods=['GET'])
+def get_active_session():
+    LOGGER.info("Received request for getting active session.")
+    try:
+        active_session = SessionManager.get_instance().get_active_session()
+        LOGGER.info("Get active session request succesfully finished.")
+        return jsonify(active_session), 200
+    except NotExistingResource as ne:
+        LOGGER.exception("Get active session request finished with errors: ")
+        raise NotFound(ne)
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["POST"])
 def upload_session_logo(session_id):
