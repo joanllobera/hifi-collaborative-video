@@ -66,6 +66,7 @@ def create_session():
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
 
+
 @SESSION_MANAGER_API.route("/<session_id>", methods=["GET"])
 def get_session(session_id):
     """
@@ -93,13 +94,14 @@ def get_session(session_id):
     try:
         session = SessionManager.get_instance().get_session(session_id)
         LOGGER.info("Session retrieval request successfully finished.")
-        return jsonify(session),200
+        return jsonify(session), 200
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
     except SessionValidationException as sv:
         LOGGER.exception("Session creation request finished with errors: ")
         raise NotFound(sv)
+
 
 @SESSION_MANAGER_API.route("/", methods=["GET"])
 def list_sessions():
@@ -124,7 +126,8 @@ def list_sessions():
     LOGGER.info("Received request for listing all sessions.")
     session_list = SessionManager.get_instance().list_sessions()
     LOGGER.info("Sessions retrieval request successfully finished.")
-    return jsonify(session_list),200
+    return jsonify(session_list), 200
+
 
 @SESSION_MANAGER_API.route("/<session_id>", methods=["DELETE"])
 def delete_session(session_id):
@@ -143,7 +146,7 @@ def delete_session(session_id):
     try:
         SessionManager.get_instance().delete_session(session_id)
         LOGGER.info("Session removal request sucessfully finished.")
-        return "",204
+        return "", 204
     except ValueError as ve:
         LOGGER.exception("Session removal request finished with errors: ")
         raise BadRequest(ve)
@@ -153,6 +156,7 @@ def delete_session(session_id):
     except SessionValidationException as se:
         LOGGER.exception("Session removal request finished with errors: ")
         raise NotFound(se)
+
 
 @SESSION_MANAGER_API.route("/<session_id>/stop", methods=["PUT"])
 def stop_session(session_id):
@@ -166,13 +170,14 @@ def stop_session(session_id):
     try:
         SessionManager.get_instance().stop_session(session_id)
         LOGGER.info("Stop request successfully finished.")
-        return "",204
+        return "", 204
     except ValueError as ve:
         LOGGER.exception("Stop request finished with errors: ")
         raise BadRequest(ve)
     except IllegalSessionStateException as ie:
         LOGGER.exception("Stop request finished with errors: ")
         raise Conflict(ie)
+
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["POST"])
 def upload_session_logo(session_id):
@@ -189,7 +194,7 @@ def upload_session_logo(session_id):
     LOGGER.info("Received request for uploading session logo.")
     if 'image' not in request.files:
         raise BadRequest("Expected a file.")
-    file = request.files[ 'image']
+    file = request.files['image']
     try:
         FilesValidator.validate_image_format(file)
         SessionManager.get_instance().set_session_logo(session_id=session_id, image_file=file)
@@ -200,6 +205,7 @@ def upload_session_logo(session_id):
     except SessionValidationException as sv:
         LOGGER.exception("Upload logo request finished with errors: ")
         raise NotFound(sv)
+
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["GET"])
 def download_logo(session_id):
@@ -222,37 +228,6 @@ def download_logo(session_id):
     except SessionValidationException as sv:
         LOGGER.exception("Download logo request finished with errors: ")
         raise NotFound(sv)
-
-@SESSION_MANAGER_API.route("/<session_id>/videos", methods=["GET"])
-def list_session_videos(session_id):
-    """
-    Endpoint for listing all the videos from a session.
-
-    :param session_id: Id of the session
-    :return:
-        - HTTP 200, if the information could be sucessfully retrieved. The info is returned in
-        the body of the message.
-        - HTTP 400, if the given session id is not a valid session id.
-        - HTTP 404, if the session does not exist.
-    The body response of the HTTP 200 will have following format:
-        [
-            {
-                "id": "5ac3a2bc578384adb8fe4ed4",
-                "name": "Concert de Nadal"
-            }
-        ]
-    """
-    LOGGER.info("Received request for listing session videos.")
-    try:
-        videos_info = SessionManager.get_instance().list_session_videos(session_id=session_id)
-        LOGGER.info("Listing session videos request succesfully finished.")
-        return jsonify(videos_info),200
-    except ValueError as ve:
-        LOGGER.exception("Listing session videos request finished with errors: ")
-        raise BadRequest(ve)
-    except NotExistingResource as ne:
-        LOGGER.exception("Listing session videos request finished with errors: ")
-        raise NotFound(ne)
 
 @SESSION_MANAGER_API.route("/<session_id>/videos", methods=["PUT"])
 def add_video_to_session(session_id):
@@ -283,6 +258,7 @@ def add_video_to_session(session_id):
         LOGGER.exception("Adding video to session request finished with errors: ")
         raise Conflict(ie)
 
+
 @SESSION_MANAGER_API.route("/<session_id>/videos/all", methods=["GET"])
 def list_all_session_videos(session_id):
     """
@@ -295,7 +271,8 @@ def list_all_session_videos(session_id):
         - HTTP 400, if the given session id is not a valid session id.
         - HTTP 404, if the session does not exist.
     """
-    LOGGER.info("Received request for listing all session videos. [session_id={}]".format(session_id))
+    LOGGER.info(
+        "Received request for listing all session videos. [session_id={}]".format(session_id))
     try:
         videos = VideoManager.get_instance().list_all_session_videos(session_id=session_id)
         LOGGER.info("Listing session videos sucessfully finished.")
@@ -307,3 +284,29 @@ def list_all_session_videos(session_id):
         LOGGER.exception("Listing session videos request finished with errors: ")
         raise NotFound(ne)
 
+
+@SESSION_MANAGER_API.route("/<session_id>/videos", methods=["GET"])
+def list_session_videos(session_id):
+    """
+    Endpoint for listing all the user videos of a session.
+
+    :param session_id: Id of the session
+    :return:
+        - HTTP 200, if the videos could be successfully retrieved. The list of videos are returned
+        in the body of the response with json format.
+        - HTTP 400, if the given session id is not a valid session id.
+        - HTTP 404, if the session does not exist.
+    """
+    user_id = session['user_id']
+    LOGGER.info("Received request for listing session videos. [session_id={}, user_id={}]".format(
+        session_id, user_id))
+    try:
+        videos = VideoManager.get_instance().list_session_videos(user_id=user_id, session_id=session_id)
+        LOGGER.info("Listing session videos sucessfully finished.")
+        return jsonify(videos), 200
+    except ValueError as ve:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ne)

@@ -6,6 +6,7 @@ from os import path, makedirs
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException
+from core.helpers.data_transformer import DataTransformer
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import GenericValidator
 from core.model.rumba_session import RumbaSession
@@ -72,18 +73,29 @@ class VideoManager(object):
         LOGGER.info("Listing all session videos. [session_id={}]".format(session_id))
         GenericValidator.validate_id(session_id)
         session = SessionManager.get_instance().get_session(session_id=session_id)
-        session_videos = []
         videos = Video.objects(session=session['id'])
-        for video in videos:
-            session_video = {'session_id': session['id'],
-                             'band': session['band'],
-                             'video_name': video['name'],
-                             'video_id': str(video['id'])
-                             }
-            session_videos.append(session_video)
+        session_videos = DataTransformer.generate_video_list_view(session=session, db_videos=videos)
         LOGGER.info("Retrieved {} videos for session {}".format(len(session_videos), session_id))
         return session_videos
 
+    def list_session_videos(self, session_id, user_id):
+        """
+
+        :param session_id:
+        :param user_id:
+        :return:
+        """
+        LOGGER.info(
+            "Listing all session videos of the user. [session_id={}, user_id={}]".format(session_id,
+                                                                                         user_id))
+        GenericValidator.validate_id(session_id)
+        GenericValidator.validate_id(user_id)
+        session = SessionManager.get_instance().get_session(session_id=session_id)
+        videos = Video.objects(session=session['id'], user_id=user_id)
+        session_videos = DataTransformer.generate_video_list_view(session=session, db_videos=videos)
+        LOGGER.info("Retrieved {} videos for session {} and user {}".format
+                    (len(session_videos), session_id, user_id))
+        return session_videos
 
     ##########################
     ##      THREADS         ##
