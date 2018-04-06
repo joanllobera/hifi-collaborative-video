@@ -15,14 +15,17 @@
   </div>
 </div>
 <script>
-  screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+  window.addEventListener("orientationchange", function() {
+    if (window.orientation == 90 || window.orientation == -90) {
+      alert('landscape mode');
+    } else {
+      alert('portrait mode');
+    }
+  });
 
-if (screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"])) {
-  // orientation was locked
-  alert('locked');
-} else {
-  // orientation lock failed
-  alert('no locked');
-}
+
+
+
+
 
 </script>
