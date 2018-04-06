@@ -5,6 +5,7 @@ video {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
+  z-index: -1000;
 }
 
 .black {
@@ -12,7 +13,7 @@ video {
   background-color: rgba(0,0,0,.6);
   bottom:0;
   width: 100%;
-  height:150px;
+  height:100px;
   display: flex;
 }
 
@@ -27,9 +28,9 @@ video {
 }
 
 .border {
-  border: 12px lightgrey solid;
-  width: 95px;
-  height: 95px;
+  border: 5px lightgrey solid;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   text-align: center;
   padding: .6em;
@@ -40,17 +41,17 @@ video {
 }
 
 .record {
-  width: 75px;
-  height: 75px;
+  width: 55px;
+  height: 55px;
   background-color: red;
   border-radius: 50%;
   text-align: center;
 }
 
 .stop {
-  margin: 16px;
-  width: 45px;
-  height: 45px;
+  margin: 10px;
+  width: 35px;
+  height: 35px;
   background-color: red;
   border-radius:0;
   text-align: center;

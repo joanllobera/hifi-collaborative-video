@@ -36,7 +36,7 @@ export class CameraComponent implements OnInit {
      debug: true,
      dependencies: Janus.useDefaultDependencies(),
      callback: function() {
-            //alert('Janusssss');
+            alert('Janus initialized');
      }
    });
     var echotest = null;
@@ -63,11 +63,11 @@ export class CameraComponent implements OnInit {
                         // Negotiate WebRTC
 									var body = { "audio": false, "video": true };
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
-									//echotest.send({"message": body});
+									echotest.send({"message": body});
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
-											media: { data: true },	// Let's negotiate data channels as well
+											media: { data: true, video: true, audio:false },	// Let's negotiate data channels as well
 											// If you want to test simulcasting (Chrome and Firefox only), then
 											// pass a ?simulcast=true when opening this demo page: it will turn
 											// the following 'simulcast' property to pass to janus.js to true
@@ -98,6 +98,7 @@ export class CameraComponent implements OnInit {
                 onmessage: function(msg, jsep) {
                         // We got a message/event (msg) from the plugin
                         // If jsep is not null, this involves a WebRTC negotiation
+                        echotest.handleRemoteJsep({jsep: jsep});
                 },
                 onlocalstream: function(stream) {
                         // We have a local stream (getUserMedia worked!) to display
@@ -165,7 +166,8 @@ export class CameraComponent implements OnInit {
                 },
                 onremotestream: function(stream) {
                         // We have a remote stream (working PeerConnection!) to display
-                          console.log('onremotestream:::', stream);
+
+
                 },
                 oncleanup: function() {
                         // PeerConnection with the plugin closed, clean the UI
