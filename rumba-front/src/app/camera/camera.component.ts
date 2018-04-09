@@ -67,7 +67,7 @@ export class CameraComponent implements OnInit {
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
-											media: { data: true, video: true, audio:false },	// Let's negotiate data channels as well
+											media: { video: true, audio:false, data: true },	// Let's negotiate data channels as well
 											// If you want to test simulcasting (Chrome and Firefox only), then
 											// pass a ?simulcast=true when opening this demo page: it will turn
 											// the following 'simulcast' property to pass to janus.js to true
