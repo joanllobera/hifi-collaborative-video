@@ -14,3 +14,8 @@
     <div *ngIf="isRecording" (click)="checkButton()" class="stop"></div>
   </div>
 </div>
+<script>
+  screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
+
+  screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"]);
+</script>
