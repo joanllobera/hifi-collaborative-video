@@ -57,8 +57,8 @@ export class CameraComponent implements OnInit {
   function initDevices(devices) {
   	devices.forEach(function(device) {
         if (device.kind === 'videoinput') {
-          console.log(device);
-          alert(device.id);
+          console.log('each device:::', device);
+          alert(device.deviceId);
         }
     });
   }
@@ -257,7 +257,7 @@ export class CameraComponent implements OnInit {
   ngOnInit() {
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function(stream) {
-        alert(stream);
+        console.log('stream::::', stream);
       })
       .catch(function(err) {
         /* handle the error */
