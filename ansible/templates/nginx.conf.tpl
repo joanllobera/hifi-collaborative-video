@@ -73,13 +73,21 @@ http {
 
 	## server
 	server {
-		listen {{ nginx_port }};
+		listen {{ nginx_port }} ssl;
+		server_name             rumba;
+		ssl_certificate		    "{{ janus_dir }}/share/janus/certs/mycert.pem";
+		ssl_certificate_key 	"{{ janus_dir }}/share/janus/certs/mycert.key";
+
         location / {
                 proxy_pass http://localhost:{{ frontend_port }};
         }
         location /api {
                 proxy_pass http://localhost:{{ backend_port }};
         }
+        location /janus {
+			proxy_pass http://localhost:8088;
+		}
+
 
     }
 

@@ -75,7 +75,7 @@ export class CameraComponent implements OnInit {
 											success: function(jsep) {
 
                         Janus.debug("Got SDP!");
-												Janus.debug(jsep);
+												Janus.debug('Janus.debug:::::', jsep);
 												echotest.send({"message": body, "jsep": jsep});
 											},
 											error: function(error) {

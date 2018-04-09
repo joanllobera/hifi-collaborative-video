@@ -24,3 +24,4 @@ class Video(Document):
     name = StringField(required=True, null=False, max_length=255)
     thumbs_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)
     splitter_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)
+    user_id = StringField(required=True, null=False, max_length=50)
