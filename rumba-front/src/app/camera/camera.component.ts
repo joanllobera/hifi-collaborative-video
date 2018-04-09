@@ -50,6 +50,66 @@ export class CameraComponent implements OnInit {
 
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
+
+
+
+
+  function initDevices(devices) {
+  	devices.forEach(function(device) {
+        if (device.kind === 'videoinput') {
+          console.log(device);
+          alert(device.id);
+        }
+    });
+  }
+
+  function restartCapture() {
+  	// Negotiate WebRTC
+  	var body = { "audio": true, "video": true };
+  	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
+  	echotest.send({"message": body});
+  	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
+
+  	var videoDeviceId = 12;
+
+  	echotest.createOffer(
+  		{
+  			// We provide a specific device ID for both audio and video
+  			media: {
+  				video: {
+  					deviceId: {
+  						exact: videoDeviceId
+  					}
+  				},
+  				replaceVideo: true,	// This is only needed in case of a renegotiation
+  				data: true	// Let's negotiate data channels as well
+  			},
+  			// If you want to test simulcasting (Chrome and Firefox only), then
+  			// pass a ?simulcast=true when opening this demo page: it will turn
+  			// the following 'simulcast' property to pass to janus.js to true
+  			simulcast: doSimulcast,
+  			success: function(jsep) {
+  				Janus.debug("Got SDP!");
+  				Janus.debug(jsep);
+  				echotest.send({"message": body, "jsep": jsep});
+  			},
+  			error: function(error) {
+
+  			}
+  		});
+}
+
+
+
+
+
+
+
+
+
+
+
+
     var janus = new Janus({
       server: 'http://192.168.10.252:8088/janus',
       success: function() {
@@ -58,9 +118,10 @@ export class CameraComponent implements OnInit {
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-                        // Plugin attached! 'pluginHandle' is our handle
-                        echotest = pluginHandle;
-                        // Negotiate WebRTC
+
+                  // Plugin attached! 'pluginHandle' is our handle
+                  echotest = pluginHandle;
+                  // Negotiate WebRTC
 									var body = { "audio": false, "video": true };
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
 									echotest.send({"message": body});
@@ -73,6 +134,9 @@ export class CameraComponent implements OnInit {
 											// the following 'simulcast' property to pass to janus.js to true
 											simulcast: doSimulcast,
 											success: function(jsep) {
+
+                        Janus.listDevices(initDevices);
+
 
                         Janus.debug("Got SDP!");
 												Janus.debug('Janus.debug:::::', jsep);
