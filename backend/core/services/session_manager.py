@@ -1,3 +1,5 @@
+import configparser
+
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
@@ -164,6 +166,21 @@ class SessionManager(object):
         db_session.update(set__active=False)
         LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
 
+    def get_active_session(self):
+        """
+
+        :return:
+        """
+        LOGGER.info("Retrieveing active session")
+        session = RumbaSession.objects(active=True).first()
+        if session is None:
+            return None
+        LOGGER.info("Session sucessfully retrieved: [id={}]".format(session['id']))
+        LOGGER.debug("Session information: {}".format(session))
+        view_sess = MongoHelper.to_dict(session)
+        view_sess.pop('folder_url')
+        return view_sess
+
     def set_session_logo(self, session_id, image_file):
         """
 
@@ -203,34 +220,4 @@ class SessionManager(object):
             return url
         except Exception as ex:
             LOGGER.exception("Error getting session logo: ")
-            raise ex
-
-    def list_session_videos(self, session_id):
-        """
-        Retrieves all videos of the session and returns their main information.
-        :param session_id: Id of the session.
-        :return: List of dictionaries. Each dictionary contains the information of one of the
-        videos. The json representation of the returned value would be the following:
-            [
-                {
-                    "id": "5ac3a2bc578384adb8fe4ed4",
-                    "name": "Concert de Nadal"
-                }
-            ]
-        :rtype: list
-        """
-        LOGGER.info("Listing session videos information: [session_id={}]".format(session_id))
-        videos_info = []
-        try:
-            GenericValidator.validate_id(session_id)
-            session = RumbaSession.objects(id=session_id).first()
-            if session is None:
-                raise NotExistingResource("No session with such id.")
-            videos = Video.objects(session=session)
-            for video in videos:
-                videos_info.append({'id': str(video['id']), 'name': video['name']})
-            LOGGER.info("Videos from session sucessfully retrieved: [session_id={}]".format(session_id))
-            return videos_info
-        except Exception as ex:
-            LOGGER.exception("Error getting session videos information: ")
             raise ex

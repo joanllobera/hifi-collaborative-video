@@ -10,7 +10,8 @@
 <div class="black flex-wrap">
   <!-- <img src="assets/material/ic_fiber_manual_record_white_48px.svg" alt=""> -->
   <div class="border">
-    <div *ngIf="!isRecording" (click)="checkButton()" class="record"></div>
+    <div *ngIf="!isRecording" (click)="startRecording();checkButton()" class="record"></div>
     <div *ngIf="isRecording" (click)="checkButton()" class="stop"></div>
   </div>
 </div>
+
