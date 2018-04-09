@@ -34,6 +34,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.5/adapter.min.js"></script>
   <script type="text/javascript" src="assets/janus/janus.js"></script>
+  <script>
+    screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
 
+    screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"]);
+  </script>
 </body>
 </html>
