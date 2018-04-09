@@ -35,9 +35,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.1.5/adapter.min.js"></script>
   <script type="text/javascript" src="assets/janus/janus.js"></script>
   <script>
-    window.screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
-
-    window.screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"]);
+    window.addEventListener("orientationchange", function() {
+      alert("the orientation of the device is now " + screen.orientation.angle);
+    });
   </script>
 </body>
 </html>
