@@ -17,12 +17,6 @@
 <script>
   screen.lockOrientationUniversal = screen.lockOrientation || screen.mozLockOrientation || screen.msLockOrientation;
 
-if (screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"])) {
-  // orientation was locked
-  alert('locked');
-} else {
-  // orientation lock failed
-  alert('no locked');
-}
+  screen.lockOrientationUniversal(["portrait-primary", "portrait-secondary"]);
 
 </script>
