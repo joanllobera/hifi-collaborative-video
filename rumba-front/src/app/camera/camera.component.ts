@@ -60,7 +60,7 @@ export class CameraComponent implements OnInit {
           console.log(device);
           alert(device.id);
         }
-    }
+    });
   }
 
   function restartCapture() {
