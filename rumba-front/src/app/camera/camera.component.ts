@@ -191,6 +191,14 @@ export class CameraComponent implements OnInit {
   }
 
   ngOnInit() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        alert(stream);
+      })
+      .catch(function(err) {
+        /* handle the error */
+      });
+
     this.configureJanus()
   }
 
