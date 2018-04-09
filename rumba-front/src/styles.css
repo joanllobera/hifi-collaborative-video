@@ -148,7 +148,7 @@ body, html {
   color:yellow;
 }
 
-@media screen (orientation: landscape) {
+/* @media screen (orientation: landscape) {
   html {
     transform: rotate(-90deg);
     transform-origin: left top;
@@ -158,4 +158,4 @@ body, html {
     top: 100%;
     left: 0;
   }
-}
+} */
