@@ -34,6 +34,8 @@ export class CameraComponent implements OnInit {
       )
   }
 
+
+
   // Helper to parse query string
   getQueryStringValue(name) {
   	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -76,11 +78,12 @@ export class CameraComponent implements OnInit {
           alert(device.deviceId);
         }
     });
+    return devices;
   }
 
   function restartCapture() {
   	// Negotiate WebRTC
-  	var body = { "audio": true, "video": true };
+  	var body = { "audio": false, "video": true };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -125,15 +128,16 @@ export class CameraComponent implements OnInit {
 
 
 
-    var janus = new Janus({
-      server: 'http://192.168.10.252:8088/janus',
+  var janus = new Janus({
+      server: 'https://192.168.10.252:8080/janus',
       success: function() {
+
               // Done! attach to plugin XYZ
               // Attach to echo test plugin, using the previously created janus instance
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-
+                  var devices = Janus.listDevices(initDevices);
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
@@ -143,14 +147,18 @@ export class CameraComponent implements OnInit {
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
-											media: { video: true, audio:false, data: true },	// Let's negotiate data channels as well
+											media: {
+                        video: true,
+                        audio:false,
+                        data: true
+                      },	// Let's negotiate data channels as well
 											// If you want to test simulcasting (Chrome and Firefox only), then
 											// pass a ?simulcast=true when opening this demo page: it will turn
 											// the following 'simulcast' property to pass to janus.js to true
 											simulcast: doSimulcast,
 											success: function(jsep) {
 
-                        Janus.listDevices(initDevices);
+                        // Janus.listDevices(initDevices);
 
 
                         Janus.debug("Got SDP!");
@@ -161,7 +169,6 @@ export class CameraComponent implements OnInit {
 												Janus.error("WebRTC error:", error);
 											}
 										});
-
 
 
 
