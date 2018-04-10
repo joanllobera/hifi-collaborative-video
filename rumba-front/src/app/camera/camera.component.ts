@@ -126,7 +126,7 @@ export class CameraComponent implements OnInit {
 
 
     var janus = new Janus({
-      server: 'http://192.168.10.252:8088/janus',
+      server: 'https://192.168.10.252:8080/janus',
       success: function() {
               // Done! attach to plugin XYZ
               // Attach to echo test plugin, using the previously created janus instance
