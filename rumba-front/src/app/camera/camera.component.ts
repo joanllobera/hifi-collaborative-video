@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from  'rxjs/Observable';
+import { Observer } from 'rxjs';
+
+import { RecordService } from  '../record.service';
+
+
 //import '../assets/janus/janus.js';
 
 declare var Janus: any;
@@ -13,10 +19,19 @@ export class CameraComponent implements OnInit {
 
   isRecording: boolean = false;
 
-  constructor() { }
+  constructor(private record: RecordService) { }
 
   checkButton() {
     this.isRecording = !this.isRecording;
+  }
+
+  startRecording() {
+    this.record.startRecordingVideo()
+      .subscribe(
+        (response) => {
+          console.log(response);
+        }
+      )
   }
 
   // Helper to parse query string
