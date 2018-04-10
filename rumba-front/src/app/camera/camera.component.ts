@@ -34,6 +34,11 @@ export class CameraComponent implements OnInit {
       )
   }
 
+  closeJanusSession(janus) {
+    janus.destroy();
+  }
+
+
   // Helper to parse query string
   getQueryStringValue(name) {
   	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -76,6 +81,7 @@ export class CameraComponent implements OnInit {
           alert(device.deviceId);
         }
     });
+    return devices;
   }
 
   function restartCapture() {
@@ -125,7 +131,7 @@ export class CameraComponent implements OnInit {
 
 
 
-    var janus = new Janus({
+  var janus = new Janus({
       server: 'https://192.168.10.252:8080/janus',
       success: function() {
 
@@ -134,7 +140,7 @@ export class CameraComponent implements OnInit {
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-                  Janus.listDevices(initDevices);
+                  var devices = Janus.listDevices(initDevices);
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
@@ -166,7 +172,6 @@ export class CameraComponent implements OnInit {
 												Janus.error("WebRTC error:", error);
 											}
 										});
-
 
 
 
