@@ -76,6 +76,7 @@ export class CameraComponent implements OnInit {
           alert(device.deviceId);
         }
     });
+    return devices;
   }
 
   function restartCapture() {
@@ -128,12 +129,13 @@ export class CameraComponent implements OnInit {
     var janus = new Janus({
       server: 'https://192.168.10.252:8080/janus',
       success: function() {
+
               // Done! attach to plugin XYZ
               // Attach to echo test plugin, using the previously created janus instance
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-
+                  let devices = Janus.listDevices(initDevices);
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
@@ -143,14 +145,23 @@ export class CameraComponent implements OnInit {
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
-											media: { video: true, audio:false, data: true },	// Let's negotiate data channels as well
+											media: {
+                        video: {
+                          deviceId: {
+                            exact: devices[1].deviceId
+                          }
+                        },
+                        //video: true,
+                        audio:false,
+                        data: true
+                      },	// Let's negotiate data channels as well
 											// If you want to test simulcasting (Chrome and Firefox only), then
 											// pass a ?simulcast=true when opening this demo page: it will turn
 											// the following 'simulcast' property to pass to janus.js to true
 											simulcast: doSimulcast,
 											success: function(jsep) {
 
-                        Janus.listDevices(initDevices);
+                        // Janus.listDevices(initDevices);
 
 
                         Janus.debug("Got SDP!");
