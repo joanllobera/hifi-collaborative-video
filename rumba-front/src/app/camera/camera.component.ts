@@ -34,9 +34,6 @@ export class CameraComponent implements OnInit {
       )
   }
 
-  closeJanusSession(janus) {
-    janus.destroy();
-  }
 
 
   // Helper to parse query string
