@@ -159,6 +159,7 @@ class FileSystemService(object):
     def __build_session_directory_path__(self, band):
         if band is None or type(band) != str or not band:
             raise ValueError("Expected a valid session name.")
+        band = band.replace(" ", "_")
         return self.directory + band
 
 
