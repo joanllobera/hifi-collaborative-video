@@ -37,9 +37,9 @@ def add_video_to_active_session():
     LOGGER.info("Received request for adding a video to the active session.")
     user_id = session['user_id']
     try:
-        video_id = VideoManager.get_instance().add_video_to_active_session(user_id=user_id)
+        video = VideoManager.get_instance().add_video_to_active_session(user_id=user_id)
         LOGGER.info("Request for adding a video to the active session successfully finished.")
-        return jsonify({'id': video_id}), 200
+        return jsonify(video), 200
     except IllegalSessionStateException as ie:
         LOGGER.info("Request for adding a video to the active session finished with errors -")
         raise Conflict(ie)

@@ -8,6 +8,7 @@ from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.data_transformer import DataTransformer
 from core.helpers.loggers import LoggerHelper
+from core.helpers.mongo import MongoHelper
 from core.helpers.validators import GenericValidator
 from core.model.rumba_session import RumbaSession
 from core.model.video import Video
@@ -54,8 +55,11 @@ class VideoManager(object):
         if session is None:
             raise IllegalSessionStateException("There's no active session.")
         video_id = self.add_video(session_id=session['id'], user_id=user_id)
+        video_mongo = Video.objects(id=video_id).first()
+        video_dict = MongoHelper.to_dict(video_mongo)
+        video_dict['session'] = str(video_dict['session'])
         LOGGER.info("Video successfully added to active session")
-        return video_id
+        return video_dict
 
 
     def add_video(self, session_id, user_id):
