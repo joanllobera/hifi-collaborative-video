@@ -20,6 +20,7 @@ import { SessionCloseComponent } from './session-close/session-close.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CameraComponent } from './camera/camera.component';
+import { RecordService } from './record.service';
 
 
 
@@ -47,7 +48,10 @@ import { CameraComponent } from './camera/camera.component';
   exports: [
     HeaderComponent
   ],
-  providers: [SessionService],
+  providers: [
+    SessionService,
+    RecordService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
