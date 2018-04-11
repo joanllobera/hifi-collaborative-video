@@ -62,7 +62,7 @@ export class SessionCloseComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('close session', response);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/session']);
         }
       )
   }
