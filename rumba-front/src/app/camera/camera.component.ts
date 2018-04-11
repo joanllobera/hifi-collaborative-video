@@ -54,6 +54,7 @@ export class CameraComponent implements OnInit {
      dependencies: Janus.useDefaultDependencies(),
      callback: function() {
             alert('Janus initialized');
+            //Janus.listDevices(initDevices);
      }
    });
     var echotest = null;
@@ -67,7 +68,7 @@ export class CameraComponent implements OnInit {
 
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
-
+    var deviceList =[];
 
 
 
@@ -76,9 +77,15 @@ export class CameraComponent implements OnInit {
         if (device.kind === 'videoinput') {
           console.log('each device:::', device);
           alert(device.deviceId);
+          deviceList.push(device);
         }
     });
-    return devices;
+
+    if (deviceList.length > 1) {
+      restartCapture(deviceList[1].deviceId);
+    }
+
+
   }
 
   function restartCapture(iidd) {
@@ -137,7 +144,7 @@ export class CameraComponent implements OnInit {
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-                  var devices = Janus.listDevices(initDevices);
+                  Janus.listDevices(initDevices);
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
@@ -159,7 +166,7 @@ export class CameraComponent implements OnInit {
 											success: function(jsep) {
 
                         // Janus.listDevices(initDevices);
-
+                        console.log('deviceList::', deviceList);
 
                         Janus.debug("Got SDP!");
 												Janus.debug('Janus.debug:::::', jsep);
