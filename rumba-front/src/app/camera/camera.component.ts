@@ -54,7 +54,7 @@ export class CameraComponent implements OnInit {
      dependencies: Janus.useDefaultDependencies(),
      callback: function() {
             alert('Janus initialized');
-            //Janus.listDevices(initDevices);
+
      }
    });
     var echotest = null;
@@ -90,7 +90,7 @@ export class CameraComponent implements OnInit {
 
   function restartCapture(iidd) {
   	// Negotiate WebRTC
-  	var body = { "audio": false, "video": true, "data":true };
+var body = { "audio": false, "video": true,  };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -106,7 +106,8 @@ export class CameraComponent implements OnInit {
   						exact: videoDeviceId
   					}
   				},
-  				replaceVideo: true,	// This is only needed in case of a renegotiation
+  				replaceVideo: true,
+          audio:false,	// This is only needed in case of a renegotiation
   				data: true	// Let's negotiate data channels as well
   			},
   			// If you want to test simulcasting (Chrome and Firefox only), then
@@ -152,30 +153,30 @@ export class CameraComponent implements OnInit {
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
 									echotest.send({"message": body});
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
-									echotest.createOffer({
-											// No media provided: by default, it's sendrecv for audio and video
-											media: {
-                        video: true,
-                        audio:false,
-                        data: true
-                      },	// Let's negotiate data channels as well
-											// If you want to test simulcasting (Chrome and Firefox only), then
-											// pass a ?simulcast=true when opening this demo page: it will turn
-											// the following 'simulcast' property to pass to janus.js to true
-											simulcast: doSimulcast,
-											success: function(jsep) {
-
-                        // Janus.listDevices(initDevices);
-                        console.log('deviceList::', deviceList);
-
-                        Janus.debug("Got SDP!");
-												Janus.debug('Janus.debug:::::', jsep);
-												echotest.send({"message": body, "jsep": jsep});
-											},
-											error: function(error) {
-												Janus.error("WebRTC error:", error);
-											}
-										});
+									// echotest.createOffer({
+									// 		// No media provided: by default, it's sendrecv for audio and video
+									// 		media: {
+                  //       video: true,
+                  //       audio:false,
+                  //       data: true
+                  //     },	// Let's negotiate data channels as well
+									// 		// If you want to test simulcasting (Chrome and Firefox only), then
+									// 		// pass a ?simulcast=true when opening this demo page: it will turn
+									// 		// the following 'simulcast' property to pass to janus.js to true
+									// 		simulcast: doSimulcast,
+									// 		success: function(jsep) {
+                  //
+                  //
+                  //       console.log('deviceList::', deviceList);
+                  //
+                  //       Janus.debug("Got SDP!");
+									// 			Janus.debug('Janus.debug:::::', jsep);
+									// 			echotest.send({"message": body, "jsep": jsep});
+									// 		},
+									// 		error: function(error) {
+									// 			Janus.error("WebRTC error:", error);
+									// 		}
+									// 	});
 
                     restartCapture(devices[1].deviceId);
 
