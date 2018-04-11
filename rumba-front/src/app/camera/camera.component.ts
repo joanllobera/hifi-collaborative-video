@@ -81,14 +81,14 @@ export class CameraComponent implements OnInit {
     return devices;
   }
 
-  function restartCapture() {
+  function restartCapture(iidd) {
   	// Negotiate WebRTC
-  	var body = { "audio": false, "video": true };
+  	var body = { "audio": false, "video": true, "data":true };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 
-  	var videoDeviceId = 12;
+  	var videoDeviceId = iidd;
 
   	echotest.createOffer(
   		{
@@ -170,7 +170,7 @@ export class CameraComponent implements OnInit {
 											}
 										});
 
-
+                    restartCapture(devices[1].deviceId);
 
 
                 },
