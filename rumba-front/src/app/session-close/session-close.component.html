@@ -17,7 +17,7 @@
 
 <div class="container w-85 p-3">
   <div class="row">
-    <div class="col">
+    <div class="col" *ngIf="currentSession">
 
       <div class="form-group top1">
         <label for="banda" class="bmd-label-floating">Banda *</label>
@@ -37,28 +37,30 @@
           <img width="100" src="assets/logo/rumba_logo-v2.png" alt="">
           <img width="100" [src]="binaryData" alt="">
         </div> -->
-        <input type="text" class="form-control" id="logo"><br/>
+        <input type="text" class="form-control" id="logo" /><br/>
+        <img [src]="binaryData" alt="">
       </div>
 
       <div class="form-group">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
-        <input type="text" class="form-control" id="date" [(ngModel)]="currentSession.date" name="date" required>
+        <input type="text" class="form-control" id="date" [(ngModel)]="formatedDate" name="date" required />
         <!-- <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.date | date:'dd-MM-yyyy'}}</p> -->
       </div>
 
       <div class="form-group top1">
-        <label for="localitzacio" class="bmd-label-floating">Localització</label>
-        <input type="text" class="form-control" id="location" ([ngModel])="currentSession.localitzacio" name="location">
+        <label for="location" class="bmd-label-floating">Localització</label>
+        <input type="text" class="form-control" id="location" ([ngModel])="currentSession.location" [value]="currentSession.location" name="location" />
+
       </div>
 
       <div class="form-group top1">
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
         <div class="row">
           <div class="col">
-              <input type="text" placeholder="Usuari" class="form-control" id="username" ([ngModel])="vimeoUser" name="username">
+              <input type="text" placeholder="Usuari" class="form-control" id="username" [value]="vimeouser" ([ngModel])="vimeouser" name="vimeopassword" />
           </div>
           <div class="col">
-              <input type="password" placeholder="Password" class="form-control" id="password" ([ngModel])="vimeoPassword" name="password">
+              <input type="password" placeholder="Password" class="form-control" id="password" [value]="vimeopassword" ([ngModel])="vimeopassword" name="vimeoPassword" />
           </div>
         </div>
       </div>
