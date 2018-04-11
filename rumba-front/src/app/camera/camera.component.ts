@@ -149,37 +149,37 @@ var body = { "audio": false, "video": true,  };
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
-									var body = { "audio": false, "video": true };
+									var body = { "audio": false, "video": true, "data": true };
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
 									echotest.send({"message": body});
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
-									// echotest.createOffer({
-									// 		// No media provided: by default, it's sendrecv for audio and video
-									// 		media: {
-                  //       video: true,
-                  //       audio:false,
-                  //       data: true
-                  //     },	// Let's negotiate data channels as well
-									// 		// If you want to test simulcasting (Chrome and Firefox only), then
-									// 		// pass a ?simulcast=true when opening this demo page: it will turn
-									// 		// the following 'simulcast' property to pass to janus.js to true
-									// 		simulcast: doSimulcast,
-									// 		success: function(jsep) {
-                  //
-                  //
-                  //       console.log('deviceList::', deviceList);
-                  //
-                  //       Janus.debug("Got SDP!");
-									// 			Janus.debug('Janus.debug:::::', jsep);
-									// 			echotest.send({"message": body, "jsep": jsep});
-									// 		},
-									// 		error: function(error) {
-									// 			Janus.error("WebRTC error:", error);
-									// 		}
-									// 	});
+
+									echotest.createOffer({
+											// No media provided: by default, it's sendrecv for audio and video
+											media: {
+                        video: true,
+                        audio:false,
+                        data: true
+                      },	// Let's negotiate data channels as well
+											// If you want to test simulcasting (Chrome and Firefox only), then
+											// pass a ?simulcast=true when opening this demo page: it will turn
+											// the following 'simulcast' property to pass to janus.js to true
+											simulcast: doSimulcast,
+											success: function(jsep) {
+
+
+                        console.log('deviceList::', deviceList);
+
+                        Janus.debug("Got SDP!");
+												Janus.debug('Janus.debug:::::', jsep);
+												echotest.send({"message": body, "jsep": jsep});
+											},
+											error: function(error) {
+												Janus.error("WebRTC error:", error);
+											}
+										});
 
                     restartCapture(devices[1].deviceId);
-
 
                 },
                 error: function(cause) {
