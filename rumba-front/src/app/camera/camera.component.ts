@@ -179,6 +179,7 @@ export class CameraComponent implements OnInit {
                         console.log("error:::", cause);
                 },
                 consentDialog: function(on) {
+                  
                         // e.g., Darken the screen if on=true (getUserMedia incoming), restore it otherwise
                 },
                 onmessage: function(msg, jsep) {
