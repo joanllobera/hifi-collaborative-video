@@ -90,7 +90,7 @@ export class CameraComponent implements OnInit {
 
   function restartCapture(iidd) {
   	// Negotiate WebRTC
-  	var body = { "audio": false, "video": true,  };
+var body = { "audio": false, "video": true,  };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -178,7 +178,7 @@ export class CameraComponent implements OnInit {
 									// 		}
 									// 	});
 
-
+                    restartCapture(devices[1].deviceId);
 
 
                 },
