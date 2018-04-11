@@ -90,7 +90,7 @@ export class CameraComponent implements OnInit {
 
   function restartCapture(iidd) {
   	// Negotiate WebRTC
-  	var body = { "audio": false, "video": true,  };
+var body = { "audio": false, "video": true,  };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -153,6 +153,7 @@ export class CameraComponent implements OnInit {
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
 									echotest.send({"message": body});
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
+
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
 											media: {
@@ -177,6 +178,8 @@ export class CameraComponent implements OnInit {
 												Janus.error("WebRTC error:", error);
 											}
 										});
+
+                    restartCapture(devices[1].deviceId);
 
                 },
                 error: function(cause) {
