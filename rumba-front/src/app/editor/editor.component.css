@@ -1,0 +1,28 @@
+video {
+  width: 100%;
+  height: 250px;
+}
+
+.oneVideo {
+  /* width: 3000px; */
+  height: 100px;
+  margin-top: .5em;
+  min-width: 3000px;
+}
+
+.video-container .row img {
+  width: 100px;
+  height:100px;
+}
+
+.video-container  {
+  width:2500px;
+  margin-top: 1em;
+  overflow-x:scroll;overflow-y:hidden
+}
+
+img {
+  display:inline-block;
+  width: 100px;
+  height: 100px;
+}

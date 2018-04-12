@@ -179,7 +179,7 @@ var body = { "audio": false, "video": true,  };
 											}
 										});
 
-                    restartCapture(devices[1].deviceId);
+
 
                 },
                 error: function(cause) {
@@ -187,7 +187,7 @@ var body = { "audio": false, "video": true,  };
                         console.log("error:::", cause);
                 },
                 consentDialog: function(on) {
-                  
+
                         // e.g., Darken the screen if on=true (getUserMedia incoming), restore it otherwise
                 },
                 onmessage: function(msg, jsep) {
