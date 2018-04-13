@@ -3,6 +3,12 @@ video {
   height: 250px;
 }
 
+.allVideos {
+  /* width: vw;
+  overflow-x:scroll;
+  overflow-y:hidden; */
+}
+
 .video-container  {
   padding-left: 1em;
   padding-right: 1em;
