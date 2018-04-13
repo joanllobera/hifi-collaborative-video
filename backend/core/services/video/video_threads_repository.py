@@ -22,6 +22,7 @@ class VideoThreadsRepository(object):
     thumbs_mutex = Lock()
     dasher_spliter_threads = []
     dasher_spliter_mutex = Lock()
+    audio_thread = None
 
     def __init__(self):
         if VideoThreadsRepository.__instance is not None:
@@ -202,3 +203,18 @@ class VideoThreadsRepository(object):
         finally:
             LOGGER.debug("Unlocking DasherSplitter mutex.")
             self.dasher_spliter_mutex.release()
+
+    ################################
+    #####          AUDIO        ####
+    ################################
+
+    def store_audio_thread(self, audio_thread):
+        LOGGER.info("Storing audio thread.")
+        self.audio_thread = audio_thread
+
+    def get_audio_thread(self):
+        LOGGER.info("Getting audio thread")
+        return self.audio_thread
+
+    def remove_audio_thread(self):
+        self.audio_thread = None
