@@ -15,7 +15,7 @@ export class EditorComponent implements OnInit {
   }
 
   onSelectFrame(event) {
-    console.log(event);
+    event.target.classList.toggle('selectedImg');
   }
 
 

@@ -3,6 +3,12 @@ video {
   height: 250px;
 }
 
+.video-container  {
+  width:2500px;
+  margin-top: 1em;
+  overflow-x:scroll;overflow-y:hidden
+}
+
 .oneVideo {
   /* width: 3000px; */
   height: 100px;
@@ -15,14 +21,16 @@ video {
   height:100px;
 }
 
-.video-container  {
-  width:2500px;
-  margin-top: 1em;
-  overflow-x:scroll;overflow-y:hidden
-}
-
 img {
   display:inline-block;
   width: 100px;
   height: 100px;
+  transition: opacity .3s;
+  cursor: pointer;
+
+}
+
+.selectedImg {
+  border:red 3px solid;
+  opacity: .5;
 }
