@@ -95,11 +95,7 @@ function initDevices(devices) {
       		{
       			// We provide a specific device ID for both audio and video
       			media: {
-      				audio: {
-      					deviceId: {
-      						exact: audioDeviceId
-      					}
-      				},
+      				audio: false,
       				replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
       				video: {
       					deviceId: {
