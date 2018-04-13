@@ -8,6 +8,7 @@ import { OrientationComponent } from './orientation/orientation.component';
 import { VideosComponent } from './videos/videos.component';
 import { SessionCloseComponent } from './session-close/session-close.component';
 import { CameraComponent } from './camera/camera.component';
+import { EditorComponent } from './editor/editor.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const appRoutes: Routes = [
   { path: 'session', component: SessionComponent },
   { path: 'sessionClose/:id', component: SessionCloseComponent},
   { path: 'videos', component: VideosComponent },
-  { path: 'camera', component: CameraComponent }
+  { path: 'camera', component: CameraComponent },
+  { path: 'editor', component: EditorComponent }
 ];
 
 @NgModule({

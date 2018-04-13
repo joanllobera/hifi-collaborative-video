@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
@@ -15,7 +15,7 @@ declare var Janus: any;
   templateUrl: './camera.component.html',
   styleUrls: ['./camera.component.css']
 })
-export class CameraComponent implements OnInit {
+export class CameraComponent implements OnInit, OnDestroy {
 
   isRecording: boolean = false;
 
@@ -84,19 +84,22 @@ export class CameraComponent implements OnInit {
     if (deviceList.length > 1) {
       restartCapture(deviceList[1].deviceId);
     }
-
-
   }
+
+function closeJanus() {
+  janus.destroy();
+}
+
 
   function restartCapture(iidd) {
   	// Negotiate WebRTC
-var body = { "audio": false, "video": true,  };
+    var body = { "audio": false, "video": true,  };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 
   	var videoDeviceId = iidd;
-
+    
   	echotest.createOffer(
   		{
   			// We provide a specific device ID for both audio and video
@@ -179,7 +182,7 @@ var body = { "audio": false, "video": true,  };
 											}
 										});
 
-                    restartCapture(devices[1].deviceId);
+
 
                 },
                 error: function(cause) {
@@ -187,7 +190,7 @@ var body = { "audio": false, "video": true,  };
                         console.log("error:::", cause);
                 },
                 consentDialog: function(on) {
-                  
+
                         // e.g., Darken the screen if on=true (getUserMedia incoming), restore it otherwise
                 },
                 onmessage: function(msg, jsep) {
@@ -286,19 +289,19 @@ var body = { "audio": false, "video": true,  };
   }
 
   ngOnInit() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        console.log('stream::::', stream);
-      })
-      .catch(function(err) {
-        /* handle the error */
-      });
-
+    // navigator.mediaDevices.getUserMedia({ video: true })
+    //   .then(function(stream) {
+    //     console.log('stream::::', stream);
+    //   })
+    //   .catch(function(err) {
+    //   });
     this.configureJanus()
   }
 
 
+ngOnDestroy() {
 
+}
 
 
 }
