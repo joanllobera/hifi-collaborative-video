@@ -22,6 +22,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CameraComponent } from './camera/camera.component';
 import { RecordService } from './record.service';
 import { EditorComponent } from './editor/editor.component';
+import { CameraBackComponent } from './camera-back/camera-back.component';
 
 
 
@@ -37,7 +38,8 @@ import { EditorComponent } from './editor/editor.component';
     VideosComponent,
     SessionCloseComponent,
     CameraComponent,
-    EditorComponent
+    EditorComponent,
+    CameraBackComponent
   ],
   imports: [
     BrowserModule,
