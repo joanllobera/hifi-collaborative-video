@@ -4,6 +4,8 @@ video {
 }
 
 .video-container  {
+  padding-left: 1em;
+  padding-right: 1em;
   width:2500px;
   margin-top: 1em;
   overflow-x:scroll;overflow-y:hidden
