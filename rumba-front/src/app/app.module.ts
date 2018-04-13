@@ -23,6 +23,7 @@ import { CameraComponent } from './camera/camera.component';
 import { RecordService } from './record.service';
 import { EditorComponent } from './editor/editor.component';
 import { CameraBackComponent } from './camera-back/camera-back.component';
+import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
 
 
@@ -39,7 +40,8 @@ import { CameraBackComponent } from './camera-back/camera-back.component';
     SessionCloseComponent,
     CameraComponent,
     EditorComponent,
-    CameraBackComponent
+    CameraBackComponent,
+    EditorNiceComponent
   ],
   imports: [
     BrowserModule,
