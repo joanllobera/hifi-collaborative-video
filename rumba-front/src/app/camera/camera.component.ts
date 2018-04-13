@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
@@ -15,7 +15,7 @@ declare var Janus: any;
   templateUrl: './camera.component.html',
   styleUrls: ['./camera.component.css']
 })
-export class CameraComponent implements OnInit {
+export class CameraComponent implements OnInit, OnDestroy {
 
   isRecording: boolean = false;
 
@@ -54,6 +54,7 @@ export class CameraComponent implements OnInit {
      dependencies: Janus.useDefaultDependencies(),
      callback: function() {
             alert('Janus initialized');
+
      }
    });
     var echotest = null;
@@ -67,7 +68,7 @@ export class CameraComponent implements OnInit {
 
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
-
+    var deviceList =[];
 
 
 
@@ -76,20 +77,29 @@ export class CameraComponent implements OnInit {
         if (device.kind === 'videoinput') {
           console.log('each device:::', device);
           alert(device.deviceId);
+          deviceList.push(device);
         }
     });
-    return devices;
+
+    if (deviceList.length > 1) {
+      restartCapture(deviceList[1].deviceId);
+    }
   }
 
-  function restartCapture() {
+function closeJanus() {
+  janus.destroy();
+}
+
+
+  function restartCapture(iidd) {
   	// Negotiate WebRTC
-  	var body = { "audio": false, "video": true };
+    var body = { "audio": false, "video": true,  };
   	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
   	echotest.send({"message": body});
   	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
 
-  	var videoDeviceId = 12;
-
+  	var videoDeviceId = iidd;
+    
   	echotest.createOffer(
   		{
   			// We provide a specific device ID for both audio and video
@@ -99,7 +109,8 @@ export class CameraComponent implements OnInit {
   						exact: videoDeviceId
   					}
   				},
-  				replaceVideo: true,	// This is only needed in case of a renegotiation
+  				replaceVideo: true,
+          audio:false,	// This is only needed in case of a renegotiation
   				data: true	// Let's negotiate data channels as well
   			},
   			// If you want to test simulcasting (Chrome and Firefox only), then
@@ -137,14 +148,15 @@ export class CameraComponent implements OnInit {
               janus.attach({
                 plugin: "janus.plugin.echotest",
                 success: function(pluginHandle) {
-                  var devices = Janus.listDevices(initDevices);
+                  Janus.listDevices(initDevices);
                   // Plugin attached! 'pluginHandle' is our handle
                   echotest = pluginHandle;
                   // Negotiate WebRTC
-									var body = { "audio": false, "video": true };
+									var body = { "audio": false, "video": true, "data": true };
 									Janus.debug("Sending message (" + JSON.stringify(body) + ")");
 									echotest.send({"message": body});
 									Janus.debug("Trying a createOffer too (audio/video sendrecv)");
+
 									echotest.createOffer({
 											// No media provided: by default, it's sendrecv for audio and video
 											media: {
@@ -158,8 +170,8 @@ export class CameraComponent implements OnInit {
 											simulcast: doSimulcast,
 											success: function(jsep) {
 
-                        // Janus.listDevices(initDevices);
 
+                        console.log('deviceList::', deviceList);
 
                         Janus.debug("Got SDP!");
 												Janus.debug('Janus.debug:::::', jsep);
@@ -172,13 +184,13 @@ export class CameraComponent implements OnInit {
 
 
 
-
                 },
                 error: function(cause) {
                         // Couldn't attach to the plugin
                         console.log("error:::", cause);
                 },
                 consentDialog: function(on) {
+
                         // e.g., Darken the screen if on=true (getUserMedia incoming), restore it otherwise
                 },
                 onmessage: function(msg, jsep) {
@@ -277,19 +289,19 @@ export class CameraComponent implements OnInit {
   }
 
   ngOnInit() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        console.log('stream::::', stream);
-      })
-      .catch(function(err) {
-        /* handle the error */
-      });
-
+    // navigator.mediaDevices.getUserMedia({ video: true })
+    //   .then(function(stream) {
+    //     console.log('stream::::', stream);
+    //   })
+    //   .catch(function(err) {
+    //   });
     this.configureJanus()
   }
 
 
+ngOnDestroy() {
 
+}
 
 
 }

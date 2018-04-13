@@ -4,6 +4,7 @@ import { SessionService } from '../session/session.service';
 
 import { Vimeo } from '../model/vimeo.model';
 
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-session-close',
@@ -12,15 +13,20 @@ import { Vimeo } from '../model/vimeo.model';
 })
 export class SessionCloseComponent implements OnInit {
 
+  activatedHelp: boolean = false;
   sessionId: string;
   binaryData = null;
-  vimeoUser: string;
-  vimeoPassword: string;
-
+  vimeouser: string = undefined;
+  vimeopassword: string = undefined;
+  formatedDate: string = 'undefined';
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
 
   constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
+
+  setHelpStatus() {
+    this.activatedHelp = !this.activatedHelp;
+  }
 
   ngOnInit() {
     this.sessionId = this.route.snapshot.params['id'];
@@ -31,8 +37,14 @@ export class SessionCloseComponent implements OnInit {
         (response) => {
           console.log(response);
           this.currentSession = response.json();
-          this.vimeoUser = this.currentSession.vimeo['username'];
-          this.vimeoPassword = this.currentSession.vimeo['password'];
+
+          let dateOk = new Date(this.currentSession.date);
+          let niceDate = moment(dateOk).locale('es').format('L');
+
+          this.formatedDate = niceDate;
+          this.vimeouser = this.currentSession.vimeo['username'];
+          this.vimeopassword = this.currentSession.vimeo['password'];
+
         }
       );
 
@@ -43,9 +55,6 @@ export class SessionCloseComponent implements OnInit {
           this.binaryData = response['_body'];
         }
       )
-
-
-
   }
 
   onCloseSession() {
@@ -53,7 +62,7 @@ export class SessionCloseComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('close session', response);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/session']);
         }
       )
   }
