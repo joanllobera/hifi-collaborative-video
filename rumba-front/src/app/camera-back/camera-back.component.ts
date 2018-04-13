@@ -43,7 +43,7 @@ export class CameraBackComponent implements OnInit {
 
   configureJanus() {
 
-    var server = 'https://192.168.10.252:8080/janus',;
+    var server = 'https://192.168.10.252:8080/janus';
 
     var janus = null;
     var echotest = null;
@@ -86,7 +86,7 @@ export class CameraBackComponent implements OnInit {
               }
             });
 
-          // iidd = deviceList[1].deviceId;          
+          // iidd = deviceList[1].deviceId;
         } else {
           iidd = deviceList[0].deviceId;
         }
@@ -156,7 +156,6 @@ export class CameraBackComponent implements OnInit {
 								plugin: "janus.plugin.echotest",
 								opaqueId: opaqueId,
 								success: function(pluginHandle) {
-									$('#details').remove();
 									echotest = pluginHandle;
 									Janus.log("Plugin attached! (" + echotest.getPlugin() + ", id=" + echotest.getId() + ")");
 									// Enumerate devices: that's what we're here for
