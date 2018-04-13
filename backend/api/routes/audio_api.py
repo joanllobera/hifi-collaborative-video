@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify
 from pymongo import MongoClient
 
 from core.helpers.loggers import LoggerHelper
+from core.services.audio_manager import AudioManager
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
@@ -27,3 +28,19 @@ def get_mic_state():
         status = db_entry['state']
     LOGGER.info("Microphone state request successfully finished: [state={}]".format(status))
     return jsonify({'state': status}),200
+
+
+@AUDIO_API.route("/record/start", methods=["PUT"])
+def record_audio():
+    LOGGER.info("Received request for recording microphone.")
+    session_path = "/tmp/"
+    timestamp = AudioManager.get_instance().record_audio(session_path)
+    print("timestamp")
+    print(timestamp)
+    return jsonify({"timestamp" : str(timestamp)}), 204
+
+@AUDIO_API.route("/record/stop", methods=["PUT"])
+def stop_audio():
+    LOGGER.info("Received request for stoping microphone.")
+    AudioManager.get_instance().stop_audio()
+    return "", 204

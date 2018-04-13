@@ -8,6 +8,7 @@ from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
 from core.model.video import Video
+from core.services.audio_manager import AudioManager
 from core.services.fs_manager import FileSystemService
 
 LOGGER = LoggerHelper.get_logger("session_manager", "session_manager.log")
@@ -63,6 +64,8 @@ class SessionManager(object):
             # Secondly we create the working directory.
             dir_path = FileSystemService.get_instance().create_session_directory(
                 band=session_info['band'])
+            # we start to record audio
+            initial_timestmap = AudioManager.get_instance().record_audio(dir_path)
         except Exception as ex:
             LOGGER.exception("Error creating session  - ")
             raise ex
@@ -71,7 +74,7 @@ class SessionManager(object):
             session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
                                    date=session_info['date'], is_public=session_info['is_public'],
                                    folder_url=dir_path, active=True, vimeo=session_info['vimeo'],
-                                   location=session_info['location']).save()
+                                   location=session_info['location'], audio_timestamp=str(initial_timestmap)).save()
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))
@@ -163,6 +166,7 @@ class SessionManager(object):
         if not session['active']:
             raise IllegalSessionStateException("Only active sessions can be stopped.")
         db_session = RumbaSession.objects(id=session_id).first()
+        AudioManager.get_instance().stop_audio()
         db_session.update(set__active=False)
         LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
 
