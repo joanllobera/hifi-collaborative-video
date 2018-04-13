@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   { path: 'session', component: SessionComponent },
   { path: 'sessionClose/:id', component: SessionCloseComponent},
   { path: 'videos', component: VideosComponent },
-  { path: 'camera', component: CameraComponent },
+  // { path: 'camera', component: CameraComponent },
   { path: 'camera-back', component: CameraBackComponent },
   { path: 'editor', component: EditorComponent }
 ];
