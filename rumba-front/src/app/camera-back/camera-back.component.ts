@@ -62,25 +62,31 @@ export class CameraBackComponent implements OnInit {
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
 
-// Helper method to prepare a UI selection of the available devices
-function initDevices(devices) {
-  var deviceList = [];
-	devices.forEach(function(device) {
+    // Helper method to prepare a UI selection of the available devices
+    function initDevices(devices) {
+      var deviceList = [];
+    	devices.forEach(function(device) {
 
-    if (device.kind === 'videoinput') {
-      console.log('device::::', device);
-      deviceList.push(device);
+        if (device.kind === 'videoinput') {
+          console.log('device::::', device);
+          deviceList.push(device);
+        }
+
+    	});
+
+    	restartCapture(deviceList);
     }
-
-	});
-
-	restartCapture(deviceList);
-}
 
     function restartCapture(deviceList) {
         var iidd = undefined;
         if (deviceList.length > 1) {
-          iidd = deviceList[1].deviceId;
+            deviceList.forEach(function(each){
+              if (each.label.match('back')) {
+                iidd = each.deviceId;
+              }
+            });
+
+          // iidd = deviceList[1].deviceId;          
         } else {
           iidd = deviceList[0].deviceId;
         }
