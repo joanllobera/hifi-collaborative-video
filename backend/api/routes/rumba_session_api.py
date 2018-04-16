@@ -17,6 +17,7 @@ from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import SessionValidator, FilesValidator
+from core.services.audio_manager import AudioManager
 from core.services.session_manager import SessionManager
 from core.services.video.video_manager import VideoManager
 
@@ -294,7 +295,6 @@ def list_all_session_videos(session_id):
         LOGGER.exception("Listing session videos request finished with errors: ")
         raise NotFound(ne)
 
-
 @SESSION_MANAGER_API.route("/<session_id>/videos", methods=["GET"])
 def list_session_videos(session_id):
     """
@@ -319,4 +319,19 @@ def list_session_videos(session_id):
         raise BadRequest(ve)
     except NotExistingResource as ne:
         LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ne)
+
+@SESSION_MANAGER_API.route("/<session_id>/audio/ts", methods=["GET"])
+def get_audio_init_ts(session_id):
+    LOGGER.info("Received request for getting the initial timestamp of the session audio. [session_id={}]".format(
+        session_id))
+    try:
+        ts = AudioManager.get_instance().get_audio_init_ts(session_id)
+        LOGGER.info("Getting initial timestamp request succesfully finished")
+        return jsonify({"timestmap": ts})
+    except ValueError as ve:
+        LOGGER.exception("Getting initial timestamp of audio request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Getting initial timestamp of audio request finished with errors: ")
         raise NotFound(ne)
