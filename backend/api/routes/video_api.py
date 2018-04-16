@@ -1,7 +1,8 @@
 from flask import Blueprint, send_file, session, jsonify
 from pymongo import MongoClient
-from werkzeug.exceptions import Conflict
+from werkzeug.exceptions import Conflict, BadRequest, NotFound
 
+from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.services.video.video_manager import VideoManager
@@ -44,3 +45,21 @@ def add_video_to_active_session():
         LOGGER.info("Request for adding a video to the active session finished with errors -")
         raise Conflict(ie)
 
+
+@VIDEO_API.route("/<video_id>/ts", methods=["GET"])
+def get_video_initial_ts(video_id):
+    """
+
+    :return:
+    """
+    LOGGER.info("Received request for getting the video initial ts.")
+    try:
+        ts = VideoManager.get_instance().get_initial_ts(video_id)
+        LOGGER.info("Request for getting the initial ts of a video sucessfully finished.")
+        return jsonify({"timestamp": ts}),200
+    except ValueError as ve:
+        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        raise NotFound(ne)
