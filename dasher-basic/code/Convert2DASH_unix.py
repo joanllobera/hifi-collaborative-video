@@ -23,6 +23,8 @@ import os
 import platform
 import shutil
 import sys
+import uuid
+from os import mkdir
 
 import ProgressConversion
 import config as Config
@@ -77,7 +79,8 @@ def convertVideo(inputFile, outputSource, resolution, bitrate, segmentLength):
 
     str_res = ("%sx%s") % (str(resolution_size[0]), str(resolution_size[1]))
 
-    OUTPUT_NAME = inputSource + "_" + str_res + "_" + bitrate
+    #OUTPUT_NAME = inputSource + "_" + str_res + "_" + bitrate
+    OUTPUT_NAME = "video"
     output_target = "%s/%s" % (outputSource, OUTPUT_NAME)
 
     print("")
@@ -127,7 +130,10 @@ class Dasher:
             exit(-1)
         inputFile = sys.argv[1]
         outputDirectory = sys.argv[2]
-        outputTemp = "/tmp"
+        random_uuid = uuid.uuid4().hex
+        outputTemp = sys.argv[2]
+        #outputTemp = "/tmp/{}".format(random_uuid)
+        #mkdir(outputTemp)
         # inputPath = "C://dasher-basic//input"
         # inputPath = "/home/adrian/code/rumba/dasher-basic/input"
         # inputSource = "video"
@@ -141,3 +147,4 @@ class Dasher:
 
         output_name = convertVideo(inputFile, outputTemp, resolution, bitrate, segmentLength)
         dashVideo(segmentLength, outputTemp, output_name, outputDirectory)
+
