@@ -22,7 +22,25 @@ export class SessionCloseComponent implements OnInit {
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
 
+
+  isImageLoading: boolean = false;
+
   constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
+
+  imageToShow: any;
+
+  createImageFromBlob(image: Blob) {
+     let reader = new FileReader();
+     reader.addEventListener("load", () => {
+        this.imageToShow = reader.result;
+     }, false);
+
+     if (image) {
+        reader.readAsDataURL(image);
+     }
+  }
+
+
 
   setHelpStatus() {
     this.activatedHelp = !this.activatedHelp;
@@ -52,10 +70,13 @@ export class SessionCloseComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('getLogoById::', response);
-          this.binaryData = response['_body'];
+          // this.binaryData = response['_body'];
+          this.binaryData = response.blob();
+          this.createImageFromBlob(this.binaryData);
         }
       )
   }
+
 
   onCloseSession() {
     this.sessionSrv.closeSession(this.sessionId)
