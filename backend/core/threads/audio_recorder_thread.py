@@ -29,6 +29,8 @@ class AudioRecorderThread(Thread):
         while self.recording:
             data = self.stream.read(CHUNK)
             self.frames.append(data)
+        self.stop()
+        return
 
 
     def stop(self):
@@ -42,3 +44,6 @@ class AudioRecorderThread(Thread):
         waveFile.setframerate(RATE)
         waveFile.writeframes(b''.join(self.frames))
         waveFile.close()
+        self.audio.terminate()
+        self.frames = []
+        self.stream = None

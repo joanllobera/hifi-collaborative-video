@@ -38,5 +38,4 @@ class AudioManager(object):
         audio_thread = VideoThreadsRepository.get_instance().get_audio_thread()
         audio_thread.recording = False
         time.sleep(1)
-        audio_thread.stop()
         VideoThreadsRepository.get_instance().remove_audio_thread()
