@@ -2,7 +2,7 @@ video {
   width: 100%;
   height: 400px;
 
-    background:transparent url('/assets/logo/rumba-home.png') no-repeat 0 0;
+    background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
    -webkit-background-size:cover;
    -moz-background-size:cover;
    -o-background-size:cover;
@@ -15,8 +15,8 @@ video {
 
 .oneVideo img {
   display: inline-block;
-  width:100px;
-  height: 100px;
+  width:80px;
+  height: 80px;
   transition: opacity .3s;
 }
 
