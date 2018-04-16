@@ -1,24 +1,26 @@
 <div>
-  <video height="400" width="auto" controls>
+  <video controls>
     <source src="https://www.youtube.com/watch?v=MPV7JXTWPWI">
   </video>
   <div class="row">
     <div class="col">
-      <button class="btn btn-xs btn-danger float-right right1">SEGÜENT</button>
+      <!-- <button class="btn btn-xs btn-danger float-right right1">SEGÜENT</button> -->
+
+      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1">SEGÜENT</button>
+
     </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col">
-    <div class="allVideos">
+    <div class="allVideos top1">
       <div class="video-container">
         <div class="regla">
 
         </div>
         <div class="oneVideo" #onevideo>
           <div (click)="onSelectFrame($event)" class="iframe">
-
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
             <img src="assets/logo/rumba-home.png" alt="foto" />
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
@@ -31,8 +33,6 @@
         </div>
         <div class="oneVideo">
           <div (click)="onSelectFrame($event)" class="iframe">
-
-
             <img src="assets/logo/rumba-home.png" alt="foto" />
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
             <img src="assets/logo/rumba-home.png" alt="foto" />
@@ -43,10 +43,8 @@
               <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
           </div>
         </div>
-
         <div class="oneVideo">
           <div (click)="onSelectFrame($event)" class="iframe">
-
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
             <img src="assets/logo/rumba-home.png" alt="foto" />
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
@@ -59,8 +57,6 @@
         </div>
         <div class="oneVideo">
           <div (click)="onSelectFrame($event)" class="iframe">
-
-
             <img src="assets/logo/rumba-home.png" alt="foto" />
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
             <img src="assets/logo/rumba-home.png" alt="foto" />
@@ -71,7 +67,6 @@
               <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
           </div>
         </div>
-
       </div>
     </div>
   </div>

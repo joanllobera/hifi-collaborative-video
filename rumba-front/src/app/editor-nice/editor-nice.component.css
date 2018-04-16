@@ -1,13 +1,23 @@
 video {
   width: 100%;
-  height: 250px;
+  height: 400px;
+
+    background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
+   -webkit-background-size:cover;
+   -moz-background-size:cover;
+   -o-background-size:cover;
+   background-size:cover;
 }
 
+.video-disabled {
+  opacity: .7;
+}
 
 .oneVideo img {
   display: inline-block;
-  width:100px;
-  height: 100px;
+  width:80px;
+  height: 80px;
+  transition: opacity .3s;
 }
 
 
