@@ -115,3 +115,10 @@ class FilesValidator(object):
         return '.' in filename and \
                filename.rsplit('.', 1)[1].lower() in FilesValidator.ALLOWED_EXTENSIONS
 
+
+class VideoValidator(object):
+
+    @staticmethod
+    def validate_video_edit_info(edit_info):
+        # TODO implement this method.
+        return True
