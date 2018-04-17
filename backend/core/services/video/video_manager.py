@@ -155,7 +155,7 @@ class VideoManager(object):
         video = Video.objects(id=video_id).first()
         if video is None:
             raise NotExistingResource("There's no video with such id.")
-        thumbs_path = path.dirname(video['video_path']) + "/thumbs"
+        thumbs_path = video['video_path'] + "/thumbs"
         zipbuffer = FileSystemService.get_instance().zip_directory(dir_url=thumbs_path,
                                                                    zip_name=video['name'])
         LOGGER.info("Video Thumbs successfully collected in ZIP file")
