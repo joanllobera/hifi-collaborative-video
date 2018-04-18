@@ -25,6 +25,8 @@ class VideoEditorHelper(object):
             ":", ".")
         video_slice_info['outpoint'] = str(datetime.timedelta(seconds=video_info['end'])).replace(
             ":", ".")
+        video_slice_info['inpoint'] = video_slice_info['inpoint'][-2:] + ".00"
+        video_slice_info['outpoint'] = video_slice_info['outpoint'][-2:] + ".00"
         return video_slice_info
 
     @staticmethod

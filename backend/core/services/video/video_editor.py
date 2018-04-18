@@ -14,7 +14,6 @@ class VideoEditor(object):
 
     __instance = None
 
-
     def __init__(self):
         if VideoEditor.__instance is not None:
             raise Exception("This class is a singleton.")
@@ -35,7 +34,7 @@ class VideoEditor(object):
         :return:
         """
         self.__validate_video_edition_input__(session_id, edit_info)
-        edit_info_filename = self.__prepare_video_edition__()
+        edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info)
         video_path = self.__create_video__(edit_info_filename)
         # TODO this path should be https://blabla/blabla.mp4
         return video_path
