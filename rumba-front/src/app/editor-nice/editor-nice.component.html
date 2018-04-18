@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col">
 
-      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1">SEGÜENT</button>
+      <button (click)="onGetThumbnails()" type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1">SEGÜENT</button>
 
     </div>
   </div>
@@ -18,44 +18,9 @@
         <div class="regla">
 
         </div>
-        <div class="oneVideo" #onevideo>
+        <div class="oneVideo" *ngIf="list">
           <div (click)="onSelectFrame($event)" class="iframe">
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-          </div>
-        </div>
-        <div class="oneVideo">
-          <div (click)="onSelectFrame($event)" class="iframe">
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
-            <img src="assets/logo/rumba-home.png" alt="foto" />
-            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img *ngFor="let url of list;let i = index" [src]="url" alt="foto" />
           </div>
         </div>
         <div class="oneVideo">
@@ -178,6 +143,46 @@
             <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
           </div>
         </div>
+        <!-- <div class="oneVideo">
+          <div (click)="onSelectFrame($event)" class="iframe">
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+          </div>
+        </div>
+        <div class="oneVideo">
+          <div (click)="onSelectFrame($event)" class="iframe">
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+            <img src="assets/logo/rumba-home.png" alt="foto" />
+            <img src="assets/logo/rumba_logo-v2.png" alt="foto" />
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
