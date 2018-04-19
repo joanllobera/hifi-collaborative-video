@@ -13,11 +13,15 @@ import * as FileSaver from 'file-saver';
 export class EditorNiceComponent implements OnInit {
 
   singleList: any[] = [];
-  list: any[] = [];
   listOfLists: any[] = [];
   allVideos: any = undefined;
+  delta: number[] = [];
 
-  constructor(private videoService: VideosServiceService) { }
+constructor(private videoService: VideosServiceService) { }
+
+  setStyle(dif: number) {
+    return dif * 80;
+  }
 
   ngOnInit() {
     this.getAllVideos();
@@ -26,16 +30,23 @@ export class EditorNiceComponent implements OnInit {
 
   getAllVideos() {
     this.listOfLists = [];
-    this.list = [];
     this.videoService.getAllVideos()
       .subscribe(
         (response) => {
           // console.log(response);
           this.allVideos = response;
-          this.allVideos.forEach((each) => {
-            console.log('eachVideo', each);
+          this.allVideos.forEach((each, index) => {
+            console.log('eachVideo :::' + index, each);
+            if (index > 0) {
+              var dif = each.ts - this.allVideos[index-1].ts;
+              this.delta.push(dif);
+              console.log('videoNum '+index+' amb dif de ', dif);
+            } else {
+              this.delta.push(0);
+            }
             this.onGetThumbnailsMany(each.video_id);
           });
+          console.log('this.delta:::', this.delta);
         }
       );
   }
