@@ -1,6 +1,10 @@
 import subprocess
 from threading import Thread
 
+from core.helpers.loggers import LoggerHelper
+
+LOGGER = LoggerHelper.get_logger("video_editor", "video_editor.log")
+
 
 class VideoEditorThread(Thread):
 
@@ -13,10 +17,13 @@ class VideoEditorThread(Thread):
         super(VideoEditorThread, self).__init__()
         self.edition_info_filename = edition_info_file
         self.output_file = output_file
-        self.command = "ffmpeg -i concat -i {} {}".format(self.edition_info_filename,
+        self.command = "ffmpeg -f concat -safe 0 -i {} {}".format(self.edition_info_filename,
                                                           self.output_file)
 
     def run(self):
+        LOGGER.info("VideoEditorThread: Cutting and concataniting video slices.")
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
         process.wait(timeout=180)
         self.code = process.returncode
+        LOGGER.info("VideoEditorThread: Ffmpeg command finished with following code: {}"
+                    .format(self.code))

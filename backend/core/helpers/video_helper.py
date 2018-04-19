@@ -4,6 +4,8 @@ from copy import copy
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.model.video import Video
+from core.services.audio_manager import AudioManager
+from core.services.video.video_manager import VideoManager
 
 
 class VideoEditorHelper(object):
@@ -59,3 +61,29 @@ class VideoEditorHelper(object):
             f.write("outpoint {}\n".format(video_slice['outpoint']))
         f.close()
         return filename
+
+    @staticmethod
+    def get_first_video_ts(edit_info):
+        """
+
+        :param edit_info:
+        :return:
+        """
+        if edit_info is None or type(edit_info) != dict:
+            raise ValueError("Expected a dictionary as parameter.")
+        video_info = edit_info['videos_slices'][0]
+        ts = VideoManager.get_instance().get_initial_ts(video_id=video_info['id'])
+        updated_ts = float(ts) + float(video_info['init'])
+        return str(updated_ts)
+
+    @staticmethod
+    def calculate_audio_init_offset(session_id, video_init_ts):
+        """
+
+        :param session_id:
+        :return:
+        """
+        audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
+        offset = float(video_init_ts) - float(audio_init_ts)
+        offset = round(offset, 3)
+        return str(offset)

@@ -14,7 +14,7 @@ class ThumbsCreatorThread(Thread):
         super(ThumbsCreatorThread, self).__init__()
         self.video_path = video_path
         self.output_path = path.dirname(self.video_path) + "/thumbs"
-        self.command = "ffmpeg -i " + self.video_path + " -vf fps=1 " + self.output_path + "/out%d.jpg && sleep 20"
+        self.command = "ffmpeg -i " + self.video_path + " -vf fps=1 " + self.output_path + "/out%03d.jpg && sleep 20"
 
     def run(self):
         mkdir(self.output_path)

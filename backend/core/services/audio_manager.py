@@ -43,7 +43,8 @@ class AudioManager(object):
         time.sleep(1)
         VideoThreadsRepository.get_instance().remove_audio_thread()
 
-    def get_audio_init_ts(self, session_id):
+    @staticmethod
+    def get_audio_init_ts(session_id):
         """
 
         :return:
@@ -54,4 +55,3 @@ class AudioManager(object):
             raise NotExistingResource("No session with such id.")
         ts = session['audio_timestamp']
         return ts
-
