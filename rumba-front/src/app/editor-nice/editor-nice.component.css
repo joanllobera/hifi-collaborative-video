@@ -2,35 +2,41 @@ video {
   width: 100%;
   height: 400px;
 
-    background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
-   -webkit-background-size:cover;
-   -moz-background-size:cover;
-   -o-background-size:cover;
-   background-size:cover;
+  background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
 }
 
 .video-disabled {
   opacity: .7;
 }
 
-.oneVideo > div img {
+.oneVideo > div.iframe > img {
   display: inline-block;
   width:80px;
   height: 80px;
   transition: opacity .3s;
 }
 
-
 .selectedImg {
   border:red 2px solid;
   opacity: .5;
   background-color: red;
 }
+
 .oneVideo {
-  padding:.2em;
+  padding:.1em;
+  display:block;
+}
+
+.ifame {
+  display:block;
 }
 
 .video-container {
+
   padding: .3em;
   overflow-x: auto;
    white-space: nowrap;
