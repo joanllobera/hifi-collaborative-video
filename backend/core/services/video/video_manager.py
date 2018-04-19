@@ -100,8 +100,9 @@ class VideoManager(object):
                 session_video['ts'] = self.get_initial_ts(video_id=session_video['video_id'])
             except Exception:
                 LOGGER.warn("Could not retrieve timestmap of video. Skipping it...")
-        LOGGER.info("Retrieved {} videos for session {}".format(len(session_videos), session_id))
-        return session_videos
+        ordered_list = sorted(session_videos, key=lambda x: float(x['ts']))
+        LOGGER.info("Retrieved {} videos for session {}".format(len(ordered_list), session_id))
+        return ordered_list
 
     def list_session_videos(self, session_id, user_id):
         """
