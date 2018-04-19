@@ -95,6 +95,11 @@ class VideoManager(object):
         session = SessionManager.get_instance().get_session(session_id=session_id)
         videos = Video.objects(session=session['id'])
         session_videos = DataTransformer.generate_video_list_view(session=session, db_videos=videos)
+        for session_video in session_videos:
+            try:
+                session_video['ts'] = self.get_initial_ts(video_id=session_video['video_id'])
+            except Exception:
+                LOGGER.warn("Could not retrieve timestmap of video. Skipping it...")
         LOGGER.info("Retrieved {} videos for session {}".format(len(session_videos), session_id))
         return session_videos
 

@@ -1,13 +1,10 @@
-import configparser
 
-from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
-from core.model.video import Video
 from core.services.audio_manager import AudioManager
 from core.services.fs_manager import FileSystemService
 

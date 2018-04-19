@@ -68,8 +68,6 @@ class VideoEditor(object):
         audio_path = "{}/audio.wav".format(session['folder_url'])
         video_init_ts = VideoEditorHelper.get_first_video_ts(edit_info=edit_info)
         audio_init_offset = VideoEditorHelper.calculate_audio_init_offset(session_id=session_id, video_init_ts=video_init_ts)
-        print("vamosaver")
-        print(audio_init_offset)
         ffmpeg_audio_init_offset = DataTransformer.transform_seconds_to_ffmpeg_offset(float(audio_init_offset))
         end_ts = None  # TODO implement it
         audio_output = "{}/audio-{}.wav".format(session['folder_url'], uuid.uuid4().hex)
