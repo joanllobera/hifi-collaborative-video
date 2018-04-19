@@ -12,25 +12,45 @@ import * as FileSaver from 'file-saver';
 })
 export class EditorNiceComponent implements OnInit {
 
-  urls: any = undefined;
+  singleList: any[] = [];
   list: any[] = [];
-  check: any = undefined;
-
-
+  listOfLists: any[] = [];
+  allVideos: any = undefined;
 
   constructor(private videoService: VideosServiceService) { }
 
   ngOnInit() {
-    //this.onGetThumbnails();
+    this.getAllVideos();
+    this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
   }
 
+  getAllVideos() {
+    this.listOfLists = [];
+    this.list = [];
+    this.videoService.getAllVideos()
+      .subscribe(
+        (response) => {
+          // console.log(response);
+          this.allVideos = response;
+          this.allVideos.forEach((each) => {
+            console.log('eachVideo', each);
+            this.onGetThumbnails22(each.video_id);
+          });
+        }
+      );
+  }
+
+  getThumbInfo(event: Event) {
+    console.log(event);
+  }
 
   onSelectFrame(event) {
     event.target.classList.toggle('selectedImg');
   }
 
-  onGetThumbnails() {
-    this.videoService.getThunmbnailsFromVideo()
+  onGetThumbnails(id:string) {
+    this.singleList = [];
+    this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
           var new_zip = new JSZip();
@@ -38,7 +58,50 @@ export class EditorNiceComponent implements OnInit {
           .then(
             (zip) => {
 
-              var sortedObject = [];
+              let zipFiles = zip.files;
+              const ordered = {};
+              Object.keys(zipFiles).sort().forEach(function(key) {
+                ordered[key] = zipFiles[key];
+              });
+
+
+              for (var prop in ordered) {
+                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
+                let reader = new FileReader();
+                reader.addEventListener("load", () => {
+                  if (reader.result != "") {
+                    this.singleList.push(reader.result);
+                  }
+                }, false);
+                if (blob) {
+                   reader.readAsDataURL(blob);
+                }
+              }
+          });
+
+          // download zip file
+          // let fileName = "QCPReport.zip";
+          // FileSaver.saveAs(response, fileName);
+
+        },
+        (error) => {
+          console.log('error::::', error);
+        }
+      );
+
+  }
+
+
+  onGetThumbnails22(id:string) {
+    var temp = [];
+    this.videoService.getThunmbnailsFromVideo(id)
+      .subscribe(
+        (response) => {
+          var new_zip = new JSZip();
+          new_zip.loadAsync(response)
+          .then(
+            (zip) => {
+
               let zipFiles = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
@@ -50,18 +113,25 @@ export class EditorNiceComponent implements OnInit {
                 let reader = new FileReader();
                 reader.addEventListener("load", () => {
                   if (reader.result != "") {
-                    this.list.push(reader.result);
+                    temp.push(reader.result);
                   }
                 }, false);
                 if (blob) {
                    reader.readAsDataURL(blob);
                 }
               }
+
+              this.listOfLists.push(temp);
+              console.log('this.listOfLists::::', this.listOfLists);
+
+
+
           });
 
+
           // download zip file
-          let fileName = "QCPReport.zip";
-          FileSaver.saveAs(response, fileName);
+          // let fileName = "QCPReport.zip";
+          // FileSaver.saveAs(response, fileName);
 
         },
         (error) => {
@@ -69,7 +139,10 @@ export class EditorNiceComponent implements OnInit {
         }
       );
 
+
   }
+
+
 
 
 }

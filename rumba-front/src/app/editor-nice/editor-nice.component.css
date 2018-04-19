@@ -13,7 +13,7 @@ video {
   opacity: .7;
 }
 
-.oneVideo img {
+.oneVideo > div img {
   display: inline-block;
   width:80px;
   height: 80px;
@@ -22,7 +22,7 @@ video {
 
 
 .selectedImg {
-  border:red 5px solid;
+  border:red 2px solid;
   opacity: .5;
   background-color: red;
 }
