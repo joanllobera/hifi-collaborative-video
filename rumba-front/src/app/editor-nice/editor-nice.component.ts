@@ -34,7 +34,7 @@ export class EditorNiceComponent implements OnInit {
           this.allVideos = response;
           this.allVideos.forEach((each) => {
             console.log('eachVideo', each);
-            this.onGetThumbnails22(each.video_id);
+            this.onGetThumbnailsMany(each.video_id);
           });
         }
       );
@@ -92,7 +92,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
 
-  onGetThumbnails22(id:string) {
+  onGetThumbnailsMany(id:string) {
     var temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
