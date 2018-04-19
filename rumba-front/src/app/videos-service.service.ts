@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Video } from './model/video.model';
 import { Vimeo } from './model/vimeo.model';
 
-import * as JSZip from 'jszip';
 import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/Rx';  //needed for .map()
@@ -26,13 +25,16 @@ export class VideosServiceService {
     return this.listOfVideos.slice();
   }
 
-  getThunmbnailsFromVideo() {
-    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + '5ad4b5fdc94b4c6bc260dd3c' + '/thumbs', {observe: 'body', responseType: 'blob'}).map(
+  getThunmbnailsFromVideo(id:string) {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + id + '/thumbs', {observe: 'body', responseType: 'blob'}).map(
         (response) => {
-          console.log(response);
           return response;
         }
       );
+  }
+
+  getAllVideos() {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + '5ad09d5ec94b4c7adb5dbe27' + '/videos/all', {observe: 'body', responseType: 'json'});
   }
 
 
