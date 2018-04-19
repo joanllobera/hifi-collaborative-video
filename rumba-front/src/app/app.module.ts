@@ -25,7 +25,7 @@ import { EditorComponent } from './editor/editor.component';
 import { CameraBackComponent } from './camera-back/camera-back.component';
 import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
-
+import { VideosServiceService } from './videos-service.service';
 
 
 @NgModule({
@@ -56,7 +56,8 @@ import { EditorNiceComponent } from './editor-nice/editor-nice.component';
   ],
   providers: [
     SessionService,
-    RecordService
+    RecordService,
+    VideosServiceService
   ],
   bootstrap: [AppComponent]
 })

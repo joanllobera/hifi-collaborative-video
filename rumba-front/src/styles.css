@@ -9,6 +9,7 @@ body, html {
    margin: 0;
    width: vh;
    height: vw;
+   overflow-x: hidden;
  }
 
 /* fonts for all app*/

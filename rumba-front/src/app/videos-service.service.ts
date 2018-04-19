@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { Video } from './model/video.model';
 import { Vimeo } from './model/vimeo.model';
 
+import { HttpClient } from '@angular/common/http';
+
+import 'rxjs/Rx';  //needed for .map()
+
+import { AppConfig } from './app-config';
+import { Http, ResponseContentType } from '@angular/http';
+
 @Injectable()
 export class VideosServiceService {
 
@@ -12,10 +19,24 @@ export class VideosServiceService {
     new Video(3, 'Primavera Club', 'The Punsetes', 'Apolo', new Vimeo('aaa', 'bbb'))
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient, private http: Http) { }
 
   getVideos() {
     return this.listOfVideos.slice();
   }
+
+  getThunmbnailsFromVideo(id:string) {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + id + '/thumbs', {observe: 'body', responseType: 'blob'}).map(
+        (response) => {
+          return response;
+        }
+      );
+  }
+
+  getAllVideos() {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + '5ad09d5ec94b4c7adb5dbe27' + '/videos/all', {observe: 'body', responseType: 'json'});
+  }
+
+
 
 }
