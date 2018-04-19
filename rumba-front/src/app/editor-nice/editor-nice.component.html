@@ -29,8 +29,8 @@
 
         <div *ngFor="let oneList of listOfLists" class="oneVideo">
           <div (click)="onSelectFrame($event)" class="iframe">
-            <img (click)="getThumbInfo(event)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let i = index;">
-          </div>          
+            <img (click)="getThumbInfo($event)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let i = index;">
+          </div>
         </div>
 
 
