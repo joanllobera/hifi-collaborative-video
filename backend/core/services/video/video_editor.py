@@ -8,6 +8,7 @@ from core.helpers.validators import GenericValidator, VideoValidator
 from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
 from core.threads.audio_splitter_thread import AudioSplitterThread
+from core.threads.audio_video_mixer_thread import AudioVideoMixerThread
 from core.threads.video_editor_thread import VideoEditorThread
 
 LOGGER = LoggerHelper.get_logger("video_editor", "video_editor.log")
@@ -37,14 +38,14 @@ class VideoEditor(object):
         :return:
         """
         self.__validate_video_edition_input__(session_id, edit_info)
-        edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info)
+        edition_id = self.__generate_random_uuid__()
+        edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info, edition_id=edition_id)
         video_path = self.__create_video__(edit_info_filename)
-        final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path, edit_info=edit_info)
-        # TODO this path should be https://blabla/blabla.mp4
+        final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path, edit_info=edit_info, edition_id=edition_id)
         return final_video_path
 
 
-    def __merge_audio_and_video__(self, session_id, video_path, edit_info):
+    def __merge_audio_and_video__(self, session_id, video_path, edit_info, edition_id):
         """
 
         :param session_id:
@@ -52,8 +53,18 @@ class VideoEditor(object):
         :return:
         """
         LOGGER.info("Merging session audio with video.")
+        session = RumbaSession.objects(id=session_id).first()
+        if session is None:
+            raise NotExistingResource("There's no session with such id.")
         audio_file = self.__cut_audio__(session_id, edit_info)
-        LOGGER.info("Video and session audio merged.")
+        output_file = "{}/video-{}.mp4".format(session['folder_url'], edition_id)
+        mixer = AudioVideoMixerThread(audio_file=audio_file, video_file=video_path, output_file=output_file)
+        mixer.start()
+        mixer.join()
+        if mixer.code != 0:
+            raise Exception("Error merging video and audio.")
+        LOGGER.info("Video and session audio merged. [path={}]".format(output_file))
+        return output_file
 
     def __cut_audio__(self, session_id, edit_info):
         """
@@ -67,7 +78,9 @@ class VideoEditor(object):
             raise NotExistingResource("There's no session with such id.")
         audio_path = "{}/audio.wav".format(session['folder_url'])
         video_init_ts = VideoEditorHelper.get_first_video_ts(edit_info=edit_info)
+        print("First Video ts: {}".format(video_init_ts))
         audio_init_offset = VideoEditorHelper.calculate_audio_init_offset(session_id=session_id, video_init_ts=video_init_ts)
+        print("Audio offset: {}".format(audio_init_offset))
         ffmpeg_audio_init_offset = DataTransformer.transform_seconds_to_ffmpeg_offset(float(audio_init_offset))
         end_ts = None  # TODO implement it
         audio_output = "{}/audio-{}.wav".format(session['folder_url'], uuid.uuid4().hex)
@@ -96,7 +109,7 @@ class VideoEditor(object):
             LOGGER.exception("Error validating user input - ")
             raise ex
 
-    def __prepare_video_edition__(self, session_id, edit_info):
+    def __prepare_video_edition__(self, session_id, edit_info, edition_id):
         """
 
         :param session_id:
@@ -110,7 +123,7 @@ class VideoEditor(object):
                 raise NotExistingResource("This session does not exist.")
             video_slices = VideoEditorHelper.create_videoslices_info(edit_info)
             edit_info_filename = VideoEditorHelper.save_edit_info_to_file(
-                session_path=session["folder_url"], video_slices=video_slices)
+                session_path=session["folder_url"], video_slices=video_slices, edition_id=edition_id)
             return edit_info_filename
         except Exception as ex:
             LOGGER.exception("Error preparing video edition - ")
@@ -135,3 +148,6 @@ class VideoEditor(object):
         except Exception as ex:
             LOGGER.exception("Error creating video - ")
             raise ex
+
+    def __generate_random_uuid__(self):
+        return uuid.uuid4().hex

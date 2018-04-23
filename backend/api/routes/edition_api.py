@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import BadRequest
 
 from core.helpers.loggers import LoggerHelper
@@ -13,9 +13,8 @@ def build_video(session_id):
     LOGGER.info("Received request for editing a video.")
     try:
         edit_info = request.get_json(force=True)
-        VideoEditor.get_instance().edit_video(session_id=session_id, edit_info=edit_info)
-        return "",204
+        path = VideoEditor.get_instance().edit_video(session_id=session_id, edit_info=edit_info)
+        return jsonify({"path": path}), 200
     except ValueError as ve:
         LOGGER.exception("Request for editing video finished with errors - ")
         raise BadRequest(ve)
-

@@ -32,6 +32,27 @@ class VideoEditorHelper(object):
         return video_slice_info
 
     @staticmethod
+    def build_next_video_slice_information(video_id, initial_ts, end_ts):
+        """
+
+        :param video_info:
+        :return:
+        """
+        if video_id is None or initial_ts is None or end_ts is None:
+            raise ValueError("All parameters are mandatory.")
+        video = Video.objects(id=video_id).first()
+        if video is None:
+            raise NotExistingResource("There's no video with such id.")
+        video_slice_info = {}
+        video_slice_info['file'] = "{}/dasher-output/video.mp4".format(video['video_path'])
+        video_init = float(VideoManager.get_instance().get_initial_ts(video_id=video_id))
+        init_offset = float(initial_ts) - float(video_init)
+        end_offset = float(end_ts) - float(video_init)
+        video_slice_info['inpoint'] = str(datetime.timedelta(seconds=init_offset))
+        video_slice_info['outpoint'] = str(datetime.timedelta(seconds=end_offset))
+        return video_slice_info
+
+    @staticmethod
     def create_videoslices_info(edit_info):
         """
 
@@ -40,20 +61,49 @@ class VideoEditorHelper(object):
         """
         video_slices = []
         videos = copy(edit_info['videos_slices'])
+        prev_ts = -1
         for video in videos:
-            video_slice = VideoEditorHelper.build_next_video_slice_info(video_info=video)
+            ## if it's the first video, we don't have previous videos, so we just calculate
+            ## the video slice.
+            video_original_ts = VideoManager.get_instance().get_initial_ts(video_id=video['id'])
+            if prev_ts == -1:
+                initial_ts = float(video_original_ts) + float(video['init'])
+                end_ts = initial_ts + (float(video['end']) - float(video['init']))
+                print("Video {}".format(video['id']))
+                print("------------------------------")
+                print("Info: {}".format(video))
+                print("Original: \t{}".format(video_original_ts))
+                print("Fixed: \t\t{}".format(initial_ts))
+                print("End: \t\t{}".format(end_ts))
+                prev_ts = end_ts
+                video_slice = VideoEditorHelper.build_next_video_slice_information(video_id=video['id'],
+                                                                            initial_ts=initial_ts,
+                                                                            end_ts=end_ts)
+                print("Video_slice_info:{}".format(video_slice))
+            else:
+                initial_ts = prev_ts
+                end_ts = float(video_original_ts) + float(video['end']) + float(1)
+                print("Video {}".format(video['id']))
+                print("------------------------------")
+                print("Info: {}".format(video))
+                print("Original: \t{}".format(video_original_ts))
+                print("Fixed: \t\t{}".format(initial_ts))
+                print("End: \t\t{}".format(end_ts))
+                video_slice = VideoEditorHelper.build_next_video_slice_information(video_id=video['id'],
+                                                                            initial_ts=initial_ts,
+                                                                            end_ts=end_ts)
             video_slices.append(video_slice)
         return video_slices
 
     @staticmethod
-    def save_edit_info_to_file(session_path, video_slices):
+    def save_edit_info_to_file(session_path, video_slices, edition_id):
         """
 
         :param session_path:
         :param video_slices:
         :return:
         """
-        filename = "{}/edited-video-{}.txt".format(session_path, uuid.uuid4().hex)
+        filename = "{}/edited-video-{}.txt".format(session_path, edition_id)
         f = open(filename, "w")
         for video_slice in video_slices:
             f.write("file {}\n".format(video_slice['file']))
