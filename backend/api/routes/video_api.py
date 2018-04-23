@@ -45,7 +45,6 @@ def add_video_to_active_session():
         LOGGER.info("Request for adding a video to the active session finished with errors -")
         raise Conflict(ie)
 
-
 @VIDEO_API.route("/<video_id>/ts", methods=["GET"])
 def get_video_initial_ts(video_id):
     """
@@ -57,6 +56,25 @@ def get_video_initial_ts(video_id):
         ts = VideoManager.get_instance().get_initial_ts(video_id)
         LOGGER.info("Request for getting the initial ts of a video sucessfully finished.")
         return jsonify({"timestamp": ts}),200
+    except ValueError as ve:
+        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        raise NotFound(ne)
+
+@VIDEO_API.route("/<video_id>/stop", methods=['PUT'])
+def stop_video(video_id):
+    """
+
+    :param video_id:
+    :return:
+    """
+    LOGGER.info("Received request for stopping video.")
+    try:
+        VideoManager.get_instance().stop_video(video_id=video_id)
+        LOGGER.info("Request for stopping a video successfully finished.")
+        return "",204
     except ValueError as ve:
         LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
         raise BadRequest(ve)

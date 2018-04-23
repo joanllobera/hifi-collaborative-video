@@ -5,7 +5,7 @@ import configparser
 import os
 from os import path
 
-from core.exceptions.generic_exceptions import NotExistingResource
+from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.data_transformer import DataTransformer
 from core.helpers.loggers import LoggerHelper
@@ -123,6 +123,29 @@ class VideoManager(object):
         LOGGER.info("Retrieved {} videos for session {} and user {}".format
                     (len(session_videos), session_id, user_id))
         return session_videos
+
+    def stop_video(self, video_id):
+        """
+        
+        :param video_id:
+        :return:
+        """
+        LOGGER.info("Stopping video: [id={}]".format(video_id))
+        try:
+            GenericValidator.validate_id(video_id)
+            video = Video.objects(id=video_id).first()
+            if video is None:
+                raise NotExistingResource("No video with such id")
+            if video['finished']:
+                raise IllegalResourceState("The video is already stopped.")
+            video.update(set__finished=True)
+            LOGGER.info("Video stopped: [id={}]".format(video_id))
+        except ValueError as ve:
+            LOGGER.exception("Error validating video id: ")
+            raise ve
+        except Exception as ex:
+            LOGGER.exception("Error trying to stop video: ")
+            raise ex
 
     ##########################
     ##      THREADS         ##
