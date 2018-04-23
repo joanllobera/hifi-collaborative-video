@@ -78,14 +78,12 @@ class VideoEditor(object):
             raise NotExistingResource("There's no session with such id.")
         audio_path = "{}/audio.wav".format(session['folder_url'])
         video_init_ts = VideoEditorHelper.get_first_video_ts(edit_info=edit_info)
-        print("First Video ts: {}".format(video_init_ts))
         audio_init_offset = VideoEditorHelper.calculate_audio_init_offset(session_id=session_id, video_init_ts=video_init_ts)
-        print("Audio offset: {}".format(audio_init_offset))
         ffmpeg_audio_init_offset = DataTransformer.transform_seconds_to_ffmpeg_offset(float(audio_init_offset))
-        end_ts = None  # TODO implement it
+        audio_end_offset = VideoEditorHelper.calculate_audio_end_offset(session_id=session_id, edit_info=edit_info, audio_init_offset=audio_init_offset)
         audio_output = "{}/audio-{}.wav".format(session['folder_url'], uuid.uuid4().hex)
         audio_thread = AudioSplitterThread(inputFile=audio_path, outputFile=audio_output,
-                                           initial_offset=ffmpeg_audio_init_offset, end_ts=end_ts)
+                                           initial_offset=ffmpeg_audio_init_offset, end_offset=audio_end_offset)
         audio_thread.start()
         audio_thread.join()
         if audio_thread.code != 0:

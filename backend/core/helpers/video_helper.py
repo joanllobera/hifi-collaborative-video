@@ -3,6 +3,7 @@ import uuid
 from copy import copy
 
 from core.exceptions.generic_exceptions import NotExistingResource
+from core.helpers.validators import GenericValidator
 from core.model.video import Video
 from core.services.audio_manager import AudioManager
 from core.services.video.video_manager import VideoManager
@@ -135,5 +136,27 @@ class VideoEditorHelper(object):
         """
         audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
         offset = float(video_init_ts) - float(audio_init_ts)
+        offset = round(offset, 3)
+        return str(offset)
+
+    @staticmethod
+    def calculate_audio_end_offset(session_id, edit_info, audio_init_offset):
+        """
+
+        :param session_id:
+        :param edit_info:
+        :return:
+        """
+        GenericValidator.validate_id(session_id)
+        if edit_info is None or type(edit_info) != dict:
+            raise ValueError("Expected a dictionary as parameter.")
+        last_video = edit_info['videos_slices'][-1]
+        last_video_info = Video.objects(id=last_video['id']).first()
+        if last_video_info is None:
+            raise NotExistingResource("The last video of the edition does not exist.")
+        audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
+        video_initts = VideoManager.get_instance().get_initial_ts(video_id=str(last_video_info['id']))
+        end_ts = float(video_initts) + float(last_video['end']) + 1.0
+        offset = float(end_ts) - float(audio_init_ts) - float(audio_init_offset)
         offset = round(offset, 3)
         return str(offset)
