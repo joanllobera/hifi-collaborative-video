@@ -26,6 +26,7 @@ import { CameraBackComponent } from './camera-back/camera-back.component';
 import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
 import { VideosServiceService } from './videos-service.service';
+import { MargindeltaDirective } from './margindelta.directive';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { VideosServiceService } from './videos-service.service';
     CameraComponent,
     EditorComponent,
     CameraBackComponent,
-    EditorNiceComponent
+    EditorNiceComponent,
+    MargindeltaDirective
   ],
   imports: [
     BrowserModule,
