@@ -15,25 +15,25 @@ class AudioRecorderThread(Thread):
     audio = None
     stream = None
     recording = False
+    waveFile = None
 
     def __init__(self, session_path):
         super(AudioRecorderThread, self).__init__()
         self.session_path=session_path
         self.audio = pyaudio.PyAudio()
+        self.waveFile = wave.open(self.session_path + WAVE_OUTPUT_FILENAME, "wb")
+        self.waveFile.setnchannels(CHANNELS)
+        self.waveFile.setframerate(RATE)
 
     def run(self):
         self.stream = self.audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True,
                                  frames_per_buffer=CHUNK)
-        waveFile = wave.open(self.session_path + WAVE_OUTPUT_FILENAME, "wb")
-        print("Recording in file: {}".format(self.session_path + WAVE_OUTPUT_FILENAME))
-        waveFile.setnchannels(CHANNELS)
-        waveFile.setsampwidth(self.audio.get_sample_size(FORMAT))
-        waveFile.setframerate(RATE)
+        self.waveFile.setsampwidth(self.audio.get_sample_size(FORMAT))
         self.recording=True
         while self.recording:
             data = self.stream.read(CHUNK)
-            waveFile.writeframes(data)
-        waveFile.close()
+            self.waveFile.writeframes(data)
+        self.waveFile.close()
         self.stop()
         return
 
@@ -44,3 +44,4 @@ class AudioRecorderThread(Thread):
         self.stream.close()
         self.audio.terminate()
         self.stream = None
+        self.waveFile = None

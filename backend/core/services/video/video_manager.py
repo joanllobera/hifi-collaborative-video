@@ -3,7 +3,6 @@ TODO license
 """
 import configparser
 import os
-from os import path
 
 from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.exceptions.session_exceptions import IllegalSessionStateException
@@ -213,28 +212,4 @@ class VideoManager(object):
             raise ve
         except Exception as ex:
             LOGGER.exception("Error trying to split video: ")
-            raise ex
-
-    def get_initial_ts(self, video_id):
-        """
-
-        :param video_id:
-        :return:
-        """
-        LOGGER.info("Getting initial ts of video [video_id={}]".format(video_id))
-        try:
-            GenericValidator.validate_id(video_id)
-            video = Video.objects(id=video_id).first()
-            if video is None:
-                raise NotExistingResource("No video with such id.")
-            video_path = video['video_path']
-            ts_filename = "{}/ts.txt".format(video_path)
-            file = open(ts_filename, "r")
-            if not os.path.exists(ts_filename):
-                raise NotExistingResource("Video is still being recorded or it failed.")
-            ts = file.read().rstrip("\n")
-            LOGGER.info("Read video initial timestamp: [video_id={}, ts={}]".format(video_id, ts))
-            return ts
-        except Exception as ex:
-            LOGGER.exception("Error trying to get the initial timestmap of a video: ")
             raise ex

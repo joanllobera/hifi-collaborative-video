@@ -1,12 +1,10 @@
 import datetime
-import uuid
+import os
 from copy import copy
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.helpers.validators import GenericValidator
 from core.model.video import Video
-from core.services.audio_manager import AudioManager
-from core.services.video.video_manager import VideoManager
 
 
 class VideoEditorHelper(object):
@@ -46,7 +44,7 @@ class VideoEditorHelper(object):
             raise NotExistingResource("There's no video with such id.")
         video_slice_info = {}
         video_slice_info['file'] = "{}/dasher-output/video.mp4".format(video['video_path'])
-        video_init = float(VideoManager.get_instance().get_initial_ts(video_id=video_id))
+        video_init = float(VideoEditorHelper.get_initial_ts(video_id=video_id))
         init_offset = float(initial_ts) - float(video_init)
         end_offset = float(end_ts) - float(video_init)
         video_slice_info['inpoint'] = str(datetime.timedelta(seconds=init_offset))
@@ -66,7 +64,7 @@ class VideoEditorHelper(object):
         for video in videos:
             ## if it's the first video, we don't have previous videos, so we just calculate
             ## the video slice.
-            video_original_ts = VideoManager.get_instance().get_initial_ts(video_id=video['id'])
+            video_original_ts = VideoEditorHelper.get_initial_ts(video_id=video['id'])
             if prev_ts == -1:
                 initial_ts = float(video_original_ts) + float(video['init'])
                 end_ts = initial_ts + (float(video['end']) - float(video['init']))
@@ -123,40 +121,56 @@ class VideoEditorHelper(object):
         if edit_info is None or type(edit_info) != dict:
             raise ValueError("Expected a dictionary as parameter.")
         video_info = edit_info['videos_slices'][0]
-        ts = VideoManager.get_instance().get_initial_ts(video_id=video_info['id'])
+        ts = VideoEditorHelper.get_initial_ts(video_id=video_info['id'])
         updated_ts = float(ts) + float(video_info['init'])
         return str(updated_ts)
 
     @staticmethod
-    def calculate_audio_init_offset(session_id, video_init_ts):
+    def calculate_audio_init_offset(video_init_ts, audio_init_ts):
         """
 
         :param session_id:
         :return:
         """
-        audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
         offset = float(video_init_ts) - float(audio_init_ts)
         offset = round(offset, 3)
         return str(offset)
 
     @staticmethod
-    def calculate_audio_end_offset(session_id, edit_info, audio_init_offset):
+    def calculate_audio_end_offset(edit_info, audio_init_offset, audio_init_ts):
         """
 
         :param session_id:
         :param edit_info:
         :return:
         """
-        GenericValidator.validate_id(session_id)
         if edit_info is None or type(edit_info) != dict:
             raise ValueError("Expected a dictionary as parameter.")
         last_video = edit_info['videos_slices'][-1]
         last_video_info = Video.objects(id=last_video['id']).first()
         if last_video_info is None:
             raise NotExistingResource("The last video of the edition does not exist.")
-        audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
-        video_initts = VideoManager.get_instance().get_initial_ts(video_id=str(last_video_info['id']))
+        video_initts = VideoEditorHelper.get_initial_ts(video_id=str(last_video_info['id']))
         end_ts = float(video_initts) + float(last_video['end']) + 1.0
         offset = float(end_ts) - float(audio_init_ts) - float(audio_init_offset)
         offset = round(offset, 3)
         return str(offset)
+
+    @staticmethod
+    def get_initial_ts(video_id):
+        """
+
+        :param video_id:
+        :return:
+        """
+        GenericValidator.validate_id(video_id)
+        video = Video.objects(id=video_id).first()
+        if video is None:
+            raise NotExistingResource("No video with such id.")
+        video_path = video['video_path']
+        ts_filename = "{}/ts.txt".format(video_path)
+        file = open(ts_filename, "r")
+        if not os.path.exists(ts_filename):
+            raise NotExistingResource("Video is still being recorded or it failed.")
+        ts = file.read().rstrip("\n")
+        return ts

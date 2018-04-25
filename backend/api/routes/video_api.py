@@ -5,6 +5,7 @@ from werkzeug.exceptions import Conflict, BadRequest, NotFound
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
+from core.services.video.video_editor import VideoEditor
 from core.services.video.video_manager import VideoManager
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
@@ -72,7 +73,8 @@ def stop_video(video_id):
     """
     LOGGER.info("Received request for stopping video.")
     try:
-        VideoManager.get_instance().stop_video(video_id=video_id)
+        VideoManager.get_instance().top_video(video_id=video_id)
+        VideoEditor.get_instance().merge_user_video(video_id=video_id)
         LOGGER.info("Request for stopping a video successfully finished.")
         return "",204
     except ValueError as ve:
