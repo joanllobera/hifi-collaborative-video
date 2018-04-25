@@ -1,6 +1,7 @@
 import datetime
 import os
 from copy import copy
+from operator import itemgetter
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.helpers.validators import GenericValidator
@@ -59,15 +60,17 @@ class VideoEditorHelper(object):
         :return:
         """
         video_slices = []
-        videos = copy(edit_info['videos_slices'])
+        videos = copy(edit_info)
+        ordered_videos = sorted(videos, key=itemgetter('position'))
         prev_ts = -1
-        for video in videos:
+        for video in ordered_videos:
             ## if it's the first video, we don't have previous videos, so we just calculate
             ## the video slice.
             video_original_ts = VideoEditorHelper.get_initial_ts(video_id=video['id'])
             if prev_ts == -1:
-                initial_ts = float(video_original_ts) + float(video['init'])
-                end_ts = initial_ts + (float(video['end']) - float(video['init']))
+                initial_ts = float(video_original_ts) + float(video['thumb'])
+                end_ts = initial_ts + 1.0
+                #end_ts = initial_ts + (float(video['end']) - float(video['init']))
                 print("Video {}".format(video['id']))
                 print("------------------------------")
                 print("Info: {}".format(video))
@@ -81,7 +84,7 @@ class VideoEditorHelper(object):
                 print("Video_slice_info:{}".format(video_slice))
             else:
                 initial_ts = prev_ts
-                end_ts = float(video_original_ts) + float(video['end']) + float(1)
+                end_ts = float(video_original_ts) + float(video['thumb']) + 1.0
                 print("Video {}".format(video['id']))
                 print("------------------------------")
                 print("Info: {}".format(video))
@@ -91,6 +94,7 @@ class VideoEditorHelper(object):
                 video_slice = VideoEditorHelper.build_next_video_slice_information(video_id=video['id'],
                                                                             initial_ts=initial_ts,
                                                                             end_ts=end_ts)
+                prev_ts = end_ts
             video_slices.append(video_slice)
         return video_slices
 
