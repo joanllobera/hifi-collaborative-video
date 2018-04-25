@@ -62,7 +62,7 @@ class AudioManager(object):
         return ts
 
     @staticmethod
-    def cut_audio_for_user_video(session_id, video_id, video_init_ts):
+    def cut_audio_for_user_video(session_id, video_id, video_init_ts, video_length):
         """
 
         :param session_id:
@@ -88,7 +88,7 @@ class AudioManager(object):
         print("Audio init ts: {}".format(audio_init_ts))
         print("Audio init offset: {}".format(audio_init_offset))
         audio_thread = AudioSplitterThread(inputFile=audio_path, outputFile=audio_output,
-                                           initial_offset=ffmpeg_audio_init_offset, end_offset=audio_end_offset)
+                                           initial_offset=ffmpeg_audio_init_offset, end_offset=video_length)
         audio_thread.start()
         audio_thread.join()
         if audio_thread.code != 0:

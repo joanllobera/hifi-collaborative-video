@@ -13,6 +13,7 @@ from core.services.video.video_manager import VideoManager
 from core.threads.audio_splitter_thread import AudioSplitterThread
 from core.threads.audio_video_mixer_thread import AudioVideoMixerThread
 from core.threads.video_editor_thread import VideoEditorThread
+from core.threads.video_length_thread import VideoLengthThread
 
 LOGGER = LoggerHelper.get_logger("video_editor", "video_editor.log")
 
@@ -59,11 +60,16 @@ class VideoEditor(object):
         if video is None:
             raise NotExistingResource("There's no video with such id.")
         video_init_ts = VideoEditorHelper.get_initial_ts(video_id=video_id)
-        # TODO get the end of the video
+        original_video = "{}/dasher-output/video.mp4".format(video['video_path'])
+        t_video_length = VideoLengthThread(video_file=original_video)
+        t_video_length.start()
+        t_video_length.join()
+        if (t_video_length.code != 0):
+            raise Exception("Error merging audio and video of the user.")
         audio_path = AudioManager.cut_audio_for_user_video(session_id=str(video['session']['id']),
                                                            video_id=video_id,
-                                                           video_init_ts=video_init_ts)
-        original_video = "{}/dasher-output/video.mp4".format(video['video_path'])
+                                                           video_init_ts=video_init_ts,
+                                                           video_length=t_video_length.output)
         output_file = "{}/dasher-output/video-mixed.mp4".format(video['video_path'])
         mixer = AudioVideoMixerThread(video_file=original_video, audio_file=audio_path, output_file=output_file)
         mixer.start()

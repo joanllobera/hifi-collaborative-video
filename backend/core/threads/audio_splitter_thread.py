@@ -22,6 +22,7 @@ class AudioSplitterThread(Thread):
         self.inputFile = inputFile
         self.outputFile = outputFile
         self.command = "ffmpeg -i {} -ss {} -t {} -c copy {}".format(inputFile, initial_offset, end_offset, outputFile)
+        print(self.command)
 
     def run(self):
         LOGGER.info("AudioSplitterThread: Splitting audio.")
