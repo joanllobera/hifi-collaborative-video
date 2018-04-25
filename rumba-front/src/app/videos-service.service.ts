@@ -37,6 +37,9 @@ export class VideosServiceService {
     return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + '5ad09d5ec94b4c7adb5dbe27' + '/videos/all', {observe: 'body', responseType: 'json'});
   }
 
+  buildVideo(json) {
+    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json);
+  }
 
 
 }
