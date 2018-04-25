@@ -77,6 +77,7 @@ class VideoEditor(object):
         if mixer.code != 0:
             raise Exception("Error merxing user video with audio. FFmpeg command failed.")
         video.update(set__mixed=True)
+        video.update(set__mixed_video_path=output_file)
 
 
     def __merge_audio_and_video__(self, session_id, video_path, edit_info, edition_id):

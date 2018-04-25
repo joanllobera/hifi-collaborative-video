@@ -147,6 +147,28 @@ class VideoManager(object):
             LOGGER.exception("Error trying to stop video: ")
             raise ex
 
+    def get_mixed_video_path(self, video_id):
+        """
+
+        :param video_id:
+        :return:
+        """
+        LOGGER.info("Geeting mixed video path [video_id={}]".format(video_id))
+        try:
+            video = Video.objects(id=video_id).first()
+            if video is None:
+                raise NotExistingResource("There's no video with such id.")
+            if not video['mixed'] or not video['mixed_video_path']:
+                raise IllegalResourceState("The video is no mixed yet.")
+            LOGGER.info("Mixed video path retrieved: [video_id={}, path={}]".format(video_id, video['mixed_video_path']))
+            return video['mixed_video_path']
+        except ValueError as ve:
+            LOGGER.exception("Error validating video id: ")
+            raise ve
+        except Exception as ex:
+            LOGGER.exception("Error getting mixed video: ")
+            raise ex
+
     ##########################
     ##      THREADS         ##
     ##########################

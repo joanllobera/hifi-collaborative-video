@@ -73,7 +73,7 @@ def stop_video(video_id):
     """
     LOGGER.info("Received request for stopping video.")
     try:
-        VideoManager.get_instance().top_video(video_id=video_id)
+        VideoManager.get_instance().stop_video(video_id=video_id)
         VideoEditor.get_instance().merge_user_video(video_id=video_id)
         LOGGER.info("Request for stopping a video successfully finished.")
         return "",204
@@ -82,4 +82,22 @@ def stop_video(video_id):
         raise BadRequest(ve)
     except NotExistingResource as ne:
         LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        raise NotFound(ne)
+
+@VIDEO_API.route("/<video_id>/mixed")
+def download_mixed_video(video_id):
+    """
+
+    :param video_id:
+    :return:
+    """
+    LOGGER.info("Received request for downloading mixed video.")
+    try:
+        video_path = VideoManager.get_instance().get_mixed_video_path(video_id)
+        send_file(video_path, mimetype="video/mp4")
+    except ValueError as ve:
+        LOGGER.exception("Request for downloading mixed video finished with errors.")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Request for downloading mixed video finished with errors.")
         raise NotFound(ne)

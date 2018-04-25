@@ -27,3 +27,4 @@ class Video(Document):
     finished = BooleanField(required=True, default=False, null=False)
     user_id = StringField(required=True, null=False, max_length=50)
     mixed = BooleanField(required=True, default=False, null=False)
+    mixed_video_path = StringField(required=False, max_length=255)
