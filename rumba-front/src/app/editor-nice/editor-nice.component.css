@@ -18,10 +18,11 @@ video {
   width:80px;
   height: 80px;
   transition: opacity .3s;
+  cursor:pointer;
 }
 
 .selectedImg {
-  border:red 2px solid;
+  border:#fff 2px solid;
   opacity: .5;
   background-color: red;
 }
