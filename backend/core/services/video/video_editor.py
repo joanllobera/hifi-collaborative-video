@@ -59,11 +59,18 @@ class VideoEditor(object):
         if video is None:
             raise NotExistingResource("There's no video with such id.")
         video_init_ts = VideoEditorHelper.get_initial_ts(video_id=video_id)
+        # TODO get the end of the video
         audio_path = AudioManager.cut_audio_for_user_video(session_id=str(video['session']['id']),
                                                            video_id=video_id,
                                                            video_init_ts=video_init_ts)
-        print("vamolos")
-        print(audio_path)
+        original_video = "{}/dasher-output/video.mp4".format(video['video_path'])
+        output_file = "{}/dasher-output/video-mixed.mp4".format(video['video_path'])
+        mixer = AudioVideoMixerThread(video_file=original_video, audio_file=audio_path, output_file=output_file)
+        mixer.start()
+        mixer.join()
+        if mixer.code != 0:
+            raise Exception("Error merxing user video with audio. FFmpeg command failed.")
+        video.update(set__mixed=True)
 
 
     def __merge_audio_and_video__(self, session_id, video_path, edit_info, edition_id):

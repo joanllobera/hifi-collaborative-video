@@ -26,3 +26,4 @@ class Video(Document):
     splitter_status = StringField(required=True, null=False, default=ProcessStatus.NOT_STARTED.value)
     finished = BooleanField(required=True, default=False, null=False)
     user_id = StringField(required=True, null=False, max_length=50)
+    mixed = BooleanField(required=True, default=False, null=False)

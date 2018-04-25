@@ -10,6 +10,7 @@ from core.helpers.data_transformer import DataTransformer
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import GenericValidator
+from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
 from core.model.video import Video
 from core.services.fs_manager import FileSystemService
@@ -96,7 +97,7 @@ class VideoManager(object):
         session_videos = DataTransformer.generate_video_list_view(session=session, db_videos=videos)
         for session_video in session_videos:
             try:
-                session_video['ts'] = self.get_initial_ts(video_id=session_video['video_id'])
+                session_video['ts'] = VideoEditorHelper.get_initial_ts(video_id=session_video['video_id'])
             except Exception:
                 LOGGER.warn("Could not retrieve timestmap of video. Skipping it...")
                 session_videos['ts'] = -1

@@ -122,11 +122,11 @@ class VideoEditorHelper(object):
         :param edit_info:
         :return:
         """
-        if edit_info is None or type(edit_info) != dict:
-            raise ValueError("Expected a dictionary as parameter.")
-        video_info = edit_info['videos_slices'][0]
+        if edit_info is None or type(edit_info) != list:
+            raise ValueError("Expected a list as parameter.")
+        video_info = edit_info[0]
         ts = VideoEditorHelper.get_initial_ts(video_id=video_info['id'])
-        updated_ts = float(ts) + float(video_info['init'])
+        updated_ts = float(ts) + float(video_info['thumb'])
         return str(updated_ts)
 
     @staticmethod
@@ -148,14 +148,14 @@ class VideoEditorHelper(object):
         :param edit_info:
         :return:
         """
-        if edit_info is None or type(edit_info) != dict:
-            raise ValueError("Expected a dictionary as parameter.")
-        last_video = edit_info['videos_slices'][-1]
+        if edit_info is None or type(edit_info) != list:
+            raise ValueError("Expected a list as parameter.")
+        last_video = edit_info[-1]
         last_video_info = Video.objects(id=last_video['id']).first()
         if last_video_info is None:
             raise NotExistingResource("The last video of the edition does not exist.")
         video_initts = VideoEditorHelper.get_initial_ts(video_id=str(last_video_info['id']))
-        end_ts = float(video_initts) + float(last_video['end']) + 1.0
+        end_ts = float(video_initts) + float(last_video['thumb']) + 1.0
         offset = float(end_ts) - float(audio_init_ts) - float(audio_init_offset)
         offset = round(offset, 3)
         return str(offset)
