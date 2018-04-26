@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 
 import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
@@ -19,8 +20,10 @@ export class EditorNiceComponent implements OnInit {
   allVideosOk: any[] = [];
 
   videoJson: any[] = [];
+  videoStream: any = undefined;
 
-constructor(private videoService: VideosServiceService) { }
+
+constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.getAllVideos();
@@ -229,12 +232,25 @@ constructor(private videoService: VideosServiceService) { }
     this.videoService.buildVideo(this.videoJson)
       .subscribe(
         (response) => {
-          console.log(response);
+          this.createVideoFromBlob(response); //httpClient
+          // this.createVideoFromBlob(response.blob()); //http
         }, (error) => {
           console.log(error);
         }
       );
   }
+
+  createVideoFromBlob(video: Blob) {
+     let reader = new FileReader();
+     reader.addEventListener("load", () => {
+        this.videoStream = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result);
+     }, false);
+
+     if (video) {
+        reader.readAsDataURL(video);
+     }
+  }
+
 
 
 

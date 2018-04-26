@@ -1,7 +1,9 @@
 <div>
-  <video controls>
-    <source src="https://www.youtube.com/watch?v=MPV7JXTWPWI">
+  <video controls autoplay loop >
+    <!-- <source src="assets/SEG.mp4" type="video/mp4"> -->
+      <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
   </video>
+
   <div class="row">
     <div class="col">
 
@@ -25,4 +27,4 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
