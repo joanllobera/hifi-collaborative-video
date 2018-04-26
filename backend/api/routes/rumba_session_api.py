@@ -181,6 +181,12 @@ def stop_session(session_id):
 
 @SESSION_MANAGER_API.route("/active", methods=['GET'])
 def get_active_session():
+    """
+    HTTP endpoint for retrieving the current active session.
+    :return:
+        - HTTP 200 with the id in the body.
+        - HTTP 404, if there's no active session.
+    """
     LOGGER.info("Received request for getting active session.")
     try:
         active_session = SessionManager.get_instance().get_active_session()
@@ -323,6 +329,14 @@ def list_session_videos(session_id):
 
 @SESSION_MANAGER_API.route("/<session_id>/audio/ts", methods=["GET"])
 def get_audio_init_ts(session_id):
+    """
+    HTTP Endpoint for retrieving the initial timestamp of the audio of a session.
+    :param session_id: Id of the rumba session.
+    :return:
+        - HTTP 200, with the initial timestamp in the body response.
+        - HTTP 400, if the given id is not valid.
+        - HTTP 404, if there's session with such id.
+    """
     LOGGER.info("Received request for getting the initial timestamp of the session audio. [session_id={}]".format(
         session_id))
     try:

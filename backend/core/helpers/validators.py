@@ -134,7 +134,7 @@ class VideoValidator(object):
         if edit_info is None or type(edit_info) != list:
             raise ValueError("Expected a list.")
         for video in edit_info:
-            if 'thumb' not in video.keys() or not video['thumb']:
+            if 'thumb' not in video.keys():
                 raise ValueError("At least one of the videos does not contain the 'thumb' information.")
             if 'id' not in video.keys() or not video['id']:
                 raise ValueError("At least one of the videos does not contian the 'id' information.")

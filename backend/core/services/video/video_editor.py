@@ -20,6 +20,16 @@ LOGGER = LoggerHelper.get_logger("video_editor", "video_editor.log")
 
 
 class VideoEditor(object):
+    """
+    Class for the edition of audio and videos of the rumba sessions. This class contains methods
+    for cutting audio and video, merging videos with the session audios and create slices of videos.
+
+    This class has been implemented as a singleton, so in order to call it you would need to make
+    use of the get_instance() method before calling any of its methods:
+
+        video_editor = VideoEditor.get_instance()
+
+    """
 
     __instance = None
 
@@ -115,10 +125,14 @@ class VideoEditor(object):
 
     def __merge_audio_and_video__(self, session_id, video_path, edit_info, edition_id):
         """
+        Merges the rumba session audio with the video identified by the given id.
 
-        :param session_id:
-        :param video_path:
-        :return:
+        :param session_id: Id of the rumba session.
+        :param video_path: Absolute path in the server operanting system of the video.
+        :param edit_info: The informtion provided by the editor containing the list of video slices.
+        :param editionid: The id that is being used to identify this edition process.
+        :return: Absolute path where the video merged by this method is located.
+        :rtype: str
         """
         LOGGER.info("Merging session audio with video.")
         session = RumbaSession.objects(id=session_id).first()
@@ -136,10 +150,16 @@ class VideoEditor(object):
 
     def __cut_audio__(self, session_id, edit_info):
         """
+        Given a rumba session and the information to mount a video, it cuts the session audio to
+        fit into the mounted video. For this, it takes into account the timestamp of the
+        first frame of the video to mount and the timestamp of the last frame of this new video.
 
-        :param session_id:
-        :param edit_info:
-        :return:
+        VERY IMPORTANT: This method assumes that the timestamps of video and audio are consistent
+        in terms of synchronization.
+
+        :param session_id: Id of the rumba session.
+        :param edit_info: The informtion provided by the editor containing the list of video slices.
+        :return: Absolute path where the audio cut by this method is located.
         """
         session = RumbaSession.objects(id=session_id).first()
         if session is None:
@@ -162,10 +182,12 @@ class VideoEditor(object):
 
     def __validate_video_edition_input__(self, session_id, edit_info):
         """
-
-        :param session_id:
-        :param edit_info:
-        :return:
+        Helper method for checking that the information provided by the editor to mouna video
+        has valid data.
+        :param session_id: Id of the rumba session.
+        :param edit_info: The informtion provided by the editor containing the list of video slices.
+        :raises: ValueError, if the information provided by the editor is not valid or has a wrong
+        format.
         """
         LOGGER.info("Starting video edition: [session_id={}]".format(session_id))
         try:
@@ -179,10 +201,13 @@ class VideoEditor(object):
 
     def __prepare_video_edition__(self, session_id, edit_info, edition_id):
         """
+        Given the information provided by the editor to mount a video, this method builds the
+        text file that will serve as input to mount the video.
 
-        :param session_id:
-        :param edit_info:
-        :return:
+        :param session_id: Id of the rumba session.
+        :param edit_info: The informtion provided by the editor containing the list of video slices.
+        :return: Absolute path to the file that can be used with ffmpeg to mount the video.
+        :rtype: str
         """
         try:
             LOGGER.debug("Preparing video edition..")
@@ -199,8 +224,14 @@ class VideoEditor(object):
 
     def __create_video__(self, edit_info_filename):
         """
+        Given the absolute path of a text file containing the slices of videos of the new video
+        (as expected by ffmpeg), it builds the video desired by the editor.
 
-        :param edit_info_filename:
+        For more information about this text file, please check the __prepare_video_edition__
+        method.
+
+        :param edit_info_filename: Absolute path to the text file that contains the information
+        of the video slices that ffmpeg will use to build the video.
         :return:
         """
         try:
@@ -218,4 +249,7 @@ class VideoEditor(object):
             raise ex
 
     def __generate_random_uuid__(self):
+        """
+        Generates and returns a random uuid in hexadecimal format.
+        """
         return uuid.uuid4().hex
