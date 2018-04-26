@@ -38,7 +38,10 @@ export class VideosServiceService {
   }
 
   buildVideo(json) {
-    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json);
+    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, {observe: 'body', responseType: 'blob'});
+
+    // return this.http.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, { responseType: ResponseContentType.Blob });
+
   }
 
 
