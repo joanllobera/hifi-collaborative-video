@@ -1,8 +1,15 @@
+"""
+Module containing the HTTP endpoionts for the management of videos.
+
+This module contains a Flask Blueprint exposing methods for managing the videos of the users,
+in terms of starting/stopping the record of video and downloading them.
+"""
+
 from flask import Blueprint, send_file, session, jsonify
 from pymongo import MongoClient
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
 
-from core.exceptions.generic_exceptions import NotExistingResource
+from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.exceptions.session_exceptions import IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.services.video.video_editor import VideoEditor
@@ -32,16 +39,17 @@ def split_video(video_id):
 @VIDEO_API.route("/", methods=["POST"])
 def add_video_to_active_session():
     """
-    Endpoint for adding a new video to the actrive session.
-
+    Endpoint for adding a new video to the actives session.
     :return:
+        - HTTP 201, with the id of the video in the body.
+        - HTTP 409, if there's no active session.
     """
     LOGGER.info("Received request for adding a video to the active session.")
     user_id = session['user_id']
     try:
         video = VideoManager.get_instance().add_video_to_active_session(user_id=user_id)
         LOGGER.info("Request for adding a video to the active session successfully finished.")
-        return jsonify(video), 200
+        return jsonify(video), 201
     except IllegalSessionStateException as ie:
         LOGGER.info("Request for adding a video to the active session finished with errors -")
         raise Conflict(ie)
@@ -49,8 +57,12 @@ def add_video_to_active_session():
 @VIDEO_API.route("/<video_id>/ts", methods=["GET"])
 def get_video_initial_ts(video_id):
     """
-
+    HTTP endpoint for retrieving the initial TS of a video, in seconds.
+    :param video_id: Id of the video.
     :return:
+        - HTTP 200 with the timestamp in the body.
+        - HTTP 400, if the provided parameter is not a valid id.
+        - HTTP 404, if there's no video with the provided id.
     """
     LOGGER.info("Received request for getting the video initial ts.")
     try:
@@ -67,19 +79,53 @@ def get_video_initial_ts(video_id):
 @VIDEO_API.route("/<video_id>/stop", methods=['PUT'])
 def stop_video(video_id):
     """
+    HTTP endpoint for stopping the record of a video.
 
-    :param video_id:
+    :param video_id: ID of the video to stop.
     :return:
+        - HTTP 204, if the video recording could be stopped.
+        - HTTP 400, if the provided parameter is not a valid id.
+        - HTTP 404, if there's no video with such id.
+        - HTTP 409, if the video was already stopped.
     """
     LOGGER.info("Received request for stopping video.")
     try:
-        VideoManager.get_instance().top_video(video_id=video_id)
+        VideoManager.get_instance().stop_video(video_id=video_id)
         VideoEditor.get_instance().merge_user_video(video_id=video_id)
         LOGGER.info("Request for stopping a video successfully finished.")
         return "",204
     except ValueError as ve:
-        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        LOGGER.exception("Request for stopping a video finished with errors.")
         raise BadRequest(ve)
     except NotExistingResource as ne:
-        LOGGER.exception("Request for getting the initial ts of a video finished with errors.")
+        LOGGER.exception("Request for stopping a video finished with errors.")
         raise NotFound(ne)
+    except IllegalResourceState as ir:
+        LOGGER.exception("Request for stopping a video finished with errors.")
+        raise Conflict(ir)
+
+@VIDEO_API.route("/<video_id>/mixed")
+def download_mixed_video(video_id):
+    """
+    HTTP endpoint for downloading a video recorded by the user, which has been mixed with
+    the audio of the session.
+    :param video_id: Id of the video to download.
+    :return:
+        - HTTP 200 with the video attached, if the video could be retrieved.
+        - HTTP 400, if the provided parameter is not a valid id.
+        - HTTP 404, if there's no video with such id.
+        - HTTP 409, if the video has not been mixed yet.
+    """
+    LOGGER.info("Received request for downloading mixed video.")
+    try:
+        video_path = VideoManager.get_instance().get_mixed_video_path(video_id)
+        send_file(video_path, mimetype="video/mp4"),200
+    except ValueError as ve:
+        LOGGER.exception("Request for downloading mixed video finished with errors.")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Request for downloading mixed video finished with errors.")
+        raise NotFound(ne)
+    except IllegalResourceState as ir:
+        LOGGER.exception("Request for downloading mixed video finished with errors.")
+        raise Conflict(ir)

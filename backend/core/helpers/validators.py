@@ -85,9 +85,10 @@ class FilesValidator(object):
     @staticmethod
     def validate_image_format(image_file):
         """
-
-        :param image_file:
-        :return:
+        Validates that the uploaded image has one of the allowed extension.
+        :param image_file: File containing the image.
+        :raises: ValueError: If the provided parameter is not a file, is not a file image, or it's
+        an image but it does not have an allowed extension.
         """
         if image_file is None:
             raise ValueError("Expected a file.")
@@ -117,8 +118,25 @@ class FilesValidator(object):
 
 
 class VideoValidator(object):
+    """
+    Class containing methods for validating the user input related to actions performed on videos.
+    """
 
     @staticmethod
     def validate_video_edit_info(edit_info):
-        # TODO implement this method.
-        return True
+        """
+        Checks that the information provided to edit a video is well-formed and valid.
+        :param edit_info: List of dictionaries, containing each dictionary the information
+        of the video.
+        :raises: ValueError, if any of the parameters for each video is missing, or if the provided
+        parameter is not a list.
+        """
+        if edit_info is None or type(edit_info) != list:
+            raise ValueError("Expected a list.")
+        for video in edit_info:
+            if 'thumb' not in video.keys() or not video['thumb']:
+                raise ValueError("At least one of the videos does not contain the 'thumb' information.")
+            if 'id' not in video.keys() or not video['id']:
+                raise ValueError("At least one of the videos does not contian the 'id' information.")
+            if 'position' not in video.keys():
+                raise ValueError("At least one of the videos does not contain the 'position' information.")
