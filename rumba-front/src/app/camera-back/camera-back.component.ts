@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RecordService } from  '../record.service';
 import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
-
+import * as $ from 'jquery';
 
 declare var Janus: any;
 
@@ -167,6 +167,13 @@ export class CameraBackComponent implements OnInit {
 									// 		clearInterval(bitrateTimer);
 									// 		janus.destroy();
 									// 	});
+
+                  $(window).on('beforeunload', function() {
+                    alert('hoalaaa');
+                  });
+                  window.addEventListener("beforeunload", function (event) {
+                    alert('hola javascript');
+                  });
 								},
 								error: function(error) {
 									console.error("  -- Error attaching plugin...", error);
@@ -336,9 +343,10 @@ export class CameraBackComponent implements OnInit {
     //   })
     //   .catch(function(err) {
     //   });
-    this.configureJanus()
-  }
+    this.configureJanus();
 
+
+  }
 
 
 
