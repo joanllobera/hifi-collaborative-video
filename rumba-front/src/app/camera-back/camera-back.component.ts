@@ -156,15 +156,6 @@ export class CameraBackComponent implements OnInit {
 			var janus = new Janus(
 				{
 					server: server,
-					// No "iceServers" is provided, meaning janus.js will use a default STUN server
-					// Here are some examples of how an iceServers field may look like to support TURN
-					// 		iceServers: [{url: "turn:yourturnserver.com:3478", username: "janususer", credential: "januspwd"}],
-					// 		iceServers: [{url: "turn:yourturnserver.com:443?transport=tcp", username: "janususer", credential: "januspwd"}],
-					// 		iceServers: [{url: "turns:yourturnserver.com:443?transport=tcp", username: "janususer", credential: "januspwd"}],
-					// Should the Janus API require authentication, you can specify either the API secret or user token here too
-					//		token: "mytoken",
-					//	or
-					//		apisecret: "serversecret",
 					success: function() {
 						// Attach to echo test plugin
 						janus.attach(
@@ -184,34 +175,13 @@ export class CameraBackComponent implements OnInit {
 									// 		janus.destroy();
 									// 	});
 
-                  $(window).on('beforeunload', function() {
-                    alert('hoalaaa');
-                  });
-                  window.addEventListener("beforeunload", function (event) {
-                    alert('hola javascript');
-                  });
 								},
 								error: function(error) {
 									console.error("  -- Error attaching plugin...", error);
 								},
 								consentDialog: function(on) {
 									Janus.debug("Consent dialog should be " + (on ? "on" : "off") + " now");
-									// if(on) {
-									// 	// Darken screen and show hint
-									// 	$.blockUI({
-									// 		message: '<div><img src="up_arrow.png"/></div>',
-									// 		css: {
-									// 			border: 'none',
-									// 			padding: '15px',
-									// 			backgroundColor: 'transparent',
-									// 			color: '#aaa',
-									// 			top: '10px',
-									// 			left: (navigator.mozGetUserMedia ? '-100px' : '300px')
-									// 		} });
-									// } else {
-									// 	// Restore screen
-									// 	$.unblockUI();
-									// }
+
 								},
 								onmessage: function(msg, jsep) {
 									Janus.debug(" ::: Got a message :::");
@@ -226,10 +196,7 @@ export class CameraBackComponent implements OnInit {
 								onlocalstream: function(stream) {
 									Janus.debug(" ::: Got a local stream :::");
 									Janus.debug(stream);
-									// if($('#myvideo').length === 0) {
-									// 	$('#videos').removeClass('hide').show();
-									// 	$('#videoleft').append('<video class="rounded centered" id="myvideo" width=320 height=240 autoplay muted="muted"/>');
-									// }
+
                   Janus.attachMediaStream(document.getElementById('myvideo'), stream);
 
                   document.getElementById('myvideo').setAttribute('muted', "muted");
@@ -242,91 +209,7 @@ export class CameraBackComponent implements OnInit {
 								onremotestream: function(stream) {
 									Janus.debug(" ::: Got a remote stream :::");
 									Janus.debug(stream);
-									// var addButtons = false;
-									// if($('#peervideo').length === 0) {
-									// 	addButtons = true;
-									// 	$('#videos').removeClass('hide').show();
-									// 	$('#videoright').append('<video class="rounded centered hide" id="peervideo" width=320 height=240 autoplay/>');
-									// 	// Show the video, hide the spinner and show the resolution when we get a playing event
-									// 	$("#peervideo").bind("playing", function () {
-									// 		$('#waitingvideo').remove();
-									// 		if(this.videoWidth)
-									// 			$('#peervideo').removeClass('hide').show();
-									// 		if(spinner !== null && spinner !== undefined)
-									// 			spinner.stop();
-									// 		spinner = null;
-									// 		var width = this.videoWidth;
-									// 		var height = this.videoHeight;
-									// 		$('#curres').removeClass('hide').text(width+'x'+height).show();
-									// 	});
-									// }
-									// Janus.attachMediaStream($('#peervideo').get(0), stream);
-									// var videoTracks = stream.getVideoTracks();
-									// if(videoTracks === null || videoTracks === undefined || videoTracks.length === 0) {
-									// 	// No remote video
-									// 	$('#peervideo').hide();
-									// 	if($('#videoright .no-video-container').length === 0) {
-									// 		$('#videoright').append(
-									// 			'<div class="no-video-container">' +
-									// 				'<i class="fa fa-video-camera fa-5 no-video-icon"></i>' +
-									// 				'<span class="no-video-text">No remote video available</span>' +
-									// 			'</div>');
-									// 	}
-									// } else {
-									// 	$('#videoright .no-video-container').remove();
-									// 	$('#peervideo').removeClass('hide').show();
-									// }
-									// if(!addButtons)
-									// 	return;
-									// // Enable audio/video buttons and bitrate limiter
-									// audioenabled = true;
-									// videoenabled = true;
-									// $('#toggleaudio').removeAttr('disabled').click(
-									// 	function() {
-									// 		audioenabled = !audioenabled;
-									// 		if(audioenabled)
-									// 			$('#toggleaudio').html("Disable audio").removeClass("btn-success").addClass("btn-danger");
-									// 		else
-									// 			$('#toggleaudio').html("Enable audio").removeClass("btn-danger").addClass("btn-success");
-									// 		echotest.send({"message": { "audio": audioenabled }});
-									// 	});
-									// $('#togglevideo').removeAttr('disabled').click(
-									// 	function() {
-									// 		videoenabled = !videoenabled;
-									// 		if(videoenabled)
-									// 			$('#togglevideo').html("Disable video").removeClass("btn-success").addClass("btn-danger");
-									// 		else
-									// 			$('#togglevideo').html("Enable video").removeClass("btn-danger").addClass("btn-success");
-									// 		echotest.send({"message": { "video": videoenabled }});
-									// 	});
-									// $('#toggleaudio').parent().removeClass('hide').show();
-									// $('#bitrate a').removeAttr('disabled').click(function() {
-									// 	var id = $(this).attr("id");
-									// 	var bitrate = parseInt(id)*1000;
-									// 	if(bitrate === 0) {
-									// 		Janus.log("Not limiting bandwidth via REMB");
-									// 	} else {
-									// 		Janus.log("Capping bandwidth to " + bitrate + " via REMB");
-									// 	}
-									// 	$('#bitrateset').html($(this).html() + '<span class="caret"></span>').parent().removeClass('open');
-									// 	echotest.send({"message": { "bitrate": bitrate }});
-									// 	return false;
-									// });
-									// if(Janus.webRTCAdapter.browserDetails.browser === "chrome" || Janus.webRTCAdapter.browserDetails.browser === "firefox" ||
-									// 		Janus.webRTCAdapter.browserDetails.browser === "safari") {
-									// 	$('#curbitrate').removeClass('hide').show();
-									// 	bitrateTimer = setInterval(function() {
-									// 		// Display updated bitrate, if supported
-									// 		var bitrate = echotest.getBitrate();
-									// 		//~ Janus.debug("Current bitrate is " + echotest.getBitrate());
-									// 		$('#curbitrate').text(bitrate);
-									// 		// Check if the resolution changed too
-									// 		var width = $("#peervideo").get(0).videoWidth;
-									// 		var height = $("#peervideo").get(0).videoHeight;
-									// 		if(width > 0 && height > 0)
-									// 			$('#curres').removeClass('hide').text(width+'x'+height).show();
-									// 	}, 1000);
-									// }
+
 								},
 								ondataopen: function(data) {
 									Janus.log("The DataChannel is available!");
@@ -346,6 +229,7 @@ export class CameraBackComponent implements OnInit {
 					},
 					destroyed: function() {
 						window.location.reload();
+            console.log('destroyed');
 					}
 				});
 
@@ -360,8 +244,6 @@ export class CameraBackComponent implements OnInit {
     //   .catch(function(err) {
     //   });
     this.configureJanus();
-
-
   }
 
 
