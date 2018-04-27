@@ -12,9 +12,8 @@
       state: directory
   - name: Download Janus code
     git:
-      repo: https://github.com/meetecho/janus-gateway
+      repo: https://{{ bitbucket_user }}:{{ bitbucket_pass }}@bitbucket.i2cat.net/scm/rum/janus.git
       dest: /tmp/janus
-      version: v0.3.0
   - name: Create directory for Janus
     become: true
     file:
@@ -41,3 +40,7 @@
     copy:
       src: ../../files/janus.transport.http.cfg
       dest: "{{ janus_dir }}/etc/janus/janus.transport.http.cfg"
+  - name: Copy ServerDate library
+    copy:
+      src: ../../files/ServerDate.js
+      dest:  "{{ janus_dir }}/share/janus/demos/ServerDate.js"

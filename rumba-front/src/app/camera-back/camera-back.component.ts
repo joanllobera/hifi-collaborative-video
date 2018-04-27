@@ -3,8 +3,10 @@ import { RecordService } from  '../record.service';
 import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
 import * as $ from 'jquery';
+import '../../assets/serverdate/ServerDate.js';
 
 declare var Janus: any;
+declare var ServerDate: any;
 
 @Component({
   selector: 'app-camera-back',
@@ -62,6 +64,15 @@ export class CameraBackComponent implements OnInit {
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
 
+	function calculate_time_delta(n_reqs){
+		var timedelta = 0;
+		var i;
+		for (i=0; i< n_reqs; i++){
+			timedelta += Math.round(ServerDate.now() - Date.now());
+		}
+		return timedelta;
+	}
+
     // Helper method to prepare a UI selection of the available devices
     function initDevices(devices) {
       var deviceList = [];
@@ -90,8 +101,16 @@ export class CameraBackComponent implements OnInit {
         } else {
           iidd = deviceList[0].deviceId;
         }
+		// Starting ServerDate synchronization on attachment success
+		var n_reqs = 30;
+	    var timedelta = 0;
+	    while (timedelta === 0){
+	    	timedelta = calculate_time_delta(n_reqs);
+	    }
+	    var delta = timedelta / n_reqs;
+
       	// Negotiate WebRTC
-      	var body = { "audio": true, "video": true };
+      	var body = { "audio": true, "video": true, "timedelta": delta};
       	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
       	echotest.send({"message": body});
       	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -125,9 +144,6 @@ export class CameraBackComponent implements OnInit {
       			}
       		});
       }
-
-
-
 
 
     Janus.init({debug: "all", callback: function() {
