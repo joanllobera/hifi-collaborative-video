@@ -19,7 +19,7 @@ window["jQuery"] = $;
 export class CameraBackComponent implements OnInit {
 
   isRecording: boolean = false;
-  videoPath: any;
+  videoPath: any = undefined;
 
 
   constructor(private record: RecordService) { }
