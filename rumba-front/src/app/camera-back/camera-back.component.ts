@@ -242,15 +242,20 @@ export class CameraBackComponent implements OnInit {
 
   }
 
+   getVideoPath(): any {
+     this.record.startRecordingVideo()
+       .subscribe(
+         (response) => {
+           console.log(response);
+           return response['video_path'];
+         }
+       )
+   }
+
+
   ngOnInit() {
 
-    this.record.startRecordingVideo()
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.videoPath = response['video_path'];
-        }
-      )
+    this.videoPath = this.getVideoPath();
 
   }
 
