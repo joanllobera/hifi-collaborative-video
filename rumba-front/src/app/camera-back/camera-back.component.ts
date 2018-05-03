@@ -6,7 +6,10 @@ import * as $ from 'jquery';
 import '../../assets/serverdate/ServerDate.js';
 
 declare var Janus: any;
+declare var janus: any;
 declare var ServerDate: any;
+window["$"] = $;
+window["jQuery"] = $;
 
 @Component({
   selector: 'app-camera-back',
@@ -16,6 +19,8 @@ declare var ServerDate: any;
 export class CameraBackComponent implements OnInit {
 
   isRecording: boolean = false;
+  box: any;
+
 
   constructor(private record: RecordService) { }
 
@@ -24,6 +29,8 @@ export class CameraBackComponent implements OnInit {
   }
 
   startRecording() {
+    this.configureJanus();
+
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
@@ -175,6 +182,13 @@ export class CameraBackComponent implements OnInit {
 									// 		janus.destroy();
 									// 	});
 
+                  $(window).on('beforeunload', function(){
+                    alert('beforeunload');
+                  });
+                  $(window).bind('beforeunload', function(){
+                		alert('>>>>>Before You Go<<<<<<<< \n Your custom message go here');
+                	});
+
 								},
 								error: function(error) {
 									console.error("  -- Error attaching plugin...", error);
@@ -234,18 +248,14 @@ export class CameraBackComponent implements OnInit {
 				});
 
 	}});
+
+
   }
 
   ngOnInit() {
-    // navigator.mediaDevices.getUserMedia({ video: true })
-    //   .then(function(stream) {
-    //     console.log('stream::::', stream);
-    //   })
-    //   .catch(function(err) {
-    //   });
-    this.configureJanus();
-  }
 
+    //this.configureJanus();¡
+  }
 
 
 }
