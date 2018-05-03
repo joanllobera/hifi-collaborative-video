@@ -31,12 +31,12 @@ export class CameraBackComponent implements OnInit {
   startRecording() {
     this.configureJanus();
 
-    this.record.startRecordingVideo()
-      .subscribe(
-        (response) => {
-          console.log(response);
-        }
-      )
+    // this.record.startRecordingVideo()
+    //   .subscribe(
+    //     (response) => {
+    //       console.log(response);
+    //     }
+    //   )
   }
 
 
