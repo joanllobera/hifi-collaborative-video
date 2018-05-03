@@ -29,7 +29,7 @@ export class CameraBackComponent implements OnInit {
   }
 
   startRecording() {
-    this.configureJanus();
+    //this.configureJanus();
 
     // this.record.startRecordingVideo()
     //   .subscribe(
@@ -253,8 +253,7 @@ export class CameraBackComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    //this.configureJanus();¡
+    this.configureJanus();
   }
 
 
