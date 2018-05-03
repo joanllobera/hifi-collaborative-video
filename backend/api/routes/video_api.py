@@ -129,3 +129,19 @@ def download_mixed_video(video_id):
     except IllegalResourceState as ir:
         LOGGER.exception("Request for downloading mixed video finished with errors.")
         raise Conflict(ir)
+
+@VIDEO_API.route("/")
+def list_user_videos():
+    LOGGER.info("Received request for listing user videos.")
+    user_id = session['user_id']
+    try:
+        videos = VideoManager.get_instance().list_user_videos(user_id=user_id)
+        LOGGER.info("Listing user videos sucessfully finished.")
+        return jsonify(videos), 200
+    except ValueError as ve:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ne)
+
