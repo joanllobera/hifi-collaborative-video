@@ -10,12 +10,19 @@ import { VideosServiceService } from '../videos-service.service';
 })
 export class VideosComponent implements OnInit {
 
-  allVideos: Video[] = [];
+  allVideos: any = [];
 
   constructor(private videoService: VideosServiceService) { }
 
   ngOnInit() {
-    this.allVideos = this.videoService.getVideos();
+    // this.allVideos = this.videoService.getVideos();
+    this.videoService.getRecordedVideos()
+      .subscribe(
+        (response) => {
+          this.allVideos = response;
+          console.log(this.allVideos);
+        }
+      );
   }
 
 }
