@@ -145,3 +145,18 @@ def list_user_videos():
         LOGGER.exception("Listing session videos request finished with errors: ")
         raise NotFound(ne)
 
+@VIDEO_API.route("/<video_id>/first_thumb", methods=['GETS'])
+def get_video_first_thumb(video_id):
+    LOGGER.info("Received request for getting video first thumb.")
+    try:
+        thumb_path = VideoManager.get_instance().get_video_first_thumb(video_id=video_id)
+        LOGGER.info("Request for getting video first thumb successfully finished.")
+        send_file(thumb_path)
+    except ValueError as ve:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise BadRequest(ve)
+    except NotExistingResource as ne:
+        LOGGER.exception("Listing session videos request finished with errors: ")
+        raise NotFound(ne)
+
+
