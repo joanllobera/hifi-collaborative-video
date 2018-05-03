@@ -26,7 +26,15 @@ export class CameraBackComponent implements OnInit {
   }
 
   startRecording() {
-    this.configureJanus();
+    this.record.startRecordingVideo()
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.videoPath = response['video_path'];
+          this.configureJanus(this.videoPath);
+
+        }
+      )
 
   }
 
@@ -41,7 +49,7 @@ export class CameraBackComponent implements OnInit {
   }
 
 
-  configureJanus() {
+  configureJanus(videoPath: string) {
 
     var server = 'https://192.168.10.252:8080/janus';
 
@@ -107,14 +115,8 @@ export class CameraBackComponent implements OnInit {
 	    }
 	    var delta = timedelta / n_reqs;
 
-        if (this.videoPath != undefined) {
-          alert('ok');
-        } else {
-          alert('nonono');
-        }
-
       	// Negotiate WebRTC
-      	var body = { "audio": true, "video": true, "timedelta": delta, "filename": this.videoPath};
+      	var body = { "audio": true, "video": true, "timedelta": delta, "filename": videoPath};
       	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
       	echotest.send({"message": body});
       	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
@@ -242,20 +244,7 @@ export class CameraBackComponent implements OnInit {
 
   }
 
-   getVideoPath(): any {
-     this.record.startRecordingVideo()
-       .subscribe(
-         (response) => {
-           console.log(response);
-           return response['video_path'];
-         }
-       )
-   }
-
-
   ngOnInit() {
-
-    this.videoPath = this.getVideoPath();
 
   }
 
