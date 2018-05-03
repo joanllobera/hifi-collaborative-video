@@ -176,13 +176,6 @@ export class CameraBackComponent implements OnInit {
 									// 		janus.destroy();
 									// 	});
 
-                  $(window).on('beforeunload', function(){
-                    alert('beforeunload');
-                  });
-                  $(window).bind('beforeunload', function(){
-                		alert('>>>>>Before You Go<<<<<<<< \n Your custom message go here');
-                	});
-
 								},
 								error: function(error) {
 									console.error("  -- Error attaching plugin...", error);
