@@ -245,3 +245,20 @@ class VideoManager(object):
         except Exception as ex:
             LOGGER.exception("Error trying to split video: ")
             raise ex
+
+
+    def get_video_first_thumb(self, video_id):
+        LOGGER.info("Getting first video thumb: [id={}]".format(video_id))
+        try:
+            video = Video.objects(id=video_id)
+            if video is None:
+                raise NotExistingResource("There's no video with such id.")
+            video_path = video['video_path'] + "/thumbs/0.png"
+            LOGGER.info("First video thumb retrieved: [path={}]".format(video_path))
+            return video_path
+        except ValueError as ve:
+            LOGGER.exception("Error validating video id: ")
+            raise ve
+        except Exception as ex:
+            LOGGER.exception("Error trying to get video thumb: ")
+            raise ex
