@@ -190,7 +190,7 @@ export class CameraBackComponent implements OnInit {
 									// 		janus.destroy();
 									// 	});
 
-                  $('#close').on('click', function (){
+                  $('#stop').bind('click', function (){
                     alert('lalala');
                   });
 
