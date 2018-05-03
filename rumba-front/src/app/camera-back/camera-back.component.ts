@@ -6,10 +6,7 @@ import * as $ from 'jquery';
 import '../../assets/serverdate/ServerDate.js';
 
 declare var Janus: any;
-declare var janus: any;
 declare var ServerDate: any;
-window["$"] = $;
-window["jQuery"] = $;
 
 @Component({
   selector: 'app-camera-back',
@@ -109,6 +106,12 @@ export class CameraBackComponent implements OnInit {
 	    	timedelta = calculate_time_delta(n_reqs);
 	    }
 	    var delta = timedelta / n_reqs;
+
+        if (this.videoPath != undefined) {
+          alert('ok');
+        } else {
+          alert('nonono');
+        }
 
       	// Negotiate WebRTC
       	var body = { "audio": true, "video": true, "timedelta": delta, "filename": this.videoPath};
