@@ -17,7 +17,7 @@ export class CameraBackComponent implements OnInit {
 
   isRecording: boolean = false;
   videoPath: any = undefined;
-
+  videoId: string = undefined;
 
   constructor(private record: RecordService) { }
 
@@ -31,11 +31,20 @@ export class CameraBackComponent implements OnInit {
         (response) => {
           console.log(response);
           this.videoPath = response['video_path'];
+          this.videoId = response['id'];
           this.configureJanus(this.videoPath);
 
         }
       )
+  }
 
+  stopRecording() {
+    this.record.stopRecordingVideo(this.videoId)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        }
+      )
   }
 
 
@@ -180,6 +189,10 @@ export class CameraBackComponent implements OnInit {
 									// 		clearInterval(bitrateTimer);
 									// 		janus.destroy();
 									// 	});
+
+                  $('#close').on('click', function (){
+                    alert('lalala');
+                  });
 
 								},
 								error: function(error) {

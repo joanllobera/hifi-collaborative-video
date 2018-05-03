@@ -14,4 +14,8 @@ export class RecordService {
     return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/', {});
   }
 
+  stopRecordingVideo(videoId: string) {
+    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/stop', {});
+  }
+
 }
