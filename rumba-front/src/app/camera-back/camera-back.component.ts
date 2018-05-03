@@ -191,7 +191,7 @@ export class CameraBackComponent implements OnInit {
 									// 	});
 
                   $('#stop').bind('click', function (){
-                    alert('lalala');
+                    janus.destroy();
                   });
 
 								},
