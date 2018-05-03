@@ -45,7 +45,7 @@ export class VideosServiceService {
   }
 
   getRecordedVideos() {
-    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/videos', {observe: 'body', responseType: 'json'});
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video', {observe: 'body', responseType: 'json'});
   }
 
 
