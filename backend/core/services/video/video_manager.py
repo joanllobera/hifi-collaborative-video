@@ -250,7 +250,7 @@ class VideoManager(object):
     def get_video_first_thumb(self, video_id):
         LOGGER.info("Getting first video thumb: [id={}]".format(video_id))
         try:
-            video = Video.objects(id=video_id)
+            video = Video.objects(id=video_id).first()
             if video is None:
                 raise NotExistingResource("There's no video with such id.")
             video_path = video['video_path'] + "/thumbs/0.png"
