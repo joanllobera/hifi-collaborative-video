@@ -123,6 +123,16 @@ class VideoManager(object):
                     (len(session_videos), session_id, user_id))
         return session_videos
 
+
+    def list_user_videos(self, user_id):
+        LOGGER.info("Listing all videos of the user. [user_id={}]".format(user_id))
+        GenericValidator.validate_id(user_id)
+        videos = Video.objects(user_id=user_id)
+        user_videos = DataTransformer.generate_user_video_list(db_videos=videos)
+        LOGGER.info("Retrieved {} videos for user {}".format
+                    (len(user_videos), user_id))
+        return user_videos
+
     def stop_video(self, video_id):
         """
         

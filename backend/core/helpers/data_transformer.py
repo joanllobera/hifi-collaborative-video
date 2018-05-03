@@ -25,6 +25,24 @@ class DataTransformer(object):
         return view_videos
 
     @staticmethod
+    def generate_user_video_list(db_videos):
+        """
+
+        :param db_videos:
+        :return:
+        """
+        if db_videos is None:
+            return ValueError("Expected a QuerySet for the db_videos parameter.")
+        view_videos = []
+        for video in db_videos:
+            user_video = {
+                             'video_name': video['name'],
+                             'video_id': str(video['id'],)
+                             }
+            view_videos.append(user_video)
+        return view_videos
+
+    @staticmethod
     def transform_seconds_to_ffmpeg_offset(seconds):
         if seconds is None or type(seconds) != float:
             raise ValueError("Expected a float.")
