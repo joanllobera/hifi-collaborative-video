@@ -31,8 +31,8 @@ export class VideosComponent implements OnInit {
       );
   }
 
-  getVideoThumbnail(videoId:string) {
-    this.videoService.getVideoThumbnail(videoId)
+  getVideoFristThumbnail(videoId:string) {
+    this.videoService.getVideoFirstThumbnail(videoId)
       .subscribe(
         (response) => {
           console.log(response);
