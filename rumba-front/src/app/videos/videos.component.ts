@@ -20,9 +20,23 @@ export class VideosComponent implements OnInit {
       .subscribe(
         (response) => {
           this.allVideos = response;
-          console.log(this.allVideos);
+
+          this.allVideos.forEach(function (each, index) {
+            this.getVideoThumbnail(each.id);
+          });
+
         }
       );
   }
+
+  getVideoThumbnail(videoId:string) {
+    this.videoService.getVideoThumbnail(videoId)
+      .subscribe(
+        (response) => {
+          console.log(response);
+        }
+      );
+  }
+
 
 }

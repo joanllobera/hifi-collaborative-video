@@ -41,12 +41,16 @@ export class VideosServiceService {
     return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, {observe: 'body', responseType: 'blob'});
 
     // return this.http.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, { responseType: ResponseContentType.Blob });
-
   }
 
   getRecordedVideos() {
     return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video', {observe: 'body', responseType: 'json'});
   }
+
+  getVideoThumbnail(videoId: string) {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/first_thumb', {observe: 'body', responseType: 'json'});
+  }
+
 
 
 }
