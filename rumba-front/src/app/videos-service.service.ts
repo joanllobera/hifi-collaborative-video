@@ -48,7 +48,7 @@ export class VideosServiceService {
   }
 
   getVideoFirstThumb(videoId: string) {
-    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/first_thumb', {observe: 'body', responseType: 'blob'});
+    return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/first_thumb', { responseType: ResponseContentType.Blob });
   }
 
 
