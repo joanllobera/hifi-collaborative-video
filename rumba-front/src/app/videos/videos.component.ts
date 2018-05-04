@@ -12,18 +12,28 @@ export class VideosComponent implements OnInit {
 
   allVideos: any = undefined;
   allThumbnails: any[] = [];
+  thumbsToShow: any[] = [];
+  oneThumb: any;
 
   constructor(private videoService: VideosServiceService) { }
 
-  getVideoFirstThumbnail(videoId:string) {
-    this.videoService.getVideoFirstThumb(videoId)
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.allThumbnails.push(response);
-        }
-      );
+  createImageFromBlob(image: Blob) {
+     let reader = new FileReader();
+     reader.addEventListener("load", () => {
+        this.thumbsToShow.push(reader.result);
+     }, false);
+
+     if (image) {
+        reader.readAsDataURL(image);
+     }
   }
+
+  showImages() {
+    this.allThumbnails.forEach((each, index) => {
+      this.createImageFromBlob(each);
+    });
+  }
+
 
   ngOnInit() {
     // this.allVideos = this.videoService.getVideos();
@@ -44,6 +54,8 @@ export class VideosComponent implements OnInit {
               );
 
           });
+
+          this.showImages();
         }
       );
   }
