@@ -15,6 +15,16 @@ export class VideosComponent implements OnInit {
 
   constructor(private videoService: VideosServiceService) { }
 
+  getVideoFirstThumbnail(videoId:string) {
+    this.videoService.getVideoFirstThumb(videoId)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.allThumbnails.push(response);
+        }
+      );
+  }
+
   ngOnInit() {
     // this.allVideos = this.videoService.getVideos();
     this.videoService.getRecordedVideos()
@@ -29,15 +39,7 @@ export class VideosComponent implements OnInit {
       );
   }
 
-  getVideoFirstThumbnail(videoId:string) {
-    this.videoService.getVideoFirstThumb(videoId)
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.allThumbnails.push(response);
-        }
-      );
-  }
+
 
 
 
