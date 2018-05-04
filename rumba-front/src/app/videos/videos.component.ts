@@ -11,6 +11,8 @@ import { VideosServiceService } from '../videos-service.service';
 export class VideosComponent implements OnInit {
 
   allVideos: any = [];
+   allThumbnails: any[] = [];
+
 
   constructor(private videoService: VideosServiceService) { }
 
@@ -34,6 +36,7 @@ export class VideosComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log(response);
+          this.allThumbnails.push(response);
         }
       );
   }
