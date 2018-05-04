@@ -30,7 +30,7 @@ export class VideosComponent implements OnInit {
   }
 
   getVideoFirstThumbnail(videoId:string) {
-    this.videoService.getVideoFirstThumbnail(videoId)
+    this.videoService.getVideoFirstThumb(videoId)
       .subscribe(
         (response) => {
           console.log(response);
