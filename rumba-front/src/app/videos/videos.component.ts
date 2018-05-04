@@ -10,7 +10,7 @@ import { VideosServiceService } from '../videos-service.service';
 })
 export class VideosComponent implements OnInit {
 
-  allVideos: any[] = [];
+  allVideos: any = undefined;
   allThumbnails: any[] = [];
 
   constructor(private videoService: VideosServiceService) { }
