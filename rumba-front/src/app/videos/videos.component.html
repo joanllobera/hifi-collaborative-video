@@ -39,14 +39,8 @@
   </div>
   <div class="row top1">
 
-      <div *ngFor="let video of allVideos">
-        <div class="card col" style="margin:.5em;width:200px;padding:.5em;">
-          <!-- <div class="card-body">
-            <p class="card-text text text-primary">{{ video.name}}</p>
-          </div> -->
-          <img class="card-img-top" src="http://lorempixel.com/400/200" alt="Card image cap">
-
-        </div>
+      <div *ngFor="let video of thumbsToShow">
+        <img [src]="video" alt="">
       </div>
 
   </div>
