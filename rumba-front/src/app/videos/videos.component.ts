@@ -11,8 +11,7 @@ import { VideosServiceService } from '../videos-service.service';
 export class VideosComponent implements OnInit {
 
   allVideos: any = [];
-   allThumbnails: any[] = [];
-
+  allThumbnails: any[] = [];
 
   constructor(private videoService: VideosServiceService) { }
 
@@ -24,14 +23,13 @@ export class VideosComponent implements OnInit {
           this.allVideos = response;
 
           this.allVideos.forEach(function (each, index) {
-            this.getVideoThumbnail(each.videoId);
+            this.getVideoFirstThumbnail(each.videoId);
           });
-
         }
       );
   }
 
-  getVideoFristThumbnail(videoId:string) {
+  getVideoFirstThumbnail(videoId:string) {
     this.videoService.getVideoFirstThumbnail(videoId)
       .subscribe(
         (response) => {
@@ -40,6 +38,8 @@ export class VideosComponent implements OnInit {
         }
       );
   }
+
+
 
 
 }
