@@ -24,7 +24,7 @@ export class VideosComponent implements OnInit {
           this.allVideos = response;
 
           this.allVideos.forEach(function (each, index) {
-            this.getVideoThumbnail(each.id);
+            this.getVideoThumbnail(each.videoId);
           });
 
         }
