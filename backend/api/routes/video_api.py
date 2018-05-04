@@ -151,12 +151,10 @@ def get_video_first_thumb(video_id):
     try:
         thumb_path = VideoManager.get_instance().get_video_first_thumb(video_id=video_id)
         LOGGER.info("Request for getting video first thumb successfully finished.")
-        return send_file(thumb_path, mimetype="image/png"),200
+        return send_file(thumb_path, mimetype="image/jpg"),200
     except ValueError as ve:
         LOGGER.exception("Listing session videos request finished with errors: ")
         raise BadRequest(ve)
     except NotExistingResource as ne:
         LOGGER.exception("Listing session videos request finished with errors: ")
         raise NotFound(ne)
-
-

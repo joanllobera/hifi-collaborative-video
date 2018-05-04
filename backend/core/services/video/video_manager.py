@@ -253,7 +253,7 @@ class VideoManager(object):
             video = Video.objects(id=video_id).first()
             if video is None:
                 raise NotExistingResource("There's no video with such id.")
-            video_path = video['video_path'] + "/thumbs/0.png"
+            video_path = video['video_path'] + "/thumbs/out1.jpg"
             LOGGER.info("First video thumb retrieved: [path={}]".format(video_path))
             return video_path
         except ValueError as ve:
