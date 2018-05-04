@@ -11,8 +11,19 @@ import { VideosServiceService } from '../videos-service.service';
 export class VideosComponent implements OnInit {
 
   allVideos: any = [];
+  allThumbnails: any[] = [];
 
   constructor(private videoService: VideosServiceService) { }
+
+  getVideoFirstThumbnail(videoId:string) {
+    this.videoService.getVideoFirstThumb(videoId)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.allThumbnails.push(response);
+        }
+      );
+  }
 
   ngOnInit() {
     // this.allVideos = this.videoService.getVideos();
@@ -20,9 +31,17 @@ export class VideosComponent implements OnInit {
       .subscribe(
         (response) => {
           this.allVideos = response;
-          console.log(this.allVideos);
+
+          this.allVideos.forEach(function (each, index) {
+            this.getVideoFirstThumbnail(each.video_id);
+          });
         }
       );
   }
+
+
+
+
+
 
 }
