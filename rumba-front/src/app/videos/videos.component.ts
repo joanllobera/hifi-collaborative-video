@@ -32,7 +32,7 @@ export class VideosComponent implements OnInit {
         (response) => {
           this.allVideos = response;
 
-          this.allVideos.forEach(function (each, index) {
+          this.allVideos.forEach((each, index) => {
             // this.getVideoFirstThumbnail(each.video_id);
 
             this.videoService.getVideoFirstThumb(each.video_id)
