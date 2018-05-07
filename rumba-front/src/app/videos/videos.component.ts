@@ -73,7 +73,7 @@ export class VideosComponent implements OnInit {
 
     // download zip file
     let fileName = "test.mp4";
-    FileSaver.saveAs(this.singleVideo, fileName);
+    FileSaver.saveAs(blob, fileName);
   }
 
   onSelectVideo(index:number) {
