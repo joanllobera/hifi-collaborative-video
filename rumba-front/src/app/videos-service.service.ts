@@ -51,6 +51,10 @@ export class VideosServiceService {
     return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/first_thumb', { responseType: ResponseContentType.Blob });
   }
 
+  getSelectedVideo(video_id: string) {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + ' /api/video/' + video_id + '/mixed', { observe: 'body', responseType: 'blob' });
+  }
+
 
 
 }
