@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, send_file
+from flask import Blueprint, request, send_file
 from werkzeug.exceptions import BadRequest, NotFound
 
 from core.exceptions.generic_exceptions import NotExistingResource

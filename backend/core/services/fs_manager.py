@@ -8,7 +8,6 @@ import os
 
 import shutil
 
-import re
 import zipfile
 from io import BytesIO
 from os import makedirs

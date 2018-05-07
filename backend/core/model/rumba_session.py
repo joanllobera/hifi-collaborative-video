@@ -24,3 +24,4 @@ class RumbaSession(Document):
     vimeo = DictField(required=False)
     location = StringField(required=False, null=True, max_length=255)
     audio_timestamp = StringField(required=False, default="0")
+    edition_url = StringField(required=False, max_length=255)

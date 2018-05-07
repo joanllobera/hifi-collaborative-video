@@ -1,3 +1,4 @@
+import configparser
 
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
@@ -9,6 +10,14 @@ from core.services.audio_manager import AudioManager
 from core.services.fs_manager import FileSystemService
 
 LOGGER = LoggerHelper.get_logger("session_manager", "session_manager.log")
+
+
+CONFIG = configparser.RawConfigParser()
+CONFIG.read('backend.cfg')
+
+SERVER_URL = CONFIG.get("server", "server_url")
+if SERVER_URL[-1] != "/":
+    SERVER_URL = SERVER_URL + "/"
 
 
 class SessionManager(object):
@@ -72,6 +81,7 @@ class SessionManager(object):
                                    date=session_info['date'], is_public=session_info['is_public'],
                                    folder_url=dir_path, active=True, vimeo=session_info['vimeo'],
                                    location=session_info['location'], audio_timestamp=str(initial_timestmap)).save()
+            session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL,str(session['id'])))
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))
@@ -111,7 +121,7 @@ class SessionManager(object):
         Retrieves and returns all managed sessions.
 
         This method querys mongo database in order to retrieve all the sessions. Each session
-        is transformed into a dictionary and returned as an element of the list.
+        is transformed into a d ictionary and returned as an element of the list.
         :return: List of managed sessions. Each position of the list is a dictionary representing
         a session.
         """
