@@ -14,10 +14,10 @@ body, html {
 
 /* fonts for all app*/
 .title, .subtitle {
-  font-family: 'Roboto Slab', serif;
+  /* font-family: 'Roboto Slab', serif; */
 }
 .bodytext {
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
 }
 
 /*  font */
