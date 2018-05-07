@@ -32,12 +32,6 @@ export class VideosComponent implements OnInit {
      }
   }
 
-  showImages() {
-    this.allThumbnails.forEach((each, index) => {
-      this.createImageFromBlob(each);
-    });
-  }
-
 
   ngOnInit() {
     // this.allVideos = this.videoService.getVideos();
@@ -59,7 +53,7 @@ export class VideosComponent implements OnInit {
               );
 
           });
-          
+
         }
       );
   }
