@@ -119,7 +119,7 @@ def download_mixed_video(video_id):
     LOGGER.info("Received request for downloading mixed video.")
     try:
         video_path = VideoManager.get_instance().get_mixed_video_path(video_id)
-        send_file(video_path, mimetype="video/mp4"),200
+        return send_file(video_path, mimetype="video/mp4"),200
     except ValueError as ve:
         LOGGER.exception("Request for downloading mixed video finished with errors.")
         raise BadRequest(ve)
