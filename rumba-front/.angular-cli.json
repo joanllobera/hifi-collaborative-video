@@ -23,12 +23,12 @@
         "styles.css"
       ],
       "scripts": [
-        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
          "../node_modules/moment/min/moment.min.js",
          "../node_modules/jszip/dist/jszip.js",
          "./assets/serverdate/ServerDate.js",
          "./assets/fontawesome.js",
-         "./assets/solid.js"
+         "./assets/solid.js",
+         "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
