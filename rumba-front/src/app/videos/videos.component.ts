@@ -60,6 +60,13 @@ export class VideosComponent implements OnInit {
 
   onSelectVideo(index:number) {
     console.log('selectedVideo::::', this.allVideos[index]);
+    this.videoService.getSelectedVideo(this.allVideos[index].video_id)
+      .subscribe(
+        (response) => {
+          console.log('this is the selected video', response);
+        }
+      );
+
   }
 
 
