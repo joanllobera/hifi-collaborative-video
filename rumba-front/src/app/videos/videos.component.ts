@@ -60,7 +60,7 @@ export class VideosComponent implements OnInit {
       );
   }
 
-  downloadVideo(blob: any) {
+  downloadVideo(blob: Blob, name: string) {
     let reader = new FileReader();
 
     reader.addEventListener("load", () => {
@@ -72,8 +72,7 @@ export class VideosComponent implements OnInit {
     }
 
     // download zip file
-    let fileName = "test.mp4";
-    FileSaver.saveAs(blob, fileName);
+    FileSaver.saveAs(blob, name);
   }
 
   onSelectVideo(index:number) {
@@ -83,7 +82,7 @@ export class VideosComponent implements OnInit {
         (response) => {
           console.log('this is the selected video', response);
 
-          this.downloadVideo(response);
+          this.downloadVideo(response, this.allVideos[index].video_name);
 
         },
         (error) => {
