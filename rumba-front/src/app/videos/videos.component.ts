@@ -9,13 +9,17 @@ import { VideosServiceService } from '../videos-service.service';
   providers: [VideosServiceService]
 })
 export class VideosComponent implements OnInit {
-
+  activatedHelp:boolean = false;
   allVideos: any = undefined;
   allThumbnails: any[] = [];
   thumbsToShow: any[] = [];
   oneThumb: any;
 
   constructor(private videoService: VideosServiceService) { }
+
+  setHelpStatus() {
+    this.activatedHelp = !this.activatedHelp;
+  }
 
   createImageFromBlob(image: Blob) {
      let reader = new FileReader();
