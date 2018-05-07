@@ -15,7 +15,6 @@ export class VideosComponent implements OnInit {
   allVideos: any = undefined;
   allThumbnails: any[] = [];
   thumbsToShow: any[] = [];
-  oneThumb: any;
   singleVideo: any;
 
   constructor(private videoService: VideosServiceService) { }
@@ -84,22 +83,13 @@ export class VideosComponent implements OnInit {
         (response) => {
           console.log('this is the selected video', response);
 
-          let blob = new Blob( [ response ], { type: "video/mp4" } );
-
-          this.downloadVideo(blob);
-
-
-
-
-
-
+          this.downloadVideo(response);
 
         },
         (error) => {
           console.log(error);
         }
       );
-
   }
 
 
