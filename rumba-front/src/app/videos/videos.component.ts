@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Video } from '../model/video.model';
 import { VideosServiceService } from '../videos-service.service';
 
+import * as FileSaver from 'file-saver';
+
 @Component({
   selector: 'app-videos',
   templateUrl: './videos.component.html',
@@ -14,6 +16,7 @@ export class VideosComponent implements OnInit {
   allThumbnails: any[] = [];
   thumbsToShow: any[] = [];
   oneThumb: any;
+  singleVideo: Blob;
 
   constructor(private videoService: VideosServiceService) { }
 
@@ -65,6 +68,24 @@ export class VideosComponent implements OnInit {
         (response) => {
           console.log('this is the selected video', response);
 
+          let blob = new Blob( [ response ], { type: "video\/mp4" } );
+          let reader = new FileReader();
+          reader.addEventListener("load", () => {
+            if (reader.result != "") {
+              this.singleVideo = reader.result;
+            }
+          }, false);
+          if (blob) {
+             reader.readAsDataURL(blob);
+          }
+
+          // download zip file
+          let fileName = "test.mp4";
+          FileSaver.saveAs(this.singleVideo, fileName);
+
+        },
+        (error) => {
+          console.log(error);
         }
       );
 
