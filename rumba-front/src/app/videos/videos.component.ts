@@ -61,6 +61,7 @@ export class VideosComponent implements OnInit {
   }
 
   downloadVideo(blob: Blob, name: string) {
+    
     let reader = new FileReader();
 
     reader.addEventListener("load", () => {
