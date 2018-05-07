@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
 
@@ -18,21 +19,25 @@ export class EditorNiceComponent implements OnInit {
   allVideos: any = undefined;
   delta: number[] = [];
   allVideosOk: any[] = [];
+  session_id: string[] = [];
 
   videoJson: any[] = [];
   videoStream: any = undefined;
 
 
-constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer) { }
+  constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer, private route: ActivatedRoute) { 
+
+    this.route.params.subscribe(res => this.session_id = res.session_id);
+  }
 
   ngOnInit() {
-    this.getAllVideos();
+    this.getAllVideos(this.session_id);
     // this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
   }
 
-  getAllVideos(): void {
+  getAllVideos(session_id): void {
     this.listOfLists = [];
-    this.videoService.getAllVideos()
+    this.videoService.getAllVideos(session_id)
       .subscribe(
         (response) => {
           // console.log(response);
@@ -229,7 +234,7 @@ constructor(private videoService: VideosServiceService, private sanitizer: DomSa
   }
 
   sendVideoToServer() {
-    this.videoService.buildVideo(this.videoJson)
+    this.videoService.buildVideo(this.videoJson, this.session_id)
       .subscribe(
         (response) => {
           this.createVideoFromBlob(response); //httpClient

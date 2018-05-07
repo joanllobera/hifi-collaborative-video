@@ -33,12 +33,12 @@ export class VideosServiceService {
       );
   }
 
-  getAllVideos() {
-    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + '5ad09d5ec94b4c7adb5dbe27' + '/videos/all', {observe: 'body', responseType: 'json'});
+  getAllVideos(session_id) {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + session_id + '/videos/all', {observe: 'body', responseType: 'json'});
   }
 
-  buildVideo(json) {
-    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, {observe: 'body', responseType: 'blob'});
+  buildVideo(json, session_id) {
+    return this.httpClient.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + session_id + '/build', json, {observe: 'body', responseType: 'blob'});
 
     // return this.http.post(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + '5adef60dc94b4c5642d28cf3' + '/build', json, { responseType: ResponseContentType.Blob });
   }
