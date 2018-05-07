@@ -58,6 +58,9 @@ export class VideosComponent implements OnInit {
       );
   }
 
+  onSelectVideo(index:number) {
+    console.log('selectedVideo::::', this.allVideos[index]);
+  }
 
 
 
