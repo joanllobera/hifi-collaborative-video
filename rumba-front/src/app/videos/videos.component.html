@@ -29,7 +29,7 @@
   </div>
   <div class="row top1">
 
-      <div class="col-4 thumbnail" *ngFor="let video of thumbsToShow">
+      <div class="col-4 thumbnail" *ngFor="let video of thumbsToShow; let i = index" (click)="onSelectVideo(i)">
         <img [src]="video" alt="">
       </div>
 
