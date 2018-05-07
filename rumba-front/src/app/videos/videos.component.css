@@ -2,3 +2,8 @@
 .thumbnail {
   padding:1em;
 }
+
+.thumbnail img {
+  width: 300px;
+  height: auto;
+}
