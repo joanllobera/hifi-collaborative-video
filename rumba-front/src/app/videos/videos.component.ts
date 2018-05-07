@@ -64,6 +64,7 @@ export class VideosComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('this is the selected video', response);
+
         }
       );
 
