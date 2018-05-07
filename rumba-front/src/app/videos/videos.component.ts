@@ -19,11 +19,11 @@ export class VideosComponent implements OnInit {
 
   constructor(private videoService: VideosServiceService) { }
 
-  setHelpStatus() {
+  setHelpStatus():void {
     this.activatedHelp = !this.activatedHelp;
   }
 
-  createImageFromBlob(image: Blob) {
+  createImageFromBlob(image: Blob):void {
      let reader = new FileReader();
      reader.addEventListener("load", () => {
         this.thumbsToShow.push(reader.result);
@@ -60,8 +60,8 @@ export class VideosComponent implements OnInit {
       );
   }
 
-  downloadVideo(blob: Blob, name: string) {
-    
+  downloadVideo(blob: Blob, name: string): void {
+
     let reader = new FileReader();
 
     reader.addEventListener("load", () => {
@@ -76,7 +76,7 @@ export class VideosComponent implements OnInit {
     FileSaver.saveAs(blob, name);
   }
 
-  onSelectVideo(index:number) {
+  onSelectVideo(index:number): void {
     console.log('selectedVideo::::', this.allVideos[index]);
     this.videoService.getSelectedVideo(this.allVideos[index].video_id)
       .subscribe(
