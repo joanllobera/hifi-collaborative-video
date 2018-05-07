@@ -6,21 +6,11 @@
       </span> -->
       <span class="float-right">
         <span class="btn-group-sm">
-          <button
-            id="activeHelp"
-            type="button"
-            class="btn btn-xs btn-primary bmd-btn-fab"
-            title="Activar ajuda"
-            style="background-color: #fff173; color:black;">
-              <i class="fas fa-question"></i>
+          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
           </button>
-          <button
-            id="desactiveHelp"
-            type="button"
-            class="btn btn-xs btn-primary bmd-btn-fab hidden"
-            title="Desactivar ajuda"
-            style="background-color: #fff173; color:black;">
-              <i class="fas fa-question-circle"></i>
+          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
           </button>
         </span>
 
