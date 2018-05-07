@@ -16,7 +16,7 @@ export class VideosComponent implements OnInit {
   allThumbnails: any[] = [];
   thumbsToShow: any[] = [];
   oneThumb: any;
-  singleVideo: Blob;
+  singleVideo: any;
 
   constructor(private videoService: VideosServiceService) { }
 
@@ -61,6 +61,22 @@ export class VideosComponent implements OnInit {
       );
   }
 
+  downloadVideo(blob: any) {
+    let reader = new FileReader();
+
+    reader.addEventListener("load", () => {
+      this.singleVideo = reader.result;
+    }, false);
+
+    if (blob) {
+       reader.readAsDataURL(blob);
+    }
+
+    // download zip file
+    let fileName = "test.mp4";
+    FileSaver.saveAs(this.singleVideo, fileName);
+  }
+
   onSelectVideo(index:number) {
     console.log('selectedVideo::::', this.allVideos[index]);
     this.videoService.getSelectedVideo(this.allVideos[index].video_id)
@@ -68,20 +84,15 @@ export class VideosComponent implements OnInit {
         (response) => {
           console.log('this is the selected video', response);
 
-          let blob = new Blob( [ response ], { type: "video\/mp4" } );
-          let reader = new FileReader();
-          reader.addEventListener("load", () => {
-            if (reader.result != "") {
-              this.singleVideo = reader.result;
-            }
-          }, false);
-          if (blob) {
-             reader.readAsDataURL(blob);
-          }
+          let blob = new Blob( [ response ], { type: "video/mp4" } );
 
-          // download zip file
-          let fileName = "test.mp4";
-          FileSaver.saveAs(this.singleVideo, fileName);
+          this.downloadVideo(blob);
+
+
+
+
+
+
 
         },
         (error) => {
