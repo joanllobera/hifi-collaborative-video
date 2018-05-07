@@ -26,8 +26,7 @@
          "../node_modules/bootstrap/dist/js/bootstrap.min.js",
          "../node_modules/moment/min/moment.min.js",
          "../node_modules/jszip/dist/jszip.js",
-         "./assets/serverdate/ServerDate.js",
-         "./assets/janus/adapter.min.js"
+         "./assets/serverdate/ServerDate.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
