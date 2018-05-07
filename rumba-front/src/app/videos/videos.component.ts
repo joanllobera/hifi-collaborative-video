@@ -53,13 +53,13 @@ export class VideosComponent implements OnInit {
               .subscribe(
                 (response) => {
                   console.log(response);
-                  this.allThumbnails.push(response['_body']);
+                  //this.allThumbnails.push(response['_body']);
+                  this.createImageFromBlob(response['_body']);
                 }
               );
 
           });
-
-          this.showImages();
+          
         }
       );
   }
