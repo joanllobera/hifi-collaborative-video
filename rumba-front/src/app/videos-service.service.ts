@@ -52,7 +52,7 @@ export class VideosServiceService {
   }
 
   getSelectedVideo(video_id: string) {
-    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + ' /api/video/' + video_id + '/mixed', { observe: 'body', responseType: 'blob' });
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/api/video/' + video_id + '/mixed', { observe: 'body', responseType: 'blob' });
   }
 
 
