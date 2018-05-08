@@ -23,7 +23,7 @@ export class VideosComponent implements OnInit {
 
   constructor(private videoService: VideosServiceService, private toasterService: ToasterService ) { }
 
-  popToast() {
+  popToast():void {
     this.toasterService.pop('success', 'This is the Title', 'This is the body Body');
     this.toasterService.pop('info', 'This is the Title', 'This is the body Body');
     this.toasterService.pop('warning', 'This is the Title', 'This is the body Body');

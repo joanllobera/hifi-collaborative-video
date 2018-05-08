@@ -72,6 +72,9 @@ export class SessionCloseComponent implements OnInit {
           this.vimeouser = this.currentSession.vimeo['username'];
           this.vimeopassword = this.currentSession.vimeo['password'];
           this.editorLink = this.currentSession['edition_url'];
+
+          this.toasterService.pop('success', 'Crear sessió', 'Sessió creada correctament');
+
         }
       );
 
