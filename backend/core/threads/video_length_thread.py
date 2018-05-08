@@ -1,4 +1,5 @@
 import subprocess
+import time
 from threading import Thread
 
 from core.helpers.loggers import LoggerHelper
@@ -21,10 +22,17 @@ class VideoLengthThread(Thread):
 
     def run(self):
         LOGGER.info("VideoLengthThread: Measuring video length.")
-        process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-        process.wait(timeout=180)
-        output = process.stdout.read().decode("utf-8")
-        self.output=float(output)
+        converted = False
+        while not converted:
+            try:
+                process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
+                process.wait(timeout=180)
+                output = process.stdout.read().decode("utf-8")
+                self.output = float(output)
+                converted = True
+            except:
+                LOGGER.warn("Video is still not converted, waiting 5 seconds...")
+                time.sleep(5)
         self.code = 0
         LOGGER.info("VideoLengthThread: Video length: {}".format(self.output))
 

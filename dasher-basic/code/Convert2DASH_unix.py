@@ -141,7 +141,7 @@ class Dasher:
         # outputDashed = "/tmp/video"
         Config.VIDEOCODEC = 'libx264'
         segmentLength = "1000"  # in ms
-        resolution = "426x240"
+        resolution = "640x480"
         bitrate = "300"
         Config.VIDEOSAMPLINGRATE = "25"
 

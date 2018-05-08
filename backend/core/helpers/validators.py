@@ -32,14 +32,14 @@ class SessionValidator(object):
         if 'concert' in session.keys():
             if type(session['concert']) != str or not session['concert']:
                 raise SessionValidationException("Concert should have a valid name.")
-        if 'vimeo' in session.keys():
-            if type(session['vimeo']) != dict:
-                raise SessionValidationException(
-                    "Vimeo account information should be in json format.")
-            if 'username' not in session['vimeo'].keys() or not session['vimeo']['username']:
-                raise SessionValidationException("Vimeo username required.")
-            if 'password' not in session['vimeo'].keys() or not session['vimeo']['password']:
-                raise SessionValidationException("Vimeo password required.")
+        # if 'vimeo' in session.keys():
+        #     if type(session['vimeo']) != dict:
+        #         raise SessionValidationException(
+        #             "Vimeo account information should be in json format.")
+        #     if 'username' not in session['vimeo'].keys() or not session['vimeo']['username']:
+        #         raise SessionValidationException("Vimeo username required.")
+        #     if 'password' not in session['vimeo'].keys() or not session['vimeo']['password']:
+        #         raise SessionValidationException("Vimeo password required.")
         if 'location' in session.keys():
             if type(session['location']) != str or not session['location']:
                 raise SessionValidationException("If location is provided, it should be a string.")
