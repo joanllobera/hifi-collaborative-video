@@ -4,6 +4,7 @@ import { VideosServiceService } from '../videos-service.service';
 
 import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
+import { ToasterConfig } from 'angular5-toaster/dist/src/toaster-config';
 
 @Component({
   selector: 'app-videos',
@@ -18,7 +19,10 @@ export class VideosComponent implements OnInit {
   thumbsToShow: any[] = [];
   singleVideo: any;
 
-  constructor(private videoService: VideosServiceService, private toasterService: ToasterService) { }
+  public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
+
+
+  constructor(private videoService: VideosServiceService, private toasterService: ToasterService ) { }
 
   popToast() {
     this.toasterService.pop('success', 'This is the Title', 'This is the body Body');

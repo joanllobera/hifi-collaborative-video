@@ -99,7 +99,6 @@ export class SessionCloseComponent implements OnInit {
   onCopyToClipboard() {
     console.log("Edition link saved to clipboard.");
     this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
-
   }
 
 }
