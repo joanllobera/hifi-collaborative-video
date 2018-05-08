@@ -7,6 +7,8 @@ import { Vimeo } from '../model/vimeo.model';
 import * as moment from 'moment';
 
 import { ClipboardModule } from 'ngx-clipboard';
+import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
+import { ToasterConfig } from 'angular5-toaster/dist/src/toaster-config';
 
 @Component({
   selector: 'app-session-close',
@@ -24,11 +26,15 @@ export class SessionCloseComponent implements OnInit {
   editorLink: string = undefined;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
-
+  public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
 
   isImageLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private sessionSrv: SessionService,
+    private router: Router,
+    private toasterService: ToasterService) { }
 
   imageToShow: any;
 
@@ -66,6 +72,9 @@ export class SessionCloseComponent implements OnInit {
           this.vimeouser = this.currentSession.vimeo['username'];
           this.vimeopassword = this.currentSession.vimeo['password'];
           this.editorLink = this.currentSession['edition_url'];
+
+          this.toasterService.pop('success', 'Crear sessió', 'Sessió creada correctament');
+
         }
       );
 
@@ -93,6 +102,7 @@ export class SessionCloseComponent implements OnInit {
 
   onCopyToClipboard() {
     console.log("Edition link saved to clipboard.");
+    this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
   }
 
 }
