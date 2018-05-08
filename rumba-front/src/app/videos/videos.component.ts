@@ -19,8 +19,6 @@ export class VideosComponent implements OnInit {
   thumbsToShow: any[] = [];
   singleVideo: any;
 
-
-
   constructor(private videoService: VideosServiceService, private toasterService: ToasterService ) { }
 
   popToast():void {
@@ -44,7 +42,6 @@ export class VideosComponent implements OnInit {
         reader.readAsDataURL(image);
      }
   }
-
 
   ngOnInit() {
     // this.allVideos = this.videoService.getVideos();
@@ -85,6 +82,7 @@ export class VideosComponent implements OnInit {
 
     // download zip file
     FileSaver.saveAs(blob, name);
+    this.toasterService.pop('success', 'Descàrrega', 'El video s\'ha descarregat correctament');
   }
 
   onSelectVideo(index:number): void {
