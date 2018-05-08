@@ -23,8 +23,7 @@ const appRoutes: Routes = [
   // { path: 'camera', component: CameraComponent },
   { path: 'camera-back', component: CameraBackComponent },
   { path: 'editor', component: EditorComponent },
-  { path: 'editor-nice', component: EditorNiceComponent },
-  { path: 'editorok', component: EditorNiceComponent }
+  { path: 'editor-nice', component: EditorNiceComponent }
 ];
 
 @NgModule({
