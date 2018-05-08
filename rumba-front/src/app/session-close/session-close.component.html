@@ -89,14 +89,12 @@
       </div>
     </div>
   </div>
-
-
-
   <div class="row">
     <div class="col-6">
-      <button class="btn btn-raised btn-danger" type="button" name="button">COMPARTIR ENLLAÇ D'EDICIÓ</button>
+      <button class="btn btn-raised btn-danger" type="button" name="button" ngxClipboard  [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
     </div>
   </div>
+
   <div class="row">
     <div class="col-12">
       <div class="float-right">

@@ -27,6 +27,7 @@ import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
 import { VideosServiceService } from './videos-service.service';
 import { MargindeltaDirective } from './margindelta.directive';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { MargindeltaDirective } from './margindelta.directive';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ClipboardModule,
     HttpModule,
     HttpClientModule,
     NgbModule.forRoot(),

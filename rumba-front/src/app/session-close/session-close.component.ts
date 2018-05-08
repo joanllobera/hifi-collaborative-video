@@ -6,6 +6,8 @@ import { Vimeo } from '../model/vimeo.model';
 
 import * as moment from 'moment';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 @Component({
   selector: 'app-session-close',
   templateUrl: './session-close.component.html',
@@ -19,6 +21,7 @@ export class SessionCloseComponent implements OnInit {
   vimeouser: string = undefined;
   vimeopassword: string = undefined;
   formatedDate: string = 'undefined';
+  editorLink: string = undefined;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
 
@@ -62,7 +65,7 @@ export class SessionCloseComponent implements OnInit {
           this.formatedDate = niceDate;
           this.vimeouser = this.currentSession.vimeo['username'];
           this.vimeopassword = this.currentSession.vimeo['password'];
-
+          this.editorLink = this.currentSession['edition_url'];
         }
       );
 
@@ -86,6 +89,10 @@ export class SessionCloseComponent implements OnInit {
           this.router.navigate(['/session']);
         }
       )
+  }
+
+  onCopyToClipboard() {
+    console.log("Edition link saved to clipboard.");
   }
 
 }

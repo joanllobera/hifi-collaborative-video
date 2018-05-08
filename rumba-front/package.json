@@ -29,6 +29,7 @@
     "jquery": "^3.3.1",
     "jszip": "^3.1.5",
     "moment": "^2.22.0",
+    "ngx-clipboard": "^11.0.0",
     "rxjs": "^5.5.6",
     "webrtc-adapter": "^6.1.4",
     "zone.js": "^0.8.19"
