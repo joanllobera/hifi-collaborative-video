@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
+import { ToasterConfig } from 'angular5-toaster/dist/src/toaster-config';
 
 @Component({
   selector: 'app-session-close',
@@ -25,7 +26,7 @@ export class SessionCloseComponent implements OnInit {
   editorLink: string = undefined;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
-
+  public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
 
   isImageLoading: boolean = false;
 

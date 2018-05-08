@@ -19,7 +19,6 @@ export class VideosComponent implements OnInit {
   thumbsToShow: any[] = [];
   singleVideo: any;
 
-  public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
 
 
   constructor(private videoService: VideosServiceService, private toasterService: ToasterService ) { }
