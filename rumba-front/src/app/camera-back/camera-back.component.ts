@@ -4,6 +4,7 @@ import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
 import * as $ from 'jquery';
 import '../../assets/serverdate/ServerDate.js';
+import { AppConfig } from '../app-config';
 
 declare var Janus: any;
 declare var ServerDate: any;
@@ -60,7 +61,7 @@ export class CameraBackComponent implements OnInit {
 
   configureJanus(videoPath: string) {
 
-    var server = 'https://192.168.10.252:8080/janus';
+    var server = AppConfig.JANUS_URL;
 
     var janus = null;
     var echotest = null;
