@@ -28,6 +28,8 @@ import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 import { VideosServiceService } from './videos-service.service';
 import { MargindeltaDirective } from './margindelta.directive';
 import { ClipboardModule } from 'ngx-clipboard';
+import { ToasterModule } from 'angular5-toaster/dist/src/toaster.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { ClipboardModule } from 'ngx-clipboard';
     ClipboardModule,
     HttpModule,
     HttpClientModule,
-    NgbModule.forRoot(),
+    BrowserAnimationsModule,
+    ToasterModule,
+    NgbModule.forRoot()
   ],
   exports: [
     HeaderComponent

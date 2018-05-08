@@ -20,12 +20,14 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/angular5-toaster/dist/toaster.css",
         "styles.css"
       ],
       "scripts": [
         "../node_modules/bootstrap/dist/js/bootstrap.js",
         "../node_modules/moment/min/moment.min.js",
-        "../node_modules/jszip/dist/jszip.js"
+        "../node_modules/jszip/dist/jszip.js",
+        "../node_modules/angular5-toaster/dist/bundles/angular5-toaster.umd.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

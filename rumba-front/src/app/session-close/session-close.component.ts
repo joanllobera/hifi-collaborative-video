@@ -7,6 +7,7 @@ import { Vimeo } from '../model/vimeo.model';
 import * as moment from 'moment';
 
 import { ClipboardModule } from 'ngx-clipboard';
+import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 
 @Component({
   selector: 'app-session-close',
@@ -28,7 +29,11 @@ export class SessionCloseComponent implements OnInit {
 
   isImageLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute, private sessionSrv: SessionService, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private sessionSrv: SessionService,
+    private router: Router,
+    private toasterService: ToasterService) { }
 
   imageToShow: any;
 
@@ -93,6 +98,8 @@ export class SessionCloseComponent implements OnInit {
 
   onCopyToClipboard() {
     console.log("Edition link saved to clipboard.");
+    this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
+
   }
 
 }

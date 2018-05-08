@@ -3,6 +3,7 @@ import { Video } from '../model/video.model';
 import { VideosServiceService } from '../videos-service.service';
 
 import * as FileSaver from 'file-saver';
+import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 
 @Component({
   selector: 'app-videos',
@@ -17,7 +18,14 @@ export class VideosComponent implements OnInit {
   thumbsToShow: any[] = [];
   singleVideo: any;
 
-  constructor(private videoService: VideosServiceService) { }
+  constructor(private videoService: VideosServiceService, private toasterService: ToasterService) { }
+
+  popToast() {
+    this.toasterService.pop('success', 'This is the Title', 'This is the body Body');
+    this.toasterService.pop('info', 'This is the Title', 'This is the body Body');
+    this.toasterService.pop('warning', 'This is the Title', 'This is the body Body');
+    this.toasterService.pop('error', 'This is the Title', 'This is the body Body');
+  }
 
   setHelpStatus():void {
     this.activatedHelp = !this.activatedHelp;
