@@ -143,15 +143,33 @@ export class EditorNiceComponent implements OnInit {
 
   onGetThumbnails(id:string): void {
     this.singleList = [];
-    var a = this.videoService.getThunmbnailsFromVideo(id)
+    this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
           var new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-              return zip.files;
 
+              let zipFiles = zip.files;
+              const ordered = {};
+              Object.keys(zipFiles).sort().forEach(function(key) {
+                ordered[key] = zipFiles[key];
+              });
+
+
+              for (var prop in ordered) {
+                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
+                let reader = new FileReader();
+                reader.addEventListener("load", () => {
+                  if (reader.result != "") {
+                    this.singleList.push(reader.result);
+                  }
+                }, false);
+                if (blob) {
+                   reader.readAsDataURL(blob);
+                }
+              }
           });
 
           // download zip file
@@ -164,7 +182,6 @@ export class EditorNiceComponent implements OnInit {
         }
       );
 
-      console.log(a);
   }
 
 
@@ -220,49 +237,26 @@ export class EditorNiceComponent implements OnInit {
   onGetThumbnailsManySync(id:string): void {
     var temp = [];
     var myZip;
-    this.videoService.getThunmbnailsFromVideo(id)
+    var a = this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
           var new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-              myZip = zip;
-              let zipFiles = zip.files;
-              const ordered = {};
-              Object.keys(zipFiles).sort().forEach(function(key) {
-                ordered[key] = zipFiles[key];
-              });
-
-              for (var prop in ordered) {
-                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
-                let reader = new FileReader();
-                reader.addEventListener("load", () => {
-                  if (reader.result != "") {
-                    temp.push(reader.result);
-                  }
-                }, false);
-                if (blob) {
-                   reader.readAsDataURL(blob);
-                }
-              }
-
-              this.listOfLists.push(temp);
-              console.log('this.listOfLists::::', this.listOfLists);
+              return zip.files;
 
           });
 
-          console.log('myZip:::::', myZip);
 
-          // download zip file
-          // let fileName = "QCPReport.zip";
-          // FileSaver.saveAs(response, fileName);
 
         },
         (error) => {
           console.log('error::::', error);
         }
       );
+
+      console.log('zip.files:::::', a);
   }
 
 
