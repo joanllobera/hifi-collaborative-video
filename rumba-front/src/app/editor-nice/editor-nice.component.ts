@@ -186,6 +186,7 @@ export class EditorNiceComponent implements OnInit {
 
   onGetThumbnailsMany(id:string): void {
     var temp = [];
+    var myZip;
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
@@ -193,7 +194,7 @@ export class EditorNiceComponent implements OnInit {
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-
+              myZip = zip;
               let zipFiles = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
@@ -216,10 +217,9 @@ export class EditorNiceComponent implements OnInit {
               this.listOfLists.push(temp);
               console.log('this.listOfLists::::', this.listOfLists);
 
-
-
           });
 
+          console.log('myZip:::::', myZip);
 
           // download zip file
           // let fileName = "QCPReport.zip";
@@ -230,7 +230,6 @@ export class EditorNiceComponent implements OnInit {
           console.log('error::::', error);
         }
       );
-
   }
 
   sendVideoToServer() {
