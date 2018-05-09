@@ -21,6 +21,7 @@
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/angular5-toaster/dist/toaster.css",
+        "../node_modules/jquery/dist/jquery.js",
         "styles.css"
       ],
       "scripts": [
