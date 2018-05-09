@@ -1,6 +1,6 @@
 ---
-- hosts: rumba
-  remote_user: seg
+- hosts: localhost
+  remote_user: "{{ ubuntu_user }}"
   vars_files:
     - vars/variables.yml
   tasks:
