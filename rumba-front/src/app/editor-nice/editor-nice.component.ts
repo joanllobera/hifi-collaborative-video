@@ -236,12 +236,12 @@ export class EditorNiceComponent implements OnInit {
 
   onGetThumbnailsManySync(id:string): void {
     var temp = [];
-    var myZip;
-    var a = this.videoService.getThunmbnailsFromVideo(id)
+    var a;
+    this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
           var new_zip = new JSZip();
-          new_zip.loadAsync(response)
+          a = new_zip.loadAsync(response)
           .then(
             (zip) => {
               return zip.files;
