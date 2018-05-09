@@ -23,7 +23,7 @@ export class EditorNiceComponent implements OnInit {
 
   videoJson: any[] = [];
   videoStream: any = undefined;
-
+  ready: boolean = false;
 
   constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
 
@@ -55,8 +55,19 @@ export class EditorNiceComponent implements OnInit {
             } else {
               this.delta.push(0);
             }
-            // this.onGetThumbnailsMany(each.video_id);
-            this.onGetThumbnailsManySync(each.video_id);
+
+
+            // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
+
+            //remove the if(){}
+            if (index !== 0) {
+                if (this.ready) {
+                  this.ready = false;
+                  this.onGetThumbnailsManySync(each.video_id);
+                }
+            }
+
+
           });
           // console.log('this.delta:::', this.delta);
         }
@@ -238,7 +249,6 @@ export class EditorNiceComponent implements OnInit {
           var a = new_zip.loadAsync(response)
           .then(
             (zip, index) => {
-              zip['index'] = index;
               return zip.files;
 
           });
@@ -250,7 +260,7 @@ export class EditorNiceComponent implements OnInit {
           console.log('error::::', error);
         }
       );
-
+      this.ready = true;
   }
 
 
