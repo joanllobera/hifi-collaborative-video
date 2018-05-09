@@ -19,8 +19,8 @@
     file:
       path: "{{ janus_dir }}"
       state: directory
-      owner: seg # TODO use defined user
-      group: seg
+      owner: "{{ ubuntu_user }}"
+      group: "{{ ubuntu_user }}"
   - name: Generate configuration file
     shell: sh autogen.sh
     args:
