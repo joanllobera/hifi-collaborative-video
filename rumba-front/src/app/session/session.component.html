@@ -31,8 +31,8 @@
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
 
-        <input *ngIf="!activatedHelp" type="text" class="form-control" ngModel name="concert">
-        <input *ngIf="activatedHelp" #p="ngbPopover" placement="top-left" ngbPopover="Introdueix el nom de la banda." type="text" class="form-control" ngModel name="concert">
+        <input *ngIf="!activatedHelp" placeholder="Nom del concert" type="text" class="form-control" ngModel name="concert">
+        <input *ngIf="activatedHelp" placeholder="Nom del concert" #p="ngbPopover" placement="top-left" ngbPopover="Introdueix el nom de la banda." type="text" class="form-control" ngModel name="concert">
         <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
       </div>
 
@@ -48,14 +48,14 @@
 
       <div class="form-group top1">
         <label for="localitzacio" class="bmd-label-floating">Localització</label>
-        <input type="text" class="form-control" id="location" ngModel name="location">
+        <input type="text" placeholder="Lloc del concert" class="form-control" id="location" ngModel name="location">
       </div>
 
       <div class="form-group top1" ngModelGroup="vimeo">
         <label for="vimeo" class="bmd-label-floating">Vimeo</label>
         <div class="row">
           <div class="col">
-              <input type="text" placeholder="Usuari" class="form-control" id="username" ngModel name="username">
+              <input type="text" placeholder="Usuari de Vimeo" class="form-control" id="username" ngModel name="username">
           </div>
           <div class="col">
               <input type="password" placeholder="Password" class="form-control" id="password" ngModel name="password">

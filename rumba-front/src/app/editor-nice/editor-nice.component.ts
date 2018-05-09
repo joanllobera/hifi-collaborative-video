@@ -25,7 +25,7 @@ export class EditorNiceComponent implements OnInit {
   videoStream: any = undefined;
 
 
-  constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer, private route: ActivatedRoute) { 
+  constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
 
     this.route.params.subscribe(res => this.session_id = res.session_id);
   }
