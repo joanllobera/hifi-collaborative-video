@@ -3,7 +3,7 @@
     become: true
     apt:
       pkg: nginx
-      state: installed
+      state: present
       update_cache: true
   - name: Configure NGINX proxy
     become: true

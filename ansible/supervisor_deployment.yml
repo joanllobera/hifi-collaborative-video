@@ -1,0 +1,46 @@
+---
+- hosts: localhost
+  remote_user: "{{ ubuntu_user }}"
+  vars_files:
+    - vars/variables.yml
+  tasks:
+    - name: Test connection
+      ping:
+    - name: Install supervisor
+      become: true
+      apt:
+        package: supervisor
+        state: present
+        update_cache: true
+    - name: Start supervisor service
+      become: true
+      service:
+        name: supervisor
+        state: started
+    - name: Copy Janus config file
+      become: true
+      template:
+        src: templates/supervisor/janus.conf.tpl
+        dest: /etc/supervisor/conf.d/janus.conf
+    - name: Copy Rumba Backend config file
+      become: true
+      template:
+        src: templates/supervisor/rumba-backend.conf.tpl
+        dest: /etc/supervisor/conf.d/rumba-backend.conf
+    - name: Copy Rumba Frontend config file
+      become: true
+      template:
+        src: templates/supervisor/rumba-frontend.conf.tpl
+        dest: /etc/supervisor/conf.d/rumba-frontend.conf
+    - name: Update supervisor services
+      become: true
+      shell: "supervisorctl reread && supervisorctl update"
+    - name: Start supervisor services
+      become: true
+      supervisorctl:
+        name: "{{ item }}"
+        state: started
+      with_items:
+        - rumba-frontend
+        - rumba-backend
+        - janus

@@ -13,6 +13,8 @@ http {
 	# Basic Settings
 	##
 
+	## proxy_buffering is disabled, because it makes requests to keep pending on the frontend.
+    proxy_buffering off;
 	sendfile on;
 	tcp_nopush on;
 	tcp_nodelay on;
@@ -79,13 +81,13 @@ http {
 		ssl_certificate_key 	"{{ janus_dir }}/share/janus/certs/mycert.key";
 
         location / {
-                proxy_pass http://localhost:{{ frontend_port }};
+                proxy_pass http://127.0.0.1:{{ frontend_port }};
         }
         location /api {
-                proxy_pass http://localhost:{{ backend_port }};
+                proxy_pass http://127.0.0.1:{{ backend_port }};
         }
         location /janus {
-			proxy_pass http://localhost:8088;
+			proxy_pass http://127.0.0.1:8088;
 		}
 
 

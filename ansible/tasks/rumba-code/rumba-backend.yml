@@ -3,7 +3,7 @@
     become: true
     apt:
       package: "{{ item }}"
-      state: installed
+      state: present
       update_cache: true
     with_items:
       - build-essential
@@ -12,7 +12,7 @@
     become: true
     apt:
       package: python-pip
-      state: installed
+      state: present
       update_cache: true
 
     ###########################
@@ -33,7 +33,7 @@
     become: true
     apt:
       package: mongodb-org
-      state: installed
+      state: present
       update_cache: true
 
     ##########################
@@ -65,8 +65,8 @@
     file:
       path: "{{ item }}"
       state: directory
-      owner: seg
-      group: seg
+      owner: "{{ ubuntu_user }}"
+      group: "{{ ubuntu_user }}"
     with_items:
       - /var/rumba
       - /var/rumba/logs

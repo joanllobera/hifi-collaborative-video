@@ -29,14 +29,14 @@
   - name: Install FFMPEG dependencies
     become: true
     apt:
-	package: libx264-dev
-	state: present
-	update_cache: true
+      package: libx264-dev
+      state: present
+      update_cache: true
   - name: Download ffmpeg
     get_url:
       url: "http://ffmpeg.org/releases/ffmpeg-{{ ffmpeg_version }}.tar.gz"
       dest: /tmp/ffmpeg/ffmpeg.tar.gz
-  - name: Extract ffmpeg.tar. gz
+  - name: Extract ffmpeg.tar.gz
     unarchive:
       src: /tmp/ffmpeg/ffmpeg.tar.gz
       dest: /tmp/ffmpeg/code/

@@ -2,7 +2,7 @@
 # used by the Ansible playbooks.
 
 # Folder where the Rumba code would be cloned
-- rumba_src_folder: /home/seg/code
+- rumba_src_folder:
 
 # Port that NGINX will use for listening requests to be proxied to frontend and/or backend.
 - nginx_port: 8080
@@ -16,3 +16,10 @@
 
 # Directory where the Janus would be installed
 - janus_dir: /opt/janus
+
+# Ubuntu username
+- ubuntu_user:
+
+# Bitbucket section
+- bitbucket_user:
+- bitbucket_pass:

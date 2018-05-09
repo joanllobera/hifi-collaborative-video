@@ -6,6 +6,6 @@
   - name: Install node v.7.8.0
     shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install v7.8.0"
   - name: Install node modules
-    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install"
+    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use v7.8.0 && npm install"
   - name: Install angular/cli
-    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && npm install -g @angular/cli"
+    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use v7.8.0 && npm install -g @angular/cli@1.7.3"
