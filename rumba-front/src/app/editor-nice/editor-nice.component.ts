@@ -231,7 +231,6 @@ export class EditorNiceComponent implements OnInit {
 
 
   onGetThumbnailsManySync(id:string): void {
-    var temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
@@ -239,7 +238,7 @@ export class EditorNiceComponent implements OnInit {
           var a = new_zip.loadAsync(response)
           .then(
             (zip, index) => {
-              zip.index = index;
+              zip['index'] = index;
               return zip.files;
 
           });
