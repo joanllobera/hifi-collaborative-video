@@ -13,7 +13,7 @@ import { CameraBackComponent } from './camera-back/camera-back.component';
 import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/session', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'orientation', component: OrientationComponent},
   { path: 'styles', component: StylesComponent },
