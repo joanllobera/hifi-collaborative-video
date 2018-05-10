@@ -58,11 +58,11 @@ export class EditorNiceComponent implements OnInit {
             }
 
             if (index === 0) {
+              this.onGetThumbnailsMany(each.video_id);
+            } else {
               setTimeout(() => {
                 this.onGetThumbnailsMany(each.video_id);
               }, 2000);
-            } else {
-              this.onGetThumbnailsMany(each.video_id);
             }
 
 
