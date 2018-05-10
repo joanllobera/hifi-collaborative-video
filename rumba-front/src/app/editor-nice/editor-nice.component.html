@@ -1,5 +1,5 @@
 <div>
-  <video controls autoplay loop >
+  <video controls autoplay loop controlsList="nodownload">
     <!-- <source src="assets/SEG.mp4" type="video/mp4"> -->
       <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
   </video>
