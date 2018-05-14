@@ -61,7 +61,7 @@ export class CameraBackComponent implements OnInit {
 
   configureJanus(videoPath: string) {
 
-    var server = AppConfig.JANUS_PROD;
+    var server = AppConfig.JANUS_DEV;
 
     var janus = null;
     var echotest = null;
