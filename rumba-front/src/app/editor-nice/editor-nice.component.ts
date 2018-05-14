@@ -134,16 +134,7 @@ export class EditorNiceComponent implements OnInit {
       var index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
-      if (this.duplicatePosition(this.videoJson, thumbnail)) {
-        //buscar el de la misma position y borrarlo
-        // let duplicatedByPosition = this.getDuplicatedObjectByPosition(this.videoJson, thumbnail);
-        // let index = this.getDuplicateIndex(this.videoJson, duplicatedByPosition[0]);
-        // this.videoJson.splice(index, 1);
-        alert('Hi ha més d\'un franme sel·leccionat pel mateix període de temps')
-        this.videoJson.push(thumbnail);
-      } else {
-        this.videoJson.push(thumbnail);
-      }
+      this.videoJson.push(thumbnail);
 
     }
 
