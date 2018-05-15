@@ -271,9 +271,12 @@ export class EditorNiceComponent implements OnInit {
       .subscribe(
         (response) => {
           this.createVideoFromBlob(response); //httpClient
-          // this.createVideoFromBlob(response.blob()); //http
+          this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
         }, (error) => {
           console.log(error);
+           if (error.status === 409) {
+             this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
+           }
         }
       );
   }
