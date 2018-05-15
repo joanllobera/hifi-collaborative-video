@@ -1,7 +1,7 @@
 from flask import Blueprint, request, send_file
-from werkzeug.exceptions import BadRequest, NotFound
+from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
-from core.exceptions.generic_exceptions import NotExistingResource
+from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.helpers.loggers import LoggerHelper
 from core.services.video.video_editor import VideoEditor
 
@@ -81,3 +81,6 @@ def build_video(session_id):
     except NotExistingResource as ne:
         LOGGER.exception("Request for editing video finished with errors - ")
         raise NotFound(ne)
+    except IllegalResourceState as ie:
+        LOGGER.exception("Request for editing video finished with errors - ")
+        raise Conflict(ie)
