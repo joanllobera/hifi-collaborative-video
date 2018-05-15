@@ -6,6 +6,7 @@ import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
 
 import * as FileSaver from 'file-saver';
+import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 
 @Component({
   selector: 'app-editor-nice',
@@ -26,7 +27,11 @@ export class EditorNiceComponent implements OnInit {
   zipList: any[] =  [];
 
 
-  constructor(private videoService: VideosServiceService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
+  constructor(
+    private videoService: VideosServiceService,
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private toasterService: ToasterService) {
 
     this.route.params.subscribe(res => this.session_id = res.session_id);
   }
@@ -250,15 +255,14 @@ export class EditorNiceComponent implements OnInit {
               this.zipList.push(zip.files);
           });
 
-          console.log('zip.files::::::::', a);
+          // console.log('zip.files::::::::', a);
 
         },
         (error) => {
-          console.log('error::::', error);
+          // console.log('error::::', error);
         }
       );
 
-      console.log('lalalalalalala:::::::', this.zipList);
   }
 
 
