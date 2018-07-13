@@ -6,6 +6,7 @@ from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
+from core.model.session_status import SessionStatus
 from core.services.audio_manager import AudioManager
 from core.services.fs_manager import FileSystemService
 
@@ -63,25 +64,26 @@ class SessionManager(object):
             # First we validate user input
             SessionValidator.validate_new_session(session_info)
             LOGGER.info("Checking if there's any active sessions..")
-            active_sessions = RumbaSession.objects(active=True).count()
-            if active_sessions > 0:
+            created_sessions = RumbaSession.objects(state=SessionStatus.CREATED.value).count()
+            active_sessions = RumbaSession.objects(state=SessionStatus.ACTIVE.value).count()
+            if active_sessions > 0 or created_sessions > 0:
                 LOGGER.error("Error creating session: There's already an active session.")
                 raise SessionValidationException("There's already an active session.")
             # Secondly we create the working directory.
             dir_path = FileSystemService.get_instance().create_session_directory(
                 band=session_info['band'])
-            # we start to record audio
-            initial_timestmap = AudioManager.get_instance().record_audio(dir_path)
+            # TODO move it - we start to record audio
+            # initial_timestmap = AudioManager.get_instance().record_audio(dir_path)
         except Exception as ex:
             LOGGER.exception("Error creating session  - ")
             raise ex
         try:
             # Store the information int the DB.
             session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
-                                   date=session_info['date'], is_public=session_info['is_public'],
-                                   folder_url=dir_path, active=True, vimeo=session_info['vimeo'],
-                                   location=session_info['location'], audio_timestamp=str(initial_timestmap)).save()
-            session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL,str(session['id'])))
+                                   date=session_info['date'], folder_url=dir_path, location=session_info['location']
+                                   ).save()
+            session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL, str(session['id'])))
+            session.update(set__record_url="{}camera-back".format(SERVER_URL))
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))
