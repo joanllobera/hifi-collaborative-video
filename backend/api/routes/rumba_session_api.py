@@ -10,7 +10,7 @@ import json
 
 from flask import Blueprint, request, send_file, session
 from flask.json import jsonify
-from werkzeug.exceptions import BadRequest, NotFound, Conflict
+from werkzeug.exceptions import BadRequest, NotFound, Conflict, InternalServerError
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
@@ -66,6 +66,32 @@ def create_session():
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
+
+
+@SESSION_MANAGER_API.route("/<session_id>", methods=["PUT"])
+def initialize_session(session_id):
+    """
+    Endpoint for initialzing an existing Rumba session.
+    :param session_id: Id of the session to initialize
+    :return:
+        - HTTP 204, if the session could be successfully initialized.
+        - HTTP 404, if the session does not exist.
+        - HTTP 409, if the session is not in the expected state before initializing it.
+
+    """
+    LOGGER.info("Received request for initializing a session")
+    try:
+        SessionManager.get_instance().initialize_session(session_id=session_id)
+        LOGGER.info("Session sucessfully initialized.")
+        return "", 204
+    except IllegalSessionStateException as ie:
+        LOGGER.exception("Session initialization request finished with errors.")
+        raise Conflict(ie)
+    except NotExistingResource as ne:
+        LOGGER.exception("Session initialization request finished with errors.")
+        raise NotFound(ne)
+    except Exception as ex:
+        raise InternalServerError(ex)
 
 
 @SESSION_MANAGER_API.route("/<session_id>", methods=["GET"])
