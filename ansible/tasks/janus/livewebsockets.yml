@@ -1,0 +1,22 @@
+---
+  - name: Remove clone of temp libwebsockets repo (if it already exists)
+    file:
+      path: /tmp/libwebsockets
+      state: absent
+  - name: Git clone libwebsockets (to support WebRTC Data Channels)
+    git:
+      repo: git://git.libwebsockets.org/libwebsockets
+      dest: /tmp/libwebsockets
+  - name: Configure livewebsockets build
+    shell: cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr
+    args:
+      chdir: /tmp/libwebsockets
+  - name: Build livewebsockets
+    shell: make
+    args:
+      chdir: /tmp/libwebsockets
+  - name: Install livewebsockets
+    become: true
+    shell: make install
+    args:
+      chdir: /tmp/libwebsockets

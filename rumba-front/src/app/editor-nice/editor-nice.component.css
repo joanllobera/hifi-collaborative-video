@@ -1,0 +1,46 @@
+video {
+  width: 100%;
+  height: auto;
+
+  background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+}
+
+.video-disabled {
+  opacity: .7;
+}
+
+.oneVideo > div.iframe > img {
+  display: inline-block;
+  width:80px;
+  height: 80px;
+  transition: opacity .3s;
+  cursor:pointer;
+}
+
+.selectedImg {
+  border-left:#fff 2px solid;
+  border-right:#fff 2px solid;
+
+  opacity: .5;
+  background-color: red;
+}
+
+.oneVideo {
+  padding:.1em;
+  display:block;
+}
+
+.ifame {
+  display:block;
+}
+
+.video-container {
+
+  padding: .3em;
+  overflow-x: auto;
+   white-space: nowrap;
+}

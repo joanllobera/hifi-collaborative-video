@@ -1,0 +1,58 @@
+video {
+  position: fixed;
+  top: 55px;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1000;
+}
+
+.black {
+  position: fixed;
+  background-color: rgba(0,0,0,.6);
+  bottom:0;
+  width: 100%;
+  height:100px;
+  display: flex;
+}
+
+.flex-wrap, .border {
+	flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.record-button {
+  height: 50px;
+}
+
+.border {
+  border: 5px lightgrey solid;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  text-align: center;
+  padding: .6em;
+}
+
+.record, .stop {
+  cursor:pointer;
+}
+
+.record {
+  width: 55px;
+  height: 55px;
+  background-color: red;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.stop {
+  margin: 10px;
+  width: 35px;
+  height: 35px;
+  background-color: red;
+  border-radius:0;
+  text-align: center;
+}

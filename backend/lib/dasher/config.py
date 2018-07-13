@@ -18,10 +18,8 @@
 #  Authors:  Joan Llobera <joan.llobera@i2cat.net>, David Gómez <david.gomez@i2cat.net>
 
 
-
-
-#Ffmpeg Parameters
-SegmentLength =""
+# Ffmpeg Parameters
+SegmentLength = ""
 VIDEOSAMPLINGRATE = ""
 VIDEOCODEC = "libx264"
 
@@ -35,38 +33,35 @@ def format_filename(filename):
     for idx, chr_ in enumerate(invalid_chars):
         keyinvalidDict[chr_] = idx
 
-    
     for k in filename:
         if k in keyinvalidDict.keys():
-            filename = filename.replace(k,'_') # I don't like spaces in filenames.                
+            filename = filename.replace(k, '_')  # I don't like spaces in filenames.
     return filename
 
-def PrintConfig ():
 
-
+def PrintConfig():
     '''
     Print all internal variables for debug
     '''
     print("=================================================================")
     print(" PrintConfig ")
     print("=================================================================")
-    print("-- Paths --") 
-    print("InputhPath-> %s" % InputhPath) 
-    print("PremierProjectName-> %s" % PremierProjectName) 
-    #Paths fore share accros the program
+    print("-- Paths --")
+    print("InputhPath-> %s" % InputhPath)
+    print("PremierProjectName-> %s" % PremierProjectName)
+    # Paths fore share accros the program
 
-    print("TempFolder-> %s" % TempFolder )
-    
+    print("TempFolder-> %s" % TempFolder)
 
-    #Ffmpeg Parameters
-    print("-- Ffmpeg --") 
+    # Ffmpeg Parameters
+    print("-- Ffmpeg --")
 
     print("SegmentLength-> %s" % SegmentLength)
-    print("VIDEOSAMPLINGRATE-> %s" % VIDEOSAMPLINGRATE )
-    print("VIDEOCODEC-> %s" % VIDEOCODEC )
-     
-    print("-- Media --") 
- 
+    print("VIDEOSAMPLINGRATE-> %s" % VIDEOSAMPLINGRATE)
+    print("VIDEOCODEC-> %s" % VIDEOCODEC)
+
+    print("-- Media --")
+
     print("tvList-> %s" % tvList)
     print("sphericalList-> %s" % sphericalList)
     print("portalList-> %s" % portalList)
@@ -75,12 +70,12 @@ def PrintConfig ():
     print("tvBitRate-> %s" % tvBitRate)
     print("sphericalBitRate-> %s" % sphericalBitRate)
     print("portalBitRate-> %s" % portalBitRate)
-    
+
     print("tvResolutions-> %s" % tvResolutions)
     print("sphericalResolutions-> %s" % sphericalResolutions)
     print("portalResolutions-> %s" % portalResolutions)
 
 
-    
-    
-    
+
+
+

@@ -1,0 +1,22 @@
+---
+  - name: Install Janus dependencies
+    become: true
+    apt:
+      package: "{{ item }}"
+      state: present
+      update_cache: true
+    with_items:
+      - libmicrohttpd-dev
+      - libjansson-dev
+      - libnice-dev
+      - libssl-dev
+      - libsrtp-dev
+      - libsofia-sip-ua-dev
+      - libglib2.0-dev
+      - libopus-dev
+      - libogg-dev
+      - libcurl4-openssl-dev
+      - pkg-config
+      - gengetopt
+      - libtool
+      - automake

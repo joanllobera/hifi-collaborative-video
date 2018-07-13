@@ -1,0 +1,22 @@
+---
+  - name: Remove clone of temp usrsctp repo (if it already exists)
+    file:
+      path: /tmp/usrsctp
+      state: absent
+  - name: Git clone usrsctp (to support WebRTC Data Channels)
+    git:
+      repo: https://github.com/sctplab/usrsctp
+      dest: /tmp/usrsctp
+  - name: Build usrsctp
+    shell: "{{ item }}"
+    with_items:
+      - ./bootstrap
+      - ./configure --prefix=/usr
+      - make
+    args:
+      chdir: /tmp/usrsctp
+  - name: Install usrsctp
+    shell: "make install"
+    become: true
+    args:
+      chdir: /tmp/usrsctp

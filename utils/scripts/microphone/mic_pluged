@@ -1,0 +1,2 @@
+event=jack/microphone MICROPHONE unplug
+action=sh /etc/acpi/microphone_state.sh off

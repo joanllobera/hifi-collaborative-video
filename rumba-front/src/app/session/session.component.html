@@ -1,0 +1,121 @@
+<!-- <div class="container" style="margin-top:5em;">
+  <div class="row">
+    <div class="col">
+      <span class="float-right">
+        <span class="btn-group-sm">
+          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
+          </button>
+          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
+          </button>
+        </span>
+      </span>
+    </div>
+  </div>
+</div> -->
+
+<form style="margin-top:5em;" (ngSubmit)="onSubmit(sessionF)" #sessionF="ngForm">
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <div class="form-group top1">
+
+        <label for="banda" class="bmd-label-floating">Banda *</label>
+        <input *ngIf="activatedHelp" placeholder="Nom de la banda" placement="top-left" ngbPopover="* Són camps obligatoris" type="text" class="form-control" ngModel name="band" required>
+
+        <input *ngIf="!activatedHelp" placeholder="Nom de la banda" type="text" class="form-control" ngModel name="band" required>
+      </div>
+
+      <div class="form-group">
+        <label for="concert" class="bmd-label-floating">Concert</label>
+
+        <input *ngIf="!activatedHelp" placeholder="Nom del concert" type="text" class="form-control" ngModel name="concert">
+        <input *ngIf="activatedHelp" placeholder="Nom del concert" #p="ngbPopover" placement="top-left" ngbPopover="Introdueix el nom de la banda." type="text" class="form-control" ngModel name="concert">
+        <!-- <span class="bmd-help">We'll never share your email with anyone else.</span> -->
+      </div>
+
+      <div class="form-group top1">
+        <label for="logo" class="bmd-label-floating">Logo</label>
+        <input type="file" class="form-control" id="logo" (change)="onFileSelected($event)"><br/>
+      </div>
+
+      <div class="form-group">
+        <label for="data" class="bmd-label-floating">Data *</label>
+        <input type="text" class="form-control" id="date" [(ngModel)]="niceDate" name="date" disabled required>
+      </div>
+
+      <div class="form-group top1">
+        <label for="localitzacio" class="bmd-label-floating">Localització</label>
+        <input type="text" placeholder="Lloc del concert" class="form-control" id="location" ngModel name="location">
+      </div>
+
+      <div class="form-group top1" ngModelGroup="vimeo">
+        <label for="vimeo" class="bmd-label-floating">Vimeo</label>
+        <div class="row">
+          <div class="col">
+              <input type="text" placeholder="Usuari de Vimeo" class="form-control" id="username" ngModel name="username">
+          </div>
+          <div class="col">
+              <input type="password" placeholder="Password" class="form-control" id="password" ngModel name="password">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="container w-95 p-3">
+    <div class="row top1">
+      <div class="alert alert-secondary" role="alert" style="width:100%;">
+        <p class="bodytext red size20">Qui pot gravar</p>
+        <div class="row">
+          <div class="col-xs-6 col-sm-3 col-md-2">
+            <!-- <div class="form-check">
+              <input class="form-check-input" type="radio" name="is_public" value="true" ngModel checked/>
+              <label class="form-check-label radiobutton">
+              Tothom
+            </label>
+            </div> -->
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="true" checked>
+                Tothom
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-3 col-md-2">
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="value">
+                Editors
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="float-right">
+
+          <div *ngIf="!audioStatus" class="audio-off text-center">
+            <i class="fas fa-microphone-slash"></i>&nbsp;Audio OFF
+          </div>
+          <div *ngIf="audioStatus" class="audio-on text-center">
+            <i class="fas fa-microphone"></i>&nbsp;Audio ON
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col top1">
+        <div class="float-right">
+          <button type="submit" id="btn-start-session" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger" [disabled]="!sessionF.valid">INICIAR LA SESSIÓ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

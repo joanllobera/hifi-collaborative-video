@@ -1,0 +1,195 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  font-family:arial;
+}
+
+body, html {
+   padding: 0;
+   margin: 0;
+   width: vh;
+   height: vw;
+   overflow-x: hidden;
+ }
+
+/* fonts for all app*/
+.title, .subtitle {
+  /* font-family: 'Roboto Slab', serif; */
+}
+.bodytext {
+  /* font-family: 'Roboto', sans-serif; */
+}
+
+/*  font */
+.regular  {
+  font-weight: 400;
+}
+.light {
+  font-weight: 300;
+}
+
+/* @media (orientation: portrait) {
+  .portrait {
+    background-color: pink;
+  }
+}
+@media (orientation: landscape) {
+  .portrait {
+    background-color: yellow;
+  }
+} */
+
+
+#btn-start-session {
+  background-color: red;
+}
+
+/* font sizes */
+.size18 {
+  font-size: 18px;
+}
+.size20 {
+  font-size: 20px;
+}
+.size22 {
+  font-size: 22px;
+}
+.size24 {
+  font-size: 24px;
+}
+.size26 {
+  font-size: 26px;
+}
+
+
+
+/* app colors */
+.bg-red {
+  background-color: rgba(234, 2, 11, 1);
+}
+
+.color-red {
+  color: rgba(234, 2, 11, 1);
+}
+
+.bg-yellow {
+  background-color: rgba(255, 241, 115, 1);
+}
+
+.bg-white {
+  background-color: rgba(255, 255, 255, 1);
+  border: solid 1px lightgrey
+}
+
+.color-white {
+  color: rgba(255, 255, 255, 1);
+}
+
+.bg-black {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.bg-dgrey {
+  background-color: rgba(189, 189, 189, 1);
+}
+
+.bg-lgrey {
+  background-color: rgba(238, 238, 238, 1);
+}
+
+
+.box-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:center;
+}
+.box-container > div {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  text-align: center;
+}
+
+.info-icon {
+  background-color: #fff173;
+  color: black;
+}
+
+.top1 {
+  margin-top:1em;
+}
+
+.top2 {
+  margin-top:2em;
+}
+
+.top3 {
+  margin-top:3em;
+}
+
+.top4 {
+  margin-top:4em;
+}
+
+.top6 {
+  margin-top:6em;
+}
+
+.hidden {
+  /* visibility: hidden; */
+  display:none;
+}
+
+ .left1 {
+   margin-left: 1em;
+ }
+
+ .left2 {
+   margin-left: 2em;
+ }
+
+ .left3 {
+   margin-left: 3em;
+ }
+
+ .left4 {
+   margin-left: 4em;
+ }
+
+ .right1 {
+   margin-right: 1em;
+ }
+
+ .right2 {
+   margin-right: 2em;
+ }
+
+ .right3 {
+   margin-right: 3em;
+ }
+
+ .right4 {
+   margin-right: 4em;
+ }
+
+
+
+.popover-body {
+  background-color: rgba(255, 241, 115, 1);
+}
+
+.arrow {
+  color:yellow;
+}
+
+/* @media screen (orientation: landscape) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+} */

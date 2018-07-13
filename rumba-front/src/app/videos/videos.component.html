@@ -1,0 +1,65 @@
+<div class="container" style="margin-top:5em;">
+  <div class="row">
+    <div class="col clearfix">
+      <!--
+      <span class="float-right">
+        <span class="btn-group-sm">
+          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
+          </button>
+          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
+            <i class="fa fa-question-circle"></i>
+          </button>
+        </span>
+
+      </span>
+      <span class="float-left color-red size24">
+          <i class="fas fa-angle-left"></i>
+      </span>
+      -->
+    </div>
+  </div>
+
+  <div class="row top2">
+    <div class="col">
+      <h3 class="title regular color-red">
+        Els meus videos
+      </h3>
+    </div>
+  </div>
+  <div class="row top1">
+
+      <div class="col-4 thumbnail" *ngFor="let video of thumbsToShow; let i = index" (click)="onSelectVideo(i)">
+        <img [src]="video" alt="">
+      </div>
+
+  </div>
+  <div class="row top2">
+    <div class="col">
+      <h3 class="title regular color-red">
+        Descarrega't els teus videos ara!
+      </h3>
+    </div>
+  </div>
+  <div class="row top6">
+    <div class="col">
+      <div class="text-center title size24 color-red">
+        <div class="">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="">
+          ATENCIÓ!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row top1">
+    <div class="col">
+      <div class="top4 text-center subtitle regular color-red">
+        La funció de gravació només funcionarà amb el mòbil en orientació horitzontal
+      </div>
+    </div>
+  </div>
+</div>
+<toaster-container></toaster-container>

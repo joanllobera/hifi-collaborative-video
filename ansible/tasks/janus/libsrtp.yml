@@ -1,0 +1,24 @@
+---
+  - name: Download libsrtp v1.5.0
+    unarchive:
+      src: https://github.com/cisco/libsrtp/archive/v1.5.0.tar.gz
+      dest: /tmp
+      remote_src: yes
+  - name: Configure libsrtp v1.5.0 before building
+    shell: ./configure --prefix=/usr --enable-openssl
+    args:
+      chdir: /tmp/libsrtp-1.5.0
+  - name: Uninstall previous version
+    shell: make uninstall
+    become: true
+    args:
+      chdir: /tmp/libsrtp-1.5.0
+  - name: Build libsrtp v1.5.0
+    shell: make libsrtp.so
+    args:
+      chdir: /tmp/libsrtp-1.5.0
+  - name: Install libsrtp v1.5.0
+    shell: make install
+    become: true
+    args:
+      chdir: /tmp/libsrtp-1.5.0

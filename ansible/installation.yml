@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  remote_user: "{{ ubuntu_user }}"
+  vars_files:
+    - vars/variables.yml
+  tasks:
+    - include_tasks: tasks/rumba-code/code.yml
+    - include_tasks: tasks/rumba-code/rumba-backend.yml
+    - include_tasks: tasks/rumba-code/rumba-frontend.yml
+    - include_tasks: tasks/nginx/nginx.yml
+    - include_tasks: tasks/dasher/dasher.yml
+    - include_tasks: tasks/janus/janus.yml
+    - include_tasks: tasks/ntp/ntp.yml
+  handlers:
+    - include: handlers/handlers.yml

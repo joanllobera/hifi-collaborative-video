@@ -1,0 +1,31 @@
+<div>
+  <!-- <video controls autoplay loop controlsList="nodownload"> -->
+  <video controls autoplay loop>
+      <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
+  </video>
+
+  <div class="row">
+    <div class="col">
+
+      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="allVideos top1">
+      <div class="video-container">
+
+        <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo">
+          <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
+            <img (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<toaster-container></toaster-container>

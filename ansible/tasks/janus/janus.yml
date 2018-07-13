@@ -1,0 +1,46 @@
+---
+
+  - include_tasks: janus-dependencies.yml
+  - include_tasks: boring-ssl.yml
+  - include_tasks: libsrtp.yml
+  - include_tasks: livewebsockets.yml
+  - include_tasks: usrsctp.yml
+
+  - name: Create directory for Janus code
+    file:
+      path: /tmp/janus
+      state: directory
+  - name: Download Janus code
+    git:
+      repo: https://{{ bitbucket_user }}:{{ bitbucket_pass }}@bitbucket.i2cat.net/scm/rum/janus.git
+      dest: /tmp/janus
+  - name: Create directory for Janus
+    become: true
+    file:
+      path: "{{ janus_dir }}"
+      state: directory
+      owner: "{{ ubuntu_user }}"
+      group: "{{ ubuntu_user }}"
+  - name: Generate configuration file
+    shell: sh autogen.sh
+    args:
+      chdir: /tmp/janus/
+  - name: Build janus-gateway (no RabbitMQ, no MQTT, use BoringSSL)
+    command: "./configure --prefix={{ janus_dir }} --disable-rabbitmq --disable-mqtt --enable-boringssl"
+    args:
+      chdir: /tmp/janus/
+  - name: Install Janus
+    command: "{{ item }}"
+    args:
+      chdir: /tmp/janus/
+    with_items:
+      - make install
+      - make configs
+  - name: Enable HTTPs in Janus
+    copy:
+      src: ../../files/janus.transport.http.cfg
+      dest: "{{ janus_dir }}/etc/janus/janus.transport.http.cfg"
+  - name: Copy ServerDate library
+    copy:
+      src: ../../files/ServerDate.js
+      dest:  "{{ janus_dir }}/share/janus/demos/ServerDate.js"
