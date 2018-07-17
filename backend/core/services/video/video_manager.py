@@ -11,6 +11,7 @@ from core.helpers.mongo import MongoHelper
 from core.helpers.validators import GenericValidator
 from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
+from core.model.session_status import SessionStatus
 from core.model.video import Video
 from core.services.fs_manager import FileSystemService
 from core.services.session_manager import SessionManager
@@ -71,7 +72,7 @@ class VideoManager(object):
         """
         LOGGER.info("Adding video to session.")
         session = SessionManager.get_instance().get_session(session_id=session_id)
-        if not session['active']:
+        if session['state'] != SessionStatus.ACTIVE.value:
             raise IllegalSessionStateException("Can only add videos to active sessions.")
         user_videos = Video.objects(session=session['id'], user_id=user_id).count()
         video_name = "video{}".format(user_videos)
