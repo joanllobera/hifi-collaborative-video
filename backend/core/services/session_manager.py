@@ -84,6 +84,7 @@ class SessionManager(object):
                                    ).save()
             session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL, str(session['id'])))
             session.update(set__record_url="{}camera-back".format(SERVER_URL))
+            session.update(set__master_url="{}master-camera".format(SERVER_URL))
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))

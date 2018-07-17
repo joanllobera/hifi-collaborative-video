@@ -26,4 +26,5 @@ class RumbaSession(Document):
     audio_timestamp = StringField(required=False, default="0")
     edition_url = StringField(required=False, max_length=255)
     record_url = StringField(required=False, max_length=255)
+    master_url = StringField(required=False, max_length=255)
 
