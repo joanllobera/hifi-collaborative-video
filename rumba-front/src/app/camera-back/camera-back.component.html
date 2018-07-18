@@ -1,13 +1,20 @@
-<div class="row" style="margin-top:-.5em;">
+<div class="row">
   <div class="col-12">
-    <video class="rounded centered" id="myvideo" autoplay muted="muted" ></video>
+    <video #fullVideo class="rounded centered" id="myvideo" autoplay muted="muted" ></video>
   </div>
 </div>
 
 <div class="black flex-wrap">
 
-  <div class="border">
-    <div *ngIf="!isRecording" (click)="startRecording();checkButton()" class="record"></div>
-    <div *ngIf="isRecording" (click)="stopRecording();checkButton()" id="stop" class="stop"></div>
+  <div class="">
+    <!-- <div *ngIf="!isRecording" (click)="startRecording();checkButton()" class="record"></div>
+    <div *ngIf="isRecording" (click)="stopRecording();checkButton()" id="stop" class="stop"></div> -->
+    <div *ngIf="!isRecording" (click)="startRecording();checkButton()">
+      <img class="start-img" src="assets/logo/record.png" alt="">
+    </div>
+    <div *ngIf="isRecording" (click)="stopRecording();checkButton()">
+      <img class="stop-img" src="assets/logo/stop.png" alt="">
+    </div>
+
   </div>
 </div>

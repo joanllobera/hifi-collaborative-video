@@ -24,18 +24,13 @@ export class SessionComponent implements OnInit {
   audioStatus: boolean = false;
   selectedFile: File = null;
   currentDate = Date.now();
-
   dateOk = new Date(this.currentDate);
-
   niceDate = moment(this.dateOk).locale('es').format('L');
 
-
-  constructor(private sessionSrv: SessionService, private router: Router, private http: HttpClient) { }
-
-
-
-
-
+  constructor(
+      private sessionSrv: SessionService,
+      private router: Router,
+      private http: HttpClient) { }
 
   ngOnInit() {
     this.sessionSrv.getAudioStatus()
@@ -63,19 +58,13 @@ export class SessionComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // form.value.date = (new Date(form.value.date)).getTime();
     form.value.date = this.currentDate;
-    if (form.value.is_public == 'true') {
-      form.value.is_public = true;
-    } else {
-      form.value.is_public = false;
-    }
+
     this.sessionSrv.startSession(form.value)
       .subscribe(
         (response) => {
           console.log('response::', response);
           var a = response.json();
-
 
           if (this.selectedFile) {
               this.onUploadLogo(a.id);
@@ -87,10 +76,5 @@ export class SessionComponent implements OnInit {
         }
       );
   }
-
-
-
-
-
 
 }

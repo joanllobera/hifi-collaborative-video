@@ -1,19 +1,3 @@
-<!-- <div class="container" style="margin-top:5em;">
-  <div class="row">
-    <div class="col">
-      <span class="float-right">
-        <span class="btn-group-sm">
-          <button *ngIf="!activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: #fff173; color:black; border-radius:50%;border-width:0px">
-            <i class="fa fa-question-circle"></i>
-          </button>
-          <button *ngIf="activatedHelp" (click)="setHelpStatus()" type="button" class="btn btn-xs btn-primary" name="button" style="background-color: orange; color:black; border-radius:50%;border-width:0px">
-            <i class="fa fa-question-circle"></i>
-          </button>
-        </span>
-      </span>
-    </div>
-  </div>
-</div> -->
 
 <div class="container" style="margin-top:5em;">
   <div class="row">
@@ -50,58 +34,30 @@
       <div class="form-group top1">
         <label for="location" class="bmd-label-floating">Localització</label>
         <input type="text" class="form-control" id="location" ([ngModel])="currentSession.location" [value]="currentSession.location" name="location" />
-
       </div>
-
-      <div class="form-group top1">
-        <label for="vimeo" class="bmd-label-floating">Vimeo</label>
-        <div class="row">
-          <div class="col">
-              <input type="text" placeholder="Usuari" class="form-control" id="username" [value]="vimeouser" ([ngModel])="vimeouser" name="vimeopassword" />
-          </div>
-          <div class="col">
-              <input type="password" placeholder="Password" class="form-control" id="password" [value]="vimeopassword" ([ngModel])="vimeopassword" name="vimeoPassword" />
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="form-group top1">
-        <label for="isPublic" class="bmd-label-floating">Sessió pública</label>
-        <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.is_public }}</p>
-      </div> -->
 
     </div>
   </div>
 </div>
 <div class="container w-85 p-3">
-  <div class="row top1">
-    <div class="alert alert-secondary" role="alert" style="width:100%;">
-      <p class="bodytext red size20">Qui pot gravar</p>
-      <div class="row">
-        <div class="col-xs-6 col-sm-3 col-md-2">
-          <div class="radio">
-            <label>
-              <input type="radio" name="optionsRadios" id="optionsRadios1" value="true" checked>
-              Tothom
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="row">
     <div class="col-6">
-      <button class="btn btn-raised btn-danger" type="button" name="button" ngxClipboard  [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
+      <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" ngxClipboard  [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row top1">
     <div class="col-12">
-      <div class="float-right">
-        <button class="btn btn-raised btn-danger" type="button" name="button" (click)="onCloseSession()">TANCAR LA SESSIÓ</button>
-      </div>
+      <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" (click)="onCloseSession()">TANCAR LA SESSIÓ</button>
     </div>
   </div>
+
+  <div class="row top1">
+    <div class="col-12">
+      <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" (click)="gotToMasterCamera()">VISTA CÀMARA MÀSTER</button>
+    </div>
+  </div>
+
 </div>
 
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
