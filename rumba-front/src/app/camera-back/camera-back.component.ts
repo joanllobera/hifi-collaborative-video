@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RecordService } from  '../record.service';
 import { Observable } from  'rxjs/Observable';
 import { Observer } from 'rxjs';
@@ -19,8 +19,15 @@ export class CameraBackComponent implements OnInit {
   isRecording: boolean = false;
   videoPath: any = undefined;
   videoId: string = undefined;
+  @ViewChild('fullVideo') videoElem: ElementRef;
 
   constructor(private record: RecordService) { }
+
+  ngOnInit() {
+    // if (this.videoElem.nativeElement.webkitRequestFullScreen) {
+    //   this.videoElem.nativeElement.webkitRequestFullScreen();
+    // }
+  }
 
   checkButton() {
     this.isRecording = !this.isRecording;
@@ -61,7 +68,7 @@ export class CameraBackComponent implements OnInit {
 
   configureJanus(videoPath: string) {
 
-    var server = AppConfig.JANUS_PROD;
+    var server = AppConfig.JANUS_DEV;
 
     var janus = null;
     var echotest = null;
@@ -258,9 +265,7 @@ export class CameraBackComponent implements OnInit {
 
   }
 
-  ngOnInit() {
 
-  }
 
 
 }
