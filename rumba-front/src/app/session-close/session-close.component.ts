@@ -69,8 +69,8 @@ export class SessionCloseComponent implements OnInit {
           let niceDate = moment(dateOk).locale('es').format('L');
 
           this.formatedDate = niceDate;
-          this.vimeouser = this.currentSession.vimeo['username'];
-          this.vimeopassword = this.currentSession.vimeo['password'];
+          // this.vimeouser = this.currentSession.vimeo['username'];
+          // this.vimeopassword = this.currentSession.vimeo['password'];
           this.editorLink = this.currentSession['edition_url'];
 
           this.toasterService.pop('success', 'Crear sessió', 'Sessió creada correctament');
@@ -89,6 +89,9 @@ export class SessionCloseComponent implements OnInit {
       )
   }
 
+  gotToMasterCamera() {
+    this.router.navigate([this.currentSession['master_url']]);
+  }
 
   onCloseSession() {
     this.sessionSrv.closeSession(this.sessionId)
