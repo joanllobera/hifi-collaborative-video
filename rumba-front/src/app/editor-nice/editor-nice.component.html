@@ -1,6 +1,6 @@
 <div>
-  <video controls autoplay loop controlsList="nodownload">
-    <!-- <source src="assets/SEG.mp4" type="video/mp4"> -->
+  <!-- <video controls autoplay loop controlsList="nodownload"> -->
+  <video controls autoplay loop>
       <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
   </video>
 
@@ -28,3 +28,4 @@
     </div>
   </div>
 </div>
+<toaster-container></toaster-container>

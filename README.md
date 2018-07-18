@@ -25,7 +25,6 @@ In order to install and deploy it, following software should be already installe
 
 <ul>
     <li>rumba_src_folder: Absolute path of the folder where the cloned code will reside.</li>
-    <li>nginx_port: Port that the NGINX proxy will listen</li>
     <li>frontend_port: Port that the frontend will be listening</li>
     <li>backend_port: Port that the backend will be listening</li>
     <li>ffmpeg_version: Version of FFMPEG to download and install</li>
