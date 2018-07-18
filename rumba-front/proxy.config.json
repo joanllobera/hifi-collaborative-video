@@ -1,6 +1,6 @@
 {
   "localhost:4200": {
-    "target": "https://192.168.10.252:8080",
+    "target": "https://192.168.11.197",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
