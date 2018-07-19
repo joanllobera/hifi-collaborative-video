@@ -24,9 +24,13 @@ export class CameraBackComponent implements OnInit {
   constructor(private record: RecordService) { }
 
   ngOnInit() {
+    // video tag
     // if (this.videoElem.nativeElement.webkitRequestFullScreen) {
     //   this.videoElem.nativeElement.webkitRequestFullScreen();
     // }
+
+    //f11
+    //document.documentElement.webkitRequestFullScreen()
   }
 
   checkButton() {
