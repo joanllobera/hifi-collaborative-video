@@ -89,7 +89,7 @@ export class SessionCloseComponent implements OnInit {
       )
   }
 
-  gotToMasterCamera() {
+  goToMasterCamera() {
     this.router.navigate([this.currentSession['master_url']]);
   }
 
