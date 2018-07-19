@@ -9,6 +9,7 @@ import { VideosComponent } from './videos/videos.component';
 import { SessionCloseComponent } from './session-close/session-close.component';
 import { CameraBackComponent } from './camera-back/camera-back.component';
 import { EditorNiceComponent } from './editor-nice/editor-nice.component';
+import { CameraMasterComponent } from './camera-master/camera-master.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/session', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'sessionClose/:id', component: SessionCloseComponent},
   { path: 'videos', component: VideosComponent },
   { path: 'camera-back', component: CameraBackComponent },
+  { path: 'camera-master', component: CameraMasterComponent },
   { path: 'editor-nice/:session_id', component: EditorNiceComponent }
 ];
 

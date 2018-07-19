@@ -28,6 +28,7 @@ import { MargindeltaDirective } from './margindelta.directive';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToasterModule } from 'angular5-toaster/dist/src/toaster.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CameraMasterComponent } from './camera-master/camera-master.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SessionCloseComponent,
     CameraBackComponent,
     EditorNiceComponent,
-    MargindeltaDirective
+    MargindeltaDirective,
+    CameraMasterComponent
   ],
   imports: [
     BrowserModule,
