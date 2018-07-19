@@ -24,6 +24,7 @@ export class SessionCloseComponent implements OnInit {
   vimeopassword: string = undefined;
   formatedDate: string = 'undefined';
   editorLink: string = undefined;
+  recordLink: string = undefined;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
   public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
@@ -72,6 +73,8 @@ export class SessionCloseComponent implements OnInit {
           // this.vimeouser = this.currentSession.vimeo['username'];
           // this.vimeopassword = this.currentSession.vimeo['password'];
           this.editorLink = this.currentSession['edition_url'];
+          this.recordLink = this.currentSession['record_url'];
+
 
           this.toasterService.pop('success', 'Crear sessió', 'Sessió creada correctament');
 
@@ -108,4 +111,8 @@ export class SessionCloseComponent implements OnInit {
     this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
   }
 
+  onCopyRecordLinkToClipboard() {
+    this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
+  }
+  
 }
