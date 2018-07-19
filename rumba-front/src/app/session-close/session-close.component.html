@@ -41,23 +41,22 @@
 </div>
 <div class="container w-85 p-3">
   <div class="row">
-    <div class="col-6">
-      <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" ngxClipboard  [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
+      <div class="col-12">
+        <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" (click)="gotToMasterCamera()">VISTA CÀMARA MÀSTER</button>
+      </div>
     </div>
-  </div>
+    <div class="row top1">
+      <div class="col-12">
+        <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" ngxClipboard  [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
+      </div>
+    </div>
+
 
   <div class="row top1">
     <div class="col-12">
       <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" (click)="onCloseSession()">TANCAR LA SESSIÓ</button>
     </div>
   </div>
-
-  <div class="row top1">
-    <div class="col-12">
-      <button class="btn btn-xs btn-raised btn-danger" type="button" name="button" (click)="gotToMasterCamera()">VISTA CÀMARA MÀSTER</button>
-    </div>
-  </div>
-
 </div>
 
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
