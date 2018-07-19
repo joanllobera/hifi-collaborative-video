@@ -52,8 +52,8 @@ class VideoManager(object):
         :return:
         """
         LOGGER.info("Adding video to active session.")
-        session = SessionManager.get_instance().get_active_session()
-        if session is None:
+        session = SessionManager.get_instance().get_current_session()
+        if session is None or session['state'] != SessionStatus.ACTIVE.value:
             raise IllegalSessionStateException("There's no active session.")
         video_id = self.add_video(session_id=session['id'], user_id=user_id)
         video_mongo = Video.objects(id=video_id).first()

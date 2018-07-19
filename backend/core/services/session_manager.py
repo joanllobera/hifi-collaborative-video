@@ -130,19 +130,19 @@ class SessionManager(object):
 
         This method check if there's a session in the database with the provided id. If so, the
         information of the session is returned in a dictionary. If not, the method raises a
-        SessionValidationException.
+        IllegalSessionStateException.
         :return: Dictionary containing the information of the session identified with the id given
         as parameter.
         :raises:
-        - SessionValidationException, if there's no session with such id.
+        - NotExistingResource, if there's no session with such id.
         - ValueError, if the provided id is not a valid id.
         """
         LOGGER.info("Retrieveing session: [id={}].".format(session_id))
         GenericValidator.validate_id(session_id)
         session = RumbaSession.objects(id=session_id).first()
         if session is None:
-            raise SessionValidationException("There's no session with such id.")
-        LOGGER.info("Session sucessfully retrieved: [id={}]".format(session_id))
+            raise NotExistingResource("There's no session with such id.")
+        LOGGER.info("Session successfully retrieved: [id={}]".format(session_id))
         LOGGER.debug("Session information: {}".format(session))
         view_sess = MongoHelper.to_dict(session)
         view_sess.pop('folder_url')
@@ -175,7 +175,7 @@ class SessionManager(object):
         stopped. In order to remove a live session, it is mandatory to remove it first.
         :param session_id: Id of the session to remove.
         :raises:
-            - SessionValidationException, if the session does not exist.
+            - IllegalSessionStateException, if the session does not exist.
             - IlegalSessionStateException, if the session is active.
             - ValueError, if the provided id is not a valid id.
         """
@@ -202,20 +202,24 @@ class SessionManager(object):
         LOGGER.info("Stopping session: [id={}]".format(session_id))
         GenericValidator.validate_id(session_id)
         session = self.get_session(session_id)
-        if session['state'] != SessionStatus.ACTIVE.value:
-            raise IllegalSessionStateException("Only active sessions can be stopped.")
+        valid_states = [SessionStatus.CREATED.value, SessionStatus.ACTIVE.value]
+        if session['state'] not in valid_states:
+            raise IllegalSessionStateException("Only active and initialized sessions can be stopped.")
         db_session = RumbaSession.objects(id=session_id).first()
-        AudioManager.get_instance().stop_audio()
+        if  session['state'] == SessionStatus.ACTIVE.value:
+            LOGGER.info("Stopping audio recording.")
+            AudioManager.get_instance().stop_audio()
         db_session.update(set__state=SessionStatus.FINISHED.value)
         LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
 
-    def get_active_session(self):
+    def get_current_session(self):
         """
 
         :return:
         """
-        LOGGER.info("Retrieveing active session")
-        session = RumbaSession.objects(state=SessionStatus.ACTIVE.value).first()
+        LOGGER.info("Retrieveing current session")
+        states = [SessionStatus.ACTIVE.value, SessionStatus.CREATED.value]
+        session = RumbaSession.objects.filter(state__in=states).first()
         if session is None:
             return None
         LOGGER.info("Session sucessfully retrieved: [id={}]".format(session['id']))

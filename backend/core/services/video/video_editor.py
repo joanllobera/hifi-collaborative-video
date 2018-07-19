@@ -9,6 +9,7 @@ from core.helpers.validators import GenericValidator, VideoValidator
 
 from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
+from core.model.session_status import SessionStatus
 from core.model.video import Video
 from core.services.audio_manager import AudioManager
 from core.threads.audio_splitter_thread import AudioSplitterThread
@@ -79,8 +80,8 @@ class VideoEditor(object):
         session = RumbaSession.objects(id=session_id).first()
         if session is None:
             raise NotExistingResource("There's no session with sch id.")
-        if session['active']:
-            raise IllegalResourceState("Session is still active.")
+        if session['state'] != SessionStatus.FINISHED.value:
+            raise IllegalResourceState("Only finished sessions can be edited.")
         edition_id = self.__generate_random_uuid__()
         edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info, edition_id=edition_id)
         video_path = self.__create_video__(edit_info_filename)

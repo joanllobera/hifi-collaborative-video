@@ -6,7 +6,6 @@ helpers methods required by the frontend.
 
 This API has been implemented using Flask Blueprints.
 """
-import json
 
 from flask import Blueprint, request, send_file, session
 from flask.json import jsonify
@@ -125,7 +124,7 @@ def get_session(session_id):
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
-    except SessionValidationException as sv:
+    except NotExistingResource as sv:
         LOGGER.exception("Session creation request finished with errors: ")
         raise NotFound(sv)
 
@@ -201,25 +200,29 @@ def stop_session(session_id):
     except ValueError as ve:
         LOGGER.exception("Stop request finished with errors: ")
         raise BadRequest(ve)
-    except IllegalSessionStateException as ie:
+    except NotExistingResource as ie:
         LOGGER.exception("Stop request finished with errors: ")
-        raise Conflict(ie)
+        raise NotFound(ie)
+    except IllegalSessionStateException as ise:
+        LOGGER.exception("Stop request finished with errors: ")
+        raise Conflict(ise)
+
 
 @SESSION_MANAGER_API.route("/active", methods=['GET'])
-def get_active_session():
+def get_current_session():
     """
-    HTTP endpoint for retrieving the current active session.
+    HTTP endpoint for retrieving the current session.
     :return:
         - HTTP 200 with the id in the body.
-        - HTTP 404, if there's no active session.
+        - HTTP 404, if there's no created nor initialized session.
     """
-    LOGGER.info("Received request for getting active session.")
+    LOGGER.info("Received request for getting current session.")
     try:
-        active_session = SessionManager.get_instance().get_active_session()
-        LOGGER.info("Get active session request succesfully finished.")
-        return jsonify(active_session), 200
+        current_session = SessionManager.get_instance().get_current_session()
+        LOGGER.info("Get current session request succesfully finished.")
+        return jsonify(current_session), 200
     except NotExistingResource as ne:
-        LOGGER.exception("Get active session request finished with errors: ")
+        LOGGER.exception("Get current session request finished with errors: ")
         raise NotFound(ne)
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["POST"])
