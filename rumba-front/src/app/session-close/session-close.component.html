@@ -42,17 +42,18 @@
 <div class="container w-85 p-3">
   <div class="row">
     <div class="col-12">
-      <button class="btn btn-xs btn-raised btn-primary btn-block" type="button" name="button" (click)="goToMasterCamera()">VISTA CÀMARA MÀSTER</button>
+      <!-- <button class="btn btn-xs btn-raised btn-warning btn-block" type="button" name="button" (click)="goToMasterCamera()">VISTA CÀMARA MÀSTER</button> -->
+      <a class="btn btn-xs btn-raised btn-warning btn-block" target="_blank" type="button" name="button" [href]="currentSession['master_url']">VISTA CÀMARA MÀSTER</a>
     </div>
   </div>
   <div class="row top1">
     <div class="col-12">
-      <button class="btn btn-xs btn-raised btn-primary btn-block" type="button" name="button" ngxClipboard [cbContent]="recordLink" (click)="onCopyRecordLinkToClipboard()">COMPARTIR ENLLAÇ DE GRAVACIÓ </button>
+      <button class="btn btn-xs btn-raised btn-warning btn-block" type="button" name="button" ngxClipboard [cbContent]="recordLink" (click)="onCopyRecordLinkToClipboard()">COMPARTIR ENLLAÇ DE GRAVACIÓ </button>
     </div>
   </div>
   <div class="row top1">
     <div class="col-12">
-      <button class="btn btn-xs btn-raised btn-primary btn-block" type="button" name="button" ngxClipboard [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
+      <button class="btn btn-xs btn-raised btn-warning btn-block" type="button" name="button" ngxClipboard [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
     </div>
   </div>
   <div class="row top1">
