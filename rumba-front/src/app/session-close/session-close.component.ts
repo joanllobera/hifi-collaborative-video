@@ -93,7 +93,11 @@ export class SessionCloseComponent implements OnInit {
   }
 
   goToMasterCamera() {
-    this.router.navigate([this.currentSession['master_url']]);
+    //this.router.navigate([this.currentSession['master_url']]);
+    window.open(
+      this.currentSession['master_url'],
+      '_blank' // <- This is what makes it open in a new window.
+    );
   }
 
   onCloseSession() {
@@ -114,5 +118,5 @@ export class SessionCloseComponent implements OnInit {
   onCopyRecordLinkToClipboard() {
     this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
   }
-  
+
 }
