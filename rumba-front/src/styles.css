@@ -182,7 +182,7 @@ body, html {
   color:yellow;
 }
 
-/* @media screen and (orientation: portrait) {
+@media screen and (orientation: portrait) {
   nav {
     visibility: visible;
   }
@@ -192,4 +192,4 @@ body, html {
   nav {
     visibility: hidden;
   }
-} */
+}
