@@ -23,11 +23,7 @@ export class CameraMasterComponent implements OnInit {
   constructor(private record: RecordService) { }
 
   ngOnInit() {
-    //this.startRecording();
-  }
-
-  initialiceCreatedRumbaSessopm() {
-    
+    this.startRecording();
   }
 
   checkButton() {
@@ -38,7 +34,6 @@ export class CameraMasterComponent implements OnInit {
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
-          console.log(response);
           this.videoPath = response['video_path'];
           this.videoId = response['id'];
           this.configureJanus(this.videoPath);
@@ -51,7 +46,6 @@ export class CameraMasterComponent implements OnInit {
     this.record.stopRecordingVideo(this.videoId)
       .subscribe(
         (response) => {
-          console.log(response);
         }
       )
   }
