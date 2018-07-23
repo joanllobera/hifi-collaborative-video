@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   { path: 'sessionClose/:id', component: SessionCloseComponent},
   { path: 'videos', component: VideosComponent },
   { path: 'camera-back', component: CameraBackComponent },
-  { path: 'camera-master', component: CameraMasterComponent },
+  { path: 'master-camera', component: CameraMasterComponent },
   { path: 'editor-nice/:session_id', component: EditorNiceComponent }
 ];
 
