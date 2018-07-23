@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { ToasterConfig } from 'angular5-toaster/dist/src/toaster-config';
+import { RecordService } from '../record.service';
 
 @Component({
   selector: 'app-session-close',
@@ -35,7 +36,8 @@ export class SessionCloseComponent implements OnInit {
     private route: ActivatedRoute,
     private sessionSrv: SessionService,
     private router: Router,
-    private toasterService: ToasterService) { }
+    private toasterService: ToasterService,
+    private recordSrv: RecordService) { }
 
   imageToShow: any;
 
@@ -50,7 +52,14 @@ export class SessionCloseComponent implements OnInit {
      }
   }
 
-
+  initializeRumbaSession() {
+    this.recordSrv.initializeRumbaSession(this.sessionId)
+      .subscribe(
+        (data) => {
+          this.router.navigate(['/master-camera']);
+        }
+      );
+  }
 
   setHelpStatus() {
     this.activatedHelp = !this.activatedHelp;

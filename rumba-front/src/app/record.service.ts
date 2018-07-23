@@ -18,4 +18,8 @@ export class RecordService {
     return this.httpClient.put(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + videoId + '/stop', {});
   }
 
+  initializeRumbaSession(session_id: string) {
+    return this.httpClient.put(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + session_id, {});
+  }
+
 }
