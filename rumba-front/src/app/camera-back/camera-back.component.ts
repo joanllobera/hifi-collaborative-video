@@ -32,7 +32,6 @@ export class CameraBackComponent implements OnInit {
     //f11
     //document.documentElement.webkitRequestFullScreen()
 
-    this.startRecording();
 
   }
 
