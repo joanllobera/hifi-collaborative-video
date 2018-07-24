@@ -23,7 +23,8 @@ export class CameraMasterComponent implements OnInit {
   constructor(private record: RecordService) { }
 
   ngOnInit() {
-    this.startRecording();
+    //this.startRecording();
+    this.configureJanus();
   }
 
   checkButton() {
@@ -58,7 +59,7 @@ export class CameraMasterComponent implements OnInit {
   	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
-  configureJanus(videoPath: string) {
+  configureJanus(videoPath?: string) {
 
     var server = AppConfig.JANUS_DEV;
 
@@ -123,9 +124,16 @@ export class CameraMasterComponent implements OnInit {
 	    	timedelta = calculate_time_delta(n_reqs);
 	    }
 	    var delta = timedelta / n_reqs;
-
+      var body;
       	// Negotiate WebRTC
-      	var body = { "audio": true, "video": true, "timedelta": delta, "filename": videoPath};
+
+        if (videoPath) {
+            body = { "audio": true, "video": true, "timedelta": delta, "record": true, "filename": videoPath};
+        } else {
+            body = { "audio": true, "video": true, "timedelta": delta, "record": false };
+        }
+
+
       	Janus.debug("Sending message (" + JSON.stringify(body) + ")");
       	echotest.send({"message": body});
       	Janus.debug("Trying a createOffer too (audio/video sendrecv)");
