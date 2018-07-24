@@ -6,6 +6,7 @@ import '../../assets/serverdate/ServerDate.js';
 import { AppConfig } from '../app-config';
 
 declare var Janus: any;
+declare var janus: any;
 declare var ServerDate: any;
 
 @Component({
@@ -32,6 +33,7 @@ export class CameraMasterComponent implements OnInit {
   }
 
   startRecording() {
+    janus.destroy();
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
