@@ -8,6 +8,7 @@ import 'rxjs/Rx';  //needed for .map()
 
 import { AppConfig } from './app-config';
 import { Http, ResponseContentType } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class VideosServiceService {
@@ -18,6 +19,8 @@ export class VideosServiceService {
     new Video(2, 'Primavera Sound', 'Slow Dive', 'Barcelona-Forum', new Vimeo('aaa', 'bbb')),
     new Video(3, 'Primavera Club', 'The Punsetes', 'Apolo', new Vimeo('aaa', 'bbb'))
   ];
+
+  rangeValue = new Subject<number>();
 
   constructor(private httpClient: HttpClient, private http: Http) { }
 

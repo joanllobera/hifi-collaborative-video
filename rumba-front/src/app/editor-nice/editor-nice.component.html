@@ -6,9 +6,10 @@
 
   <div class="row">
     <div class="col">
-
+      <input type="range" class="form-control" name="zoomRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+    </div>
+    <div class="col">
       <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
-
     </div>
   </div>
 </div>

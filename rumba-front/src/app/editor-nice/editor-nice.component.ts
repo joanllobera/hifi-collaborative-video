@@ -31,7 +31,8 @@ export class EditorNiceComponent implements OnInit {
     private videoService: VideosServiceService,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private videoSrv: VideosServiceService) {
 
     this.route.params.subscribe(res => this.session_id = res.session_id);
   }
@@ -39,6 +40,11 @@ export class EditorNiceComponent implements OnInit {
   ngOnInit() {
     this.getAllVideos(this.session_id);
     // this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
+  }
+
+  changeZoom(value: number) {
+    console.log(value);
+    this.videoSrv.rangeValue.next(value);
   }
 
   getAllVideos(session_id): void {
