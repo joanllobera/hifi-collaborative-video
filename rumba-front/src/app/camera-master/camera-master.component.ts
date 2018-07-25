@@ -33,14 +33,12 @@ export class CameraMasterComponent implements OnInit {
   }
 
   startRecording() {
-    janus.destroy();
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
           this.videoPath = response['video_path'];
           this.videoId = response['id'];
           this.configureJanus(this.videoPath);
-
         }
       )
   }
@@ -82,14 +80,14 @@ export class CameraMasterComponent implements OnInit {
     var doSimulcast = (this.getQueryStringValue("simulcast") === "yes" || this.getQueryStringValue("simulcast") === "true");
     var simulcastStarted = false;
 
-	function calculate_time_delta(n_reqs){
-		var timedelta = 0;
-		var i;
-		for (i=0; i< n_reqs; i++){
-			timedelta += Math.round(ServerDate.now() - Date.now());
-		}
-		return timedelta;
-	}
+  	function calculate_time_delta(n_reqs){
+  		var timedelta = 0;
+  		var i;
+  		for (i=0; i< n_reqs; i++){
+  			timedelta += Math.round(ServerDate.now() - Date.now());
+  		}
+  		return timedelta;
+  	}
 
     // Helper method to prepare a UI selection of the available devices
     function initDevices(devices) {
@@ -192,14 +190,6 @@ export class CameraMasterComponent implements OnInit {
 									Janus.log("Plugin attached! (" + echotest.getPlugin() + ", id=" + echotest.getId() + ")");
 									// Enumerate devices: that's what we're here for
 									Janus.listDevices(initDevices);
-									// We wait for the user to select the first device before making a move
-									// $('#start').removeAttr('disabled').html("Stop")
-									// 	.click(function() {
-									// 		$(this).attr('disabled', "true");
-									// 		clearInterval(bitrateTimer);
-									// 		janus.destroy();
-									// 	});
-
                   $('#stop').bind('click', function (){
                     janus.destroy();
                   });
