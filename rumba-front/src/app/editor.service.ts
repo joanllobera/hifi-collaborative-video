@@ -6,6 +6,6 @@ export class EditorService {
 
   currentWidth = new Subject<number>();
 
-  constructor() { }
+  constructor(private editorSrv: EditorService) { }
 
 }
