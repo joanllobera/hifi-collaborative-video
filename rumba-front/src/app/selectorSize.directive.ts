@@ -11,6 +11,9 @@ export class SelectorSizeDirective implements OnInit {
     this.elementRef.nativeElement.style.width;
 	}
 
-  
+  onClickSeparator($event) {
+    console.log($event);
+  }
+
 
 }
