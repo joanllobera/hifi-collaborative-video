@@ -54,5 +54,7 @@ div.selector {
   margin: 0;
   padding:0;
   z-index: 1000;
+  height: 80px;
+  width: 100%;
 
 }
