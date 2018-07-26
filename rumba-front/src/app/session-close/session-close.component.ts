@@ -93,7 +93,6 @@ export class SessionCloseComponent implements OnInit {
   }
 
   goToMasterCamera() {
-
     this.recordSrv.initializeRumbaSession(this.sessionId)
       .subscribe(
         (data) => {
