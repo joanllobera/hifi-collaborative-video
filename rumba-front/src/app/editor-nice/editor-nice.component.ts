@@ -7,6 +7,7 @@ import { VideosServiceService } from '../videos-service.service';
 
 import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
+import { EditorService } from '../editor.service';
 
 @Component({
   selector: 'app-editor-nice',
@@ -32,7 +33,8 @@ export class EditorNiceComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private toasterService: ToasterService,
-    private videoSrv: VideosServiceService) {
+    private videoSrv: VideosServiceService,
+    private editorSrv: EditorService) {
 
     this.route.params.subscribe(res => this.session_id = res.session_id);
   }
@@ -44,6 +46,7 @@ export class EditorNiceComponent implements OnInit {
 
   onClickSeparator(event: Event) {
     console.log(event)
+    this.editorSrv.currentWidth.next(1);
   }
 
   changeZoom(value: number) {
