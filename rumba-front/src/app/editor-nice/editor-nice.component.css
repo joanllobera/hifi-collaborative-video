@@ -1,8 +1,7 @@
 video {
   width: 100%;
   height: auto;
-
-  background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
+  background:transparent url('/assets/logo/visual-studio.jpeg') no-repeat top left;
   -webkit-background-size:cover;
   -moz-background-size:cover;
   -o-background-size:cover;
@@ -43,4 +42,9 @@ video {
   padding: .3em;
   overflow-x: auto;
    white-space: nowrap;
+}
+
+input, input:active, input:focus {
+  outline: 0;
+  outline: none;
 }

@@ -5,8 +5,11 @@
   </video>
 
   <div class="row">
-    <div class="col">
-      <input type="range" class="form-control" name="zoomRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+    <div class="col-3">
+      <h5 class="text text-danger left1">
+        <strong>ZOOM</strong>
+      </h5>
+      <input type="range" class="form-control left1" name="zoomRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
     </div>
     <div class="col">
       <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
@@ -21,7 +24,7 @@
 
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo">
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
-            <img (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
+            <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
           </div>
         </div>
 

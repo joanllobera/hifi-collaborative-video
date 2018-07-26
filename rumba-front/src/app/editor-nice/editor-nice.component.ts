@@ -43,7 +43,6 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    console.log(value);
     this.videoSrv.rangeValue.next(value);
   }
 

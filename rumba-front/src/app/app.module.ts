@@ -29,6 +29,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ToasterModule } from 'angular5-toaster/dist/src/toaster.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CameraMasterComponent } from './camera-master/camera-master.component';
+import { ThumbSizeDirective } from './thumbSize.directive';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CameraMasterComponent } from './camera-master/camera-master.component';
     CameraBackComponent,
     EditorNiceComponent,
     MargindeltaDirective,
-    CameraMasterComponent
+    CameraMasterComponent,
+    ThumbSizeDirective
   ],
   imports: [
     BrowserModule,

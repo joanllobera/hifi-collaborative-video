@@ -100,10 +100,10 @@ export class SessionCloseComponent implements OnInit {
           console.log('initializeRumbaSession::',data);
           //this.router.navigate(['/master-camera']);
 
-          this.router.navigate([this.currentSession['master_url']]);
+          //this.router.navigate([this.currentSession['master_url']]);
           window.open(
             this.currentSession['master_url'],
-            '_blank' // <- This is what makes it open in a new window.
+            '_blank'
           );
       }
     );
