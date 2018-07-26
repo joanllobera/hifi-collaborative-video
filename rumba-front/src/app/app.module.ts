@@ -30,6 +30,7 @@ import { ToasterModule } from 'angular5-toaster/dist/src/toaster.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CameraMasterComponent } from './camera-master/camera-master.component';
 import { ThumbSizeDirective } from './thumbSize.directive';
+import { SelectorSizeDirective } from './selectorSize.directive';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ThumbSizeDirective } from './thumbSize.directive';
     EditorNiceComponent,
     MargindeltaDirective,
     CameraMasterComponent,
-    ThumbSizeDirective
+    ThumbSizeDirective,
+    SelectorSizeDirective
   ],
   imports: [
     BrowserModule,
