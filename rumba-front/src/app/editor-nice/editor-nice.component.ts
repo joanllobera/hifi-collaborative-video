@@ -42,8 +42,8 @@ export class EditorNiceComponent implements OnInit {
     // this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
   }
 
-  onMouseMove(event: Event) {
-    console.log(event);
+  onClickSeparator(event: Event) {
+    console.log(event)
   }
 
   changeZoom(value: number) {
