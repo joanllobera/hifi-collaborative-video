@@ -47,7 +47,7 @@ export class SelectorSizeDirective implements OnInit {
 
 	resizer(offsetX: number) {
     this.ownWidth += offsetX;
-		this.elementRef.nativeElement.style.width += offsetX + 'px';
+		this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
   }
 
 }
