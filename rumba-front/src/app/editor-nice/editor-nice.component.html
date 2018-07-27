@@ -9,7 +9,7 @@
       <h5 class="text text-danger left1">
         <strong>ZOOM</strong>
       </h5>
-      <input type="range" class="form-control left1" name="zoomRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+      <input type="range" class="form-control left1" name="zoomRange" value="10" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
     </div>
     <div class="col">
       <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
@@ -17,6 +17,8 @@
   </div>
 </div>
 
+
+<!-- mocked data  remove it for production -->
 <div class="row">
   <div class="col">
     <div class="allVideos top1">
@@ -54,6 +56,8 @@
     </div>
   </div>
 </div>
+<!-- end mocked data -->
+
 
 
 <div class="row">
