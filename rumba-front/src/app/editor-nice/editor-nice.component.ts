@@ -52,6 +52,7 @@ export class EditorNiceComponent implements OnInit {
 
   changeZoom(value: number) {
     this.videoSrv.rangeValue.next(value);
+    this.initialRange = value;
   }
 
   getAllVideos(session_id): void {

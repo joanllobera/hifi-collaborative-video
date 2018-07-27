@@ -6,11 +6,16 @@
 
   <div class="row top1">
     <div class="col-3">
-      <h5 class="text text-danger left1">
-        <strong>ZOOM</strong>
-      </h5>
-      <input type="range" class="form-control left1" name="zoomRange" [value]="initialRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
-      <span class="badge badge-danger">{{initialRange}}</span>
+      <div class="row">
+          <div class="col">
+            ZOOM <span class="badge badge-danger">{{initialRange}}</span>
+          </div>
+          <div class="col">
+              <input type="range" class="form-control left1" name="zoomRange" [value]="initialRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+          </div>
+      </div>
+
+
     </div>
     <div class="col">
       <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
