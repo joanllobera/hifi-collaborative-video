@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CameraMasterComponent } from './camera-master/camera-master.component';
 import { ThumbSizeDirective } from './thumbSize.directive';
 import { SelectorSizeDirective } from './selectorSize.directive';
+import { EditorService } from './editor.service';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { SelectorSizeDirective } from './selectorSize.directive';
   providers: [
     SessionService,
     RecordService,
-    VideosServiceService
+    VideosServiceService,
+    EditorService
   ],
   bootstrap: [AppComponent]
 })
