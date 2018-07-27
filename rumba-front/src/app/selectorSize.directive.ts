@@ -6,8 +6,9 @@ import { EditorService } from './editor.service';
 })
 export class SelectorSizeDirective implements OnInit {
 
-	y: number = 100;
-	oldY: number = 0;
+	ownWidth: number;
+	x: number = 100;
+	oldX: number = 0;
 	moving: boolean = false;
 
   constructor (private elementRef: ElementRef, private editorSrv: EditorService) {}
@@ -21,10 +22,32 @@ export class SelectorSizeDirective implements OnInit {
       );
 	}
 
-	@HostListener('click', ['$event'])
+	@HostListener('mousemove', ['$event'])
 	onMouseMove(event: MouseEvent) {
 		console.log('moving', event);
+		if (!this.moving) {
+			return;
+		}
+		this.resizer(event.clientX - this.oldX);
+		this.oldX = event.clientX;
 	}
 
+	@HostListener('mousedown', ['$event'])
+	onMouseDown(event: MouseEvent) {
+		console.log('mousedown', event);
+		this.moving = true;
+		this.oldX = event.clientX;
+	}
+
+	@HostListener('mouseup', ['$event'])
+	onMouseUp(event: MouseEvent) {
+		console.log('mouseup', event);
+		this.moving = false;
+	}
+
+	resizer(offsetX: number) {
+    this.ownWidth += offsetX;
+		this.elementRef.nativeElement.style.width += offsetX + 'px';
+  }
 
 }

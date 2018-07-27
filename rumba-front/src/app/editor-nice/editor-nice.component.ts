@@ -46,8 +46,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   onClickSeparator(event: Event) {
-    console.log('separator clicked!', event)
-    this.editorSrv.currentWidth.next(1);
+    // console.log('separator clicked!', event)
+    // this.editorSrv.currentWidth.next(1);
   }
 
   changeZoom(value: number) {
