@@ -21,7 +21,7 @@ export class SelectorSizeDirective implements OnInit {
       );
 	}
 
-	@HostListener('kkk1:mousemove', ['$event'])
+	@HostListener('click', ['$event'])
 	onMouseMove(event: MouseEvent) {
 		console.log('moving', event);
 	}
