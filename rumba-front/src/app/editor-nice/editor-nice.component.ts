@@ -46,7 +46,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   onClickSeparator(event: Event) {
-    console.log(event)
+    console.log('separator clicked!', event)
     this.editorSrv.currentWidth.next(1);
   }
 
