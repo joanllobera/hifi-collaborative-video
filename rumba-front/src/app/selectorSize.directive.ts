@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnInit } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, HostListener } from '@angular/core';
 import { EditorService } from './editor.service';
 
 @Directive({
@@ -6,20 +6,25 @@ import { EditorService } from './editor.service';
 })
 export class SelectorSizeDirective implements OnInit {
 
+	y: number = 100;
+	oldY: number = 0;
+	moving: boolean = false;
+
   constructor (private elementRef: ElementRef, private editorSrv: EditorService) {}
 
 	ngOnInit(): void {
     this.editorSrv.currentWidth
       .subscribe(
         (data) => {
-          this.elementRef.nativeElement.style.width = data;
-					alert(data);
+          //this.elementRef.nativeElement.style.width = data;
         }
       );
-
-
 	}
 
+	@HostListener('mousemove', ['$event'])
+	onMouseMove(event: MouseEvent) {
+		console.log('moving', event);
+	}
 
 
 }
