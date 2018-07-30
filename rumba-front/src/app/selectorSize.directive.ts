@@ -11,16 +11,17 @@ export class SelectorSizeDirective implements OnInit {
 	x: number = 100;
 	oldX: number = 0;
 	moving: boolean = false;
+	zoom: number;
 
   constructor (private elementRef: ElementRef, private videoSrv: VideosServiceService ) {}
 
 	ngOnInit(): void {
     this.videoSrv.rangeValue
       .subscribe(
-        (data) => {
+        (data: number) => {
           //this.elementRef.nativeElement.style.width = data;
 					console.log('currentWidth:::', data);
-					alert(data);
+					this.zoom = data;
         }
       );
 	}
