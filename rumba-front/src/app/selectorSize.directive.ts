@@ -18,6 +18,8 @@ export class SelectorSizeDirective implements OnInit {
       .subscribe(
         (data) => {
           //this.elementRef.nativeElement.style.width = data;
+					console.log('currentWidth:::', data);
+					alert(data);
         }
       );
 	}
