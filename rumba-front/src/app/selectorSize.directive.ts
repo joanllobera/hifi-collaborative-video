@@ -53,7 +53,7 @@ export class SelectorSizeDirective implements OnInit {
 	customMethod() {
 		//Make the DIV element draggagle:
 		//dragElement(document.getElementById("mySelector"));
-		dragElement(this.selectorElem)
+		dragElement(this.elementRef.nativeElement)
 
 		function dragElement(elmnt) {
 		  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
