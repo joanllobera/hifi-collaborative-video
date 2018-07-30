@@ -16,44 +16,31 @@ export class SelectorSizeDirective implements OnInit {
   constructor (private elementRef: ElementRef, private videoSrv: VideosServiceService ) {}
 
 	ngOnInit(): void {
-    this.videoSrv.rangeValue
-      .subscribe(
-        (data: number) => {
-          //this.elementRef.nativeElement.style.width = data;
-					console.log('currentWidth:::', data);
-					this.zoom = data;
-        }
-      );
+    // this.videoSrv.rangeValue
+    //   .subscribe(
+    //     (data: number) => {
+		// 			console.log('currentWidth:::', data);
+		// 			this.zoom = data;
+    //     }
+    //   );
+		this.customMethod();
 	}
 
 	@HostListener('mousemove', ['$event'])
 	onMouseMove(event: MouseEvent) {
 		//console.log('moving', event);
 
-
-		// if (!this.moving) {
-		// 	return;
-		// }
-		// this.resizer(event.clientX - this.oldX);
-		// this.oldX = event.clientX;
 	}
 
 	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
-		// this.moving = true;
-		// this.oldX = event.clientX;
 
-		this.elementRef.nativeElement.style.left = event.clientX + 'px';
 	}
 
 	@HostListener('mouseup', ['$event'])
 	onMouseUp(event: MouseEvent) {
 		console.log('mouseup', event);
-
-		this.elementRef.nativeElement.style.left = event.clientX + 'px';
-
-		//this.moving = false;
 
 	}
 
@@ -61,5 +48,51 @@ export class SelectorSizeDirective implements OnInit {
     // this.ownWidth += offsetX;
 		// this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
   }
+
+	customMethod() {
+		//Make the DIV element draggagle:
+		dragElement(document.getElementById("mySelector"));
+
+		function dragElement(elmnt) {
+		  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		  if (document.getElementById(elmnt.id + "header")) {
+		    /* if present, the header is where you move the DIV from:*/
+		    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+		  } else {
+		    /* otherwise, move the DIV from anywhere inside the DIV:*/
+		    elmnt.onmousedown = dragMouseDown;
+		  }
+
+		  function dragMouseDown(e) {
+		    e = e || window.event;
+		    e.preventDefault();
+		    // get the mouse cursor position at startup:
+		    pos3 = e.clientX;
+		    pos4 = e.clientY;
+		    document.onmouseup = closeDragElement;
+		    // call a function whenever the cursor moves:
+		    document.onmousemove = elementDrag;
+		  }
+
+		  function elementDrag(e) {
+		    e = e || window.event;
+		    e.preventDefault();
+		    // calculate the new cursor position:
+		    pos1 = pos3 - e.clientX;
+		    pos2 = pos4 - e.clientY;
+		    pos3 = e.clientX;
+		    pos4 = e.clientY;
+		    // set the element's new position:
+		    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+		    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+		  }
+
+		  function closeDragElement() {
+		    /* stop moving when mouse button is released:*/
+		    document.onmouseup = null;
+		    document.onmousemove = null;
+		  }
+		}
+	}
 
 }
