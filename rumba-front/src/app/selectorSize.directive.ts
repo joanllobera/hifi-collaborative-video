@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnInit, HostListener } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, HostListener, ViewChild } from '@angular/core';
 import { EditorService } from './editor.service';
 import { VideosServiceService } from './videos-service.service';
 
@@ -12,6 +12,7 @@ export class SelectorSizeDirective implements OnInit {
 	oldX: number = 0;
 	moving: boolean = false;
 	zoom: number;
+	@ViewChild('mySelector') selectorElem: ElementRef;
 
   constructor (private elementRef: ElementRef, private videoSrv: VideosServiceService ) {}
 
@@ -51,7 +52,8 @@ export class SelectorSizeDirective implements OnInit {
 
 	customMethod() {
 		//Make the DIV element draggagle:
-		dragElement(document.getElementById("mySelector"));
+		//dragElement(document.getElementById("mySelector"));
+		dragElement(this.selectorElem)
 
 		function dragElement(elmnt) {
 		  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;

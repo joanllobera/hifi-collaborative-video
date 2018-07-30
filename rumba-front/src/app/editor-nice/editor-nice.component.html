@@ -31,7 +31,7 @@
       <div class="video-container">
 
         <div class="oneVideo" (mouseup)="onClickSeparator($event)">
-          <div appThumbSize appSelectorSize class="selector" id="mySelector"></div>
+          <div appThumbSize appSelectorSize class="selector" #mySelector></div>
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
 
             <img appThumbSize (click)="getThumbInfo($event, 0, 0)" src="assets/logo/visual-studio.jpeg">
@@ -80,7 +80,7 @@
         </div>
 
         <div class="oneVideo" (mouseup)="onClickSeparator($event)">
-          <div appThumbSize appSelectorSize class="selector" id="mySelector"></div>
+          <div appThumbSize appSelectorSize class="selector" #mySelector></div>
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
 
             <img appThumbSize (click)="getThumbInfo($event, 1, 0)" src="assets/logo/kyle-goetsch.jpg">
