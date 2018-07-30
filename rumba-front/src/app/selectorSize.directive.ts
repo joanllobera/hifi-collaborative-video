@@ -28,7 +28,9 @@ export class SelectorSizeDirective implements OnInit {
 
 	@HostListener('mousemove', ['$event'])
 	onMouseMove(event: MouseEvent) {
-		console.log('moving', event);
+		//console.log('moving', event);
+
+
 		// if (!this.moving) {
 		// 	return;
 		// }
@@ -40,7 +42,7 @@ export class SelectorSizeDirective implements OnInit {
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
 
-		this.elementRef.nativeElement.style.left = event.clientX;
+		this.elementRef.nativeElement.style.left = event.clientX + 'px';
 
 		// this.moving = true;
 		// this.oldX = event.clientX;
