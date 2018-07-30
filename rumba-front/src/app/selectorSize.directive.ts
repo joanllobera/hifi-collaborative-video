@@ -29,29 +29,32 @@ export class SelectorSizeDirective implements OnInit {
 	@HostListener('mousemove', ['$event'])
 	onMouseMove(event: MouseEvent) {
 		console.log('moving', event);
-		if (!this.moving) {
-			return;
-		}
-		this.resizer(event.clientX - this.oldX);
-		this.oldX = event.clientX;
+		// if (!this.moving) {
+		// 	return;
+		// }
+		// this.resizer(event.clientX - this.oldX);
+		// this.oldX = event.clientX;
 	}
 
 	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
-		this.moving = true;
-		this.oldX = event.clientX;
+
+		this.elementRef.nativeElement.style.left = event.clientX;
+
+		// this.moving = true;
+		// this.oldX = event.clientX;
 	}
 
 	@HostListener('mouseup', ['$event'])
 	onMouseUp(event: MouseEvent) {
 		console.log('mouseup', event);
-		this.moving = false;
+		//this.moving = false;
 	}
 
 	resizer(offsetX: number) {
-    this.ownWidth += offsetX;
-		this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
+    // this.ownWidth += offsetX;
+		// this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
   }
 
 }
