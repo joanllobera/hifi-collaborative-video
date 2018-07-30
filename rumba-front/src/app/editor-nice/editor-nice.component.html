@@ -30,7 +30,7 @@
     <div class="allVideos top1">
       <div class="video-container">
 
-        <div class="oneVideo" (mouseup)="onClickSeparator($event)">
+        <div class="oneVideo" appSelectorSize (mouseup)="onClickSeparator($event)">
           <div appThumbSize appSelectorSize class="selector kkk1"></div>
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
 
