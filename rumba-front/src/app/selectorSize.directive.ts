@@ -1,5 +1,6 @@
 import { Directive, Input, ElementRef, OnInit, HostListener } from '@angular/core';
 import { EditorService } from './editor.service';
+import { VideosServiceService } from './videos-service.service';
 
 @Directive({
 	selector: '[appSelectorSize]'
@@ -11,10 +12,10 @@ export class SelectorSizeDirective implements OnInit {
 	oldX: number = 0;
 	moving: boolean = false;
 
-  constructor (private elementRef: ElementRef, private editorSrv: EditorService) {}
+  constructor (private elementRef: ElementRef, private videoSrv: VideosServiceService ) {}
 
 	ngOnInit(): void {
-    this.editorSrv.currentWidth
+    this.videoSrv.rangeValue
       .subscribe(
         (data) => {
           //this.elementRef.nativeElement.style.width = data;
