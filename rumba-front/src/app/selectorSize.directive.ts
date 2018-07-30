@@ -43,6 +43,8 @@ export class SelectorSizeDirective implements OnInit {
 		console.log('mousedown', event);
 		// this.moving = true;
 		// this.oldX = event.clientX;
+
+		this.elementRef.nativeElement.style.left = event.clientX + 'px';
 	}
 
 	@HostListener('mouseup', ['$event'])
