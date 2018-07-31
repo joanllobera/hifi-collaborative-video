@@ -37,7 +37,7 @@ export class SelectorSizeDirective implements OnInit {
 	onMouseDoubleClick(event: MouseEvent) {
 		console.log('double click', event);
 
-		this.elementRef.nativeElement.style.width += event.clientX + 'px';
+		//this.elementRef.nativeElement.style.width += event.clientX + 'px';
 
 	}
 
