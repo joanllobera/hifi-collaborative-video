@@ -37,8 +37,6 @@ export class SelectorSizeDirective implements OnInit {
 	onMouseDoubleClick(event: MouseEvent) {
 		console.log('double click', event);
 
-		//this.elementRef.nativeElement.style.width += event.clientX + 'px';
-
 	}
 
 	@HostListener('mousedown', ['$event'])
@@ -68,11 +66,6 @@ export class SelectorSizeDirective implements OnInit {
 		  elmnt.onmousedown = dragMouseDown;
 			elmnt.ontouchstart = dragMouseDown;
 
-
-			elmnt.ondblclick = elementWidth;
-
-
-
 		  function dragMouseDown(e) {
 		    e = e || window.event;
 		    e.preventDefault();
@@ -85,14 +78,6 @@ export class SelectorSizeDirective implements OnInit {
 				// call a function whenever the cursor moves:
 		    document.onmousemove = elementDrag;
 				document.ontouchmove = elementDrag;
-			}
-
-			function elementWidth(e) {
-				e = e || window.event;
-				e.preventDefault();
-
-				elmnt.style.width = elmnt.style.width + e.clientX + 'px';
-
 			}
 
 		  function elementDrag(e) {
