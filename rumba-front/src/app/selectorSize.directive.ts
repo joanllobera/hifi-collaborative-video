@@ -24,7 +24,7 @@ export class SelectorSizeDirective implements OnInit {
 		// 			this.zoom = data;
     //     }
     //   );
-		this.customMethod();
+		this.moveSelector();
 	}
 
 	@HostListener('mousemove', ['$event'])
@@ -56,7 +56,10 @@ export class SelectorSizeDirective implements OnInit {
 		// this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
   }
 
-	customMethod() {
+
+
+
+	moveSelector() {
 		//Make the DIV element draggagle:
 		//dragElement(document.getElementById("mySelector"));
 		dragElement(this.elementRef.nativeElement)
