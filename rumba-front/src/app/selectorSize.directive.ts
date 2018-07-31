@@ -25,7 +25,6 @@ export class SelectorSizeDirective implements OnInit {
     //     }
     //   );
 		this.moveSelector();
-		this.updateWidth();
 	}
 
 	@HostListener('mousemove', ['$event'])
@@ -56,27 +55,6 @@ export class SelectorSizeDirective implements OnInit {
     // this.ownWidth += offsetX;
 		// this.elementRef.nativeElement.style.width += (offsetX * 100) + 'px';
   }
-
-
-	updateWidth() {
-		var resizeHandle = document.getElementById('handle');
-		var box = document.getElementById('selector');
-		resizeHandle.addEventListener('mousedown', initialiseResize, false);
-
-		function initialiseResize(e) {
-			window.addEventListener('mousemove', startResizing, false);
-		   	window.addEventListener('mouseup', stopResizing, false);
-		}
-
-		function startResizing(e) {
-		   box.style.width = (e.clientX - box.offsetLeft) + 'px';
-		   box.style.height = (e.clientY - box.offsetTop) + 'px';
-		}
-		function stopResizing(e) {
-		    window.removeEventListener('mousemove', startResizing, false);
-		    window.removeEventListener('mouseup', stopResizing, false);
-		}
-	}
 
 	moveSelector() {
 		//Make the DIV element draggagle:
