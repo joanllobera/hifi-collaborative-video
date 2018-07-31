@@ -83,6 +83,14 @@ export class SelectorSizeDirective implements OnInit {
 				document.ontouchmove = elementDrag;
 			}
 
+			function elementWidth(e) {
+				e = e || window.event;
+				e.preventDefault();
+
+				elmnt.style.width = elmnt.style.width + e.clientX + 'px';
+
+			}
+
 		  function elementDrag(e) {
 		    e = e || window.event;
 		    e.preventDefault();
