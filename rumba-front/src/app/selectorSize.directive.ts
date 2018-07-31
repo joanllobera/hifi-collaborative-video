@@ -33,6 +33,12 @@ export class SelectorSizeDirective implements OnInit {
 
 	}
 
+	@HostListener('dblclick', ['$event'])
+	onMouseDoubleClick(event: MouseEvent) {
+		console.log('double click', event);
+
+	}
+
 	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
@@ -92,6 +98,10 @@ export class SelectorSizeDirective implements OnInit {
 		    /* stop moving when mouse button is released:*/
 		    document.onmouseup = null;
 		    document.onmousemove = null;
+
+				//touch events
+				document.ontouchend = null;
+				document.ontouchmove = null;
 		  }
 		}
 	}
