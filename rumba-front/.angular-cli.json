@@ -25,6 +25,7 @@
       ],
       "scripts": [
         "../node_modules/bootstrap/dist/js/bootstrap.js",
+        "assets/serverdate/ServerDate.js",
         "../node_modules/moment/min/moment.min.js",
         "../node_modules/jszip/dist/jszip.js",
         "../node_modules/angular5-toaster/dist/bundles/angular5-toaster.umd.js"
