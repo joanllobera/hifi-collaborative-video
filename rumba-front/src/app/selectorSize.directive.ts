@@ -69,6 +69,10 @@ export class SelectorSizeDirective implements OnInit {
 			elmnt.ontouchstart = dragMouseDown;
 
 
+			elmnt.ondblclick = elementWidth;
+
+
+
 		  function dragMouseDown(e) {
 		    e = e || window.event;
 		    e.preventDefault();
