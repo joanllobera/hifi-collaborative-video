@@ -26,7 +26,6 @@ export class CameraMasterComponent implements OnInit {
   ngOnInit() {
     //this.startRecording();
 
-    document.documentElement.webkitRequestFullScreen();
     this.configureJanus();
   }
 
