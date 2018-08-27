@@ -30,7 +30,7 @@ export class CameraBackComponent implements OnInit {
     // }
 
     //f11
-    //document.documentElement.webkitRequestFullScreen()
+    document.documentElement.webkitRequestFullScreen()
 
 
   }
