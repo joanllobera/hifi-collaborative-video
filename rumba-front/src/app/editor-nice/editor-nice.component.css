@@ -21,11 +21,11 @@ video {
 }
 
 .selectedImg {
-  border-left:#fff 2px solid;
-  border-right:#fff 2px solid;
+  /* border-left:#fff 2px solid;
+  border-right:#fff 2px solid; */
 
   opacity: .5;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .oneVideo {
