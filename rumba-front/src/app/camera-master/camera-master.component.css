@@ -21,10 +21,18 @@ video {
 
 .full-button {
   position: fixed;
-  display: flex;
+  color: white;
+  left: 40px;
+  top: 40px;
+  cursor: pointer;
+  z-index: 10000;
 }
 
-.flex-wrap, .full-screen, .border {
+.hidden {
+  visibility: hidden;
+}
+
+.flex-wrap, .border {
 	flex-wrap: wrap;
   justify-content: center;
   align-items: center;
