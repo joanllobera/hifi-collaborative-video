@@ -31,13 +31,23 @@ export class CameraMasterComponent implements OnInit {
   }
 
   toggleFullScreen() {
-    document.documentElement.webkitRequestFullScreen();
     this.fullScreen = true;
+
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullScreen();
+    }
   }
 
   exitFullScreen() {
-    document.webkitExitFullscreen();
     this.fullScreen = false;
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
   }
 
   checkButton() {
