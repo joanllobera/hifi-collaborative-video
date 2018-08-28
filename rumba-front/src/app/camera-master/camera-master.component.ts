@@ -20,6 +20,8 @@ export class CameraMasterComponent implements OnInit {
   videoPath: any = undefined;
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
+  fullScreen: boolean = false;
+
 
   constructor(private record: RecordService) { }
 
@@ -30,6 +32,12 @@ export class CameraMasterComponent implements OnInit {
 
   toggleFullScreen() {
     document.documentElement.webkitRequestFullScreen();
+    this.fullScreen = true;
+  }
+
+  exitFullScreen() {
+    document.webkitExitFullscreen();
+    this.fullScreen = false;
   }
 
   checkButton() {

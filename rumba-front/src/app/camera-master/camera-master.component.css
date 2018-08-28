@@ -28,10 +28,6 @@ video {
   z-index: 10000;
 }
 
-.hidden {
-  visibility: hidden;
-}
-
 .flex-wrap, .border {
 	flex-wrap: wrap;
   justify-content: center;
