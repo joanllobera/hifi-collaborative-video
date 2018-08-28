@@ -19,7 +19,12 @@ video {
   display: flex;
 }
 
-.flex-wrap, .border {
+.full-button {
+  position: fixed;
+  display: flex;
+}
+
+.flex-wrap, .full-screen, .border {
 	flex-wrap: wrap;
   justify-content: center;
   align-items: center;
