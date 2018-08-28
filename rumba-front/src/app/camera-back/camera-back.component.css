@@ -19,6 +19,15 @@ video {
   display: flex;
 }
 
+.full-button {
+  position: fixed;
+  color: white;
+  left: 40px;
+  top: 40px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
 .flex-wrap, .border {
 	flex-wrap: wrap;
   justify-content: center;

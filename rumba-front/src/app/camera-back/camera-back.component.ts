@@ -20,19 +20,22 @@ export class CameraBackComponent implements OnInit {
   videoPath: any = undefined;
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
+  fullScreen: boolean = false;
+
 
   constructor(private record: RecordService) { }
 
   ngOnInit() {
-    // video tag
-    // if (this.videoElem.nativeElement.webkitRequestFullScreen) {
-    //   this.videoElem.nativeElement.webkitRequestFullScreen();
-    // }
+  }
 
-    //f11
-    //document.documentElement.webkitRequestFullScreen()
+  toggleFullScreen() {
+    document.documentElement.webkitRequestFullScreen();
+    this.fullScreen = true;
+  }
 
-
+  exitFullScreen() {
+    document.webkitExitFullscreen();
+    this.fullScreen = false;
   }
 
   checkButton() {
