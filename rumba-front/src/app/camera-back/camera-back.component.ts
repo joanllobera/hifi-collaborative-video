@@ -21,7 +21,7 @@ export class CameraBackComponent implements OnInit {
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
-
+  allowRecording: boolean = false;
 
   constructor(private record: RecordService) { }
 

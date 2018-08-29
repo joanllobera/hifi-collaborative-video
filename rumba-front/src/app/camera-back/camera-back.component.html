@@ -22,3 +22,9 @@
   <img *ngIf="!fullScreen" src="assets/logo/fullscreen-white.png" (click)="toggleFullScreen()" width="30" alt="" />
   <img *ngIf="fullScreen" src="assets/logo/fullscreen-white.png" (click)="exitFullScreen()" width="30" alt="" />
 </div>
+
+<div class="feedback" *ngIf="!allowRecording">
+  <div class="camera">
+    <img src="assets/logo/NoCameraIcon.png" width="60" alt="" />
+  </div>
+</div>
