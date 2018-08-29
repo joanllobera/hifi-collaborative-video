@@ -22,7 +22,6 @@ export class CameraMasterComponent implements OnInit {
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
 
-
   constructor(private record: RecordService) { }
 
   ngOnInit() {
