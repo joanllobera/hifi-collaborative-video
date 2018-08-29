@@ -25,7 +25,7 @@ video {
     flex-direction: column;  /* make main axis vertical */
     justify-content: center; /* center items vertically, in this case */
     align-items: center;     /* center items horizontally, in this case */
-    height: 100vh;
+    height: 70vh;
 }
 
 .camera {
@@ -34,6 +34,29 @@ video {
   align-items: center;
   z-index: 10000;
   -webkit-animation: fadeInFromNone 1.5s infinite;
+}
+
+.counter-container {
+  display: flex;           /* establish flex container */
+  flex-direction: column;  /* make main axis vertical */
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center;     /* center items horizontally, in this case */
+  height: 10vh;
+}
+
+.counter {
+  flex-wrap:wrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+}
+
+.counter p {
+  opacity: .7;
+  color: white;
+  font-size: 20px;
+  padding: .2em .4em;
+  background-color: rgba(0,0,0,.6);
 }
 
 @keyframes fadeInFromNone {

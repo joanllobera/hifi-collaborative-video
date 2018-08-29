@@ -23,8 +23,14 @@
   <img *ngIf="fullScreen" src="assets/logo/fullscreen-white.png" (click)="exitFullScreen()" width="30" alt="" />
 </div>
 
+<div class="counter-container">
+  <div class="counter">
+    <p id="counter">{{counter}}</p>
+  </div>
+</div>
+
 <div class="feedback" *ngIf="!allowRecording">
   <div class="camera">
-    <img src="assets/logo/NoCameraIcon.png" width="60" alt="" />
+    <img src="assets/logo/NoCameraIconRed.png" width="60" alt="" />
   </div>
 </div>

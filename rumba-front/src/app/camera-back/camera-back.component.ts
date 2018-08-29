@@ -23,9 +23,35 @@ export class CameraBackComponent implements OnInit {
   fullScreen: boolean = false;
   allowRecording: boolean = false;
 
+  seconds: any = 0;
+  minutes: number = 0;
+  counter: string = '00:00';
+
   constructor(private record: RecordService) { }
 
   ngOnInit() {
+    this.setCounter();
+  }
+
+  setCounter() {
+    setInterval( () => {
+      this.seconds += 1;
+      if (this.seconds > 59) {
+        this.minutes += 1;
+        this.seconds = 0;
+      }
+
+      if (this.seconds < 10 && this.minutes < 10) {
+        this.counter = '0' + this.minutes + ':0' + this.seconds;
+      } else if (this.minutes < 10) {
+        this.counter = '0' + this.minutes + ':' + this.seconds;
+      } else if (this.seconds < 10) {
+        this.counter = this.minutes + ':0' + this.seconds;
+      } else {
+        this.counter = this.minutes + ':' + this.seconds;
+      }
+
+    }, 1000)
   }
 
   toggleFullScreen() {
@@ -49,8 +75,6 @@ export class CameraBackComponent implements OnInit {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
-
-
   }
 
   checkButton() {
@@ -65,7 +89,7 @@ export class CameraBackComponent implements OnInit {
           this.videoPath = response['video_path'];
           this.videoId = response['id'];
           this.configureJanus(this.videoPath);
-
+          this.setCounter();
         }
       )
   }
