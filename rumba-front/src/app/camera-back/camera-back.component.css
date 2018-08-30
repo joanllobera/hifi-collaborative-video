@@ -29,10 +29,14 @@ video {
 }
 
 .camera {
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   z-index: 10000;
+  -webkit-animation: fadeInFromNone 1.5s infinite;
+}
+
+.no-recording {
   -webkit-animation: fadeInFromNone 1.5s infinite;
 }
 
@@ -45,10 +49,11 @@ video {
 }
 
 .counter {
+  position:fixed;
   flex-wrap:wrap;
   justify-content: center;
   align-items: center;
-  z-index: 100000;
+  z-index: 10000;
 }
 
 .counter p {
@@ -71,7 +76,7 @@ video {
 
 .full-button {
   position: fixed;
-  color: white;
+  color: #fff;
   left: 40px;
   top: 40px;
   cursor: pointer;
