@@ -18,6 +18,21 @@ video {
   position: fixed;
   background-color: rgba(0,0,0,.4);
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .timer p {
+  position:absolute;
+  color: #fff;
+  top: 30px;
+} */
+
+.record-buttons {
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .feedback {
@@ -81,16 +96,6 @@ video {
   top: 40px;
   cursor: pointer;
   z-index: 10000;
-}
-
-.flex-wrap, .border {
-	flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.record-button {
-  height: 50px;
 }
 
 .border {
