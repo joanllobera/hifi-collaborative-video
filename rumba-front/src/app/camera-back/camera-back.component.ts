@@ -21,7 +21,7 @@ export class CameraBackComponent implements OnInit {
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
-  allowRecording: boolean = false;
+  allowRecording: boolean = true;
 
   seconds: any = 0;
   minutes: number = 0;
@@ -63,7 +63,6 @@ export class CameraBackComponent implements OnInit {
     } else if (document.documentElement.webkitRequestFullscreen) {
       document.documentElement.webkitRequestFullScreen();
     }
-
   }
 
   exitFullScreen() {
