@@ -31,6 +31,7 @@ export class SessionCloseComponent implements OnInit {
   public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
 
   isImageLoading: boolean = false;
+  imageToShow: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +40,7 @@ export class SessionCloseComponent implements OnInit {
     private toasterService: ToasterService,
     private recordSrv: RecordService) { }
 
-  imageToShow: any;
+
 
   createImageFromBlob(image: Blob) {
      let reader = new FileReader();
