@@ -143,7 +143,8 @@
       <div class="video-container">
 
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo" (mouseup)="onClickSeparator($event)">
-          <div appThumbSize appSelectorSize class="selector"></div>
+          <!-- This is the selector -->
+          <!-- <div appThumbSize appSelectorSize class="selector"></div> -->
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
             <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
           </div>
