@@ -89,6 +89,9 @@ export class SessionCloseComponent implements OnInit {
           // this.binaryData = response['_body'];
           this.binaryData = response.blob();
           this.createImageFromBlob(this.binaryData);
+        },
+        (error) => {
+          console.log('getLogoById::error::', error);
         }
       )
   }

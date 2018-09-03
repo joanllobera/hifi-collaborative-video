@@ -30,7 +30,7 @@ export class CameraBackComponent implements OnInit {
   constructor(private record: RecordService) { }
 
   ngOnInit() {
-    this.setCounter();
+
   }
 
   setCounter() {

@@ -33,6 +33,20 @@ export class SelectorSizeDirective implements OnInit {
 
 	}
 
+	@HostListener('touchstart', ['$event'])
+	onTouchstart(event: MouseEvent) {
+		//console.log('moving', event);
+		alert('touchstart');
+
+	}
+
+	@HostListener('touchend', ['$event'])
+	onTouchend(event: MouseEvent) {
+		//console.log('moving', event);
+		alert('touchend');
+
+	}
+
 	@HostListener('dblclick', ['$event'])
 	onMouseDoubleClick(event: MouseEvent) {
 		console.log('double click', event);
