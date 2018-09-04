@@ -166,12 +166,12 @@ export class EditorNiceComponent implements OnInit {
 
   onSelectFrame(event): void {
     event.target.classList.toggle('selectedImg');
-    this.onSelectFirstFrame(event);
+
   }
 
   onSelectFirstFrame(event): void {
     let allimg = this.videoList.nativeElement.querySelectorAll('img');
-    
+
     console.log(allimg);
     allimg[0].classList.add('firstSelected');
   }

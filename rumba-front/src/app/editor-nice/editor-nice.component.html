@@ -149,7 +149,7 @@
           <!-- This is the selector -->
           <!-- <div appThumbSize appSelectorSize class="selector"></div> -->
 
-          <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe" [class]="'iframe' + (i)">
+          <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe" [class]="'test' + (i)">
             <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
           </div>
         </div>
