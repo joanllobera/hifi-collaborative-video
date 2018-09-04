@@ -59,6 +59,14 @@ div.selector {
   position: absolute;
 }
 
+div.claudator {
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+}
 
 /* range slider for video zoom */
 .slider {
