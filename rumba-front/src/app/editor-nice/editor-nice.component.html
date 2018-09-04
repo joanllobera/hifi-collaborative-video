@@ -142,8 +142,8 @@
     <div class="allVideos top1">
       <div class="video-container">
         <div class="claudator">
-          <img appClaudatorMove height="80px" src="assets/logo/left-yellow.png" alt="">
-          <img appClaudatorMove height="80px" src="assets/logo/right-yellow.png" alt="">
+          <img height="80px" src="assets/logo/left-yellow.png" alt="">
+          <img appClaudatorMove #claudator height="80px" src="assets/logo/right-yellow.png" alt="">
         </div>
 
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo" (mouseup)="onClickSeparator($event)">
