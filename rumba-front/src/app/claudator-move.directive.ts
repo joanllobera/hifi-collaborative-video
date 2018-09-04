@@ -23,7 +23,15 @@ export class ClaudatorMoveDirective implements OnInit {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
     //console.log(this.elementRef);
-    this.elementRef.nativeElement.style.left = event.clientX + 'px';
+    //this.elementRef.nativeElement.style.left = event.clientX + 'px';
+    this.elementRef.nativeElement.style.left = event.pageX + 'px';
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    //console.log(this.elementRef);
+    //this.elementRef.nativeElement.style.left = event.clientX + 'px';
+    this.elementRef.nativeElement.style.left = event.pageX + 'px';
   }
 
   moveSelector() {
