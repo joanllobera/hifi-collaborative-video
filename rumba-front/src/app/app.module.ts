@@ -32,6 +32,8 @@ import { CameraMasterComponent } from './camera-master/camera-master.component';
 import { ThumbSizeDirective } from './thumbSize.directive';
 import { SelectorSizeDirective } from './selectorSize.directive';
 import { EditorService } from './editor.service';
+import { ClaudatorMoveDirective } from './claudator-move.directive';
+
 
 
 @NgModule({
@@ -49,7 +51,8 @@ import { EditorService } from './editor.service';
     MargindeltaDirective,
     CameraMasterComponent,
     ThumbSizeDirective,
-    SelectorSizeDirective
+    SelectorSizeDirective,
+    ClaudatorMoveDirective
   ],
   imports: [
     BrowserModule,
