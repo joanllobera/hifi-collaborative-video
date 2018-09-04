@@ -10,7 +10,7 @@ export class ClaudatorMoveDirective implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-    this.moveSelector();
+    //this.moveSelector();
   }
 
   @HostListener('touchstart', ['$event'])
