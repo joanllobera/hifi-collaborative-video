@@ -141,14 +141,15 @@
   <div class="col">
     <div class="allVideos top1">
       <div class="video-container">
-
+        <div class="claudator">
+          <img width="20" src="assets/logo/left-yellow.png" alt="">
+          <img width="20" src="assets/logo/right-yellow.png" alt="">
+        </div>
+        
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo" (mouseup)="onClickSeparator($event)">
           <!-- This is the selector -->
           <!-- <div appThumbSize appSelectorSize class="selector"></div> -->
-          <div class="claudator">
-            <img src="assets/logo/left-yellow.png" alt="">
-            <img src="assets/logo/right-yellow.png" alt="">
-          </div>
+
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
             <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
           </div>
