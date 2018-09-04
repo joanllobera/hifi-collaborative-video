@@ -20,12 +20,15 @@ video {
   cursor:pointer;
 }
 
-.selectedImg {
-  border-left:#fff 2px solid;
-  border-right:#fff 2px solid;
 
+.selectedImg {
+  border:yellow 5px solid;
+  border-radius: 5px;
+}
+
+.firstSelected {
+  /* border: red 5px solid; */
   opacity: .5;
-  /* background-color: red; */
 }
 
 .oneVideo {
@@ -42,6 +45,8 @@ video {
   padding: .3em;
   overflow-x: auto;
   white-space: nowrap;
+  /* border-radius: 5px;
+  border: solid lightgrey 5px; */
 }
 
 input, input:active, input:focus {
