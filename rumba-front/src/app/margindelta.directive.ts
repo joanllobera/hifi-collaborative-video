@@ -14,10 +14,11 @@ export class MargindeltaDirective implements OnInit {
 
   ngOnInit() {
 
+    this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
+
     this.videoSrv.rangeValue
       .subscribe(
         (zoomLevel: number) => {
-          if (!zoomLevel) zoomLevel = 10;
           this.thumbnailSize = 8 * zoomLevel;
           this.elementRef.nativeElement.style.marginLeft = (this.deltasize * this.thumbnailSize) + 'px';
         }
