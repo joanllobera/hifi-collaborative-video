@@ -33,7 +33,6 @@ export class ClaudatorMoveDirective implements OnInit {
 
 	@HostListener('dblclick', ['$event'])
 	onMouseDoubleClick(event: MouseEvent) {
-    this.moveSelector();
 	}
 
 	@HostListener('mousedown', ['$event'])
@@ -43,7 +42,7 @@ export class ClaudatorMoveDirective implements OnInit {
 
 	@HostListener('mouseup', ['$event'])
 	onMouseUp(event: MouseEvent) {
-
+    console.log('event:::', event);
 	}
 
 
