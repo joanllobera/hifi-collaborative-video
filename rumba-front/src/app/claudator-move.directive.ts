@@ -10,7 +10,6 @@ export class ClaudatorMoveDirective implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-
   }
 
   @HostListener('click', ['$event'])
@@ -27,14 +26,13 @@ export class ClaudatorMoveDirective implements OnInit {
 	@HostListener('touchstart', ['$event'])
 	onTouchstart(event: MouseEvent) {
 		//console.log('moving', event);
-		alert('touchstart');
+		this.elementRef.nativeElement.style.left = event.pageX + 'px';
 
 	}
 
 	@HostListener('touchend', ['$event'])
 	onTouchend(event: MouseEvent) {
 		//console.log('moving', event);
-		alert('touchend');
 
 	}
 
@@ -47,8 +45,7 @@ export class ClaudatorMoveDirective implements OnInit {
 	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
-    console.log('elementRef', this.elementRef)
-    this.right.nativeElement.style.left = event.pageX + 'px';
+
 	}
 
 	@HostListener('mouseup', ['$event'])
