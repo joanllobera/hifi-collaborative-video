@@ -18,11 +18,12 @@ export class MargindeltaDirective implements OnInit {
       .subscribe(
         (zoomLevel: number) => {
           this.thumbnailSize = 8 * zoomLevel;
+          this.elementRef.nativeElement.style.marginLeft = (this.deltasize * this.thumbnailSize) + 'px';        
         }
       );
 
 
-    this.elementRef.nativeElement.style.marginLeft = (this.deltasize * this.thumbnailSize) + 'px';
+
   }
 
 }
