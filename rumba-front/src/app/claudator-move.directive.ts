@@ -5,7 +5,7 @@ import { Directive, ElementRef, ViewChild, HostListener, OnInit } from "@angular
 })
 export class ClaudatorMoveDirective implements OnInit {
 
-  @ViewChild('right') right: ElementRef;
+  @ViewChild('right') right : ElementRef;
 
   constructor(private elementRef: ElementRef) {}
 
@@ -47,6 +47,7 @@ export class ClaudatorMoveDirective implements OnInit {
 	@HostListener('mousedown', ['$event'])
 	onMouseDown(event: MouseEvent) {
 		console.log('mousedown', event);
+    console.log('elementRef', this.elementRef)
     this.right.nativeElement.style.left = event.pageX + 'px';
 	}
 
