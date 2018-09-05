@@ -43,6 +43,11 @@ export class ClaudatorMoveDirective implements OnInit {
 	@HostListener('mouseup', ['$event'])
 	onMouseUp(event: MouseEvent) {
     console.log('event:::', event);
+
+    var pos = Math.trunc((event['clientX'] - 7) / 80);
+    alert(pos);
+
+
 	}
 
 
