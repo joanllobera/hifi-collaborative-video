@@ -46,11 +46,6 @@ export class EditorNiceComponent implements OnInit {
     // this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
   }
 
-  onClickSeparator(event: Event) {
-    // console.log('separator clicked!', event)
-    // this.editorSrv.currentWidth.next(1);
-  }
-
   changeZoom(value: number) {
     this.videoSrv.rangeValue.next(value);
     this.initialRange = value;

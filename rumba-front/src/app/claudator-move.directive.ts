@@ -5,8 +5,6 @@ import { Directive, ElementRef, ViewChild, HostListener, OnInit } from "@angular
 })
 export class ClaudatorMoveDirective implements OnInit {
 
-  @ViewChild('right') right : ElementRef;
-
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
@@ -35,7 +33,7 @@ export class ClaudatorMoveDirective implements OnInit {
 
 	@HostListener('dblclick', ['$event'])
 	onMouseDoubleClick(event: MouseEvent) {
-
+    this.moveSelector();
 	}
 
 	@HostListener('mousedown', ['$event'])
@@ -71,7 +69,7 @@ export class ClaudatorMoveDirective implements OnInit {
 
 				// call a function whenever the cursor moves:
 		    document.onmousemove = elementDrag;
-				document.ontouchmove = elementDrag;
+				document.ontouchstart = elementDrag;
 			}
 
 		  function elementDrag(e) {
@@ -94,7 +92,7 @@ export class ClaudatorMoveDirective implements OnInit {
 
 				//touch events
 				document.ontouchend = null;
-				document.ontouchmove = null;
+				document.ontouchstart = null;
 		  }
 		}
 	}
