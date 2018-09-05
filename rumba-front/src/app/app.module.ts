@@ -33,6 +33,7 @@ import { ThumbSizeDirective } from './thumbSize.directive';
 import { SelectorSizeDirective } from './selectorSize.directive';
 import { EditorService } from './editor.service';
 import { ClaudatorMoveDirective } from './claudator-move.directive';
+import { ClaudatorLeftDirective } from './claudator-left.directive';
 
 
 
@@ -52,7 +53,8 @@ import { ClaudatorMoveDirective } from './claudator-move.directive';
     CameraMasterComponent,
     ThumbSizeDirective,
     SelectorSizeDirective,
-    ClaudatorMoveDirective
+    ClaudatorMoveDirective,
+    ClaudatorLeftDirective
   ],
   imports: [
     BrowserModule,
