@@ -129,8 +129,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isFirst(array, object) {
-    return array.filter(function (each, index) {
-      return each.pos < object.pos;
+    return array.some(function (each, index) {
+      return object.position < each.position;
     })
   }
 
