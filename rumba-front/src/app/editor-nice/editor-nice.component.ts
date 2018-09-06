@@ -177,7 +177,7 @@ export class EditorNiceComponent implements OnInit {
   onSelectFrame(event): void {
     event.target.classList.toggle('selectedImg');
 
-    if (event.target.classList.hasClass('first')) {
+    if (event.target.classList.contains('first')) {
       event.target.classList.remove('first');
     }
   }
