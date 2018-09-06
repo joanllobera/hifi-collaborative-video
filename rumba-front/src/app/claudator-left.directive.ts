@@ -45,7 +45,6 @@ export class ClaudatorLeftDirective implements OnInit {
     console.log('event:::', event);
 
     var pos = Math.trunc((event['clientX'] - 7) / 80);
-    alert('left' + pos);
 
 
 	}

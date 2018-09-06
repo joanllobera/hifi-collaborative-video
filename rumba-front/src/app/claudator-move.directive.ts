@@ -45,7 +45,6 @@ export class ClaudatorMoveDirective implements OnInit {
     console.log('event:::', event);
 
     var pos = Math.trunc((event['clientX'] - 7) / 80);
-    alert(pos);
 
 
 	}
