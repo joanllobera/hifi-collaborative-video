@@ -134,7 +134,7 @@ export class EditorNiceComponent implements OnInit {
     })
   }
 
-  getThumbInfo(event: Event, videoIndex: number, blobIndex: number): void {
+  getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
     let pos = Math.trunc((event['clientX'] - 7) / 80);
     // console.log("event['clientX']:::", event['clientX']);
@@ -146,8 +146,11 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-    let xx = this.isFirst(this.videoJson, thumbnail);
-    console.log(xx);
+    //let xx = this.isFirst(this.videoJson, thumbnail);
+
+    if (this.isFirst(this.videoJson, thumbnail)) {
+      event.target.classList.add('first');
+    }
 
     if (this.duplicates(this.videoJson, thumbnail)) {
 
