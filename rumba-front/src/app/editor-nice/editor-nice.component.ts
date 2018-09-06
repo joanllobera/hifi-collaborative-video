@@ -135,6 +135,12 @@ export class EditorNiceComponent implements OnInit {
     })
   }
 
+  isLast(array, object) {
+    return array.every(function (each, index) {
+      return object.position > each.position;
+    })
+  }
+
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
     let pos = Math.trunc((event['clientX'] - 7) / 80);
@@ -147,6 +153,7 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
+    //check if it is first i-frame
     if (this.isFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.first');
@@ -154,6 +161,16 @@ export class EditorNiceComponent implements OnInit {
 
       event.target.classList.add('first');
     }
+
+    //check if it is last i-frame
+    if (this.isLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+      let video = document.querySelector('#test' + videoIndex);
+      let img = video.querySelector('img.last');
+      if (img) img.classList.remove('last');
+
+      event.target.classList.add('last');
+    }
+
 
     if (this.duplicates(this.videoJson, thumbnail)) {
       //remove duplicates
@@ -163,11 +180,12 @@ export class EditorNiceComponent implements OnInit {
     } else {
       this.videoJson.push(thumbnail);
     }
-    console.log(this.videoJson);
+    //console.log(this.videoJson);
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
     event.target.classList.toggle('selectedImg');
+
     if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('first');
     }
@@ -175,6 +193,14 @@ export class EditorNiceComponent implements OnInit {
     let video = document.querySelector('#test' + videoIndex);
     let img = video.querySelector('img.selectedImg');
     if (img) img.classList.add('first');
+
+    if (event.target.classList.contains('last') && !event.target.classList.contains('selectedImg')) {
+      event.target.classList.remove('last');
+    }
+
+    let imgLast = video.querySelector('img.selectedImg');
+    if (imgLast) imgLast.classList.add('last');
+
   }
 
   onGetThumbnails(id:string): void {
