@@ -128,33 +128,40 @@ export class EditorNiceComponent implements OnInit {
     return _index;
   }
 
-
+  isFirst(array, object) {
+    return array.filter(function (each, index) {
+      return each.pos < object.pos;
+    })
+  }
 
   getThumbInfo(event: Event, videoIndex: number, blobIndex: number): void {
 
-    var pos = Math.trunc((event['clientX'] - 7) / 80);
+    let pos = Math.trunc((event['clientX'] - 7) / 80);
     // console.log("event['clientX']:::", event['clientX']);
     // console.log("pos:::", pos);
 
-    var thumbnail = {
+    let thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
       position: pos
     };
 
+    let xx = this.isFirst(this.videoJson, thumbnail);
+    console.log(xx);
+
     if (this.duplicates(this.videoJson, thumbnail)) {
 
       //remove duplicates
-      var removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
-      var index = this.getDuplicateIndex(this.videoJson, removeme[0]);
+      let removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
+      let index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
       this.videoJson.push(thumbnail);
 
     }
 
-    console.log('videoJson::', this.videoJson);
-    console.log('event:::', event);
+    //console.log('videoJson::', this.videoJson);
+    //console.log('event:::', event);
     // console.log('videoIndex:::', videoIndex);
     // console.log('blobIndex:::', blobIndex);
   }
