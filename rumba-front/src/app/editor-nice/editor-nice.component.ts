@@ -151,7 +151,7 @@ export class EditorNiceComponent implements OnInit {
 
     if (this.isFirst(this.videoJson, thumbnail)) {
       let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.first');      
+      let img = video.querySelector('img.first');
       if (img) img.classList.remove('first');
 
       event.target.classList.add('first');
@@ -177,6 +177,9 @@ export class EditorNiceComponent implements OnInit {
   onSelectFrame(event): void {
     event.target.classList.toggle('selectedImg');
 
+    if (event.target.classList.hasClass('first')) {
+      event.target.classList.remove('first');
+    }
   }
 
   onSelectFirstFrame(event): void {
