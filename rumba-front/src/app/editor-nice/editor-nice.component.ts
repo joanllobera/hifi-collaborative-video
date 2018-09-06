@@ -174,6 +174,7 @@ export class EditorNiceComponent implements OnInit {
 
     let video = document.querySelector('#test' + videoIndex);
     let img = video.querySelector('img.selectedImg');
+    if (img) img.classList.add('first');
   }
 
   onGetThumbnails(id:string): void {
