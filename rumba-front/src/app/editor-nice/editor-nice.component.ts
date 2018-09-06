@@ -130,7 +130,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isFirst(array, object) {
-    return array.some(function (each, index) {
+    return array.every(function (each, index) {
       return object.position < each.position;
     })
   }
@@ -147,8 +147,6 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-
-
     if (this.isFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.first');
@@ -158,15 +156,16 @@ export class EditorNiceComponent implements OnInit {
     }
 
     if (this.duplicates(this.videoJson, thumbnail)) {
-
       //remove duplicates
       let removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
       let index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
       this.videoJson.push(thumbnail);
-
     }
+
+    console.log(this.videoJson);
+
   }
 
   onSelectFrame(event): void {
