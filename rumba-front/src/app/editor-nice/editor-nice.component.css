@@ -33,8 +33,7 @@ video {
 }
 
 .last {
-  border-right: 6px;
-  border-color: yellow;
+  border-right: 6px solid yellow;
 }
 
 .oneVideo {
