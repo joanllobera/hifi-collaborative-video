@@ -163,24 +163,17 @@ export class EditorNiceComponent implements OnInit {
     } else {
       this.videoJson.push(thumbnail);
     }
-
     console.log(this.videoJson);
-
   }
 
-  onSelectFrame(event): void {
+  onSelectFrame(event, videoIndex: number, blobIndex: number): void {
     event.target.classList.toggle('selectedImg');
+    if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {
+      event.target.classList.remove('first');
+    }
 
-    // if (event.target.classList.contains('first')) {
-    //   event.target.classList.remove('first');
-    // }
-  }
-
-  onSelectFirstFrame(event): void {
-    let allimg = this.videoList.nativeElement.querySelectorAll('img');
-
-    console.log(allimg);
-    allimg[0].classList.add('firstSelected');
+    let video = document.querySelector('#test' + videoIndex);
+    let img = video.querySelector('img.selectedImg');
   }
 
   onGetThumbnails(id:string): void {
