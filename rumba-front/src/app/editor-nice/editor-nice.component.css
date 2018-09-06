@@ -29,18 +29,12 @@ video {
 }
 
 .first {
-  border-left: 3px;
-  border-color: yellow
+  border: 6px solid yellow;
 }
 
 .last {
   border-right: 3px;
   border-color: yellow;
-}
-
-.firstSelected {
-  /* border: red 5px solid; */
-  opacity: .5;
 }
 
 .oneVideo {
