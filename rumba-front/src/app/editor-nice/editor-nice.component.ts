@@ -198,8 +198,8 @@ export class EditorNiceComponent implements OnInit {
       event.target.classList.remove('last');
     }
 
-    let imgLast = video.querySelector('img.selectedImg');
-    if (imgLast) imgLast.classList.add('last');
+    let imgLast = video.querySelectorAll('img.selectedImg');
+    //if (imgLast) imgLast.classList.add('last');
 
   }
 
