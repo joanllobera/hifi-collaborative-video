@@ -29,6 +29,7 @@ export class EditorNiceComponent implements OnInit {
   zipList: any[] =  [];
 
   @ViewChild('videoList') videoList: ElementRef;
+  @ViewChild('iframe') iframe: ElementRef;
 
   constructor(
     private videoService: VideosServiceService,
@@ -146,10 +147,9 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-    //let xx = this.isFirst(this.videoJson, thumbnail);
+    let video = document.querySelector('#test' + videoIndex);
 
     if (this.isFirst(this.videoJson, thumbnail)) {
-      var a = document.getElementsByTagName('img');
       event.target.classList.add('first');
     }
 
