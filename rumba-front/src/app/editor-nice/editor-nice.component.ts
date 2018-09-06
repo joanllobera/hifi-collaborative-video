@@ -200,7 +200,7 @@ export class EditorNiceComponent implements OnInit {
 
     let imgLast = video.querySelectorAll('img.selectedImg');
     //if (imgLast) imgLast.classList.add('last');
-    imgLast[imgLast.length].classList.add('last');
+    imgLast[imgLast.length-1].classList.add('last');
 
   }
 
