@@ -29,6 +29,16 @@ video {
   border-radius: 5px;
 }
 
+.first {
+  border-left: 3px;
+  border-color: yellow
+}
+
+.last {
+  border-right: 3px;
+  border-color: yellow;
+}
+
 .firstSelected {
   /* border: red 5px solid; */
   opacity: .5;
