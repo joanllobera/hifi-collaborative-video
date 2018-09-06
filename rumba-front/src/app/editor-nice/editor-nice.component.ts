@@ -149,10 +149,10 @@ export class EditorNiceComponent implements OnInit {
 
 
 
-    if (this.isFirst(this.videoJson, thumbnail)) {
-      let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.first');
-      if (img) img.classList.remove('first');
+    if (this.isFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+      // let video = document.querySelector('#test' + videoIndex);
+      // let img = video.querySelector('img.first');
+      // if (img) img.classList.remove('first');
 
       event.target.classList.add('first');
     }
@@ -167,11 +167,6 @@ export class EditorNiceComponent implements OnInit {
       this.videoJson.push(thumbnail);
 
     }
-
-    //console.log('videoJson::', this.videoJson);
-    //console.log('event:::', event);
-    // console.log('videoIndex:::', videoIndex);
-    // console.log('blobIndex:::', blobIndex);
   }
 
   onSelectFrame(event): void {
