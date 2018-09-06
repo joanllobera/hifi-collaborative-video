@@ -151,8 +151,8 @@ export class EditorNiceComponent implements OnInit {
 
     if (this.isFirst(this.videoJson, thumbnail)) {
       let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.first');
-      img.classList.remove('first');
+      let img = video.querySelector('img.first');      
+      if (img) img.classList.remove('first');
 
       event.target.classList.add('first');
     }
