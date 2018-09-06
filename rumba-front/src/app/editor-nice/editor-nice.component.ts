@@ -149,6 +149,7 @@ export class EditorNiceComponent implements OnInit {
     //let xx = this.isFirst(this.videoJson, thumbnail);
 
     if (this.isFirst(this.videoJson, thumbnail)) {
+      var a = document.getElementsByTagName('img');
       event.target.classList.add('first');
     }
 
