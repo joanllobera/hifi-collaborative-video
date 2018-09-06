@@ -29,7 +29,7 @@ video {
 }
 
 .first {
-  border: 6px solid yellow;
+  border-left: 6px solid yellow;
 }
 
 .last {
