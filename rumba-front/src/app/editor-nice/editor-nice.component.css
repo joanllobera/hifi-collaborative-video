@@ -20,6 +20,9 @@ video {
   cursor:pointer;
 }
 
+.absolute {
+  position:absolute;
+}
 
 .selectedImg {
   border:yellow 5px solid;
