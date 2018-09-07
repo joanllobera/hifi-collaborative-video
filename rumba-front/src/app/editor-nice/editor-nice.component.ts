@@ -23,6 +23,7 @@ export class EditorNiceComponent implements OnInit {
   delta: number[] = [];
   allVideosOk: any[] = [];
   session_id: string[] = [];
+  zoomLevel: number;
 
   videoJson: any[] = [];
   videoStream: any = undefined;
@@ -45,6 +46,14 @@ export class EditorNiceComponent implements OnInit {
   ngOnInit() {
     this.getAllVideos(this.session_id);
     // this.onGetThumbnails("5ad4b5fdc94b4c6bc260dd3c");
+    this.videoSrv.rangeValue
+      .subscribe(
+        (value: number) => {
+          console.log(value);
+          this.zoomLevel = value;
+        }
+      );
+
   }
 
   changeZoom(value: number) {
@@ -143,7 +152,7 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
-    let pos = Math.trunc((event['clientX'] - 7) / 80);
+    let pos = Math.trunc((event['clientX'] - 7) / (8 * this.zoomLevel));
     // console.log("event['clientX']:::", event['clientX']);
     // console.log("pos:::", pos);
 
