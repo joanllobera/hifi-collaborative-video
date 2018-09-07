@@ -136,7 +136,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isNotLast(array, object) {
-    return array.every(function (each, index) {
+    return array.some(function (each, index) {
       return each.position > object.position && each.id == object.id;
     })
   }
