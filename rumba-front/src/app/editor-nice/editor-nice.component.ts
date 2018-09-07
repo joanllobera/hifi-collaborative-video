@@ -130,14 +130,14 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isFirst(array, object) {
-    return array.every(function (each, index) {
-      return object.position < each.position && each.id === object.id;
+    return array.some(function (each, index) {
+      return each.position < object.position && each.id === object.id;
     })
   }
 
   isLast(array, object) {
     return array.every(function (each, index) {
-      return object.position > each.position && each.id == object.id;
+      return each.position > object.position && each.id == object.id;
     })
   }
 
@@ -171,7 +171,6 @@ export class EditorNiceComponent implements OnInit {
 
       event.target.classList.add('last');
     }
-
 
     if (this.duplicates(this.videoJson, thumbnail)) {
       //remove duplicates
