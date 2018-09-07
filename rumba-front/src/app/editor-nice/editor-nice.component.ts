@@ -131,13 +131,13 @@ export class EditorNiceComponent implements OnInit {
 
   isFirst(array, object) {
     return array.every(function (each, index) {
-      return object.position < each.position;
+      return object.position < each.position && each.id === object.id;
     })
   }
 
   isLast(array, object) {
     return array.every(function (each, index) {
-      return object.position > each.position;
+      return object.position > each.position && each.id == object.id;
     })
   }
 
