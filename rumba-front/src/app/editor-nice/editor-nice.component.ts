@@ -181,7 +181,7 @@ export class EditorNiceComponent implements OnInit {
     } else {
       this.videoJson.push(thumbnail);
     }
-    //console.log(this.videoJson);
+    console.log(this.videoJson);
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
