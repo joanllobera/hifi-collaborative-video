@@ -129,13 +129,13 @@ export class EditorNiceComponent implements OnInit {
     return _index;
   }
 
-  isFirst(array, object) {
+  isNotFirst(array, object) {
     return array.some(function (each, index) {
       return each.position < object.position && each.id === object.id;
     })
   }
 
-  isLast(array, object) {
+  isNotLast(array, object) {
     return array.every(function (each, index) {
       return each.position > object.position && each.id == object.id;
     })
@@ -153,18 +153,18 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-    console.log('isFirst:::', this.isFirst(this.videoJson, thumbnail));
+    console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
     //check if it is first i-frame
-    if (this.isFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    if (this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.first');
       if (img) img.classList.remove('first');
 
       event.target.classList.add('first');
     }
-    console.log('isLast:::', this.isLast(this.videoJson, thumbnail));
+    console.log('isNotLast:::', this.isNotLast(this.videoJson, thumbnail));
     //check if it is last i-frame
-    if (this.isLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    if (this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.last');
       if (img) img.classList.remove('last');
