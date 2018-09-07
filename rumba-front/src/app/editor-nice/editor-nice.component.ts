@@ -153,6 +153,7 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
+    console.log('isFirst:::', this.isFirst(this.videoJson, thumbnail));
     //check if it is first i-frame
     if (this.isFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
@@ -161,7 +162,7 @@ export class EditorNiceComponent implements OnInit {
 
       event.target.classList.add('first');
     }
-
+    console.log('isLast:::', this.isLast(this.videoJson, thumbnail));
     //check if it is last i-frame
     if (this.isLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
@@ -277,7 +278,7 @@ export class EditorNiceComponent implements OnInit {
               }
 
               this.listOfLists.push(temp);
-              console.log('this.listOfLists::::', this.listOfLists);
+              //console.log('this.listOfLists::::', this.listOfLists);
 
           });
 
