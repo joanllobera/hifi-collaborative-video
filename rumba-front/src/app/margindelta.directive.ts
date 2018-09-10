@@ -19,7 +19,7 @@ export class MargindeltaDirective implements OnInit {
                 document.body.clientWidth;
 
     this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
-    this.elementRef.nativeElement.style.minWidth = 1000 + "px";
+    this.elementRef.nativeElement.style.minWidth = width - (this.deltasize * (8 * 10)) + "px";
 
     this.videoSrv.rangeValue
       .subscribe(
