@@ -15,6 +15,7 @@ export class MargindeltaDirective implements OnInit {
   ngOnInit() {
 
     this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
+    this.elementRef.nativeElement.style.minWidth = 1000 + "px";
 
     this.videoSrv.rangeValue
       .subscribe(
