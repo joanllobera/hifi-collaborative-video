@@ -26,6 +26,8 @@ video {
 
 .selectedImg {
   opacity: .5;
+  border-top: 6px solid yellow;
+  border-bottom: 6px solid yellow;
 }
 
 .first {
