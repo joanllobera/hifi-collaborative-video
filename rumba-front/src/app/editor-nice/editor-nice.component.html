@@ -152,7 +152,7 @@
             <img appClaudatorMove height="80px" class="absolute" src="assets/logo/right-yellow.png" alt="">
           </div> -->
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event, i, ii)" #iframe class="iframe" [id]="'test' + (i)">
-            <img appThumbSize appSelectorSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
+            <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
           </div>
         </div>
 

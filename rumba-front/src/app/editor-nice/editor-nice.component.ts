@@ -149,7 +149,7 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
-    let pos = Math.trunc((event['clientX'] - 7) / (8 * this.initialRange));
+    let pos = Math.trunc((event['clientX'] - 10) / (8 * this.initialRange));
     // console.log("event['clientX']:::", event['clientX']);
     // console.log("pos:::", pos);
 
