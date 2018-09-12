@@ -16,7 +16,7 @@ import { EditorService } from '../editor.service';
 })
 export class EditorNiceComponent implements OnInit {
 
-  initialRange: number = 5;
+  initialRange: number = 10;
   singleList: string[] = [];
   listOfLists: any[] = [];
   allVideos: any = undefined;
@@ -48,6 +48,7 @@ export class EditorNiceComponent implements OnInit {
 
   changeZoom(value: number) {
     //this.videoSrv.rangeValue.next(value);
+    this.initialRange = value;
   }
 
   getAllVideos(session_id): void {
