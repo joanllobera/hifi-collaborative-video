@@ -16,7 +16,7 @@ import { EditorService } from '../editor.service';
 })
 export class EditorNiceComponent implements OnInit {
 
-  initialRange: number = 10;
+  initialRange: number = 5;
   singleList: string[] = [];
   listOfLists: any[] = [];
   allVideos: any = undefined;
