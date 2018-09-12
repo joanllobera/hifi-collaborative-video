@@ -135,9 +135,11 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isFirstItem(array, object) {
-    return array.every(function (each, index) {
-      return object.position < each.position && each.id === object.id;
+    let first: boolean = false;
+    array.forEach((each, index) => {
+      if (each.position < object.position && each.id === object.id) first = false;
     })
+    return first;
   }
 
   isNotLast(array, object) {
@@ -157,6 +159,8 @@ export class EditorNiceComponent implements OnInit {
       thumb: blobIndex,
       position: pos
     };
+    console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail))
+
 
     console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
 
