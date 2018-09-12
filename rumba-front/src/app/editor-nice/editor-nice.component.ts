@@ -135,7 +135,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isFirstItem(array, object) {
-    let first: boolean = false;
+    let first: boolean;
     array.forEach((each, index) => {
       if (each.position < object.position && each.id === object.id) first = false;
     })
