@@ -20,11 +20,11 @@ video {
   cursor:pointer;
 }
 
-div.pepito {
+div.thumb-wrapper {
   background-color: red;
 }
 
-.oneVideo > div.iframe > div.pepito > img {
+.oneVideo > div.iframe > div.thumb-wrapper > img {
   display: inline-block;
   width:80px;
   height: 80px;
