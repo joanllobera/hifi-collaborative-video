@@ -142,6 +142,14 @@ export class EditorNiceComponent implements OnInit {
     return first;
   }
 
+  isLastItem(array, object) {
+    let last: boolean;
+    array.forEach((each, index) => {
+      if (each.position > object.position && each.id === object.id) last = false;
+    });
+    return last;
+  }
+
   isNotLast(array, object) {
     return array.some( (each, index) => {
       return each.position > object.position && each.id == object.id;
@@ -159,9 +167,12 @@ export class EditorNiceComponent implements OnInit {
       thumb: blobIndex,
       position: pos
     };
+
     console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail))
+    console.log('isLastItem:::', this.isLastItem(this.videoJson, thumbnail))
 
-
+    console.log('-------------------------------------------------------------');
+    
     console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
 
     //check if it is first i-frame
