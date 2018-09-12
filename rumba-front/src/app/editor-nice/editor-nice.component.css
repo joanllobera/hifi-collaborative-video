@@ -12,7 +12,7 @@ video {
   opacity: .7;
 }
 
-.oneVideo > div.iframe > img {
+.oneVideo > div.iframe > img, .oneVideo > div.iframe > div.thumb-wrapper > img {
   display: inline-block;
   width:80px;
   height: 80px;
@@ -21,15 +21,7 @@ video {
 }
 
 div.thumb-wrapper {
-  background-color: red;
-}
-
-.oneVideo > div.iframe > div.thumb-wrapper > img {
-  display: inline-block;
-  width:80px;
-  height: 80px;
-  transition: opacity .3s;
-  cursor:pointer;
+  /* background-color: red; */
 }
 
 .absolute {
