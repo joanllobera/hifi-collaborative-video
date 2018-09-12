@@ -160,8 +160,6 @@ export class EditorNiceComponent implements OnInit {
 
     console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
 
-    console.log('isFirstItem::', this.isFirstItem(this.videoJson, thumbnail))
-
     //check if it is first i-frame
     if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
