@@ -20,6 +20,18 @@ video {
   cursor:pointer;
 }
 
+div.pepito {
+  background-color: red;
+}
+
+.oneVideo > div.iframe > div.pepito > img {
+  display: inline-block;
+  width:80px;
+  height: 80px;
+  transition: opacity .3s;
+  cursor:pointer;
+}
+
 .absolute {
   position:absolute;
 }
