@@ -129,20 +129,19 @@ export class EditorNiceComponent implements OnInit {
   }
 
   isNotFirst(array, object) {
-    return array.some(function (each, index) {
+    return array.some( (each, index) => {
       return each.position < object.position && each.id === object.id;
     })
   }
 
   isFirstItem(array, object) {
-    return array.some(function (each, index) {
-      return each.position < object.position && each.id === object.id;
+    return array.every(function (each, index) {
+      return object.position < each.position && each.id === object.id;
     })
   }
 
-
   isNotLast(array, object) {
-    return array.some(function (each, index) {
+    return array.some( (each, index) => {
       return each.position > object.position && each.id == object.id;
     })
   }
@@ -160,6 +159,9 @@ export class EditorNiceComponent implements OnInit {
     };
 
     console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
+
+    console.log('isFirstItem::', this.isFirstItem(this.videoJson, thumbnail))
+
     //check if it is first i-frame
     if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
@@ -168,7 +170,9 @@ export class EditorNiceComponent implements OnInit {
 
       event.target.classList.add('first');
     }
+
     console.log('isNotLast:::', this.isNotLast(this.videoJson, thumbnail));
+
     //check if it is last i-frame
     if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
