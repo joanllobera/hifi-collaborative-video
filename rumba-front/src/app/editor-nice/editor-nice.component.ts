@@ -16,7 +16,7 @@ import { EditorService } from '../editor.service';
 })
 export class EditorNiceComponent implements OnInit {
 
-  initialRange: number = 10;
+  initialRange: number = 5;
   singleList: string[] = [];
   listOfLists: any[] = [];
   allVideos: any = undefined;
@@ -27,6 +27,8 @@ export class EditorNiceComponent implements OnInit {
   videoJson: any[] = [];
   videoStream: any = undefined;
   zipList: any[] =  [];
+
+  videoZoomValues: number[] = [30, 10, 5, 2, 1];
 
   @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
@@ -47,7 +49,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    this.videoSrv.rangeValue.next(value);
+    //this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
   }
 
@@ -100,21 +102,9 @@ export class EditorNiceComponent implements OnInit {
     })
   }
 
-  duplicatePosition(arr, obj): boolean {
-    return arr.some(function(each, index){
-      return each.position === obj.position;
-    });
-  }
-
   getDuplicatedObject(arr, obj): object[] {
     return arr.filter(function (each, index) {
       return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
-    });
-  }
-
-  getDuplicatedObjectByPosition(arr, obj): object[] {
-    return arr.filter(function (each, index) {
-      return each.position === obj.position;
     });
   }
 
@@ -158,7 +148,7 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
-    let pos = Math.trunc((event['clientX'] - 10) / (8 * this.initialRange));
+    let pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
     // console.log("event['clientX']:::", event['clientX']);
     // console.log("pos:::", pos);
 

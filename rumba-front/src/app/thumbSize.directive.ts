@@ -7,18 +7,18 @@ import { VideosServiceService } from "./videos-service.service";
 })
 export class ThumbSizeDirective implements OnInit {
 
-  currentWidth: number = 80;
+  currentWidth: number = 10;
 
   constructor(private elementRef: ElementRef, private videoSrv: VideosServiceService) {}
 
   ngOnInit(): void {
-    this.videoSrv.rangeValue
-      .subscribe(
-        (value: number) => {
-          this.currentWidth = value;
-          this.elementRef.nativeElement.style.width = (8 * this.currentWidth) + 'px';
-        }
-      );
+    // this.videoSrv.rangeValue
+    //   .subscribe(
+    //     (value: number) => {
+    //       this.currentWidth = value;
+    //       this.elementRef.nativeElement.style.width = (8 * this.currentWidth) + 'px';
+    //     }
+    //   );
   }
 
 }

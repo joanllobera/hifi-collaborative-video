@@ -8,17 +8,21 @@
     <div class="col-6">
       <div class="row">
           <div class="col-9">
-              <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="10" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+              <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
           </div>
           <div class="col-3">
-            <span class="badge badge-danger left1"><small>ZOOM</small>  {{initialRange}}</span>
+            <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
+            <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
+            <span *ngIf="initialRange == 3" class="badge badge-danger left1"> 5s / Thumb </span>
+            <span *ngIf="initialRange == 2" class="badge badge-danger left1"> 10s / Thumb </span>
+            <span *ngIf="initialRange == 1" class="badge badge-danger left1"> 30s / Thumb </span>
           </div>
       </div>
 
 
     </div>
     <div class="col-6">
-      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
+      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">Crear Video</button>
     </div>
   </div>
 </div>
@@ -152,9 +156,10 @@
             <img appClaudatorMove height="80px" class="absolute" src="assets/logo/right-yellow.png" alt="">
           </div> -->
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event, i, ii)" #iframe class="iframe" [id]="'test' + (i)">
-            <div class="thumb-wrapper">
-              <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
-            </div>
+            <span [class.hidden]="ii % videoZoomValues[initialRange-1] != 0" class="thumb-wrapper" *ngFor="let one of oneList; let ii = index;">
+              <!-- <img *ngIf="ii % videoZoomValues[initialRange-1] == 0" appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" /> -->
+              <img appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" />
+            </span>
           </div>
         </div>
 
