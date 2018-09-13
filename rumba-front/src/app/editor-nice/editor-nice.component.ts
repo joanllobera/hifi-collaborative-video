@@ -27,9 +27,8 @@ export class EditorNiceComponent implements OnInit {
   videoJson: any[] = [];
   videoStream: any = undefined;
   zipList: any[] =  [];
-  videoZoomLevel: number = 1;
 
-  kkkk: number[] = [30, 10, 5, 2, 1];
+  videoZoomValues: number[] = [30, 10, 5, 2, 1];
 
   @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
@@ -52,24 +51,6 @@ export class EditorNiceComponent implements OnInit {
   changeZoom(value: number) {
     //this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
-    this.setVideoZoomLevel(value);
-  }
-
-  setVideoZoomLevel (zoomLevel: number) {
-    switch(zoomLevel) {
-        case 1: this.videoZoomLevel = 30;
-      break;
-        case 2: this.videoZoomLevel = 10;
-      break;
-        case 3: this.videoZoomLevel = 5;
-      break;
-        case 4: this.videoZoomLevel = 2;
-      break;
-        case 5: this.videoZoomLevel = 1;
-      break;
-    }
-    console.log('this.videoZoomLevel', this.videoZoomLevel);
-
   }
 
   getAllVideos(session_id): void {
