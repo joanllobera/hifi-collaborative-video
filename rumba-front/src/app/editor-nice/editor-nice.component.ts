@@ -30,7 +30,6 @@ export class EditorNiceComponent implements OnInit {
 
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
 
-  @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
 
   constructor(
@@ -51,6 +50,15 @@ export class EditorNiceComponent implements OnInit {
   changeZoom(value: number) {
     //this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
+    this.recoverThumbnails(value);
+  }
+
+  recoverThumbnails(value: number) {
+
+    let images = document.querySelector('iframe');
+
+    console.log(this.listOfLists);
+
   }
 
   getAllVideos(session_id): void {
