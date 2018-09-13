@@ -66,8 +66,6 @@ export class EditorNiceComponent implements OnInit {
         case 5: this.videoZoomLevel = 1;
       break;
     }
-
-    this.videoZoomLevel = zoomLevel;
   }
 
   getAllVideos(session_id): void {
