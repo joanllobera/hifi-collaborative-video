@@ -12,7 +12,7 @@ video {
   opacity: .7;
 }
 
-.oneVideo > div.iframe > img, .oneVideo > div.iframe > div.thumb-wrapper > img {
+.oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;
   width:80px;
   height: 80px;
