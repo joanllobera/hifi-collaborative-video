@@ -12,6 +12,10 @@ video {
   opacity: .7;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;
   width:80px;
@@ -44,7 +48,7 @@ div.thumb-wrapper {
 
 .oneVideo {
   padding:.1em;
-  display:block; 
+  display:block;
 }
 
 .ifame {
