@@ -29,6 +29,8 @@ export class EditorNiceComponent implements OnInit {
   zipList: any[] =  [];
   videoZoomLevel: number = 1;
 
+  kkkk: number[] = [30, 10, 5, 2, 1];
+
   @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
 
