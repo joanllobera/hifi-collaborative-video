@@ -49,6 +49,7 @@ export class EditorNiceComponent implements OnInit {
   changeZoom(value: number) {
     //this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
+    console.log('listOfLists:::', this.listOfLists);
   }
 
   getAllVideos(session_id): void {
@@ -100,21 +101,9 @@ export class EditorNiceComponent implements OnInit {
     })
   }
 
-  duplicatePosition(arr, obj): boolean {
-    return arr.some(function(each, index){
-      return each.position === obj.position;
-    });
-  }
-
   getDuplicatedObject(arr, obj): object[] {
     return arr.filter(function (each, index) {
       return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
-    });
-  }
-
-  getDuplicatedObjectByPosition(arr, obj): object[] {
-    return arr.filter(function (each, index) {
-      return each.position === obj.position;
     });
   }
 
