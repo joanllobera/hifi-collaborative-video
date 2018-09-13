@@ -27,7 +27,7 @@ export class EditorNiceComponent implements OnInit {
   videoJson: any[] = [];
   videoStream: any = undefined;
   zipList: any[] =  [];
-  videoZoomLevel: number = this.initialRange;
+  videoZoomLevel: number = 1;
 
   @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
