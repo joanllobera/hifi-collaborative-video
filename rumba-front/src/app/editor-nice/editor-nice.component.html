@@ -158,7 +158,9 @@
           <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event, i, ii)" #iframe class="iframe" [id]="'test' + (i)">
             <div class="thumb-wrapper">
               <img appThumbSize *ngFor="let one of oneList; let ii = index;" (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" />
-              <div *ngIf="ii%3==0"></div>
+              <div *ngIf="ii%3==0">
+                  CHECK NGFOR
+              </div>
             </div>
           </div>
         </div>
