@@ -57,9 +57,14 @@ export class EditorNiceComponent implements OnInit {
     let iframe = document.querySelectorAll('.iframe');
     let videoImages = [];
 
-    // iframe.forEach((each, index) => {
-    // 
-    // })
+    // for (var ifr of iframe) {
+    //   console.log('ifr:::', ifr);
+    // }
+
+
+    Array.prototype.forEach.call(iframe, (each) => {
+      console.log('each222::', each)
+    })
 
     console.log('this.videoJson::', this.videoJson);
   }
