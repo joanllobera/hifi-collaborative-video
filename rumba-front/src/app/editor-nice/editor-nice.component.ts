@@ -54,11 +54,12 @@ export class EditorNiceComponent implements OnInit {
   }
 
   recoverThumbnails(value: number) {
-    let iframe = document.querySelector('.iframe');
-    let images = iframe.querySelectorAll('img');
+    let iframe = document.querySelectorAll('.iframe');
+    let videoImages = [];
 
-
-    let kkk = document.querySelectorAll('.iframe img');
+    // iframe.forEach((each, index) => {
+    // 
+    // })
 
     console.log('this.videoJson::', this.videoJson);
   }
