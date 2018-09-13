@@ -11,11 +11,11 @@
               <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
           </div>
           <div class="col-3">
-            <span *ngIf="initialRange == 5" class="badge badge-danger left1"> Imatge / 1s </span>
-            <span *ngIf="initialRange == 4" class="badge badge-danger left1"> Imatge / 2s </span>
-            <span *ngIf="initialRange == 3" class="badge badge-danger left1"> Imatge / 5s </span>
-            <span *ngIf="initialRange == 2" class="badge badge-danger left1"> Imatge / 10s </span>
-            <span *ngIf="initialRange == 1" class="badge badge-danger left1"> Imatge / 30s </span>
+            <span *ngIf="initialRange == 5" class="badge badge-danger left1"> thumb / 1s </span>
+            <span *ngIf="initialRange == 4" class="badge badge-danger left1"> thumb / 2s </span>
+            <span *ngIf="initialRange == 3" class="badge badge-danger left1"> thumb / 5s </span>
+            <span *ngIf="initialRange == 2" class="badge badge-danger left1"> thumb / 10s </span>
+            <span *ngIf="initialRange == 1" class="badge badge-danger left1"> thumb / 30s </span>
           </div>
       </div>
 
