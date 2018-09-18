@@ -115,7 +115,11 @@ export class EditorNiceComponent implements OnInit {
   duplicates(arr, obj): boolean {
     return arr.some(function (each, index) {
       return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
-    })
+    });
+  }
+
+  isInArray(arr, obj) {
+    return arr.includes(obj);
   }
 
   getDuplicatedObject(arr, obj): object[] {
@@ -181,7 +185,7 @@ export class EditorNiceComponent implements OnInit {
 
     console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
 
-    //check if it is first i-frame
+    // check if it is first i-frame
     if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.first');
@@ -192,13 +196,19 @@ export class EditorNiceComponent implements OnInit {
 
     console.log('isNotLast:::', this.isNotLast(this.videoJson, thumbnail));
 
-    //check if it is last i-frame
+    // check if it is last i-frame
     if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
       let img = video.querySelector('img.last');
       if (img) img.classList.remove('last');
 
       event.target.classList.add('last');
+    }
+
+    if (this.isInArray(this.videoJson, thumbnail)) {
+      console.log('si existe');
+    } else {
+      console.log('no existe');
     }
 
     if (this.duplicates(this.videoJson, thumbnail)) {
