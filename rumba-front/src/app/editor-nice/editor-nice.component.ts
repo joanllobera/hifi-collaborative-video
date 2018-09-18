@@ -168,9 +168,9 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
-    let pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+    const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
 
-    let thumbnail = {
+    const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
       position: pos
@@ -203,13 +203,8 @@ export class EditorNiceComponent implements OnInit {
       event.target.classList.add('last');
     }
 
-    if (this.isInArray(this.videoJson, thumbnail)) {
-      console.log('si existe');
-    } else {
-      console.log('no existe');
-    }
-
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
+    console.log('videoJson length:::', this.videoJson.length);
 
     if (this.duplicates(this.videoJson, thumbnail)) {
       // remove duplicates
@@ -228,16 +223,20 @@ export class EditorNiceComponent implements OnInit {
       event.target.classList.remove('first');
     }
 
-    let video = document.querySelector('#test' + videoIndex);
-    let img = video.querySelector('img.selectedImg');
-    if (img) img.classList.add('first');
+    const video = document.querySelector('#test' + videoIndex);
+    const img = video.querySelector('img.selectedImg');
+    if (img) {
+      img.classList.add('first');
+    }
 
     if (event.target.classList.contains('last') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('last');
     }
 
-    let imgLast = video.querySelectorAll('img.selectedImg');
-    if (imgLast.length > 0) imgLast[imgLast.length-1].classList.add('last');
+    const imgLast = video.querySelectorAll('img.selectedImg');
+    if (imgLast.length > 0) {
+      imgLast[imgLast.length-1].classList.add('last');
+    }
 
   }
 
