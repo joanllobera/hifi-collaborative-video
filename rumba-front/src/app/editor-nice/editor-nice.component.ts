@@ -129,7 +129,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getDuplicateIndex(arr, obj): number {
-    var _index = null;
+    let _index = null;
     arr.forEach(function(each, index){
       if (each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position){
         _index = index;
@@ -169,8 +169,6 @@ export class EditorNiceComponent implements OnInit {
   getThumbInfo(event, videoIndex: number, blobIndex: number): void {
 
     let pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-    // console.log("event['clientX']:::", event['clientX']);
-    // console.log("pos:::", pos);
 
     let thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
@@ -183,8 +181,6 @@ export class EditorNiceComponent implements OnInit {
 
     console.log('-------------------------------------------------------------');
 
-    console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
-
     // check if it is first i-frame
     if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       let video = document.querySelector('#test' + videoIndex);
@@ -193,8 +189,6 @@ export class EditorNiceComponent implements OnInit {
 
       event.target.classList.add('first');
     }
-
-    console.log('isNotLast:::', this.isNotLast(this.videoJson, thumbnail));
 
     // check if it is last i-frame
     if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
@@ -210,6 +204,8 @@ export class EditorNiceComponent implements OnInit {
     } else {
       console.log('no existe');
     }
+
+    console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
 
     if (this.duplicates(this.videoJson, thumbnail)) {
       //remove duplicates
@@ -267,11 +263,11 @@ export class EditorNiceComponent implements OnInit {
                     this.singleList.push(reader.result);
                   }
                 }, false);
-                if (blob) {
-                   reader.readAsDataURL(blob);
-                }
-              }
-          });
+                  if (blob) {
+                    reader.readAsDataURL(blob);
+                  }
+                  }
+              });
 
           // download zip file
           // let fileName = "QCPReport.zip";
