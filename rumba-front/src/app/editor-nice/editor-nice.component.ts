@@ -203,9 +203,6 @@ export class EditorNiceComponent implements OnInit {
       event.target.classList.add('last');
     }
 
-    console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
-    console.log('videoJson length:::', this.videoJson.length);
-
     if (this.duplicates(this.videoJson, thumbnail)) {
       // remove duplicates
       const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
@@ -214,6 +211,10 @@ export class EditorNiceComponent implements OnInit {
     } else {
       this.videoJson.push(thumbnail);
     }
+
+    console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
+    console.log('videoJson length:::', this.videoJson.length);
+
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
