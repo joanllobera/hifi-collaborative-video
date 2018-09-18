@@ -165,6 +165,9 @@ export class EditorNiceComponent implements OnInit {
 
     const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
 
+    const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+
+
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
