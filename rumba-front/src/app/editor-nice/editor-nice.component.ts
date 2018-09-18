@@ -176,25 +176,29 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-    console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail))
-    console.log('isLastItem:::', this.isLastItem(this.videoJson, thumbnail))
+    // console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail));
+    // console.log('isLastItem:::', this.isLastItem(this.videoJson, thumbnail));
 
-    console.log('-------------------------------------------------------------');
+    // console.log('-------------------------------------------------------------');
 
     // check if it is first i-frame
     if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-      let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.first');
-      if (img) img.classList.remove('first');
+      const video = document.querySelector('#test' + videoIndex);
+      const img = video.querySelector('img.first');
+      if (img) {
+        img.classList.remove('first');
+      }
 
       event.target.classList.add('first');
     }
 
     // check if it is last i-frame
     if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-      let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.last');
-      if (img) img.classList.remove('last');
+      const video = document.querySelector('#test' + videoIndex);
+      const img = video.querySelector('img.last');
+      if (img) {
+        img.classList.remove('last');
+      }
 
       event.target.classList.add('last');
     }
@@ -208,14 +212,13 @@ export class EditorNiceComponent implements OnInit {
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
 
     if (this.duplicates(this.videoJson, thumbnail)) {
-      //remove duplicates
-      let removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
-      let index = this.getDuplicateIndex(this.videoJson, removeme[0]);
+      // remove duplicates
+      const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
+      const index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
       this.videoJson.push(thumbnail);
     }
-    console.log(this.videoJson);
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
