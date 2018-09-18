@@ -1,5 +1,5 @@
 [program:rumba-frontend]
-command=/bin/bash -c "source ~/.nvm/nvm.sh && nvm use v7.8.0 && ng serve"
+command=/bin/bash -c "source /home/{{ ubuntu_user }}/.nvm/nvm.sh && nvm use {{ node_version }} && ng serve"
 directory={{ rumba_src_folder }}/rumba/rumba-front
 autostart=true
 autorestart=true

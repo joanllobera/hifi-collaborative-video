@@ -8,6 +8,8 @@
     with_items:
       - cmake
       - golang
+      - g++
+      - git
   - name: Remove clone of BoringSSL repo (if it already exists)
     file:
       path: /tmp/boringssl

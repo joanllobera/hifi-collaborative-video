@@ -7,13 +7,12 @@
       update_cache: true
     with_items:
       - build-essential
+      - python3-dev
       - python-dev
-  - name: Install pip
-    become: true
-    apt:
-      package: python-pip
-      state: present
-      update_cache: true
+      - python3-pip
+      - python-pip
+      - libasound-dev
+      - portaudio19-dev
 
     ###########################
     ###  Mongo installation ###
@@ -47,10 +46,11 @@
   - name: Create virtual environment
     command: "virtualenv {{ rumba_src_folder }}//rumba/backend/venv -p python3.4"
   - name: Install python dependencies
+    become: true
     pip:
       name: egg
       chdir: "{{ rumba_src_folder }}/rumba/backend"
-      extra_args: "-e ."
+      extra_args: "-e {{ rumba_src_folder }}/rumba/backend"
       virtualenv: "{{ rumba_src_folder }}/rumba/backend/venv"
   - name: Create logs directory
     file:

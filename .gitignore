@@ -14,3 +14,8 @@ venv/*
 
 ## logs
 */logs
+*.log
+
+package-lock.json
+.vagrant
+venv

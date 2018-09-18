@@ -1,11 +1,18 @@
 ---
+# nodejs_package_json_path: ""
+# nodejs_npm_global_packages:
+  # Install a specific version of a package.
+#    version: 1.7.3
+
   - name: Install NVM
-    shell: >
-      curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | sh
-      creates=~/.nvm/nvm.sh
-  - name: Install node v.7.8.0
-    shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install v7.8.0"
+    shell: curl https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | sh
+    ignore_errors: yes
+  - name: Install node
+    shell: /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ node_version }}"
+    ignore_errors: yes
   - name: Install node modules
-    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use v7.8.0 && npm install"
+    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use {{ node_version }} && npm install"
+    ignore_errors: yes
   - name: Install angular/cli
-    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use v7.8.0 && npm install -g @angular/cli@1.7.3"
+    shell: /bin/bash -c "cd {{ rumba_src_folder }}/rumba/rumba-front/ && source ~/.nvm/nvm.sh && nvm use {{ node_version }} && npm install -g @angular/cli@1.7.3"
+    ignore_errors: yes

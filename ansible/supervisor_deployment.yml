@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   remote_user: "{{ ubuntu_user }}"
   vars_files:
     - vars/variables.yml
@@ -22,6 +22,11 @@
       template:
         src: templates/supervisor/janus.conf.tpl
         dest: /etc/supervisor/conf.d/janus.conf
+    - name: Create log folder for Janus code
+      become: true
+      file:
+        path: /var/log/janus
+        state: directory
     - name: Copy Rumba Backend config file
       become: true
       template:
