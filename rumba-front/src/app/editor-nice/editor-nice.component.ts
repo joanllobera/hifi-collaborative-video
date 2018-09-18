@@ -48,7 +48,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    //this.videoSrv.rangeValue.next(value);
+    // this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
     this.recoverThumbnails(value);
   }
@@ -61,9 +61,8 @@ export class EditorNiceComponent implements OnInit {
     //   console.log('ifr:::', ifr);
     // }
 
-
     Array.prototype.forEach.call(iframe, (each) => {
-      console.log('each222::', each)
+      console.log('each222::', each);
     })
 
     console.log('this.videoJson::', this.videoJson);
@@ -103,7 +102,7 @@ export class EditorNiceComponent implements OnInit {
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
 
 
-            //this.onGetThumbnailsManySync(each.video_id);
+            // this.onGetThumbnailsManySync(each.video_id);
 
 
           });
@@ -118,7 +117,7 @@ export class EditorNiceComponent implements OnInit {
     });
   }
 
-  isInArray(arr, obj) {
+  isInArray(arr, obj): boolean {
     return arr.includes(obj);
   }
 
@@ -182,26 +181,45 @@ export class EditorNiceComponent implements OnInit {
     // console.log('-------------------------------------------------------------');
 
     // check if it is first i-frame
-    if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    // if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    //   const video = document.querySelector('#test' + videoIndex);
+    //   const img = video.querySelector('img.first');
+    //   if (img) {
+    //     img.classList.remove('first');
+    //   }
+    //   event.target.classList.add('first');
+    // }
+
+    if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.first');
       if (img) {
         img.classList.remove('first');
       }
-
       event.target.classList.add('first');
     }
 
     // check if it is last i-frame
-    if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    // if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+    //   const video = document.querySelector('#test' + videoIndex);
+    //   const img = video.querySelector('img.last');
+    //   if (img) {
+    //     img.classList.remove('last');
+    //   }
+
+    //   event.target.classList.add('last');
+    // }
+
+    if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.last');
       if (img) {
         img.classList.remove('last');
       }
-
       event.target.classList.add('last');
     }
+
+
 
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
 
