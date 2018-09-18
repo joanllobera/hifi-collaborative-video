@@ -82,7 +82,7 @@ export class EditorNiceComponent implements OnInit {
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              var dif = each.ts - this.allVideosOk[index-1].ts;
+              const dif = each.ts - this.allVideosOk[index-1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
@@ -97,13 +97,9 @@ export class EditorNiceComponent implements OnInit {
               }, 2000);
             }
 
-
-
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
 
-
             // this.onGetThumbnailsManySync(each.video_id);
-
 
           });
           // console.log('this.delta:::', this.delta);
@@ -165,7 +161,7 @@ export class EditorNiceComponent implements OnInit {
     })
   }
 
-  getThumbInfo(event, videoIndex: number, blobIndex: number): void {
+  getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
 
     const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
 
