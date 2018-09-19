@@ -47,6 +47,22 @@ export class EditorNiceComponent implements OnInit {
     this.getAllVideos(this.session_id);
   }
 
+  getZoomLevel(slider: number) {
+    let zoomLevel;
+    switch(slider) {
+      case 1: zoomLevel = 30;
+      break;
+      case 2: zoomLevel = 10;
+      break;
+      case 3: zoomLevel = 5;
+      break;
+      case 4: zoomLevel = 2;
+      break;
+      case 5: zoomLevel = 1;
+    }
+    return zoomLevel;
+  }
+
   changeZoom(value: number) {
     // this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
@@ -69,7 +85,7 @@ export class EditorNiceComponent implements OnInit {
       console.log('imagesByVideo:::', imagesByVideo);
     });
 
-    this.getAllAreSame(imagesByVideo[0], value);
+    this.getAllAreSame(imagesByVideo[0], this.getZoomLevel(value));
 
 
   }
