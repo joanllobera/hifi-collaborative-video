@@ -142,7 +142,9 @@ export class EditorNiceComponent implements OnInit {
   isFirstItem(array, object) {
     let first: boolean = true;
     array.forEach((each, index) => {
-      if (each.position < object.position && each.id === object.id) first = false;
+      if (each.position < object.position && each.id === object.id) {
+        first = false;
+      }
     })
     return first;
   }
@@ -150,7 +152,9 @@ export class EditorNiceComponent implements OnInit {
   isLastItem(array, object) {
     let last: boolean = true;
     array.forEach((each, index) => {
-      if (each.position > object.position && each.id === object.id) last = false;
+      if (each.position > object.position && each.id === object.id) {
+        last = false;
+      }
     });
     return last;
   }
@@ -174,21 +178,6 @@ export class EditorNiceComponent implements OnInit {
       position: pos
     };
 
-    // console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail));
-    // console.log('isLastItem:::', this.isLastItem(this.videoJson, thumbnail));
-
-    // console.log('-------------------------------------------------------------');
-
-    // check if it is first i-frame
-    // if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-    //   const video = document.querySelector('#test' + videoIndex);
-    //   const img = video.querySelector('img.first');
-    //   if (img) {
-    //     img.classList.remove('first');
-    //   }
-    //   event.target.classList.add('first');
-    // }
-
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.first');
@@ -197,17 +186,6 @@ export class EditorNiceComponent implements OnInit {
       }
       event.target.classList.add('first');
     }
-
-    // check if it is last i-frame
-    // if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-    //   const video = document.querySelector('#test' + videoIndex);
-    //   const img = video.querySelector('img.last');
-    //   if (img) {
-    //     img.classList.remove('last');
-    //   }
-
-    //   event.target.classList.add('last');
-    // }
 
     if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
@@ -333,7 +311,7 @@ export class EditorNiceComponent implements OnInit {
               }
 
               this.listOfLists.push(temp);
-              //console.log('this.listOfLists::::', this.listOfLists);
+              // console.log('this.listOfLists::::', this.listOfLists);
 
           });
 
@@ -354,11 +332,11 @@ export class EditorNiceComponent implements OnInit {
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
-          var a = new_zip.loadAsync(response)
+          const new_zip = new JSZip();
+          const a = new_zip.loadAsync(response)
           .then(
             (zip, index) => {
-              //return zip.files;
+              // return zip.files;
               this.zipList.push(zip.files);
           });
 
@@ -377,7 +355,7 @@ export class EditorNiceComponent implements OnInit {
     this.videoService.buildVideo(this.videoJson, this.session_id)
       .subscribe(
         (response) => {
-          this.createVideoFromBlob(response); //httpClient
+          this.createVideoFromBlob(response); // httpClient
           this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
         }, (error) => {
           console.log(error);
@@ -389,8 +367,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   createVideoFromBlob(video: Blob) {
-     let reader = new FileReader();
-     reader.addEventListener("load", () => {
+     const reader = new FileReader();
+     reader.addEventListener('load', () => {
         this.videoStream = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result);
      }, false);
 
