@@ -49,15 +49,15 @@ export class EditorNiceComponent implements OnInit {
 
   getZoomLevel(slider: number) {
     switch (slider) {
-        case 1: return 30;
+        case slider = 1: return 30;
       break;
-        case 2: return 10;
+        case slider = 2: return 10;
       break;
-        case 3: return 5;
+        case slider = 3: return 5;
       break;
-        case 4: return 2;
+        case slider = 4: return 2;
       break;
-        case 5: return 1;
+        case slider = 5: return 1;
       break;
     }
   }
