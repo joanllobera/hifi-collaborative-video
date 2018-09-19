@@ -19,3 +19,5 @@ venv/*
 package-lock.json
 .vagrant
 venv
+*.retry
+variables.yml

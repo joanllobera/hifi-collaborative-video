@@ -50,6 +50,11 @@ class FileSystemService(object):
             FileSystemService()
         return FileSystemService.__instance
 
+    def wipe_dir_content(self):
+        if os.path.exists(self.directory):
+            shutil.rmtree(self.directory)
+        os.mkdir(self.directory)
+
     def create_session_directory(self, band):
         """
         Creates the directory where all the files of a session will be stored.
@@ -58,6 +63,7 @@ class FileSystemService(object):
         :rtype: str
         :raises: ValueError, if the given parameter is not a valid band name.
         """
+        self.wipe_dir_content()
         LOGGER.info("Creating session directory: [band={}]".format(band))
         if band is None or type(band) != str or not band:
             raise ValueError("Expected a valid band name for the session.")
