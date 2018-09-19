@@ -57,13 +57,12 @@ export class EditorNiceComponent implements OnInit {
     const iframe = document.querySelectorAll('.iframe');
     const videoImages = document.querySelectorAll('.iframe span img');
 
-    // Array.forEach.call(iframe, (each) => {
-    //   console.log('each222::', each);
-    // });
-
     [].forEach.call(iframe, each => {
       console.log('each [][][]::', each);
+    });
 
+    [].forEach.call(videoImages, oneImg => {
+      console.log(oneImg);
     });
 
   }
