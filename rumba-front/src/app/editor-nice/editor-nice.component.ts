@@ -63,7 +63,7 @@ export class EditorNiceComponent implements OnInit {
       console.log('each [][][]::', each);
       const id = each.id;
 
-      const images = document.querySelector(`#${id} img`);
+      const images = document.querySelectorAll(`#${id} img`);
       console.log('images:::', images);
       imagesByVideo.push(images);
       console.log('imagesByVideo:::', imagesByVideo);
