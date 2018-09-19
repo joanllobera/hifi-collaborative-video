@@ -55,7 +55,7 @@ export class EditorNiceComponent implements OnInit {
 
   recoverThumbnails(value: number) {
     const iframe = document.querySelectorAll('.iframe');
-    let videoImages = [];
+    const videoImages = document.querySelectorAll('.iframe span img');
 
     // Array.forEach.call(iframe, (each) => {
     //   console.log('each222::', each);
@@ -63,6 +63,7 @@ export class EditorNiceComponent implements OnInit {
 
     [].forEach.call(iframe, each => {
       console.log('each [][][]::', each);
+
     });
 
   }
