@@ -69,8 +69,21 @@ export class EditorNiceComponent implements OnInit {
       console.log('imagesByVideo:::', imagesByVideo);
     });
 
+    this.getAllAreSame(imagesByVideo[0], value);
+
 
   }
+
+  getAllAreSame(singleArray, zoom: number) {
+    for (let i = 0; i<singleArray.length; i = i + zoom) {
+      for (let j = 0; j < zoom; j++) {
+        console.log(singleArray[i-j]); 
+      }
+
+    }
+  }
+
+
 
   getAllVideos(session_id): void {
     this.listOfLists = [];
