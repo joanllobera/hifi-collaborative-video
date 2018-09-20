@@ -16,6 +16,10 @@ video {
   visibility: hidden;
 }
 
+.orange {
+  border: solid orange 2px;
+}
+
 .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;
   width:80px;
