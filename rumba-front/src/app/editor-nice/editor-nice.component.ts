@@ -83,6 +83,7 @@ export class EditorNiceComponent implements OnInit {
         // console.log(singleArray[i + j]);
         console.log('i:::', i);
         console.log('j:::', j);
+        console.log('i + j:::', i + j);
       }
     }
   }
