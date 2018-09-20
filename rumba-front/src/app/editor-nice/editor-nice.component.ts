@@ -88,13 +88,13 @@ export class EditorNiceComponent implements OnInit {
     //   }
     // }
 
-    for (let i = zoom; i < singleArray.length; i = i + zoom) {
+    for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean;
-      for (let j = zoom; j > 0; j--) {
+      for (let j = 0; j < zoom; j++) {
         console.log('i + j:::', i + j);
         console.log(singleArray[i + j]);
-        console.log(singleArray[i + j].classList.contains('selectedImg'));
+        //console.log(singleArray[i + j].classList.contains('selectedImg'));
       }
     }
   }
