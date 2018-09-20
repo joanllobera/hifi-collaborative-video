@@ -88,6 +88,7 @@ export class EditorNiceComponent implements OnInit {
     //   }
     // }
 
+    
     for (let i = zoom; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean;
