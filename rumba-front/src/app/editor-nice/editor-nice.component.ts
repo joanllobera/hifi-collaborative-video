@@ -80,7 +80,7 @@ export class EditorNiceComponent implements OnInit {
   getAllAreSame(singleArray, zoom: number) {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
-      for (let j = 0; j < zoom - 1; j++) {
+      for (let j = 0; j < zoom; j++) {
         // console.log(singleArray[i + j]);
         console.log('i:::', i);
         console.log('j:::', j);
