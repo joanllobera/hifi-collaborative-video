@@ -83,6 +83,7 @@ export class EditorNiceComponent implements OnInit {
       for (let j = 0; j < zoom; j++) {
         console.log('i + j:::', i + j);
         console.log(singleArray[i + j]);
+        console.log(singleArray[i + j].classList.contains('selectedImg'));
       }
     }
   }
