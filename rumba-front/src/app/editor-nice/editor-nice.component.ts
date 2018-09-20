@@ -67,15 +67,13 @@ export class EditorNiceComponent implements OnInit {
     [].forEach.call(iframe, (each, index) => {
       console.log('each [][][]::', each);
       const id = each.id;
-
       const images = document.querySelectorAll(`#${id} img`);
-      console.log('images:::', images);
       imagesByVideo.push(images);
       console.log('imagesByVideo:::', imagesByVideo);
     });
 
     let modul = this.getZoomLevel(value);
-
+    this.getAllAreSame(imagesByVideo[0], modul);
   }
 
   getAllAreSame(singleArray, zoom: number) {
@@ -83,11 +81,8 @@ export class EditorNiceComponent implements OnInit {
       for (let j = 0; j < zoom - 1; j++) {
         console.log(singleArray[i + j]);
       }
-
     }
   }
-
-
 
   getAllVideos(session_id): void {
     this.listOfLists = [];
