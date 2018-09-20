@@ -48,29 +48,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getZoomLevel(slider: number) {
-    let sliderValue: number = slider;
-    switch (sliderValue) {
-        case sliderValue = 1: {
-          return 30;
-          break;
-        }
-        case sliderValue = 1: {
-          return 10;
-          break;
-        }
-        case sliderValue = 3: {
-          return 5;
-          break;
-        }
-        case sliderValue = 4: {
-          return 2;
-          break;
-        }
-        case sliderValue = 5: {
-          return 1;
-          break;
-        }
-    }
+    let values: number[] = [30, 10, 5, 2, 1];
+    return values[slider];
   }
 
   changeZoom(value: number) {
