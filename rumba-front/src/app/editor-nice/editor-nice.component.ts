@@ -73,7 +73,8 @@ export class EditorNiceComponent implements OnInit {
     });
 
     const modul = this.getZoomLevel(value);
-    this.getAllAreSame(imagesByVideo[0], modul);
+    // this.getAllAreSame(imagesByVideo[0], modul);
+    this.getAllAreSame([4, 5, 6, 87, 4, 32, 21, 3, 4, 5, 6, 7, 7, 8], modul);
   }
 
   getAllAreSame(singleArray, zoom: number) {
