@@ -20,8 +20,8 @@
 server {
 	listen			    8080 ssl;
 	server_name		    localhost;
-	ssl_certificate		"{{ janus_dir }}"/share/janus/certs/mycert.pem;
-	ssl_certificate_key "{{ janus_dir }}"/share/janus/certs/mycert.key;
+	ssl_certificate		{{ janus_dir }}/share/janus/certs/mycert.pem;
+	ssl_certificate_key {{ janus_dir }}/share/janus/certs/mycert.key;
 
 	root "{{ janus_dir }}/share/janus/demos";
 	index index.html index.htm;
