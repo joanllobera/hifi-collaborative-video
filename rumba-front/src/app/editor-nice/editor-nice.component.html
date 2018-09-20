@@ -10,6 +10,19 @@
           <div class="col-9">
               <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
           </div>
+
+          <div class="col-9">
+            <input type="range" list="values" class="form-control left1 slider" name="zoomRange" [value]="initialRange" #zoomRange (change)="changeZoom(zoomRange.value)">
+            <datalist id="values">
+              <option value="30" label="30"></option>
+              <option value="10"></option>
+              <option value="5" label="5"></option>
+              <option value="2"></option>
+              <option value="1" label="1"></option>
+            </datalist>  
+
+          </div>
+
           <div class="col-3">
             <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
             <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
@@ -18,25 +31,6 @@
             <span *ngIf="initialRange == 1" class="badge badge-danger left1"> 30s / Thumb </span>
           </div>
       </div>
-
-      <div class="row">
-        <input type="range" list="tickmarks">
-        <datalist id="tickmarks">
-          <option value="0" label="0%">
-          <option value="10">
-          <option value="20">
-          <option value="30">
-          <option value="40">
-          <option value="50" label="50%">
-          <option value="60">
-          <option value="70">
-          <option value="80">
-          <option value="90">
-          <option value="100" label="100%">
-        </datalist>
-      </div> 
-
-
 
     </div>
     <div class="col-6">
