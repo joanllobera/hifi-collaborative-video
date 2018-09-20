@@ -73,7 +73,7 @@ export class EditorNiceComponent implements OnInit {
     });
 
     const modul = this.getZoomLevel(value);
-    this.getAllAreSame(imagesByVideo[1], modul);
+    this.getAllAreSame(imagesByVideo[0], modul);
     // this.getAllAreSame([4, 5, 6, 87, 4, 32, 21, 3, 4, 5, 6, 7, 7, 8], modul);
   }
 
@@ -82,7 +82,7 @@ export class EditorNiceComponent implements OnInit {
       console.log('currentI', i);
       let isSelected: boolean;
       for (let j = 0; j < zoom; j++) {
-        
+
         console.log('i + j:::', i + j);
         console.log(singleArray[i + j]);
         console.log(singleArray[i + j].classList.contains('selectedImg'));
