@@ -48,8 +48,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getZoomLevel(slider: number) {
-    let values: number[] = [30, 10, 5, 2, 1];
-    return values[slider-1];
+    const values: number[] = [30, 10, 5, 2, 1];
+    return values[slider - 1];
   }
 
   changeZoom(value: number) {
