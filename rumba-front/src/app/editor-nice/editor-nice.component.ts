@@ -52,24 +52,24 @@ export class EditorNiceComponent implements OnInit {
     switch (sliderValue) {
         case sliderValue = 1: {
           return 30;
+          break;
         }
-      break;
         case sliderValue = 1: {
           return 10;
+          break;
         }
-      break;
         case sliderValue = 3: {
           return 5;
+          break;
         }
-      break;
         case sliderValue = 4: {
           return 2;
+          break;
         }
-      break;
         case sliderValue = 5: {
           return 1;
+          break;
         }
-      break;
     }
   }
 
