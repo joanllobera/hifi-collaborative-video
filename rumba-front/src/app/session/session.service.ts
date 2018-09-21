@@ -25,6 +25,9 @@ export class SessionService {
   getSessionById (id: string) {
     return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id);
   }
+  getSession () {
+    return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/active' );
+  }
 
   uploadLogo (id: string, selectedFile: File) {
     const fd = new FormData();

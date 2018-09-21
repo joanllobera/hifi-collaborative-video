@@ -1,8 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RecordService} from '../record.service';
 import * as $ from 'jquery';
 import '../../assets/serverdate/ServerDate.js';
 import {AppConfig} from '../app-config';
+import {TimerObservable} from "rxjs/observable/TimerObservable";
+import {SessionService} from "../session/session.service";
 
 declare var Janus: any;
 declare var ServerDate: any;
@@ -12,25 +14,40 @@ declare var ServerDate: any;
   templateUrl: './camera-back.component.html',
   styleUrls: ['./camera-back.component.css']
 })
-export class CameraBackComponent implements OnInit {
+export class CameraBackComponent implements OnInit, OnDestroy {
 
   isRecording: boolean = false;
   videoPath: any = undefined;
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
-  allowRecording: boolean = true;
+  allowRecording: boolean = false;
   camera_device = undefined;
 
   seconds: any = 0;
   minutes: number = 0;
   counter: string = '00:00';
+  alive: boolean = true;
+  interval: number = 1000;
 
-  constructor(private record: RecordService) {
+  constructor(
+    private record: RecordService,
+    private sessionService: SessionService,
+  ) {
   }
 
   ngOnInit() {
-
+    TimerObservable.create(0, this.interval)
+      .takeWhile(() => this.alive)
+      .subscribe(() => {
+        console.log(':(');
+        this.sessionService.getSession()
+          .subscribe((data) => {
+            if (data.state === "Active") {
+              this.allowRecording = true;
+            }
+          });
+      });
     let iidd = undefined;
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
@@ -52,6 +69,11 @@ export class CameraBackComponent implements OnInit {
         });
       });
 
+
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 
   setCounter() {
