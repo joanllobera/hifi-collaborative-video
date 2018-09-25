@@ -55,6 +55,7 @@ export class EditorNiceComponent implements OnInit {
   changeZoom(value: number) {
     // this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
+    this.removeClass();
     this.recoverThumbnails(value);
   }
 
@@ -74,7 +75,14 @@ export class EditorNiceComponent implements OnInit {
 
     const modul = this.getZoomLevel(value);
     this.getAllAreSame(imagesByVideo[0], modul);
-    // this.getAllAreSame([4, 5, 6, 87, 4, 32, 21, 3, 4, 5, 6, 7, 7, 8], modul);
+    
+  }
+
+  removeClass() {
+    const thumbnails = document.querySelectorAll('.iframe span img');
+    [].forEach.call(thumbnails, (each, index) => {
+      each.classList.remove('orange');
+    });
   }
 
   getAllAreSame(singleArray, zoom: number) {
@@ -102,7 +110,6 @@ export class EditorNiceComponent implements OnInit {
             break;
           }
         }
-
 
       }
     }
