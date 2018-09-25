@@ -47,6 +47,21 @@ export class EditorNiceComponent implements OnInit {
     this.getAllVideos(this.session_id);
   }
 
+  unMarcAll() {
+    const videoImages = document.querySelectorAll('.iframe span img');
+    [].forEach.call(videoImages, (each, index) => {
+      if (each.classList.contains('selectedImg')) {
+        each.classList.remove('selectedImg');
+      }
+      if (each.classList.contains('first')) {
+        each.classList.remove('first');
+      }
+      if (each.classList.contains('last')) {
+        each.classList.remove('last');
+      }
+    });
+  }
+
   getZoomLevel(slider: number) {
     const values: number[] = [30, 10, 5, 2, 1];
     return values[slider - 1];
