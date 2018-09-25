@@ -17,7 +17,7 @@ video {
 }
 
 .orange {
-  border: solid orange 6px;
+  border: solid orangered 6px;
 }
 
 .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
@@ -37,7 +37,7 @@ div.thumb-wrapper {
 }
 
 .selectedImg {
-  opacity: .5;
+  /* opacity: .5; */
   border-top: 6px solid yellow;
   border-bottom: 6px solid yellow;
 }
