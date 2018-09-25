@@ -108,7 +108,7 @@ export class EditorNiceComponent implements OnInit {
 
       this.toasterService.pop(
       'error',
-      `Zoom: <br/>${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
+      `Zoom: ${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
       'Hi ha frames sense cap video assignat'
       );
     }
