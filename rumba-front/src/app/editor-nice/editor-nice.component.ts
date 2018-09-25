@@ -111,7 +111,7 @@ export class EditorNiceComponent implements OnInit {
     if (whiteSpace) {
       this.toasterService.pop(
       'error',
-      `Nivell de zoom ${this.videoZoomValues[this.initialRange - 1]} segons x thumbnail`,
+      `Nivell de zoom: \n${this.videoZoomValues[this.initialRange - 1]} segons x thumbnail`,
       'Hi ha frames sense cap video assignat'
       );
     }
