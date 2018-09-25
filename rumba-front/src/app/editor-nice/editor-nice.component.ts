@@ -105,6 +105,7 @@ export class EditorNiceComponent implements OnInit {
           isSelected = singleArray[i + j].classList.contains('selectedImg');
         } else {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
+            singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
             break;
           }
