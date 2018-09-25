@@ -10,8 +10,6 @@
           <div class="col">
               <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
           </div>
-
-          
       </div>
       <div class="row">
           <div class="col">
@@ -26,10 +24,12 @@
     </div>
     <div class="col-6">
         <div class="row">
-            <div class="col-6">
+            <div class="col">
                 <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-warning right1" (click)="unMarcAll()">Desmarcar Tots</button>
             </div>
-            <div class="col-6">
+          </div>
+          <div class="row">
+            <div class="col">
               <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">Crear Video</button>
             </div> 
         </div>
