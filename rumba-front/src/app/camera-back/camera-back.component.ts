@@ -4,6 +4,7 @@ import '../../assets/serverdate/ServerDate.js';
 import {AppConfig} from '../app-config';
 import {TimerObservable} from "rxjs/observable/TimerObservable";
 import {SessionService} from "../session/session.service";
+import * as RecordRTC from 'recordrtc';
 
 declare var Janus: any;
 declare var ServerDate: any;
@@ -18,16 +19,21 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   isRecording: boolean = false;
   videoPath: any = undefined;
   videoId: string = undefined;
-  @ViewChild('fullVideo') videoElem: ElementRef;
+  @ViewChild('fullVideo') video: ElementRef;
   fullScreen: boolean = false;
   allowRecording: boolean = false;
   camera_device = undefined;
+
+  stream: any;
 
   seconds: any = 0;
   minutes: number = 0;
   counter: string = '00:00';
   alive: boolean = true;
   interval: number = 1000;
+  recordRTC: any;
+  iidd: any;
+  janus: any;
 
   constructor(
     private record: RecordService,
@@ -35,9 +41,31 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  setCameraToVideo() {
+    const constraints = {
+      deviceId: {ideal: this.iidd}
+    };
+    const video = document.getElementById('myvideo');
+    // Get access to the camera!
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({video: constraints}).then(function (stream) {
+      video.srcObject = stream;
+    });
+  }
 
-    this.janus = Janus.init({
+  ngOnInit() {
+    this.iidd = undefined;
+    navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        devices.forEach(function (device) {
+          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+          if (device.kind == "videoinput" && device.label.match('back')) {
+            this.iidd = device.deviceId;
+          }
+        });
+        this.setCameraToVideo()
+      });
+    Janus.init({
       debug: "all", callback: function () {
         // Use a button to start the demo
         // Make sure the browser supports WebRTC
@@ -56,28 +84,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
             }
           });
       });
-    let iidd = undefined;
-    navigator.mediaDevices.enumerateDevices()
-      .then(devices => {
-        devices.forEach(function (device) {
-          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
-          if (device.kind == "videoinput" && device.label.match('back')) {
-            iidd = device.deviceId;
-          }
-        });
-        const constraints = {
-          deviceId: {ideal: iidd}
-        };
-        const video = document.getElementById('myvideo');
-        console.log(video);
-        // Get access to the camera!
-        // Not adding `{ audio: true }` since we only want video now
-        navigator.mediaDevices.getUserMedia({video: constraints}).then(function (stream) {
-          video.srcObject = stream;
-        });
-      });
-
-
   }
 
   ngOnDestroy() {
@@ -130,7 +136,45 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   checkButton() {
   }
 
+
+  successCallback(stream: MediaStream) {
+
+    var options = {
+      mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
+      audioBitsPerSecond: 128000,
+      videoBitsPerSecond: 128000,
+      bitsPerSecond: 128000 // if this line is provided, skip above two
+    };
+    this.stream = stream;
+    this.recordRTC = RecordRTC(stream, options);
+    this.recordRTC.startRecording();
+    const video = document.getElementById('myvideo');
+    video.src = window.URL.createObjectURL(stream);
+    // this.toggleControls();
+  }
+
+  errorCallback(error) {
+    console.log(error)
+  }
+
   startRecording() {
+    let mediaConstraints = {
+      video: {
+        mandatory: {
+          minWidth: 1280,
+          minHeight: 720,
+        },
+        deviceId: {ideal: this.iidd}
+      }, audio: true
+
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(
+        this.successCallback.bind(this),
+        this.errorCallback.bind(this)
+      );
+
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
@@ -144,8 +188,37 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     this.isRecording = !this.isRecording;
   }
 
+  processVideo(audioVideoWebMURL) {
+    // let video: HTMLVideoElement = this.video.nativeElement;
+    // let recordRTC = this.recordRTC;
+    // video.src = audioVideoWebMURL;
+    // this.toggleControls();
+    // var recordedBlob = recordRTC.getBlob();
+    // recordRTC.getDataURL(function (dataURL) {});
+    this.download();
+    this.setCameraToVideo();
+  }
+
+  toggleControls() {
+    let video: HTMLVideoElement = this.video.nativeElement;
+    video.muted = !video.muted;
+    video.controls = !video.controls;
+    video.autoplay = !video.autoplay;
+  }
+
+  download() {
+    this.recordRTC.save('video.webm');
+  }
+
   stopRecording() {
     console.log("STOP RECORDING");
+
+    let recordRTC = this.recordRTC;
+    recordRTC.stopRecording(this.processVideo.bind(this));
+    let stream = this.stream;
+    stream.getAudioTracks().forEach(track => track.stop());
+    stream.getVideoTracks().forEach(track => track.stop());
+
     this.janus.destroy();
     this.record.stopRecordingVideo(this.videoId)
       .subscribe(
