@@ -92,9 +92,6 @@ export class EditorNiceComponent implements OnInit {
         if (i + j === singleArray.length) {
           break;
         }
-
-        // console.log('i + j:::', i + j);
-        // console.log(singleArray[i + j]);
         if (j === 0) {
           isSelected = singleArray[i + j].classList.contains('selectedImg');
         } else {
@@ -105,13 +102,13 @@ export class EditorNiceComponent implements OnInit {
             break;
           }
         }
-
       }
     }
     if (whiteSpace) {
+
       this.toasterService.pop(
       'error',
-      `Nivell de zoom: \n${this.videoZoomValues[this.initialRange - 1]} segons x thumbnail`,
+      `Zoom: <br/>${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
       'Hi ha frames sense cap video assignat'
       );
     }
@@ -183,7 +180,7 @@ export class EditorNiceComponent implements OnInit {
   isNotFirst(array, object) {
     return array.some( (each, index) => {
       return each.position < object.position && each.id === object.id;
-    })
+    });
   }
 
   isFirstItem(array, object) {
@@ -192,7 +189,7 @@ export class EditorNiceComponent implements OnInit {
       if (each.position < object.position && each.id === object.id) {
         first = false;
       }
-    })
+    });
     return first;
   }
 
@@ -242,8 +239,6 @@ export class EditorNiceComponent implements OnInit {
       }
       event.target.classList.add('last');
     }
-
-
 
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
 
