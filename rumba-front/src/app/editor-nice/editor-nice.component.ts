@@ -102,7 +102,6 @@ export class EditorNiceComponent implements OnInit {
           break;
         }
 
-
         console.log('i + j:::', i + j);
         // console.log(singleArray[i + j]);
         if (j === 0) {
@@ -127,7 +126,7 @@ export class EditorNiceComponent implements OnInit {
           // console.log(response);
           this.allVideos = response;
           this.allVideosOk = this.allVideos.filter(function (each, index) {
-            return each.ts > 0
+            return each.ts > 0;
           });
 
           this.allVideosOk.forEach((each, index) => {
