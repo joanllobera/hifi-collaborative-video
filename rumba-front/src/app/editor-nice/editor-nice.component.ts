@@ -110,6 +110,7 @@ export class EditorNiceComponent implements OnInit {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
             // singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
+            this.toasterService.pop('error', 'Frames en blanc', 'Hi ha frames sense cap video assignat');
             break;
           }
         }
@@ -333,11 +334,11 @@ export class EditorNiceComponent implements OnInit {
 
 
   onGetThumbnailsMany(id:string): void {
-    var temp = [];
+    let temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
+          let new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
