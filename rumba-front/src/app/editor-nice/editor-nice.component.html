@@ -7,17 +7,20 @@
   <div class="row top1">
     <div class="col-6">
       <div class="row">
-          <div class="col-9">
+          <div class="col">
               <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
           </div>
 
-          <div class="col-3">
-            <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
-            <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
-            <span *ngIf="initialRange == 3" class="badge badge-danger left1"> 5s / Thumb </span>
-            <span *ngIf="initialRange == 2" class="badge badge-danger left1"> 10s / Thumb </span>
-            <span *ngIf="initialRange == 1" class="badge badge-danger left1"> 30s / Thumb </span>
-          </div>
+          
+      </div>
+      <div class="row">
+          <div class="col">
+              <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
+              <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
+              <span *ngIf="initialRange == 3" class="badge badge-danger left1"> 5s / Thumb </span>
+              <span *ngIf="initialRange == 2" class="badge badge-danger left1"> 10s / Thumb </span>
+              <span *ngIf="initialRange == 1" class="badge badge-danger left1"> 30s / Thumb </span>
+            </div>
       </div>
 
     </div>
