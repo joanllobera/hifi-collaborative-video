@@ -84,7 +84,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
-
+    let whiteSpace: boolan = false;
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
@@ -101,13 +101,17 @@ export class EditorNiceComponent implements OnInit {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
             // singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
-            this.toasterService.pop('error', 'Frames en blanc', 'Hi ha frames sense cap video assignat');
+            whiteSpace = true;
             break;
           }
         }
 
       }
     }
+    if (whiteSpace) {
+      this.toasterService.pop('error', 'Frames en blanc', 'Hi ha frames sense cap video assignat');
+    }
+
   }
 
   getAllVideos(session_id): void {
