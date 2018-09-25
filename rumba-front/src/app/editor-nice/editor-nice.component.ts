@@ -84,6 +84,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
+
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
@@ -92,7 +93,7 @@ export class EditorNiceComponent implements OnInit {
           break;
         }
 
-        console.log('i + j:::', i + j);
+        // console.log('i + j:::', i + j);
         // console.log(singleArray[i + j]);
         if (j === 0) {
           isSelected = singleArray[i + j].classList.contains('selectedImg');
