@@ -53,9 +53,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    // this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
-    this.removeClass();
+    //this.removeClass();
     this.recoverThumbnails(value);
   }
 
