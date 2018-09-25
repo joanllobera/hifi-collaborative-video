@@ -20,7 +20,7 @@ video {
   border: solid #ff4500 6px;
   border-top: 6px solid #ff4500 !important;
   border-bottom: 6px solid #ff4500 !important;
-  }
+}
 
 .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;

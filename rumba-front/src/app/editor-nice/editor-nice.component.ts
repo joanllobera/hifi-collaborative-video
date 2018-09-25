@@ -63,7 +63,6 @@ export class EditorNiceComponent implements OnInit {
     const videoImages = document.querySelectorAll('.iframe span img');
     const numVideos = iframe.length;
     const imagesByVideo = [];
-
     [].forEach.call(iframe, (each, index) => {
       console.log('each [][][]::', each);
       const id = each.id;
@@ -71,7 +70,6 @@ export class EditorNiceComponent implements OnInit {
       imagesByVideo.push(images);
       console.log('imagesByVideo:::', imagesByVideo);
     });
-
     const modul = this.getZoomLevel(value);
     this.getAllAreSame(imagesByVideo[0], modul);
   }
@@ -105,14 +103,12 @@ export class EditorNiceComponent implements OnInit {
       }
     }
     if (whiteSpace) {
-
       this.toasterService.pop(
       'error',
       `Zoom: ${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
       'Hi ha frames sense cap video assignat'
       );
     }
-
   }
 
   getAllVideos(session_id): void {
@@ -206,22 +202,17 @@ export class EditorNiceComponent implements OnInit {
   isNotLast(array, object) {
     return array.some( (each, index) => {
       return each.position > object.position && each.id == object.id;
-    })
+    });
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
-
     const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-
     const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
-
-
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
       position: pos
     };
-
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.first');
@@ -230,7 +221,6 @@ export class EditorNiceComponent implements OnInit {
       }
       event.target.classList.add('first');
     }
-
     if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.last');
@@ -239,9 +229,7 @@ export class EditorNiceComponent implements OnInit {
       }
       event.target.classList.add('last');
     }
-
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
-
     if (this.duplicates(this.videoJson, thumbnail)) {
       // remove duplicates
       const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
@@ -250,10 +238,7 @@ export class EditorNiceComponent implements OnInit {
     } else {
       this.videoJson.push(thumbnail);
     }
-
-
     console.log('videoJson length:::', this.videoJson.length);
-
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
@@ -262,22 +247,18 @@ export class EditorNiceComponent implements OnInit {
     if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('first');
     }
-
     const video = document.querySelector('#test' + videoIndex);
     const img = video.querySelector('img.selectedImg');
     if (img) {
       img.classList.add('first');
     }
-
     if (event.target.classList.contains('last') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('last');
     }
-
     const imgLast = video.querySelectorAll('img.selectedImg');
     if (imgLast.length > 0) {
       imgLast[imgLast.length-1].classList.add('last');
     }
-
   }
 
   onGetThumbnails(id:string): void {
@@ -285,82 +266,70 @@ export class EditorNiceComponent implements OnInit {
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
+          const new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-
-              let zipFiles = zip.files;
+              const zipFiles = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
                 ordered[key] = zipFiles[key];
               });
-
-
-              for (var prop in ordered) {
-                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
-                let reader = new FileReader();
-                reader.addEventListener("load", () => {
-                  if (reader.result != "") {
-                    this.singleList.push(reader.result);
-                  }
-                }, false);
+              for (const prop in ordered) {
+                if (ordered.hasOwnProperty(prop)) {
+                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+                  const reader = new FileReader();
+                  reader.addEventListener('load', () => {
+                    if (reader.result !== '') {
+                      this.singleList.push(reader.result);
+                    }
+                  }, false);
                   if (blob) {
                     reader.readAsDataURL(blob);
                   }
-                  }
-              });
-
-          // download zip file
+                }
+              }
+            });
+          // download zip file. Do not remove.
           // let fileName = "QCPReport.zip";
           // FileSaver.saveAs(response, fileName);
-
         },
         (error) => {
           console.log('error::::', error);
         }
       );
-
   }
 
-
   onGetThumbnailsMany(id:string): void {
-    let temp = [];
+    const temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          let new_zip = new JSZip();
+          const new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-              let zipFiles = zip.files;
+              const zipFiles: any = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
                 ordered[key] = zipFiles[key];
               });
-
-              for (var prop in ordered) {
-                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
-                let reader = new FileReader();
-                reader.addEventListener("load", () => {
-                  if (reader.result != "") {
-                    temp.push(reader.result);
+              for (const prop in ordered) {
+                if (ordered.hasOwnProperty(prop)) {
+                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+                  const reader = new FileReader();
+                  reader.addEventListener('load', () => {
+                    if (reader.result !== '') {
+                      temp.push(reader.result);
+                    }
+                  }, false);
+                  if (blob) {
+                    reader.readAsDataURL(blob);
                   }
-                }, false);
-                if (blob) {
-                   reader.readAsDataURL(blob);
                 }
               }
-
               this.listOfLists.push(temp);
-              // console.log('this.listOfLists::::', this.listOfLists);
-
           });
-
-          // download zip file
-          // let fileName = "QCPReport.zip";
-          // FileSaver.saveAs(response, fileName);
-
         },
         (error) => {
           console.log('error::::', error);
@@ -368,9 +337,7 @@ export class EditorNiceComponent implements OnInit {
       );
   }
 
-
   onGetThumbnailsManySync(id:string): void {
-
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
@@ -381,17 +348,13 @@ export class EditorNiceComponent implements OnInit {
               // return zip.files;
               this.zipList.push(zip.files);
           });
-
           // console.log('zip.files::::::::', a);
-
         },
         (error) => {
           // console.log('error::::', error);
         }
       );
-
   }
-
 
   sendVideoToServer() {
     this.videoService.buildVideo(this.videoJson, this.session_id)
@@ -413,14 +376,9 @@ export class EditorNiceComponent implements OnInit {
      reader.addEventListener('load', () => {
         this.videoStream = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result);
      }, false);
-
      if (video) {
         reader.readAsDataURL(video);
      }
   }
-
-
-
-
 
 }
