@@ -17,6 +17,8 @@ video {
 }
 
 .orange {
+  border-top: 6px solid orangered;
+  border-bottom: 6px solid orangered;
   border: solid orangered 6px;
 }
 
@@ -26,10 +28,6 @@ video {
   height: 80px;
   transition: opacity .3s;
   cursor:pointer;
-}
-
-div.thumb-wrapper {
-  /* background-color: red; */
 }
 
 .absolute {
