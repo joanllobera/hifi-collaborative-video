@@ -109,7 +109,7 @@ export class EditorNiceComponent implements OnInit {
       }
     }
     if (whiteSpace) {
-      this.toasterService.pop('error', 'Frames en blanc', 'Hi ha frames sense cap video assignat');
+      this.toasterService.pop('error', `Nivell de zoom ${this.initialRange}`, 'Hi ha frames sense cap video assignat');
     }
 
   }
@@ -142,11 +142,8 @@ export class EditorNiceComponent implements OnInit {
                 this.onGetThumbnailsMany(each.video_id);
               }, 2000);
             }
-
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
-
             // this.onGetThumbnailsManySync(each.video_id);
-
           });
           // console.log('this.delta:::', this.delta);
         }
