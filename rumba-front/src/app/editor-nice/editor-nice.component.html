@@ -12,7 +12,7 @@
           </div>
       </div>
       <div class="row">
-          <div class="col">
+          <div class="col top1">
               <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
               <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
               <span *ngIf="initialRange == 3" class="badge badge-danger left1"> 5s / Thumb </span>
@@ -25,12 +25,12 @@
     <div class="col-6">
         <div class="row">
             <div class="col">
-                <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-warning right1" (click)="unMarcAll()">Desmarcar Tots</button>
+                <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-warning float-right right1" (click)="unMarcAll()">Desmarcar Tots</button>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">Crear Video</button>
+              <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1 top1" (click)="sendVideoToServer()">Crear Video</button>
             </div> 
         </div>
     </div>   
