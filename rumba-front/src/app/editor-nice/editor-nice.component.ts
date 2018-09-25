@@ -54,7 +54,7 @@ export class EditorNiceComponent implements OnInit {
 
   changeZoom(value: number) {
     this.initialRange = value;
-    //this.removeClass();
+    this.removeClass('orange');
     this.recoverThumbnails(value);
   }
 
@@ -62,7 +62,7 @@ export class EditorNiceComponent implements OnInit {
     const iframe = document.querySelectorAll('.iframe');
     const videoImages = document.querySelectorAll('.iframe span img');
     const numVideos = iframe.length;
-    let imagesByVideo = [];
+    const imagesByVideo = [];
 
     [].forEach.call(iframe, (each, index) => {
       console.log('each [][][]::', each);
@@ -74,13 +74,12 @@ export class EditorNiceComponent implements OnInit {
 
     const modul = this.getZoomLevel(value);
     this.getAllAreSame(imagesByVideo[0], modul);
-    
   }
 
-  removeClass() {
+  removeClass(className) {
     const thumbnails = document.querySelectorAll('.iframe span img');
     [].forEach.call(thumbnails, (each, index) => {
-      each.classList.remove('orange');
+      each.classList.remove(className);
     });
   }
 
