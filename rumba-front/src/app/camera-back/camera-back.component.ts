@@ -61,8 +61,8 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     this.iidd = undefined;
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
-        this.setCameraID(devices[0]);
-        devices.forEach(function (device) {
+        this.setCameraID(devices[0].deviceId);
+        devices.forEach((device) => {
           console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
           if (device.kind == "videoinput" && device.label.match('back')) {
             this.setCameraID(device.deviceId);
