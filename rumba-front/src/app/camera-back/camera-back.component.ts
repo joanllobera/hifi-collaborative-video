@@ -154,8 +154,9 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     navigator.mediaDevices
       .getUserMedia(mediaConstraints)
       .then(
-        this.successCallback.bind(this),
-        this.errorCallback.bind(this)
+        // this.successCallback.bind(this),
+        // this.errorCallback.bind(this),
+        this.successCallback.call(this)
       );
 
     this.record.startRecordingVideo()
