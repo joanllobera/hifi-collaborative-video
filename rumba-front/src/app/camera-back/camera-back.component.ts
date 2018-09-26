@@ -306,6 +306,18 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       Janus.debug("Trying a createOffer too (audio/video sendrecv)");
       var replaceAudio = false;
       var replaceVideo = true;
+      this.iidd = undefined;
+      navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+        this.setCameraID(devices[0].deviceId);
+        devices.forEach((device) => {
+          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+          if (device.kind == "videoinput" && device.label.match('back')) {
+            this.setCameraID(device.deviceId);
+          }
+        });
+        this.setCameraToVideo()
+      });
       echotest.createOffer(
         {
           // We provide a specific device ID for both audio and video
