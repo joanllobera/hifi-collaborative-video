@@ -49,7 +49,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     // Get access to the camera!
     // Not adding `{ audio: true }` since we only want video now
     navigator.mediaDevices.getUserMedia({video: constraints}).then(function (stream) {
-      video.srcObject = stream;
+      video['srcObject'] = stream;
     });
   }
 
@@ -79,7 +79,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.sessionService.getSession()
           .subscribe((data) => {
-            if (data.state === "Active") {
+            if (data['state'] === "Active") {
               this.allowRecording = true;
             }
           });
@@ -149,7 +149,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
     const video = document.getElementById('myvideo');
-    video.src = window.URL.createObjectURL(stream);
+    video['src'] = window.URL.createObjectURL(stream);
     // this.toggleControls();
   }
 
