@@ -47,7 +47,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     const video = document.getElementById('myvideo');
     // Get access to the camera!
     // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({video: constraints}).then(function (stream) {
+    navigator.mediaDevices.getUserMedia({video: constraints}).then( (stream) => {
       video['srcObject'] = stream;
     });
   }
