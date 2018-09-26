@@ -141,46 +141,26 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   startRecording() {
-    // let mediaConstraints = {
-    //   video: {
-    //     mandatory: {
-    //       minWidth: 1280,
-    //       minHeight: 720,
-    //     },
-    //     deviceId: {ideal: this.iidd}
-    //   }, audio: true
+    let mediaConstraints = {
+      video: {
+        mandatory: {
+          minWidth: 1280,
+          minHeight: 720,
+        },
+        deviceId: {ideal: this.iidd}
+      }, audio: true
 
-    // };
-    // navigator.mediaDevices
-    //   .getUserMedia(mediaConstraints)
-    //   .then(
-    //     this.successCallback.bind(this),
-    //     this.errorCallback.bind(this)
-    //   );
+    };
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(
+        this.successCallback.bind(this),
+        this.errorCallback.bind(this)
+      );
 
     this.record.startRecordingVideo()
       .subscribe(
         (response) => {
-
-          let mediaConstraints = {
-            video: {
-              mandatory: {
-                minWidth: 1280,
-                minHeight: 720,
-              },
-              deviceId: {ideal: this.iidd}
-            }, audio: true
-          };
-          navigator.mediaDevices
-            .getUserMedia(mediaConstraints)
-            .then(
-              this.successCallback.bind(this),
-              this.errorCallback.bind(this)
-            );
-
-
-
-
           console.log(response);
           this.videoPath = response['video_path'];
           this.videoId = response['id'];
