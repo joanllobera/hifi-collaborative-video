@@ -120,7 +120,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
 
-  function successCallback(stream: MediaStream) {
+  successCallback(stream: MediaStream) {
 
     var options = {
       mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
@@ -154,7 +154,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     navigator.mediaDevices
       .getUserMedia(mediaConstraints)
       .then(
-        successCallback.bind(this),
+        this.successCallback.bind(this),
         this.errorCallback.bind(this)
       );
 
