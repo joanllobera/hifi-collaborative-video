@@ -16,6 +16,12 @@ video {
   visibility: hidden;
 }
 
+.orange {
+  border: solid #ff4500 6px;
+  border-top: 6px solid #ff4500 !important;
+  border-bottom: 6px solid #ff4500 !important;
+}
+
 .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;
   width:80px;
@@ -24,26 +30,22 @@ video {
   cursor:pointer;
 }
 
-div.thumb-wrapper {
-  /* background-color: red; */
-}
-
 .absolute {
   position:absolute;
 }
 
 .selectedImg {
-  opacity: .5;
-  border-top: 6px solid yellow;
-  border-bottom: 6px solid yellow;
+  /* opacity: .5; */
+  border-top: 6px solid #ffff00;
+  border-bottom: 6px solid #ffff00;
 }
 
 .first {
-  border-left: 6px solid yellow;
+  border-left: 6px solid #ffff00;
 }
 
 .last {
-  border-right: 6px solid yellow;
+  border-right: 6px solid #ffff00;
 }
 
 .oneVideo {

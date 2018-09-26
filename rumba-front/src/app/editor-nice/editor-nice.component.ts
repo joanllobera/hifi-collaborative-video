@@ -30,7 +30,6 @@ export class EditorNiceComponent implements OnInit {
 
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
 
-  @ViewChild('videoList') videoList: ElementRef;
   @ViewChild('iframe') iframe: ElementRef;
 
   constructor(
@@ -48,9 +47,83 @@ export class EditorNiceComponent implements OnInit {
     this.getAllVideos(this.session_id);
   }
 
+  unMarcAll() {
+    const videoImages = document.querySelectorAll('.iframe span img');
+    [].forEach.call(videoImages, (each, index) => {
+      if (each.classList.contains('selectedImg')) {
+        each.classList.remove('selectedImg');
+      }
+      if (each.classList.contains('first')) {
+        each.classList.remove('first');
+      }
+      if (each.classList.contains('last')) {
+        each.classList.remove('last');
+      }
+    });
+  }
+
+  getZoomLevel(slider: number) {
+    const values: number[] = [30, 10, 5, 2, 1];
+    return values[slider - 1];
+  }
+
   changeZoom(value: number) {
-    //this.videoSrv.rangeValue.next(value);
     this.initialRange = value;
+    this.removeClass('orange');
+    this.recoverThumbnails(value);
+  }
+
+  recoverThumbnails(value: number) {
+    const iframe = document.querySelectorAll('.iframe');
+    const videoImages = document.querySelectorAll('.iframe span img');
+    const numVideos = iframe.length;
+    const imagesByVideo = [];
+    [].forEach.call(iframe, (each, index) => {
+      console.log('each [][][]::', each);
+      const id = each.id;
+      const images = document.querySelectorAll(`#${id} img`);
+      imagesByVideo.push(images);
+      console.log('imagesByVideo:::', imagesByVideo);
+    });
+    const modul = this.getZoomLevel(value);
+    this.getAllAreSame(imagesByVideo[0], modul);
+  }
+
+  removeClass(className) {
+    const thumbnails = document.querySelectorAll('.iframe span img');
+    [].forEach.call(thumbnails, (each, index) => {
+      each.classList.remove(className);
+    });
+  }
+
+  getAllAreSame(singleArray, zoom: number) {
+    let whiteSpace: boolean = false;
+    for (let i = 0; i < singleArray.length; i = i + zoom) {
+      console.log('currentI', i);
+      let isSelected: boolean = null;
+      for (let j = 0; j < zoom; j++) {
+        if (i + j === singleArray.length) {
+          break;
+        }
+        if (j === 0) {
+          isSelected = singleArray[i + j].classList.contains('selectedImg');
+        } else {
+          if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
+            // singleArray[i].classList.remove('selectedImg');
+            singleArray[i].classList.add('orange');
+            whiteSpace = true;
+            break;
+          }
+        }
+      }
+    }
+    if (whiteSpace) {
+      this.toasterService.pop(
+      'error',
+      `Zoom: ${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
+      'Hi ha frames sense cap video assignat'
+      );
+    }
   }
 
   getAllVideos(session_id): void {
@@ -61,13 +134,13 @@ export class EditorNiceComponent implements OnInit {
           // console.log(response);
           this.allVideos = response;
           this.allVideosOk = this.allVideos.filter(function (each, index) {
-            return each.ts > 0
+            return each.ts > 0;
           });
 
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              var dif = each.ts - this.allVideosOk[index-1].ts;
+              const dif = each.ts - this.allVideosOk[index-1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
@@ -81,15 +154,8 @@ export class EditorNiceComponent implements OnInit {
                 this.onGetThumbnailsMany(each.video_id);
               }, 2000);
             }
-
-
-
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
-
-
-            //this.onGetThumbnailsManySync(each.video_id);
-
-
+            // this.onGetThumbnailsManySync(each.video_id);
           });
           // console.log('this.delta:::', this.delta);
         }
@@ -99,7 +165,11 @@ export class EditorNiceComponent implements OnInit {
   duplicates(arr, obj): boolean {
     return arr.some(function (each, index) {
       return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
-    })
+    });
+  }
+
+  isInArray(arr, obj): boolean {
+    return arr.includes(obj);
   }
 
   getDuplicatedObject(arr, obj): object[] {
@@ -109,7 +179,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getDuplicateIndex(arr, obj): number {
-    var _index = null;
+    let _index = null;
     arr.forEach(function(each, index){
       if (each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position){
         _index = index;
@@ -121,21 +191,25 @@ export class EditorNiceComponent implements OnInit {
   isNotFirst(array, object) {
     return array.some( (each, index) => {
       return each.position < object.position && each.id === object.id;
-    })
+    });
   }
 
   isFirstItem(array, object) {
     let first: boolean = true;
     array.forEach((each, index) => {
-      if (each.position < object.position && each.id === object.id) first = false;
-    })
+      if (each.position < object.position && each.id === object.id) {
+        first = false;
+      }
+    });
     return first;
   }
 
   isLastItem(array, object) {
     let last: boolean = true;
     array.forEach((each, index) => {
-      if (each.position > object.position && each.id === object.id) last = false;
+      if (each.position > object.position && each.id === object.id) {
+        last = false;
+      }
     });
     return last;
   }
@@ -143,57 +217,43 @@ export class EditorNiceComponent implements OnInit {
   isNotLast(array, object) {
     return array.some( (each, index) => {
       return each.position > object.position && each.id == object.id;
-    })
+    });
   }
 
-  getThumbInfo(event, videoIndex: number, blobIndex: number): void {
-
-    let pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-    // console.log("event['clientX']:::", event['clientX']);
-    // console.log("pos:::", pos);
-
-    let thumbnail = {
+  getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
+    const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+    const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+    const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
       position: pos
     };
-
-    console.log('isFirstItem:::', this.isFirstItem(this.videoJson, thumbnail))
-    console.log('isLastItem:::', this.isLastItem(this.videoJson, thumbnail))
-
-    console.log('-------------------------------------------------------------');
-
-    console.log('isNotFirst:::', this.isNotFirst(this.videoJson, thumbnail));
-
-    //check if it is first i-frame
-    if (!this.isNotFirst(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-      let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.first');
-      if (img) img.classList.remove('first');
-
+    if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+      const video = document.querySelector('#test' + videoIndex);
+      const img = video.querySelector('img.first');
+      if (img) {
+        img.classList.remove('first');
+      }
       event.target.classList.add('first');
     }
-
-    console.log('isNotLast:::', this.isNotLast(this.videoJson, thumbnail));
-
-    //check if it is last i-frame
-    if (!this.isNotLast(this.videoJson, thumbnail) || this.videoJson.length === 0) {
-      let video = document.querySelector('#test' + videoIndex);
-      let img = video.querySelector('img.last');
-      if (img) img.classList.remove('last');
-
+    if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
+      const video = document.querySelector('#test' + videoIndex);
+      const img = video.querySelector('img.last');
+      if (img) {
+        img.classList.remove('last');
+      }
       event.target.classList.add('last');
     }
-
+    console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
     if (this.duplicates(this.videoJson, thumbnail)) {
-      //remove duplicates
-      let removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
-      let index = this.getDuplicateIndex(this.videoJson, removeme[0]);
+      // remove duplicates
+      const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
+      const index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
       this.videoJson.push(thumbnail);
     }
-    console.log(this.videoJson);
+    console.log('videoJson length:::', this.videoJson.length);
   }
 
   onSelectFrame(event, videoIndex: number, blobIndex: number): void {
@@ -202,18 +262,18 @@ export class EditorNiceComponent implements OnInit {
     if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('first');
     }
-
-    let video = document.querySelector('#test' + videoIndex);
-    let img = video.querySelector('img.selectedImg');
-    if (img) img.classList.add('first');
-
+    const video = document.querySelector('#test' + videoIndex);
+    const img = video.querySelector('img.selectedImg');
+    if (img) {
+      img.classList.add('first');
+    }
     if (event.target.classList.contains('last') && !event.target.classList.contains('selectedImg')) {
       event.target.classList.remove('last');
     }
-
-    let imgLast = video.querySelectorAll('img.selectedImg');
-    if (imgLast.length > 0) imgLast[imgLast.length-1].classList.add('last');
-
+    const imgLast = video.querySelectorAll('img.selectedImg');
+    if (imgLast.length > 0) {
+      imgLast[imgLast.length-1].classList.add('last');
+    }
   }
 
   onGetThumbnails(id:string): void {
@@ -221,82 +281,70 @@ export class EditorNiceComponent implements OnInit {
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
+          const new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-
-              let zipFiles = zip.files;
+              const zipFiles = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
                 ordered[key] = zipFiles[key];
               });
-
-
-              for (var prop in ordered) {
-                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
-                let reader = new FileReader();
-                reader.addEventListener("load", () => {
-                  if (reader.result != "") {
-                    this.singleList.push(reader.result);
+              for (const prop in ordered) {
+                if (ordered.hasOwnProperty(prop)) {
+                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+                  const reader = new FileReader();
+                  reader.addEventListener('load', () => {
+                    if (reader.result !== '') {
+                      this.singleList.push(reader.result);
+                    }
+                  }, false);
+                  if (blob) {
+                    reader.readAsDataURL(blob);
                   }
-                }, false);
-                if (blob) {
-                   reader.readAsDataURL(blob);
                 }
               }
-          });
-
-          // download zip file
+            });
+          // download zip file. Do not remove.
           // let fileName = "QCPReport.zip";
           // FileSaver.saveAs(response, fileName);
-
         },
         (error) => {
           console.log('error::::', error);
         }
       );
-
   }
-
 
   onGetThumbnailsMany(id:string): void {
-    var temp = [];
+    const temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
+          const new_zip = new JSZip();
           new_zip.loadAsync(response)
           .then(
             (zip) => {
-              let zipFiles = zip.files;
+              const zipFiles: any = zip.files;
               const ordered = {};
               Object.keys(zipFiles).sort().forEach(function(key) {
                 ordered[key] = zipFiles[key];
               });
-
-              for (var prop in ordered) {
-                let blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: "image/jpeg" } );
-                let reader = new FileReader();
-                reader.addEventListener("load", () => {
-                  if (reader.result != "") {
-                    temp.push(reader.result);
+              for (const prop in ordered) {
+                if (ordered.hasOwnProperty(prop)) {
+                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+                  const reader = new FileReader();
+                  reader.addEventListener('load', () => {
+                    if (reader.result !== '') {
+                      temp.push(reader.result);
+                    }
+                  }, false);
+                  if (blob) {
+                    reader.readAsDataURL(blob);
                   }
-                }, false);
-                if (blob) {
-                   reader.readAsDataURL(blob);
                 }
               }
-
               this.listOfLists.push(temp);
-              //console.log('this.listOfLists::::', this.listOfLists);
-
           });
-
-          // download zip file
-          // let fileName = "QCPReport.zip";
-          // FileSaver.saveAs(response, fileName);
-
         },
         (error) => {
           console.log('error::::', error);
@@ -304,36 +352,30 @@ export class EditorNiceComponent implements OnInit {
       );
   }
 
-
   onGetThumbnailsManySync(id:string): void {
-
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
         (response) => {
-          var new_zip = new JSZip();
-          var a = new_zip.loadAsync(response)
+          const new_zip = new JSZip();
+          const a = new_zip.loadAsync(response)
           .then(
             (zip, index) => {
-              //return zip.files;
+              // return zip.files;
               this.zipList.push(zip.files);
           });
-
           // console.log('zip.files::::::::', a);
-
         },
         (error) => {
           // console.log('error::::', error);
         }
       );
-
   }
-
 
   sendVideoToServer() {
     this.videoService.buildVideo(this.videoJson, this.session_id)
       .subscribe(
         (response) => {
-          this.createVideoFromBlob(response); //httpClient
+          this.createVideoFromBlob(response); // httpClient
           this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
         }, (error) => {
           console.log(error);
@@ -345,18 +387,13 @@ export class EditorNiceComponent implements OnInit {
   }
 
   createVideoFromBlob(video: Blob) {
-     let reader = new FileReader();
-     reader.addEventListener("load", () => {
+     const reader = new FileReader();
+     reader.addEventListener('load', () => {
         this.videoStream = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result);
      }, false);
-
      if (video) {
         reader.readAsDataURL(video);
      }
   }
-
-
-
-
 
 }
