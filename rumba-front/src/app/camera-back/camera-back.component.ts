@@ -306,19 +306,17 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       Janus.debug("Trying a createOffer too (audio/video sendrecv)");
       var replaceAudio = false;
       var replaceVideo = true;
-      this.iidd = undefined;
+      var iidd = undefined;
       navigator.mediaDevices.enumerateDevices()
       .then(devices => {
         this.setCameraID(devices[0].deviceId);
         devices.forEach((device) => {
           console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
           if (device.kind == "videoinput" && device.label.match('back')) {
-            this.setCameraID(device.deviceId);
+            iidd = device.deviceId;
           }
         });
-        this.setCameraToVideo()
-      });
-      echotest.createOffer(
+       echotest.createOffer(
         {
           // We provide a specific device ID for both audio and video
           media: {
@@ -326,7 +324,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
             replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
             video: {
               deviceId: {
-                exact: this.iidd
+                exact: iidd
               }
             },
             replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
@@ -346,6 +344,8 @@ export class CameraBackComponent implements OnInit, OnDestroy {
             // Janus.error("WebRTC error:", error);
           }
         });
+      });
+
     }
 
     console.log("starting janus session")
