@@ -53,14 +53,19 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     });
   }
 
+  setCameraID(id){
+    this.iidd = id;
+  }
+
   ngOnInit() {
     this.iidd = undefined;
     navigator.mediaDevices.enumerateDevices()
       .then(devices => {
+        this.setCameraID(devices[0]);
         devices.forEach(function (device) {
           console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
           if (device.kind == "videoinput" && device.label.match('back')) {
-            this.iidd = device.deviceId;
+            this.setCameraID(device.deviceId);
           }
         });
         this.setCameraToVideo()
@@ -285,18 +290,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     }
 
     function restartCapture(deviceList) {
-      var iidd = undefined;
-      if (deviceList.length > 1) {
-        deviceList.forEach(function (each) {
-          if (each.label.match('back')) {
-            iidd = each.deviceId;
-          }
-        });
 
-        // iidd = deviceList[1].deviceId;
-      } else {
-        iidd = deviceList[0].deviceId;
-      }
       // Starting ServerDate synchronization on attachment success
       var n_reqs = 30;
       var timedelta = 0;
@@ -320,7 +314,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
             replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
             video: {
               deviceId: {
-                exact: iidd
+                exact: this.iidd
               }
             },
             replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
