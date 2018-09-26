@@ -60,6 +60,8 @@ export class EditorNiceComponent implements OnInit {
         each.classList.remove('last');
       }
     });
+    this.videoJson = [];
+
   }
 
   getZoomLevel(slider: number) {
