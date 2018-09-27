@@ -42,10 +42,12 @@ img.selectedImg {
 
 .first {
   border-left: 6px solid #ffff00;
+  border-radius: 5px 0 0 10px;
 }
 
 .last {
   border-right: 6px solid #ffff00;
+  border-radius: 5px 0 0 10px;
 }
 
 .oneVideo {
