@@ -8,6 +8,7 @@ import { VideosServiceService } from '../videos-service.service';
 import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-editor-nice',
@@ -59,6 +60,7 @@ export class EditorNiceComponent implements OnInit {
       if (each.classList.contains('last')) {
         each.classList.remove('last');
       }
+
     });
     this.videoJson = [];
 
@@ -88,8 +90,17 @@ export class EditorNiceComponent implements OnInit {
       console.log('imagesByVideo:::', imagesByVideo);
     });
     const modul = this.getZoomLevel(value);
-    this.getAllAreSame(imagesByVideo[0], modul);
+
+    // this.getAllAreSame(imagesByVideo[0], modul);
+    this.iterateAllNodeLists(imagesByVideo, modul);
   }
+
+  iterateAllNodeLists(nodeLists, modul) {
+    nodeLists.forEach(currentItem => {
+      this.getAllAreSame(currentItem, modul);
+    });
+  }
+
 
   removeClass(className) {
     const thumbnails = document.querySelectorAll('.iframe span img');
