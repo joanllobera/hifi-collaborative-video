@@ -135,9 +135,9 @@ export class EditorNiceComponent implements OnInit {
     }
     if (whiteSpace) {
       this.toasterService.pop(
-      'error',
-      `Zoom: ${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
-      'Hi ha frames sense cap video assignat'
+      'warning',
+      `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
+      'Hi ha frames sense video en aquest nivell de zoom'
       );
     }
   }
