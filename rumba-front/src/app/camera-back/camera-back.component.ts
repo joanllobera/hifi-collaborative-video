@@ -156,7 +156,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     let mediaConstraints2 = {
       video: {
         deviceId: {ideal: this.iidd}
-      }, audio: true
+      }, audio: false
     };
 
     let mediaConstraints3 = {
