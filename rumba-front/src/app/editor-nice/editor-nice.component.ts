@@ -60,6 +60,9 @@ export class EditorNiceComponent implements OnInit {
       if (each.classList.contains('last')) {
         each.classList.remove('last');
       }
+      if (each.classList.contains('orange')) {
+        each.classList.remove('orange');
+      }
 
     });
     this.videoJson = [];
