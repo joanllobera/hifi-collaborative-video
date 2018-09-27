@@ -30,6 +30,8 @@ export class EditorNiceComponent implements OnInit {
   zipList: any[] =  [];
 
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
+  whiteSpace: boolean = false;
+
 
   @ViewChild('iframe') iframe: ElementRef;
 
@@ -102,6 +104,13 @@ export class EditorNiceComponent implements OnInit {
     nodeLists.forEach(currentItem => {
       this.getAllAreSame(currentItem, modul);
     });
+    if (this.whiteSpace) {
+      this.toasterService.pop(
+      'warning',
+      `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
+      'Hi ha frames sense video en aquest nivell de zoom'
+      );
+    }
   }
 
 
@@ -113,7 +122,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
-    let whiteSpace: boolean = false;
+    //let whiteSpace: boolean = false;
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
@@ -127,19 +136,20 @@ export class EditorNiceComponent implements OnInit {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
             // singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
-            whiteSpace = true;
+            // whiteSpace = true;
+            this.whiteSpace = true;
             break;
           }
         }
       }
     }
-    if (whiteSpace) {
-      this.toasterService.pop(
-      'warning',
-      `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
-      'Hi ha frames sense video en aquest nivell de zoom'
-      );
-    }
+    // if (whiteSpace) {
+    //   this.toasterService.pop(
+    //   'warning',
+    //   `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
+    //   'Hi ha frames sense video en aquest nivell de zoom'
+    //   );
+    // }
   }
 
   getAllVideos(session_id): void {
