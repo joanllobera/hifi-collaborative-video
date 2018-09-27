@@ -141,6 +141,8 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   startRecording() {
+    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+    console.log('supportedConstraints', supportedConstraints);
     let mediaConstraints = {
       video: {
         mandatory: {
@@ -149,7 +151,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
         },
         deviceId: {ideal: this.iidd}
       }, audio: true
-
     };
     navigator.mediaDevices
       .getUserMedia(mediaConstraints)
