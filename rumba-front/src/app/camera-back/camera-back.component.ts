@@ -161,8 +161,8 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
     let mediaConstraints3 = {
       video: {
-        minWidth: 1280,
-        minHeight: 720,
+        width: 1920,
+        height: 1080,
         deviceId: {ideal: this.iidd}
       }, audio: true
     };
