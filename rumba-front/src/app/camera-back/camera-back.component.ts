@@ -28,7 +28,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
   seconds: any = 0;
   minutes: number = 0;
-  counter: string = '00:00';
   alive: boolean = true;
   interval: number = 1000;
   recordRTC: any;
@@ -48,7 +47,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     const video = document.getElementById('myvideo');
     // Get access to the camera!
     // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({video: constraints}).then(function (stream) {
+    navigator.mediaDevices.getUserMedia({video: constraints}).then( (stream) => {
       video['srcObject'] = stream;
     });
   }
@@ -93,27 +92,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-  }
-
-  setCounter() {
-    setInterval(() => {
-      this.seconds += 1;
-      if (this.seconds > 59) {
-        this.minutes += 1;
-        this.seconds = 0;
-      }
-
-      if (this.seconds < 10 && this.minutes < 10) {
-        this.counter = '0' + this.minutes + ':0' + this.seconds;
-      } else if (this.minutes < 10) {
-        this.counter = '0' + this.minutes + ':' + this.seconds;
-      } else if (this.seconds < 10) {
-        this.counter = this.minutes + ':0' + this.seconds;
-      } else {
-        this.counter = this.minutes + ':' + this.seconds;
-      }
-
-    }, 1000)
   }
 
   toggleFullScreen() {
@@ -163,6 +141,8 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   startRecording() {
+    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+    console.log('supportedConstraints', supportedConstraints);
     let mediaConstraints = {
       video: {
         mandatory: {
@@ -171,10 +151,24 @@ export class CameraBackComponent implements OnInit, OnDestroy {
         },
         deviceId: {ideal: this.iidd}
       }, audio: true
-
     };
+
+    let mediaConstraints2 = {
+      video: {
+        deviceId: {ideal: this.iidd}
+      }, audio: true
+    };
+
+    let mediaConstraints3 = {
+      video: {
+        width: 1920,
+        height: 1080,
+        deviceId: {ideal: this.iidd}
+      }, audio: true
+    };
+
     navigator.mediaDevices
-      .getUserMedia(mediaConstraints)
+      .getUserMedia(mediaConstraints3)
       .then(
         this.successCallback.bind(this),
         this.errorCallback.bind(this)
@@ -187,7 +181,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
           this.videoPath = response['video_path'];
           this.videoId = response['id'];
           this.configureJanus(this.videoPath);
-          this.setCounter();
         }
       );
     this.isRecording = !this.isRecording;
