@@ -121,7 +121,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
 
   successCallback(stream: MediaStream) {
-
     var options = {
       mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
       audioBitsPerSecond: 128000,
@@ -141,8 +140,9 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   startRecording() {
-    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-    console.log('supportedConstraints', supportedConstraints);
+    // const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+    // console.log('supportedConstraints', supportedConstraints)
+    
     let mediaConstraints = {
       video: {
         mandatory: {
@@ -164,7 +164,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
         width: 1920,
         height: 1080,
         deviceId: {ideal: this.iidd}
-      }, audio: true
+      }, audio: false
     };
 
     navigator.mediaDevices
