@@ -80,12 +80,13 @@ class VideoEditor(object):
         if session['state'] != SessionStatus.FINISHED.value:
             raise IllegalResourceState("Only finished sessions can be edited.")
         edition_id = self.__generate_random_uuid__()
+
         edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info,
-                                                            edition_id=edition_id)
+                                                            edition_id=edition_id, video_path=video_path)
         # video_path = self.__create_video__(edit_info_filename)
         # final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path,
         #                                                   edit_info=edit_info, edition_id=edition_id)
-        return final_video_path
+        return edit_info_filename
 
     def merge_user_video(self, video_id):
         """
@@ -200,7 +201,7 @@ class VideoEditor(object):
             LOGGER.exception("Error validating user input - ")
             raise ex
 
-    def __prepare_video_edition__(self, session_id, edit_info, edition_id, video_path):
+    def __prepare_video_edition__(self, session_id, edit_info, edition_id):
         """
         Given the information provided by the editor to mount a video, this method builds the
         text file that will serve as input to mount the video.
