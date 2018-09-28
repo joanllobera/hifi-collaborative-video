@@ -96,7 +96,7 @@ class VideoEditorHelper(object):
                                                                             end_ts=end_ts)
                 prev_ts = end_ts
             video_slices.append(video_slice)
-        return video_slices
+        return video_slices, video['id']
 
     @staticmethod
     def save_edit_info_to_file(session_path, video_slices, edition_id):

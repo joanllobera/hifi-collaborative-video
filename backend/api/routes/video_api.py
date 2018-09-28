@@ -104,8 +104,8 @@ def stop_video(video_id):
         LOGGER.exception("Request for stopping a video finished with errors.")
         raise Conflict(ir)
 
-@VIDEO_API.route("/<path>/mixed")
-def download_mixed_video(path):
+@VIDEO_API.route("/<video_id>/mixed")
+def download_mixed_video(video_id):
     """
     HTTP endpoint for downloading a video recorded by the user, which has been mixed with
     the audio of the session.
@@ -118,7 +118,7 @@ def download_mixed_video(path):
     """
     LOGGER.info("Received request for downloading mixed video.")
     try:
-        # video_path = VideoManager.get_instance().get_mixed_video_path(video_id)
+        path = VideoManager.get_instance().get_mixed_video_path(video_id)
         # return None, 204
         return send_file(path, mimetype="video/mp4"), 202
     except ValueError as ve:

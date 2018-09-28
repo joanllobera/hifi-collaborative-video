@@ -217,7 +217,7 @@ class VideoEditor(object):
             session = RumbaSession.objects(id=session_id).first()
             if session is None:
                 raise NotExistingResource("This session does not exist.")
-            video_slices = VideoEditorHelper.create_videoslices_info(edit_info)
+            video_slices, video_id = VideoEditorHelper.create_videoslices_info(edit_info)
             edit_info_filename = VideoEditorHelper.save_edit_info_to_file(
                 session_path=session["folder_url"], video_slices=video_slices, edition_id=edition_id)
 
@@ -225,7 +225,7 @@ class VideoEditor(object):
             thread = VideoEditorThread(edition_info_file=edit_info_filename, output_file=output_file)
             thread.start()
             output_file = "{}/video-{}.mp4".format(session['folder_url'], edition_id)
-            return output_file
+            return video_id
         except Exception as ex:
             LOGGER.exception("Error preparing video edition - ")
             raise ex
