@@ -95,9 +95,14 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
+    if (value < this.initialRange) {
+      console.log('zoom in...');
+      this.recoverThumbnails(value);
+    }
+
     this.initialRange = value;
     this.removeClass('orange');
-    this.recoverThumbnails(value);
+
   }
 
   recoverThumbnails(value: number) {
@@ -420,7 +425,7 @@ export class EditorNiceComponent implements OnInit {
       this.toasterService.pop('info', 'Crear Video', 'No hi ha cap thumbnail sel·leccionat.');
       return;
     }
-    alert('aaaa');
+
     this.videoService.buildVideo(this.videoJson, this.session_id)
       .subscribe(
         (response) => {
