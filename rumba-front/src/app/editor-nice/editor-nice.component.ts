@@ -8,7 +8,7 @@ import { VideosServiceService } from '../videos-service.service';
 import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
-import { forEach } from '@angular/router/src/utils/collection';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Component({
   selector: 'app-editor-nice',
@@ -32,6 +32,9 @@ export class EditorNiceComponent implements OnInit {
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
   whiteSpace: boolean = false;
 
+  pollInterval: number = 5000;
+  activePoll: boolean = true;
+  sendVideo: boolean = true;
 
   @ViewChild('iframe') iframe: ElementRef;
 
@@ -48,9 +51,24 @@ export class EditorNiceComponent implements OnInit {
 
   ngOnInit() {
     this.getAllVideos(this.session_id);
+    // this.startPolling();
+  }
+
+  startPolling() {
+    TimerObservable.create(0, this.pollInterval)
+      .takeWhile(() => this.activePoll)
+      .subscribe(() => {
+        // alert('EDITOR POLLING');
+
+        // this.sessionService.getVideoWhenReady()
+        //   .subscribe((data) => {
+        //
+        //   });
+      });
   }
 
   unMarcAll() {
+
     const videoImages = document.querySelectorAll('.iframe span img');
     [].forEach.call(videoImages, (each, index) => {
       if (each.classList.contains('selectedImg')) {
@@ -122,7 +140,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
-    //let whiteSpace: boolean = false;
+    // let whiteSpace: boolean = false;
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
@@ -398,6 +416,11 @@ export class EditorNiceComponent implements OnInit {
   }
 
   sendVideoToServer() {
+    if (this.videoJson.length === 0) {
+      this.toasterService.pop('info', 'Crear Video', 'No hi ha cap thumbnail sel·leccionat.');
+      return;
+    }
+    alert('aaaa');
     this.videoService.buildVideo(this.videoJson, this.session_id)
       .subscribe(
         (response) => {

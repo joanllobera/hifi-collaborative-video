@@ -30,7 +30,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1 top1" (click)="sendVideoToServer()">Crear Video</button>
+              <button [disabled]="!sendVideo" type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1 top1" (click)="sendVideoToServer()">Crear Video</button>
             </div> 
         </div>
     </div>   
