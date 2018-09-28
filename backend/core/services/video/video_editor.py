@@ -1,12 +1,9 @@
-
-
 import uuid
 
 from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.helpers.data_transformer import DataTransformer
 from core.helpers.loggers import LoggerHelper
 from core.helpers.validators import GenericValidator, VideoValidator
-
 from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
 from core.model.session_status import SessionStatus
@@ -83,11 +80,12 @@ class VideoEditor(object):
         if session['state'] != SessionStatus.FINISHED.value:
             raise IllegalResourceState("Only finished sessions can be edited.")
         edition_id = self.__generate_random_uuid__()
-        edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info, edition_id=edition_id)
-        video_path = self.__create_video__(edit_info_filename)
-        final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path, edit_info=edit_info, edition_id=edition_id)
+        edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info,
+                                                            edition_id=edition_id)
+        # video_path = self.__create_video__(edit_info_filename)
+        # final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path,
+        #                                                   edit_info=edit_info, edition_id=edition_id)
         return final_video_path
-
 
     def merge_user_video(self, video_id):
         """
@@ -122,7 +120,6 @@ class VideoEditor(object):
             raise Exception("Error merging user video with audio. FFmpeg command failed.")
         video.update(set__mixed=True)
         video.update(set__mixed_video_path=output_file)
-
 
     def __merge_audio_and_video__(self, session_id, video_path, edit_info, edition_id):
         """
@@ -168,10 +165,13 @@ class VideoEditor(object):
         audio_path = "{}/audio.wav".format(session['folder_url'])
         video_init_ts = VideoEditorHelper.get_first_video_ts(edit_info=edit_info)
         audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
-        audio_init_offset = VideoEditorHelper.calculate_audio_init_offset(audio_init_ts=audio_init_ts, video_init_ts=video_init_ts)
+        audio_init_offset = VideoEditorHelper.calculate_audio_init_offset(audio_init_ts=audio_init_ts,
+                                                                          video_init_ts=video_init_ts)
         ffmpeg_audio_init_offset = DataTransformer.transform_seconds_to_ffmpeg_offset(float(audio_init_offset))
         audio_init_ts = AudioManager.get_instance().get_audio_init_ts(session_id=session_id)
-        audio_end_offset = VideoEditorHelper.calculate_audio_end_offset(audio_init_ts=audio_init_ts, edit_info=edit_info, audio_init_offset=audio_init_offset)
+        audio_end_offset = VideoEditorHelper.calculate_audio_end_offset(audio_init_ts=audio_init_ts,
+                                                                        edit_info=edit_info,
+                                                                        audio_init_offset=audio_init_offset)
         audio_output = "{}/audio-{}.wav".format(session['folder_url'], uuid.uuid4().hex)
         audio_thread = AudioSplitterThread(inputFile=audio_path, outputFile=audio_output,
                                            initial_offset=ffmpeg_audio_init_offset, end_offset=audio_end_offset)
@@ -200,7 +200,7 @@ class VideoEditor(object):
             LOGGER.exception("Error validating user input - ")
             raise ex
 
-    def __prepare_video_edition__(self, session_id, edit_info, edition_id):
+    def __prepare_video_edition__(self, session_id, edit_info, edition_id, video_path):
         """
         Given the information provided by the editor to mount a video, this method builds the
         text file that will serve as input to mount the video.
@@ -218,7 +218,12 @@ class VideoEditor(object):
             video_slices = VideoEditorHelper.create_videoslices_info(edit_info)
             edit_info_filename = VideoEditorHelper.save_edit_info_to_file(
                 session_path=session["folder_url"], video_slices=video_slices, edition_id=edition_id)
-            return edit_info_filename
+
+            output_file = edit_info_filename.split(".")[0] + ".mp4"
+            thread = VideoEditorThread(edition_info_file=edit_info_filename, output_file=output_file)
+            thread.start()
+            output_file = "{}/video-{}.mp4".format(session['folder_url'], edition_id)
+            return output_file
         except Exception as ex:
             LOGGER.exception("Error preparing video edition - ")
             raise ex

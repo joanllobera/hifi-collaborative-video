@@ -1,4 +1,5 @@
 from flask import Blueprint, request, send_file
+from flask.json import jsonify
 from werkzeug.exceptions import BadRequest, NotFound, Conflict
 
 from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
@@ -74,7 +75,8 @@ def build_video(session_id):
     try:
         edit_info = request.get_json(force=True)
         path = VideoEditor.get_instance().edit_video(session_id=session_id, edit_info=edit_info)
-        return send_file(path, mimetype='video/mp4'), 201
+        # return send_file(path, mimetype='video/mp4'), 202
+        return jsonify({"path": path}), 202
     except ValueError as ve:
         LOGGER.exception("Request for editing video finished with errors - ")
         raise BadRequest(ve)
