@@ -79,8 +79,11 @@ export class VideosServiceService {
         );
   }
 
-  getVideoWhenReady() {
-
+  getVideoIsReady(video_id: string) {
+    return this.httpClient
+      .get(
+        AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + video_id + '/mixed', { observe: 'body', responseType: 'blob' }
+        );
   }
 
 }

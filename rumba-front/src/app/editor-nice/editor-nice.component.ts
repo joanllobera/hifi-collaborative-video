@@ -443,6 +443,23 @@ export class EditorNiceComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log(response);
+
+            TimerObservable.create(0, this.pollInterval)
+            .takeWhile(() => this.activePoll)
+            .subscribe(() => {
+              this.videoService.getVideoIsReady('videoId')
+                .subscribe(
+                  (response) => {
+                    if (response.status === 200) {
+                      this.createVideoFromBlob(response); // httpClient
+                      this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                      this.activePoll = false;
+                    }
+                  }
+                );
+            });
+
+
           }, (error) => {
             if (error.status === 409) {
               this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
