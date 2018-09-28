@@ -35,6 +35,8 @@ export class EditorNiceComponent implements OnInit {
   pollInterval: number = 5000;
   activePoll: boolean = true;
   sendVideo: boolean = true;
+  videoId: string = undefined;
+
 
   @ViewChild('iframe') iframe: ElementRef;
 
@@ -443,11 +445,12 @@ export class EditorNiceComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log(response);
+            this.videoId = response.videoId;
             this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
             TimerObservable.create(0, this.pollInterval)
             .takeWhile(() => this.activePoll)
             .subscribe(() => {
-              this.videoService.getVideoIsReady('videoId')
+              this.videoService.getVideoIsReady(this.videoId)
                 .subscribe(
                   (response) => {
                     if (response.status === 200) {
@@ -458,7 +461,6 @@ export class EditorNiceComponent implements OnInit {
                   }
                 );
             });
-
 
           }, (error) => {
             if (error.status === 409) {
