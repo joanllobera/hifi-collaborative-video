@@ -75,7 +75,7 @@ def build_video(session_id):
     try:
         edit_info = request.get_json(force=True)
         path = VideoEditor.get_instance().edit_video(session_id=session_id, edit_info=edit_info)
-        LOGGER.info("video accepted")
+        LOGGER.debug("video accepted")
         # return send_file(path, mimetype='video/mp4'), 202
         return jsonify({"path": path}), 202
     except ValueError as ve:
