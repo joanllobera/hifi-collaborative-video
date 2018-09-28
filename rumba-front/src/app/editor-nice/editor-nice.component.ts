@@ -8,6 +8,7 @@ import { VideosServiceService } from '../videos-service.service';
 import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-editor-nice',
@@ -29,6 +30,8 @@ export class EditorNiceComponent implements OnInit {
   zipList: any[] =  [];
 
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
+  whiteSpace: boolean = false;
+
 
   @ViewChild('iframe') iframe: ElementRef;
 
@@ -59,6 +62,10 @@ export class EditorNiceComponent implements OnInit {
       if (each.classList.contains('last')) {
         each.classList.remove('last');
       }
+      if (each.classList.contains('orange')) {
+        each.classList.remove('orange');
+      }
+
     });
     this.videoJson = [];
 
@@ -88,8 +95,24 @@ export class EditorNiceComponent implements OnInit {
       console.log('imagesByVideo:::', imagesByVideo);
     });
     const modul = this.getZoomLevel(value);
-    this.getAllAreSame(imagesByVideo[0], modul);
+
+    // this.getAllAreSame(imagesByVideo[0], modul);
+    this.iterateAllNodeLists(imagesByVideo, modul);
   }
+
+  iterateAllNodeLists(nodeLists, modul) {
+    nodeLists.forEach(currentItem => {
+      this.getAllAreSame(currentItem, modul);
+    });
+    if (this.whiteSpace) {
+      this.toasterService.pop(
+      'warning',
+      `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
+      'Hi ha frames sense video en aquest nivell de zoom'
+      );
+    }
+  }
+
 
   removeClass(className) {
     const thumbnails = document.querySelectorAll('.iframe span img');
@@ -99,7 +122,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
-    let whiteSpace: boolean = false;
+    //let whiteSpace: boolean = false;
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
@@ -113,19 +136,20 @@ export class EditorNiceComponent implements OnInit {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
             // singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
-            whiteSpace = true;
+            // whiteSpace = true;
+            this.whiteSpace = true;
             break;
           }
         }
       }
     }
-    if (whiteSpace) {
-      this.toasterService.pop(
-      'error',
-      `Zoom: ${this.videoZoomValues[this.initialRange - 1]} seg x thumbnail`,
-      'Hi ha frames sense cap video assignat'
-      );
-    }
+    // if (whiteSpace) {
+    //   this.toasterService.pop(
+    //   'warning',
+    //   `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
+    //   'Hi ha frames sense video en aquest nivell de zoom'
+    //   );
+    // }
   }
 
   getAllVideos(session_id): void {

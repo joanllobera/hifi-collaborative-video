@@ -156,7 +156,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     let mediaConstraints2 = {
       video: {
         deviceId: {ideal: this.iidd}
-      }, audio: true
+      }, audio: false
     };
 
     let mediaConstraints3 = {
@@ -168,7 +168,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     };
 
     navigator.mediaDevices
-      .getUserMedia(mediaConstraints3)
+      .getUserMedia(mediaConstraints2)
       .then(
         this.successCallback.bind(this),
         this.errorCallback.bind(this)
