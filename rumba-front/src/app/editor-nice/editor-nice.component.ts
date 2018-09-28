@@ -426,18 +426,32 @@ export class EditorNiceComponent implements OnInit {
       return;
     }
 
-    this.videoService.buildVideo(this.videoJson, this.session_id)
-      .subscribe(
-        (response) => {
-          this.createVideoFromBlob(response); // httpClient
-          this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
-        }, (error) => {
-          console.log(error);
-           if (error.status === 409) {
-             this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
-           }
-        }
-      );
+    // this.videoService.buildVideo(this.videoJson, this.session_id)
+    //   .subscribe(
+    //     (response) => {
+    //       this.createVideoFromBlob(response); // httpClient
+    //       this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+    //     }, (error) => {
+    //       console.log(error);
+    //        if (error.status === 409) {
+    //          this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
+    //        }
+    //     }
+    //   );
+
+      this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
+        .subscribe(
+          (response) => {
+            console.log(response);
+          }, (error) => {
+            if (error.status === 409) {
+              this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
+            }
+          }
+        );
+
+
+
   }
 
   createVideoFromBlob(video: Blob) {

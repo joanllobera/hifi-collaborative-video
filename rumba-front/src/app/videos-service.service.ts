@@ -54,6 +54,12 @@ export class VideosServiceService {
     //  { responseType: ResponseContentType.Blob });
   }
 
+  sendVideoToBuild(json, session_id) {
+    return this.httpClient.post(
+      AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + session_id + '/build', json, {observe: 'body', responseType: 'json'}
+      );
+  }
+
   getRecordedVideos() {
     return this.httpClient
       .get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video', {observe: 'body', responseType: 'json'});
