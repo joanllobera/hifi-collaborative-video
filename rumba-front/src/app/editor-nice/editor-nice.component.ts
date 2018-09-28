@@ -445,12 +445,12 @@ export class EditorNiceComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log(response);
-            this.videoId = response.path;
+            this.videoId = response.videoID;
             this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
             TimerObservable.create(0, this.pollInterval)
             .takeWhile(() => this.activePoll)
             .subscribe(() => {
-              this.videoService.getVideoIsReady('815f39fbcb6f4572bb1eeb2db3bfdd94')
+              this.videoService.getVideoIsReady(this.videoId)
                 .subscribe(
                   (response) => {
                     if (response.status === 200) {
