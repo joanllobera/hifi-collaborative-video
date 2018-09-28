@@ -443,7 +443,7 @@ export class EditorNiceComponent implements OnInit {
         .subscribe(
           (response) => {
             console.log(response);
-
+            this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
             TimerObservable.create(0, this.pollInterval)
             .takeWhile(() => this.activePoll)
             .subscribe(() => {
