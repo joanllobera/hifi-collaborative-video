@@ -56,7 +56,7 @@ export class VideosServiceService {
 
   sendVideoToBuild(json, session_id) {
     return this.httpClient.post(
-      AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + session_id + '/build', json, {observe: 'body', responseType: 'json'}
+      AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + session_id + '/build', json, {observe: 'body', responseType: 'json'}
       );
   }
 
