@@ -80,14 +80,12 @@ class VideoEditor(object):
         if session['state'] != SessionStatus.FINISHED.value:
             raise IllegalResourceState("Only finished sessions can be edited.")
         edition_id = self.__generate_random_uuid__()
-
         edit_info_filename = self.__prepare_video_edition__(session_id=session_id, edit_info=edit_info,
                                                             edition_id=edition_id)
-
         # video_path = self.__create_video__(edit_info_filename)
         # final_video_path = self.__merge_audio_and_video__(session_id=session_id, video_path=video_path,
         #                                                   edit_info=edit_info, edition_id=edition_id)
-        return edit_info_filename
+        return edition_id
 
     def merge_user_video(self, video_id):
         """
