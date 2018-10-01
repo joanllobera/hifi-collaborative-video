@@ -10,6 +10,7 @@ import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-editor-nice',
@@ -17,6 +18,8 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./editor-nice.component.css']
 })
 export class EditorNiceComponent implements OnInit {
+
+  //keepPolling = new Subject<boolean>();
 
   initialRange: number = 5;
   singleList: string[] = [];
@@ -37,6 +40,7 @@ export class EditorNiceComponent implements OnInit {
   activePoll: boolean = true;
   sendVideo: boolean = true;
   videoId: string = undefined;
+
 
 
   @ViewChild('iframe') iframe: ElementRef;
@@ -463,10 +467,10 @@ export class EditorNiceComponent implements OnInit {
             .subscribe(() => {
               this.videoService.getVideoIsReady(this.videoId)
                 .subscribe(
-                  (response: HttpResponse<Object>) => {
+                  (response) => {
                     if (response['status'] === 200) {
                       console.log('Video retrieved');
-                      this.createVideoFromBlob(response); // httpClient
+                      this.createVideoFromBlob(response['body']); // httpClient
                       this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
                       this.activePoll = false;
                     } else {
