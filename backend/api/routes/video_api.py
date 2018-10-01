@@ -120,7 +120,7 @@ def download_mixed_video(video_id):
     try:
         # path = VideoManager.get_instance().get_mixed_video_path(video_id)
         session = RumbaSession.objects.order_by('-id')[0]
-        output_file = "/var/rumba/sessions/{}/edited-video-{}.mp4".format(session['band'], video_id)
+        output_file = "/var/rumba/sessions/{}/_edited-video-{}.mp4".format(session['band'], video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 200
     except ValueError as ve:

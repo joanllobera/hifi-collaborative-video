@@ -1,6 +1,9 @@
+import re
 import subprocess
 from threading import Thread
+from time import sleep
 
+import os
 from core.helpers.loggers import LoggerHelper
 
 LOGGER = LoggerHelper.get_logger("video_editor", "video_editor.log")
@@ -25,7 +28,13 @@ class AudioVideoMixerThread(Thread):
         print("AudioVideoMixerThread: Executing command: {}".format(self.command))
         LOGGER.info("AudioVideoMixerThread: Mixing audio and video.")
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-        process.wait(timeout=60)
+        state = process.pull()
+        while state is None:
+            sleep(10)
+            state.pull()
         self.code = process.returncode
+        re.su
+        move = re.sub(r'edited', '_edited', self.output_file)
+        os.rename(self.output_file, move)
         LOGGER.info("AudioVideoMixerThread: Ffmpeg command finished with following code: {}".format
                     (self.code))
