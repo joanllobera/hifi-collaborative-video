@@ -121,8 +121,11 @@ export class EditorNiceComponent implements OnInit {
     });
     const modul = this.getZoomLevel(value);
 
-    // this.getAllAreSame(imagesByVideo[0], modul);
-    this.iterateAllNodeLists(imagesByVideo, modul);
+    if (value < this.initialRange) {
+      this.iterateAllNodeLists(imagesByVideo, modul);
+    } else {
+      this.selectUncollapsedIframes(imagesByVideo, modul);
+    }
   }
 
   iterateAllNodeLists(nodeLists, modul) {
@@ -138,18 +141,24 @@ export class EditorNiceComponent implements OnInit {
     }
   }
 
+  selectUncollapsedIframes(singleArray, zoom: number) {
+    // let whiteSpace: boolean = false;
+    for (let i = 0; i < singleArray.length; i = i + zoom) {
+      console.log('currentI', i);
 
-  removeClass(className) {
-    const thumbnails = document.querySelectorAll('.iframe span img');
-    [].forEach.call(thumbnails, (each, index) => {
-      each.classList.remove(className);
-    });
+      for (let j = 0; j < zoom; j++) {
+        if (i + j === singleArray.length) {
+          break;
+        }
+        console.log('currrent i + j', singleArray[i + j]);
+      }
+    }
   }
 
   getAllAreSame(singleArray, zoom: number) {
     // let whiteSpace: boolean = false;
     for (let i = 0; i < singleArray.length; i = i + zoom) {
-      console.log('currentI', i);
+      // console.log('currentI', i);
       let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
         if (i + j === singleArray.length) {
@@ -175,6 +184,13 @@ export class EditorNiceComponent implements OnInit {
     //   'Hi ha frames sense video en aquest nivell de zoom'
     //   );
     // }
+  }
+
+  removeClass(className) {
+    const thumbnails = document.querySelectorAll('.iframe span img');
+    [].forEach.call(thumbnails, (each, index) => {
+      each.classList.remove(className);
+    });
   }
 
   getAllVideos(session_id): void {
@@ -427,7 +443,6 @@ export class EditorNiceComponent implements OnInit {
       this.toasterService.pop('info', 'Crear Video', 'No hi ha cap thumbnail sel·leccionat.');
       return;
     }
-
     // this.videoService.buildVideo(this.videoJson, this.session_id)
     //   .subscribe(
     //     (response) => {
@@ -441,33 +456,33 @@ export class EditorNiceComponent implements OnInit {
     //     }
     //   );
 
-      this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
-        .subscribe(
-          (response) => {
-            console.log(response);
-            this.videoId = response.videoID;
-            this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
-            TimerObservable.create(0, this.pollInterval)
-            .takeWhile(() => this.activePoll)
-            .subscribe(() => {
-              this.videoService.getVideoIsReady(this.videoId)
-                .subscribe(
-                  (response) => {
-                    if (response.status === 200) {
-                      this.createVideoFromBlob(response); // httpClient
-                      this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
-                      this.activePoll = false;
-                    }
+    this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.videoId = response.videoID;
+          this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+          TimerObservable.create(0, this.pollInterval)
+          .takeWhile(() => this.activePoll)
+          .subscribe(() => {
+            this.videoService.getVideoIsReady(this.videoId)
+              .subscribe(
+                (response) => {
+                  if (response.status === 200) {
+                    this.createVideoFromBlob(response); // httpClient
+                    this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                    this.activePoll = false;
                   }
-                );
-            });
+                }
+              );
+          });
 
-          }, (error) => {
-            if (error.status === 409) {
-              this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
-            }
+        }, (error) => {
+          if (error.status === 409) {
+            this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
           }
-        );
+        }
+      );
 
 
 
