@@ -118,7 +118,7 @@ def download_mixed_video(video_id):
     """
     LOGGER.info("Received request for downloading mixed video.")
     try:
-        path = VideoManager.get_instance().get_mixed_video_path(video_id)
+        # path = VideoManager.get_instance().get_mixed_video_path(video_id)
         output_file = "{}/video-{}.mp4".format(session['folder_url'], video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 20
