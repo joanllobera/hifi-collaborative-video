@@ -67,7 +67,7 @@ class VideoEditorThread(Thread):
         return audio_output
 
     def run(self):
-        LOGGER.info("VideoEditorThread: Cutting and concataniting video slices.")
+        LOGGER.info("VideoEditorThread: Cutting and concataniting video slices. {}".format(self.command))
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
         state = process.poll()
         while state is None:
