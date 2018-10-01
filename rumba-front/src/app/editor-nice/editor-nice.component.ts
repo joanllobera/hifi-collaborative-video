@@ -453,7 +453,7 @@ export class EditorNiceComponent implements OnInit {
               this.videoService.getVideoIsReady(this.videoId)
                 .subscribe(
                   (response) => {
-                    if (response.status === 200) {
+                    if (response['status'] === 200) {
                       console.log("Video retrieved");
                       this.createVideoFromBlob(response); // httpClient
                       this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
