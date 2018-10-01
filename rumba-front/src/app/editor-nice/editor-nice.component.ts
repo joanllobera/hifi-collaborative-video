@@ -246,7 +246,7 @@ export class EditorNiceComponent implements OnInit {
   getDuplicateIndex(arr, obj): number {
     let _index = null;
     arr.forEach(function(each, index){
-      if (each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position){
+      if (each.id === obj.id && each.thumb === obj.thumb){
         _index = index;
       }
     });
