@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
 
@@ -10,7 +10,7 @@ import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
+
 
 @Component({
   selector: 'app-editor-nice',
@@ -18,8 +18,6 @@ import { Subject } from 'rxjs/Subject';
   styleUrls: ['./editor-nice.component.css']
 })
 export class EditorNiceComponent implements OnInit {
-
-  //keepPolling = new Subject<boolean>();
 
   initialRange: number = 5;
   singleList: string[] = [];
