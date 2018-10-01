@@ -32,7 +32,7 @@ export class EditorNiceComponent implements OnInit {
   videoZoomValues: number[] = [30, 10, 5, 2, 1];
   whiteSpace: boolean = false;
 
-  pollInterval: number = 5000;
+  pollInterval: number = 9000;
   activePoll: boolean = true;
   sendVideo: boolean = true;
   videoId: string = undefined;
@@ -456,35 +456,33 @@ export class EditorNiceComponent implements OnInit {
     //     }
     //   );
 
-    this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
-      .subscribe(
-        (response) => {
-          console.log(response);
-          this.videoId = response.videoID;
-          this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
-          TimerObservable.create(0, this.pollInterval)
-          .takeWhile(() => this.activePoll)
-          .subscribe(() => {
-            this.videoService.getVideoIsReady(this.videoId)
-              .subscribe(
-                (response) => {
-                  if (response.status === 200) {
-                    this.createVideoFromBlob(response); // httpClient
-                    this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
-                    this.activePoll = false;
-                  }
-                }
-              );
+      this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            this.videoId = response.videoID;
+            this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+            TimerObservable.create(5, this.pollInterval)
+            .takeWhile(() => this.activePoll)
+            .subscribe(() => {
+              this.videoService.getVideoIsReady(this.videoId)
+                .subscribe(
+                  (response) => {
+                    if (response['status'] === 200) {
+                      console.log("Video retrieved");
+                      this.createVideoFromBlob(response); // httpClient
+                      this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                      this.activePoll = false;
+                    } else {
+                      console.log('Video not ready');
+                    }
+                  });
+                });
+          }, (error) => {
+            if (error.status === 409) {
+              this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
+            }
           });
-
-        }, (error) => {
-          if (error.status === 409) {
-            this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
-          }
-        }
-      );
-
-
 
   }
 
