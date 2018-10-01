@@ -97,9 +97,13 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    this.recoverThumbnails(value);
     this.initialRange = value;
     this.removeClass('orange');
+
+    if (value < this.initialRange) {
+      this.recoverThumbnails(value);
+    }
+
   }
 
   recoverThumbnails(value: number) {
@@ -114,11 +118,7 @@ export class EditorNiceComponent implements OnInit {
     });
     const modul = this.getZoomLevel(value);
 
-    if (value < this.initialRange) {
-      this.iterateAllNodeLists(imagesByVideo, modul);
-    } else {
-      this.selectUncollapsedIframes(imagesByVideo, modul);
-    }
+    this.iterateAllNodeLists(imagesByVideo, modul);
   }
 
   iterateAllNodeLists(nodeLists, modul) {
