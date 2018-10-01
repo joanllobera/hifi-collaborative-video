@@ -4,7 +4,7 @@ Module containing the HTTP endpoionts for the management of videos.
 This module contains a Flask Blueprint exposing methods for managing the videos of the users,
 in terms of starting/stopping the record of video and downloading them.
 """
-
+from core.model.rumba_session import RumbaSession
 from flask import Blueprint, send_file, session, jsonify
 from pymongo import MongoClient
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
@@ -119,7 +119,8 @@ def download_mixed_video(video_id):
     LOGGER.info("Received request for downloading mixed video.")
     try:
         # path = VideoManager.get_instance().get_mixed_video_path(video_id)
-        output_file = "{}/video-{}.mp4".format(session['folder_url'],video_id)
+        session = RumbaSession.objects.order_by('-id')[0]
+        output_file = "/var/rumba/{}/edited-video-{}.mp4".format(session['group'],video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 200
     except ValueError as ve:
