@@ -460,7 +460,7 @@ export class EditorNiceComponent implements OnInit {
             console.log(response);
             if (response['status'] === 202) {
               this.videoId = response['body']['videoID'];
-              this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+              this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns segons');
             }
 
             TimerObservable.create(5, this.pollInterval)
@@ -472,7 +472,7 @@ export class EditorNiceComponent implements OnInit {
                     if (response['status'] === 200) {
                       console.log('Video retrieved');
                       this.createVideoFromBlob(response['body']); // httpClient
-                      this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                      // this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
                       this.activePoll = false;
                     } else {
                       console.log('Video not ready');
