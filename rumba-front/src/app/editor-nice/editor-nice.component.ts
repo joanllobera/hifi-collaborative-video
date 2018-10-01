@@ -70,7 +70,6 @@ export class EditorNiceComponent implements OnInit {
   }
 
   unMarcAll() {
-
     const videoImages = document.querySelectorAll('.iframe span img');
     [].forEach.call(videoImages, (each, index) => {
       if (each.classList.contains('selectedImg')) {
@@ -85,10 +84,8 @@ export class EditorNiceComponent implements OnInit {
       if (each.classList.contains('orange')) {
         each.classList.remove('orange');
       }
-
     });
     this.videoJson = [];
-
   }
 
   getZoomLevel(slider: number) {
@@ -97,14 +94,11 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
+    this.removeClass('orange');
     if (value < this.initialRange) {
-      console.log('zoom in...');
       this.recoverThumbnails(value);
     }
-
     this.initialRange = value;
-    this.removeClass('orange');
-
   }
 
   recoverThumbnails(value: number) {
@@ -113,19 +107,13 @@ export class EditorNiceComponent implements OnInit {
     const numVideos = iframe.length;
     const imagesByVideo = [];
     [].forEach.call(iframe, (each, index) => {
-      console.log('each [][][]::', each);
       const id = each.id;
       const images = document.querySelectorAll(`#${id} img`);
       imagesByVideo.push(images);
-      console.log('imagesByVideo:::', imagesByVideo);
     });
     const modul = this.getZoomLevel(value);
 
-    if (value < this.initialRange) {
-      this.iterateAllNodeLists(imagesByVideo, modul);
-    } else {
-      this.selectUncollapsedIframes(imagesByVideo, modul);
-    }
+    this.iterateAllNodeLists(imagesByVideo, modul);
   }
 
   iterateAllNodeLists(nodeLists, modul) {
@@ -143,10 +131,14 @@ export class EditorNiceComponent implements OnInit {
 
   selectUncollapsedIframes(singleArray, zoom: number) {
     // let whiteSpace: boolean = false;
+
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
-
+      let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
+        if (j === 0) {
+          isSelected = singleArray[i + j].classList.contains('selectedImg');
+        }
         if (i + j === singleArray.length) {
           break;
         }
