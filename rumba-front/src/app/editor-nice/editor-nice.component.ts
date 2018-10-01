@@ -260,7 +260,7 @@ export class EditorNiceComponent implements OnInit {
   isFirstItem(array, object) {
     let first: boolean = true;
     array.forEach((each, index) => {
-      if (each.position < object.position && each.id === object.id) {
+      if (each.thumb < object.thumb && each.id === object.id) {
         first = false;
       }
     });
@@ -270,7 +270,7 @@ export class EditorNiceComponent implements OnInit {
   isLastItem(array, object) {
     let last: boolean = true;
     array.forEach((each, index) => {
-      if (each.position > object.position && each.id === object.id) {
+      if (each.thumb > object.thumb && each.id === object.id) {
         last = false;
       }
     });
