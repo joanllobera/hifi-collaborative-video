@@ -15,6 +15,8 @@ from core.helpers.loggers import LoggerHelper
 from core.services.video.video_editor import VideoEditor
 from core.services.video.video_manager import VideoManager
 
+from backend.core.services.session_manager import SessionManager
+
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
 VIDEO_API = Blueprint("video_api", __name__, url_prefix="/api/video")
@@ -119,7 +121,9 @@ def download_mixed_video(video_id):
     LOGGER.info("Received request for downloading mixed video.")
     try:
         # path = VideoManager.get_instance().get_mixed_video_path(video_id)
-        output_file = "{}/video-{}.mp4".format(session['folder_url'], video_id)
+
+        sess = SessionManager().get_current_session()
+        output_file = "/var/rumba/session/{}/video-{}.mp4".format(sess['id'], video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 20
     except ValueError as ve:
