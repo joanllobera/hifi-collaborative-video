@@ -251,12 +251,6 @@ export class EditorNiceComponent implements OnInit {
     return _index;
   }
 
-  isNotFirst(array, object) {
-    return array.some( (each, index) => {
-      return each.position < object.position && each.id === object.id;
-    });
-  }
-
   isFirstItem(array, object) {
     let first: boolean = true;
     array.forEach((each, index) => {
@@ -275,12 +269,6 @@ export class EditorNiceComponent implements OnInit {
       }
     });
     return last;
-  }
-
-  isNotLast(array, object) {
-    return array.some( (each, index) => {
-      return each.position > object.position && each.id == object.id;
-    });
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
