@@ -124,7 +124,7 @@ def download_mixed_video(video_id):
         sess = RumbaSession.objects.order_by('-id')[0]
         output_file = "/var/rumba/sessions/{}/edited-video-{}.mp4".format(sess['band'], video_id)
         # return None, 204
-        return send_file(output_file, mimetype="video/mp4"), 20
+        return send_file(output_file, mimetype="video/mp4"), 200
     except ValueError as ve:
         LOGGER.exception("Request for downloading mixed video finished with errors.")
         raise BadRequest(ve)
