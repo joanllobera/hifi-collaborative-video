@@ -43,14 +43,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   setCameraToVideo() {
     const constraints = {
       deviceId: {ideal: this.iidd},
-      optional: [
-        {minWidth: 320},
-        {minWidth: 640},
-        {minWidth: 1024},
-        {minWidth: 1280},
-        {minWidth: 1920},
-        {minWidth: 2560},
-      ],
     };
     const video = document.getElementById('myvideo');
     // Get access to the camera!
@@ -134,14 +126,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       audioBitsPerSecond: 2280000,
       videoBitsPerSecond: 2280000,
       bitsPerSecond: 2280000, // if this line is provided, skip above two
-       optional: [
-          {minWidth: 320},
-          {minWidth: 640},
-          {minWidth: 1024},
-          {minWidth: 1280},
-          {minWidth: 1920},
-          {minWidth: 2560},
-        ],
     };
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
@@ -172,14 +156,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     let mediaConstraints2 = {
       video: {
         deviceId: {ideal: this.iidd},
-        optional: [
-          {minWidth: 320},
-          {minWidth: 640},
-          {minWidth: 1024},
-          {minWidth: 1280},
-          {minWidth: 1920},
-          {minWidth: 2560},
-        ],
       }, audio: false
     };
 
