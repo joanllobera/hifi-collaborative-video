@@ -1,3 +1,5 @@
+import os
+import re
 import subprocess
 import uuid
 from threading import Thread
@@ -74,6 +76,8 @@ class VideoEditorThread(Thread):
             sleep(5)
             state = process.poll()
         self.code = process.returncode
+        move = re.sub(r'edited', '_edited', self.output_file)
+        os.rename(self.output_file, move)
         LOGGER.info("VideoEditorThread: Ffmpeg command finished with following code: {}"
                     .format(self.code))
         session = RumbaSession.objects.order_by('-id')[0]
