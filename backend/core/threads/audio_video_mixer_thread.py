@@ -36,5 +36,6 @@ class AudioVideoMixerThread(Thread):
         self.code = process.returncode
         move = re.sub(r'edited', '_edited', self.output_file)
         os.rename(self.output_file, move)
+
         LOGGER.info("AudioVideoMixerThread: Ffmpeg command finished with following code: {}".format
                     (self.code))
