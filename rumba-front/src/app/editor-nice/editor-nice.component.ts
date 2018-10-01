@@ -97,14 +97,9 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
-    if (value < this.initialRange) {
-      console.log('zoom in...');
-      this.recoverThumbnails(value);
-    }
-
+    this.recoverThumbnails(value);
     this.initialRange = value;
     this.removeClass('orange');
-
   }
 
   recoverThumbnails(value: number) {
@@ -113,11 +108,9 @@ export class EditorNiceComponent implements OnInit {
     const numVideos = iframe.length;
     const imagesByVideo = [];
     [].forEach.call(iframe, (each, index) => {
-      console.log('each [][][]::', each);
       const id = each.id;
       const images = document.querySelectorAll(`#${id} img`);
       imagesByVideo.push(images);
-      console.log('imagesByVideo:::', imagesByVideo);
     });
     const modul = this.getZoomLevel(value);
 
@@ -143,6 +136,7 @@ export class EditorNiceComponent implements OnInit {
 
   selectUncollapsedIframes(singleArray, zoom: number) {
     // let whiteSpace: boolean = false;
+
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
 
