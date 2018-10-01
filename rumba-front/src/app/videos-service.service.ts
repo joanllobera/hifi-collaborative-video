@@ -83,7 +83,7 @@ export class VideosServiceService {
   getVideoIsReady(video_id: string) {
     return this.httpClient
       .get(
-        AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + video_id + '/mixed'
+        AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + video_id + '/mixed', { observe: 'response', responseType: 'blob' }
         );
   }
 
