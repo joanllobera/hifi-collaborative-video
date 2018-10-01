@@ -27,13 +27,13 @@ class AudioVideoMixerThread(Thread):
     def run(self):
         print("AudioVideoMixerThread: Executing command: {}".format(self.command))
         LOGGER.info("AudioVideoMixerThread: Mixing audio and video.")
+        LOGGER.debug("AudioVideoMixerThread: Executing command: {}".format(self.command))
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
         state = process.pull()
         while state is None:
             sleep(10)
             state.pull()
         self.code = process.returncode
-        re.su
         move = re.sub(r'edited', '_edited', self.output_file)
         os.rename(self.output_file, move)
         LOGGER.info("AudioVideoMixerThread: Ffmpeg command finished with following code: {}".format
