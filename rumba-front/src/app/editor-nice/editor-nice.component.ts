@@ -239,7 +239,7 @@ export class EditorNiceComponent implements OnInit {
 
   getDuplicatedObject(arr, obj): object[] {
     return arr.filter(function (each, index) {
-      return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
+      return each.id === obj.id && each.thumb === obj.thumb;
     });
   }
 
