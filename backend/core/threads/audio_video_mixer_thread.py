@@ -29,10 +29,10 @@ class AudioVideoMixerThread(Thread):
         LOGGER.info("AudioVideoMixerThread: Mixing audio and video.")
         LOGGER.debug("AudioVideoMixerThread: Executing command: {}".format(self.command))
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-        state = process.pull()
+        state = process.poll()
         while state is None:
             sleep(10)
-            state.pull()
+            state = process.poll()
         self.code = process.returncode
         move = re.sub(r'edited', '_edited', self.output_file)
         os.rename(self.output_file, move)

@@ -1,6 +1,7 @@
 import subprocess
 import time
 from threading import Thread
+from time import sleep
 
 from core.helpers.loggers import LoggerHelper
 
@@ -26,7 +27,10 @@ class VideoLengthThread(Thread):
         while not converted:
             try:
                 process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-                process.wait(timeout=180)
+                state = process.poll()
+                while state is None:
+                    sleep(10)
+                    state = process.poll()
                 output = process.stdout.read().decode("utf-8")
                 self.output = float(output)
                 converted = True
