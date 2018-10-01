@@ -121,7 +121,7 @@ def download_mixed_video(video_id):
     try:
         # path = VideoManager.get_instance().get_mixed_video_path(video_id)
 
-        sess = RumbaSession.objects.get(status='Active')
+        sess = RumbaSession.objects.get(state='Active')
         output_file = "/var/rumba/session/{}/video-{}.mp4".format(sess['_id'], video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 20
