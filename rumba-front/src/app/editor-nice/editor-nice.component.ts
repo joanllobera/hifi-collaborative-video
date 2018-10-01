@@ -9,6 +9,7 @@ import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-editor-nice',
@@ -450,16 +451,19 @@ export class EditorNiceComponent implements OnInit {
 
       this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
         .subscribe(
-          (response) => {
+          (response: HttpResponse<Object>) => {
             console.log(response);
-            this.videoId = response['videoID'];
-            this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+            if (response['status'] === 202) {
+              this.videoId = response['body']['videoID'];
+              this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+            }
+
             TimerObservable.create(5, this.pollInterval)
             .takeWhile(() => this.activePoll)
             .subscribe(() => {
               this.videoService.getVideoIsReady(this.videoId)
                 .subscribe(
-                  (response) => {
+                  (response: HttpResponse<Object>) => {
                     if (response['status'] === 200) {
                       console.log('Video retrieved');
                       this.createVideoFromBlob(response); // httpClient
