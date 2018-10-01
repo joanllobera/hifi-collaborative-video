@@ -42,17 +42,25 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
   setCameraToVideo() {
     const constraints = {
-      deviceId: {ideal: this.iidd}
+      deviceId: {ideal: this.iidd},
+      optional: [
+        {minWidth: 320},
+        {minWidth: 640},
+        {minWidth: 1024},
+        {minWidth: 1280},
+        {minWidth: 1920},
+        {minWidth: 2560},
+      ],
     };
     const video = document.getElementById('myvideo');
     // Get access to the camera!
     // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({video: constraints}).then( (stream) => {
+    navigator.mediaDevices.getUserMedia({video: constraints}).then((stream) => {
       video['srcObject'] = stream;
     });
   }
 
-  setCameraID(id){
+  setCameraID(id) {
     this.iidd = id;
   }
 
@@ -125,7 +133,15 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
       audioBitsPerSecond: 2280000,
       videoBitsPerSecond: 2280000,
-      bitsPerSecond: 2280000 // if this line is provided, skip above two
+      bitsPerSecond: 2280000, // if this line is provided, skip above two
+       optional: [
+          {minWidth: 320},
+          {minWidth: 640},
+          {minWidth: 1024},
+          {minWidth: 1280},
+          {minWidth: 1920},
+          {minWidth: 2560},
+        ],
     };
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
@@ -142,7 +158,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   startRecording() {
     // const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
     // console.log('supportedConstraints', supportedConstraints)
-    
+
     let mediaConstraints = {
       video: {
         mandatory: {
@@ -155,7 +171,15 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
     let mediaConstraints2 = {
       video: {
-        deviceId: {ideal: this.iidd}
+        deviceId: {ideal: this.iidd},
+        optional: [
+          {minWidth: 320},
+          {minWidth: 640},
+          {minWidth: 1024},
+          {minWidth: 1280},
+          {minWidth: 1920},
+          {minWidth: 2560},
+        ],
       }, audio: false
     };
 
@@ -301,43 +325,43 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       var replaceVideo = true;
       var iidd = undefined;
       navigator.mediaDevices.enumerateDevices()
-      .then(devices => {
-        iidd = devices[0].deviceId;
-        devices.forEach((device) => {
-          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
-          if (device.kind == "videoinput" && device.label.match('back')) {
-            iidd = device.deviceId;
-          }
-        });
-       echotest.createOffer(
-        {
-          // We provide a specific device ID for both audio and video
-          media: {
-            audio: false,
-            replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
-            video: {
-              deviceId: {
-                exact: iidd
+        .then(devices => {
+          iidd = devices[0].deviceId;
+          devices.forEach((device) => {
+            console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
+            if (device.kind == "videoinput" && device.label.match('back')) {
+              iidd = device.deviceId;
+            }
+          });
+          echotest.createOffer(
+            {
+              // We provide a specific device ID for both audio and video
+              media: {
+                audio: false,
+                replaceAudio: replaceAudio,	// This is only needed in case of a renegotiation
+                video: {
+                  deviceId: {
+                    exact: iidd
+                  }
+                },
+                replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
+                data: true	// Let's negotiate data channels as well
+              },
+              // If you want to test simulcasting (Chrome and Firefox only), then
+              // pass a ?simulcast=true when opening this demo page: it will turn
+              // the following 'simulcast' property to pass to janus.js to true
+              simulcast: doSimulcast,
+              success: function (jsep) {
+                Janus.debug("Got SDP!");
+                Janus.debug(jsep);
+                echotest.send({"message": body, "jsep": jsep});
+              },
+              error: function (error) {
+                console.log(error);
+                // Janus.error("WebRTC error:", error);
               }
-            },
-            replaceVideo: replaceVideo,	// This is only needed in case of a renegotiation
-            data: true	// Let's negotiate data channels as well
-          },
-          // If you want to test simulcasting (Chrome and Firefox only), then
-          // pass a ?simulcast=true when opening this demo page: it will turn
-          // the following 'simulcast' property to pass to janus.js to true
-          simulcast: doSimulcast,
-          success: function (jsep) {
-            Janus.debug("Got SDP!");
-            Janus.debug(jsep);
-            echotest.send({"message": body, "jsep": jsep});
-          },
-          error: function (error) {
-            console.log(error);
-            // Janus.error("WebRTC error:", error);
-          }
+            });
         });
-      });
 
     }
 

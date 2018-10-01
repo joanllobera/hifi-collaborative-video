@@ -33,6 +33,14 @@ export class CameraMasterComponent implements OnInit {
 
   setCameraToVideo() {
     const constraints = {
+      optional: [
+        {minWidth: 320},
+        {minWidth: 640},
+        {minWidth: 1024},
+        {minWidth: 1280},
+        {minWidth: 1920},
+        {minWidth: 2560},
+      ],
       deviceId: {ideal: this.iidd}
     };
     const video = document.getElementById('myvideo');
