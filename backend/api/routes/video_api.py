@@ -15,9 +15,6 @@ from core.helpers.loggers import LoggerHelper
 from core.services.video.video_editor import VideoEditor
 from core.services.video.video_manager import VideoManager
 
-from core.services.session_manager import SessionManager
-
-from backend.core.model.session_status import SessionStatus
 
 LOGGER = LoggerHelper.get_logger("api", "api.log")
 
