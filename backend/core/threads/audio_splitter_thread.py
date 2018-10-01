@@ -1,5 +1,6 @@
 import subprocess
 from threading import Thread
+from time import sleep
 
 from core.helpers.loggers import LoggerHelper
 
@@ -28,7 +29,10 @@ class AudioSplitterThread(Thread):
         LOGGER.info("AudioSplitterThread: Splitting audio.")
         LOGGER.debug("AudioSplitterThread: Executing command: {}".format(self.command))
         process = subprocess.Popen(self.command, shell=True, stdout=subprocess.PIPE)
-        process.wait(timeout=60)
+        state = process.pull()
+        while state is None:
+            sleep(10)
+            state = process.pull()
         self.code = process.returncode
         LOGGER.info("AudioSplitterThread: Ffmpeg command finished with following code: {}".format
                     (self.code))
