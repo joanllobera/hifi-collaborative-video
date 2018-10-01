@@ -56,7 +56,7 @@ export class VideosServiceService {
 
   sendVideoToBuild(json, session_id) {
     return this.httpClient.post(
-      AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + session_id + '/build', json, {observe: 'body', responseType: 'json'}
+      AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/edition/' + session_id + '/build', json
       );
   }
 
@@ -82,7 +82,7 @@ export class VideosServiceService {
   getVideoIsReady(video_id: string) {
     return this.httpClient
       .get(
-        AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + video_id + '/mixed', { observe: 'body', responseType: 'blob' }
+        AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/video/' + video_id + '/mixed', { observe: 'body', responseType: 'json' }
         );
   }
 
