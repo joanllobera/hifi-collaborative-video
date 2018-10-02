@@ -76,14 +76,14 @@ class VideoEditorThread(Thread):
             sleep(5)
             state = process.poll()
         self.code = process.returncode
-        move = re.sub(r'edited', '_edited', self.output_file)
-        os.rename(self.output_file, move)
+        # move = re.sub(r'edited', '_edited', self.output_file)
+        # os.rename(self.output_file, move)
         LOGGER.info("VideoEditorThread: Ffmpeg command finished with following code: {}"
                     .format(self.code))
         session = RumbaSession.objects.order_by('-id')[0]
         if session is None:
             raise NotExistingResource("There's no session with such id.")
         audio_file = self.__cut_audio__(session['id'], self.edit_info)
-        output_file = "{}/video-{}.mp4".format(session['folder_url'], self.edition_id)
+        output_file = "{}/edited_video-{}.mp4".format(session['folder_url'], self.edition_id)
         mixer = AudioVideoMixerThread(audio_file=audio_file, video_file=self.output_file, output_file=output_file, edition_id=self.edition_id)
         mixer.start()
