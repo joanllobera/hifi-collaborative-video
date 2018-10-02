@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
 
@@ -9,6 +9,8 @@ import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { HttpResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-editor-nice',
@@ -36,6 +38,7 @@ export class EditorNiceComponent implements OnInit {
   activePoll: boolean = true;
   sendVideo: boolean = true;
   videoId: string = undefined;
+
 
 
   @ViewChild('iframe') iframe: ElementRef;
@@ -223,7 +226,8 @@ export class EditorNiceComponent implements OnInit {
 
   duplicates(arr, obj): boolean {
     return arr.some(function (each, index) {
-      return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
+      // return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
+      return each.id === obj.id && each.thumb === obj.thumb;
     });
   }
 
@@ -233,30 +237,24 @@ export class EditorNiceComponent implements OnInit {
 
   getDuplicatedObject(arr, obj): object[] {
     return arr.filter(function (each, index) {
-      return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
+      return each.id === obj.id && each.thumb === obj.thumb;
     });
   }
 
   getDuplicateIndex(arr, obj): number {
     let _index = null;
     arr.forEach(function(each, index){
-      if (each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position){
+      if (each.id === obj.id && each.thumb === obj.thumb){
         _index = index;
       }
     });
     return _index;
   }
 
-  isNotFirst(array, object) {
-    return array.some( (each, index) => {
-      return each.position < object.position && each.id === object.id;
-    });
-  }
-
   isFirstItem(array, object) {
     let first: boolean = true;
     array.forEach((each, index) => {
-      if (each.position < object.position && each.id === object.id) {
+      if (each.thumb < object.thumb && each.id === object.id) {
         first = false;
       }
     });
@@ -266,17 +264,11 @@ export class EditorNiceComponent implements OnInit {
   isLastItem(array, object) {
     let last: boolean = true;
     array.forEach((each, index) => {
-      if (each.position > object.position && each.id === object.id) {
+      if (each.thumb > object.thumb && each.id === object.id) {
         last = false;
       }
     });
     return last;
-  }
-
-  isNotLast(array, object) {
-    return array.some( (each, index) => {
-      return each.position > object.position && each.id == object.id;
-    });
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
@@ -450,10 +442,13 @@ export class EditorNiceComponent implements OnInit {
 
       this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
         .subscribe(
-          (response) => {
+          (response: HttpResponse<Object>) => {
             console.log(response);
-            this.videoId = response['videoID'];
-            this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns quants segons');
+            if (response['status'] === 202) {
+              this.videoId = response['body']['videoID'];
+              this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns segons');
+            }
+
             TimerObservable.create(5, this.pollInterval)
             .takeWhile(() => this.activePoll)
             .subscribe(() => {
@@ -462,8 +457,8 @@ export class EditorNiceComponent implements OnInit {
                   (response) => {
                     if (response['status'] === 200) {
                       console.log('Video retrieved');
-                      this.createVideoFromBlob(response); // httpClient
-                      this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                      this.createVideoFromBlob(response['body']); // httpClient
+                      // this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
                       this.activePoll = false;
                     } else {
                       console.log('Video not ready');
