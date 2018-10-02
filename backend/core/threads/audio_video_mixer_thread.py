@@ -17,9 +17,10 @@ class AudioVideoMixerThread(Thread):
     command = None
     code = None
 
-    def __init__(self, video_file, audio_file, output_file):
+    def __init__(self, video_file, audio_file, output_file, edition_id):
         super(AudioVideoMixerThread, self).__init__()
         self.video_file = video_file
+        self.edition_id = edition_id
         self.audio_file = audio_file
         self.output_file = output_file
         self.command = "ffmpeg -i {} -i {} -c:v copy -c:a aac -strict experimental {}".format(video_file, audio_file, output_file)
