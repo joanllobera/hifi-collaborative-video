@@ -92,8 +92,8 @@ def stop_video(video_id):
     """
     LOGGER.info("Received request for stopping video.")
     try:
-        VideoManager.get_instance().stop_video(video_id=video_id)
-        VideoEditor.get_instance().merge_user_video(video_id=video_id)
+        #VideoManager.get_instance().stop_video(video_id=video_id)
+        #VideoEditor.get_instance().merge_user_video(video_id=video_id)
         LOGGER.info("Request for stopping a video successfully finished.")
         return "",204
     except ValueError as ve:
@@ -122,7 +122,7 @@ def download_mixed_video(video_id):
     try:
         # path = VideoManager.get_instance().get_mixed_video_path(video_id)
         session = RumbaSession.objects.order_by('-id')[0]
-        output_file = "/var/rumba/sessions/{}/_edited-video-{}.mp4".format(session['band'], video_id)
+        output_file = "/var/rumba/sessions/{}/__edited-video-{}.mp4".format(session['band'], video_id)
         # return None, 204
         return send_file(output_file, mimetype="video/mp4"), 200
     except ValueError as ve:
