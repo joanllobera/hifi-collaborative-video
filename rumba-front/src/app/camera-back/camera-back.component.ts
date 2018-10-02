@@ -155,6 +155,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
 
     let mediaConstraints2 = {
       video: {
+        aspectRatio: 1.7777777778,
         deviceId: {ideal: this.iidd},
       }, audio: false
     };
