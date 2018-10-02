@@ -83,6 +83,6 @@ class VideoEditorThread(Thread):
         session = RumbaSession.objects.order_by('-id')[0]
         audio_file = self.__cut_audio__(session['id'], self.edit_info)
         LOGGER.info("VideoEditorThread: {} audio file".format(audio_file))
-        output_file = "{}/edited_video-{}.mp4".format(session['folder_url'], self.edition_id)
-        mixer = AudioVideoMixerThread(audio_file=audio_file, video_file=self.output_file, output_file=output_file, edition_id=self.edition_id)
+        #output_file = "{}/edited_video-{}.mp4".format(session['folder_url'], self.edition_id)
+        mixer = AudioVideoMixerThread(audio_file=audio_file, video_file=self.output_file, output_file=self.output_file, edition_id=self.edition_id)
         mixer.start()

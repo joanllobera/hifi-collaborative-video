@@ -23,7 +23,8 @@ class AudioVideoMixerThread(Thread):
         self.edition_id = edition_id
         self.audio_file = audio_file
         self.output_file = output_file
-        self.command = "ffmpeg -i {} -i {} -c:v copy -c:a aac -strict experimental {}".format(video_file, audio_file, output_file)
+        move = re.sub(r'edited', '_edited', self.output_file)
+        self.command = "ffmpeg -i {} -i {} -c:v copy -c:a aac -strict experimental {}".format(video_file, audio_file, move)
 
     def run(self):
         print("AudioVideoMixerThread: Executing command: {}".format(self.command))
@@ -37,6 +38,5 @@ class AudioVideoMixerThread(Thread):
         self.code = process.returncode
         move = re.sub(r'edited', '_edited', self.output_file)
         os.rename(self.output_file, move)
-
         LOGGER.info("AudioVideoMixerThread: Ffmpeg command finished with following code: {}".format
                     (self.code))
