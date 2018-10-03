@@ -120,6 +120,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   iterateAllNodeLists(nodeLists, modul) {
+    this.whiteSpace = false;
     nodeLists.forEach(currentItem => {
       this.getAllAreSame(currentItem, modul);
     });
@@ -151,7 +152,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getAllAreSame(singleArray, zoom: number) {
-    // let whiteSpace: boolean = false;
+    
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       // console.log('currentI', i);
       let isSelected: boolean = null;
@@ -165,7 +166,6 @@ export class EditorNiceComponent implements OnInit {
           if (singleArray[i + j].classList.contains('selectedImg') !== isSelected) {
             // singleArray[i].classList.remove('selectedImg');
             singleArray[i].classList.add('orange');
-            // whiteSpace = true;
             this.whiteSpace = true;
             break;
           }
