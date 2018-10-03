@@ -38,7 +38,7 @@ export class EditorNiceComponent implements OnInit {
   activePoll: boolean = true;
   sendVideo: boolean = true;
   videoId: string = undefined;
-  showSpinner: boolean = true;
+  showSpinner: boolean = false;
 
 
   @ViewChild('iframe') iframe: ElementRef;
