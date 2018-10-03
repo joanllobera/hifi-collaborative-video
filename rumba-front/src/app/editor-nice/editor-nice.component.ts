@@ -38,7 +38,7 @@ export class EditorNiceComponent implements OnInit {
   activePoll: boolean = true;
   sendVideo: boolean = true;
   videoId: string = undefined;
-
+  showSpinner: boolean = true;
 
 
   @ViewChild('iframe') iframe: ElementRef;
@@ -447,6 +447,7 @@ export class EditorNiceComponent implements OnInit {
             if (response['status'] === 202) {
               this.videoId = response['body']['videoID'];
               this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns segons');
+              this.showSpinner = true;
             }
 
             TimerObservable.create(5, this.pollInterval)
@@ -460,6 +461,7 @@ export class EditorNiceComponent implements OnInit {
                       this.createVideoFromBlob(response['body']); // httpClient
                       // this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
                       this.activePoll = false;
+                      this.showSpinner = false;
                     } else {
                       console.log('Video not ready');
                     }
