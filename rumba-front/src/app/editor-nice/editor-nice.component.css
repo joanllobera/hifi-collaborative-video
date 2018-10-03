@@ -35,8 +35,10 @@ video {
 }
 
 img.selectedImg {
-  border-top: 3px solid #ffff00;
-  border-bottom: 3px solid #ffff00;
+  /* opacity: .5; */
+  border-top: 6px solid #ffff00;
+  border-bottom: 6px solid #ffff00;
+
 }
 
 .first {
