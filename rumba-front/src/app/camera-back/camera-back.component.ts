@@ -143,7 +143,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
     // const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
     // console.log('supportedConstraints', supportedConstraints)
 
-    let mediaConstraints = {
+    const mediaConstraints = {
       video: {
         mandatory: {
           minWidth: 1280,
@@ -153,18 +153,12 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       }, audio: true
     };
 
-    let mediaConstraints2 = {
-      video: {
-        aspectRatio: 1.7777777778,
-        deviceId: {ideal: this.iidd},
-      }, audio: false
-    };
-
-    let mediaConstraints3 = {
+    const mediaConstraints2 = {
       video: {
         width: 1920,
         height: 1080,
-        deviceId: {ideal: this.iidd}
+        aspectRatio: 1.7777777778,
+        deviceId: {ideal: this.iidd},
       }, audio: false
     };
 
