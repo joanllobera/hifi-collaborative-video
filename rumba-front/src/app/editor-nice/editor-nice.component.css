@@ -30,6 +30,14 @@ video {
   cursor:pointer;
 }
 
+@media only screen and (max-width: 600px) {
+  .oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
+    width:60px;
+    height: 60px;
+  } 
+}
+
+
 .absolute {
   position:absolute;
 }
