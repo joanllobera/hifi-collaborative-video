@@ -93,7 +93,6 @@ export class EditorNiceComponent implements OnInit {
 
   getZoomLevel(slider: number) {
     const values: number[] = [30, 10, 5, 2, 1];
-    this.editorSrv.newZoomValue.next(values[slider - 1]);
     return values[slider - 1];
   }
 
