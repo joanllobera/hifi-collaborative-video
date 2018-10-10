@@ -98,6 +98,8 @@ export class EditorNiceComponent implements OnInit {
   }
 
   changeZoom(value: number) {
+    const values: number[] = [30, 10, 5, 2, 1];
+    this.editorSrv.newZoomValue.next(values[value - 1]);
     this.removeClass('orange');
     if (value < this.initialRange) {
       this.recoverThumbnails(value);
