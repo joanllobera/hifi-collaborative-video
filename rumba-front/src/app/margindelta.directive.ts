@@ -9,8 +9,7 @@ import { EditorService } from './editor.service';
 export class MargindeltaDirective implements OnInit {
 
   @Input() deltasize: number;
-  @Input() zoom: number;
-  thumbnailSize: number; //size in pixels of the thumbnail in html view
+  thumbnailSize: number; // size in pixels of the thumbnail in html view
 
 
   constructor(
@@ -19,11 +18,13 @@ export class MargindeltaDirective implements OnInit {
     private editorSrv: EditorService) { }
 
   ngOnInit() {
+    this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / 1) + 'px';
 
     this.editorSrv.newZoomValue
       .subscribe(
         (data: number) => {
           alert(data);
+          this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / data) + 'px';
         }
       );
 
