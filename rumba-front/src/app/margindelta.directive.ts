@@ -1,6 +1,7 @@
 import { Directive, Input, ElementRef, OnInit } from '@angular/core';
 import { VideosServiceService } from './videos-service.service';
 import { ZoomLevel } from './zoom-level.pipe';
+import { EditorService } from './editor.service';
 
 @Directive({
   selector: '[appMargindelta]'
@@ -12,9 +13,20 @@ export class MargindeltaDirective implements OnInit {
   thumbnailSize: number; //size in pixels of the thumbnail in html view
 
 
-  constructor(private elementRef: ElementRef, private videoSrv: VideosServiceService) { }
+  constructor(
+    private elementRef: ElementRef,
+    private videoSrv: VideosServiceService,
+    private editorSrv: EditorService) { }
 
   ngOnInit() {
+
+    this.editorSrv.newZoomValue
+      .subscribe(
+        (data: number) => {
+          alert(data);
+        }
+      );
+
 
     this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / this.getZoomLevel(this.zoom)) + 'px';
 

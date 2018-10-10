@@ -10,6 +10,7 @@ import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -39,7 +40,6 @@ export class EditorNiceComponent implements OnInit {
   sendVideo: boolean = true;
   videoId: string = undefined;
   showSpinner: boolean = false;
-
 
   @ViewChild('iframe') iframe: ElementRef;
 
@@ -93,6 +93,7 @@ export class EditorNiceComponent implements OnInit {
 
   getZoomLevel(slider: number) {
     const values: number[] = [30, 10, 5, 2, 1];
+    this.editorSrv.newZoomValue.next(values[slider - 1]);
     return values[slider - 1];
   }
 
