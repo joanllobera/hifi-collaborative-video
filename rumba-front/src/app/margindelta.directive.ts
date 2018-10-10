@@ -28,7 +28,7 @@ export class MargindeltaDirective implements OnInit {
       );
 
 
-    this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / this.getZoomLevel(this.zoom)) + 'px';
+    this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
 
     // this.videoSrv.rangeValue
     //   .subscribe(
