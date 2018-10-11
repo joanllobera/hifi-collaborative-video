@@ -205,9 +205,26 @@ div.claudator {
   100% { -webkit-transform: rotate(360deg); }
 }
 
+.animation {
+  -webkit-animation: fadeInFromNone 1.5s infinite;
+  animation: fadeInFromNone 1.5s infinite;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@keyframes fadeInFromNone {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+      opacity: 1;
+  }
+}
+
+
 
 

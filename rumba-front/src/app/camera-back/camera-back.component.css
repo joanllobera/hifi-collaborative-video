@@ -50,10 +50,12 @@ video {
   align-items: center;
   z-index: 10000;
   -webkit-animation: fadeInFromNone 1.5s infinite;
+  animation: fadeInFromNone 1.5s infinite;
 }
 
 .no-recording {
   -webkit-animation: fadeInFromNone 1.5s infinite;
+  animation: fadeInFromNone 1.5s infinite;
 }
 
 .counter-container {
