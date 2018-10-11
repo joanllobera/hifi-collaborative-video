@@ -102,8 +102,42 @@ export class EditorNiceComponent implements OnInit {
     this.removeClass('orange');
     if (value < this.initialRange) {
       this.recoverThumbnails(value);
+    } else {
+      // when user is zooming out
+      // this.recoverThumbnailsZoomOut(value);
     }
     this.initialRange = value;
+  }
+
+  recoverThumbnailsZoomOut(value: number) {
+    const iframe = document.querySelectorAll('.iframe');
+    const imagesByVideo = [];
+    [].forEach.call(iframe, (each, index) => {
+      const id = each.id;
+      const images = document.querySelectorAll(`#${id} img`);
+      imagesByVideo.push(images);
+    });
+    const modul = this.getZoomLevel(value);
+
+    this.selectUncollapsedIframes(imagesByVideo, modul);
+  }
+
+  selectUncollapsedIframes(singleArray, zoom: number) {
+    // let whiteSpace: boolean = false;
+
+    for (let i = 0; i < singleArray.length; i = i + zoom) {
+      console.log('currentI', i);
+      let isSelected: boolean = null;
+      for (let j = 0; j < zoom; j++) {
+        if (j === 0) {
+          isSelected = singleArray[i + j].classList.contains('selectedImg');
+        }
+        if (i + j === singleArray.length) {
+          break;
+        }
+        console.log('currrent i + j', singleArray[i + j]);
+      }
+    }
   }
 
   recoverThumbnails(value: number) {
@@ -135,26 +169,7 @@ export class EditorNiceComponent implements OnInit {
     }
   }
 
-  selectUncollapsedIframes(singleArray, zoom: number) {
-    // let whiteSpace: boolean = false;
-
-    for (let i = 0; i < singleArray.length; i = i + zoom) {
-      console.log('currentI', i);
-      let isSelected: boolean = null;
-      for (let j = 0; j < zoom; j++) {
-        if (j === 0) {
-          isSelected = singleArray[i + j].classList.contains('selectedImg');
-        }
-        if (i + j === singleArray.length) {
-          break;
-        }
-        console.log('currrent i + j', singleArray[i + j]);
-      }
-    }
-  }
-
   getAllAreSame(singleArray, zoom: number) {
-    
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       // console.log('currentI', i);
       let isSelected: boolean = null;
