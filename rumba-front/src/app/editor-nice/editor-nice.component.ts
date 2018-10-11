@@ -119,7 +119,7 @@ export class EditorNiceComponent implements OnInit {
     });
     const modul = this.getZoomLevel(value);
 
-    this.selectUncollapsedIframes(imagesByVideo[0], modul);
+    this.selectUncollapsedIframes(imagesByVideo[1], modul);
   }
 
   selectUncollapsedIframes(singleArray, zoom: number) {
