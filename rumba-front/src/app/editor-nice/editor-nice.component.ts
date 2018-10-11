@@ -128,7 +128,7 @@ export class EditorNiceComponent implements OnInit {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('currentI', i);
       let isSelected: boolean = null;
-      for (let j = 0; j < zoom; j++) {
+      for (let j = i; j < zoom; j++) {
         console.log('currentJ', j);
         if (j === 0) {
           if (isSelected = singleArray[i + j].classList.contains('selectedImg')) {
