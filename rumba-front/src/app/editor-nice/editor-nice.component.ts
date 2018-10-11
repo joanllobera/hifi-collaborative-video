@@ -463,7 +463,7 @@ export class EditorNiceComponent implements OnInit {
             console.log(response);
             if (response['status'] === 202) {
               this.videoId = response['body']['videoID'];
-              this.toasterService.pop('info', 'Processant video', 'Aquesta acció pot trigar uns segons');
+              this.toasterService.pop('info', 'Processant video', 'Dades enviades correctament');
               this.showSpinner = true;
             }
 
