@@ -23,11 +23,9 @@ export class MargindeltaDirective implements OnInit {
     this.editorSrv.newZoomValue
       .subscribe(
         (data: number) => {
-          alert(data);
           this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / data) + 'px';
         }
       );
-
 
     this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
 
