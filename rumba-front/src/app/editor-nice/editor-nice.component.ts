@@ -133,7 +133,7 @@ export class EditorNiceComponent implements OnInit {
         if (j === 0) {
           if (isSelected = singleArray[i + j].classList.contains('selectedImg')) {
             if (j < i) {
-              singleArray[i][j].classList.add('selectedImg');
+              singleArray[i + j].classList.add('selectedImg');
             }
           }
         }
