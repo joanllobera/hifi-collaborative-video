@@ -38,11 +38,4 @@ export class MargindeltaDirective implements OnInit {
     //   );
   }
 
-  getZoomLevel(slider: number) {
-    const values: number[] = [30, 10, 5, 2, 1];
-    return values[slider - 1];
-  }
-
-
-
 }
