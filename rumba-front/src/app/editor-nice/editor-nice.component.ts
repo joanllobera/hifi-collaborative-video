@@ -128,6 +128,7 @@ export class EditorNiceComponent implements OnInit {
       for (let j = 0; j < zoom; j++) {
         let isSelected: boolean = null;
         console.log('current jjj', j + i);
+        console.log(singleArray[i + j]);
         if (i + j === singleArray.length) {
           break;
         }
@@ -142,8 +143,6 @@ export class EditorNiceComponent implements OnInit {
         }
       }
     }
-
-
   }
 
   recoverThumbnails(value: number) {
