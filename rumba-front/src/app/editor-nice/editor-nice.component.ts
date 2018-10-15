@@ -125,25 +125,41 @@ export class EditorNiceComponent implements OnInit {
   selectUncollapsedIframes(singleArray, zoom: number) {
     // let whiteSpace: boolean = false;
 
+    // for (let i = 0; i < singleArray.length; i = i + zoom) {
+    //   console.log('currentI', i);
+    //   let isSelected: boolean = null;
+    //   for (let j = i; j < i + zoom; j++) {
+    //     console.log('currentJ', j);
+    //     isSelected = singleArray[i + j].classList.contains('selectedImg');
+    //     if (j === 0) {
+    //       if (isSelected) {
+    //         if (j < i) {
+    //           singleArray[i + j].classList.add('selectedImg');
+    //         }
+    //       }
+    //     }
+    //     if (i + j === singleArray.length) {
+    //       break;
+    //     }
+    //     console.log('currrent i + j', singleArray[i + j]);
+    //   }
+    // }
+
     for (let i = 0; i < singleArray.length; i = i + zoom) {
-      console.log('currentI', i);
+      console.log('current i', i);
       let isSelected: boolean = null;
-      for (let j = i; j < i + zoom; j++) {
-        console.log('currentJ', j);
-        isSelected = singleArray[i + j].classList.contains('selectedImg');
-        if (j === 0) {
-          if (isSelected) {
-            if (j < i) {
-              singleArray[i + j].classList.add('selectedImg');
-            }
-          }
-        }
+      for (let j = 0; j < zoom; j++) {
+        console.log('current jjj', j);
         if (i + j === singleArray.length) {
           break;
         }
-        console.log('currrent i + j', singleArray[i + j]);
+        if (j === 0) {
+        } else {
+        }
       }
     }
+
+
   }
 
   recoverThumbnails(value: number) {
