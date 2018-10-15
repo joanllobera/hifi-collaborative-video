@@ -123,38 +123,20 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectUncollapsedIframes(singleArray, zoom: number) {
-    // let whiteSpace: boolean = false;
-
-    // for (let i = 0; i < singleArray.length; i = i + zoom) {
-    //   console.log('currentI', i);
-    //   let isSelected: boolean = null;
-    //   for (let j = i; j < i + zoom; j++) {
-    //     console.log('currentJ', j);
-    //     isSelected = singleArray[i + j].classList.contains('selectedImg');
-    //     if (j === 0) {
-    //       if (isSelected) {
-    //         if (j < i) {
-    //           singleArray[i + j].classList.add('selectedImg');
-    //         }
-    //       }
-    //     }
-    //     if (i + j === singleArray.length) {
-    //       break;
-    //     }
-    //     console.log('currrent i + j', singleArray[i + j]);
-    //   }
-    // }
-
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('current i', i);
-      // let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
+        let isSelected: boolean = null;
         console.log('current jjj', j + i);
         if (i + j === singleArray.length) {
           break;
         }
         if (j === 0) {
+          isSelected = singleArray[i + j].classList.contains('selectedImg');
         } else {
+          if (isSelected) {
+            singleArray[i + j].classList.add('selectedImg')
+          }
         }
       }
     }
