@@ -126,7 +126,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectUncollapsedIframes(singleArray, oldzoom: number, zoom: number) {
-    for (let i = 0; i < singleArray.length; i = i + zoom) {
+    for (let i = 0; i < singleArray.length; i = i + oldzoom) {
       console.log('current i', i);
       let isSelected: boolean = null;
       for (let k = 0; k < zoom; k++) {
