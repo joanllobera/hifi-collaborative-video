@@ -111,6 +111,10 @@ export class EditorNiceComponent implements OnInit {
     this.initialRange = value;
   }
 
+  selectAllChilds(singleArray, position: number, oldZoom: number, newZoom: number) {
+    console.log(singleArray[position]);
+  }
+
   recoverThumbnailsZoomOut(value: number) {
     const iframe = document.querySelectorAll('.iframe');
     const imagesByVideo = [];
@@ -122,7 +126,7 @@ export class EditorNiceComponent implements OnInit {
     const newModul = this.getZoomLevel(value);
     const oldModul = this.getZoomLevel(this.oldValue);
 
-    this.selectUncollapsedIframes(imagesByVideo[1], oldModul, newModul);
+    // this.selectUncollapsedIframes(imagesByVideo[1], oldModul, newModul);
   }
 
   selectUncollapsedIframes(singleArray, oldzoom: number, zoom: number) {
