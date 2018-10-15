@@ -142,6 +142,7 @@ export class EditorNiceComponent implements OnInit {
           }
         }
         console.log(singleArray[i + k]);
+        console.log('--------------------------------------------------------');
       } // end 2ond loop
     } // end 1rst loop
   }
