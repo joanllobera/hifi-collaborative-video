@@ -147,9 +147,9 @@ export class EditorNiceComponent implements OnInit {
 
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('current i', i);
-      let isSelected: boolean = null;
+      // let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
-        console.log('current jjj', j);
+        console.log('current jjj', j + i);
         if (i + j === singleArray.length) {
           break;
         }
