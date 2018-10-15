@@ -126,22 +126,22 @@ export class EditorNiceComponent implements OnInit {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('current i', i);
       let isSelected: boolean = null;
-      for (let j = 0; j < zoom; j++) {
-        console.log('current j', j);
-        console.log('current j+i', j + i);
-        console.log(singleArray[i + j]);
-        if (i + j === singleArray.length) {
+      for (let k = 0; k < zoom; k++) {
+        console.log('current k', k);
+        console.log('current k+i', k + i);
+        if (i + k === singleArray.length) {
           break;
         }
-        if (j === 0) {
-          isSelected = singleArray[i + j].classList.contains('selectedImg');
+        if (k === 0) {
+          isSelected = singleArray[i + k].classList.contains('selectedImg');
         } else {
           if (isSelected) {
-            if (!singleArray[i + j].classList.contains('selectedImg')) {
-              singleArray[i + j].classList.add('selectedImg');
+            if (!singleArray[i + k].classList.contains('selectedImg')) {
+              singleArray[i + k].classList.add('selectedImg');
             }
           }
         }
+        console.log(singleArray[i + k]);
       } // end 2ond loop
     } // end 1rst loop
   }
@@ -195,13 +195,6 @@ export class EditorNiceComponent implements OnInit {
         }
       }
     }
-    // if (whiteSpace) {
-    //   this.toasterService.pop(
-    //   'warning',
-    //   `Zoom: ${ this.videoZoomValues[this.initialRange - 1] } seg x thumb`,
-    //   'Hi ha frames sense video en aquest nivell de zoom'
-    //   );
-    // }
   }
 
   removeClass(className) {
