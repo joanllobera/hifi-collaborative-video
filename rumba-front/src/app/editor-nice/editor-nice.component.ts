@@ -267,8 +267,8 @@ export class EditorNiceComponent implements OnInit {
 
   getDuplicateIndex(arr, obj): number {
     let _index = null;
-    arr.forEach(function(each, index){
-      if (each.id === obj.id && each.thumb === obj.thumb){
+    arr.forEach(function(each, index) {
+      if (each.id === obj.id && each.thumb === obj.thumb) {
         _index = index;
       }
     });
@@ -293,6 +293,14 @@ export class EditorNiceComponent implements OnInit {
       }
     });
     return last;
+  }
+
+  selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
+    if (this.initialRange === 1) {
+      this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+    } else  {
+      console.log('zoomLevel higher than 1s/thumbnail');
+    }
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
