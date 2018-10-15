@@ -125,9 +125,10 @@ export class EditorNiceComponent implements OnInit {
   selectUncollapsedIframes(singleArray, zoom: number) {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('current i', i);
+      let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
-        let isSelected: boolean = null;
-        console.log('current jjj', j + i);
+        console.log('current j', j);
+        console.log('current j+i', j + i);
         console.log(singleArray[i + j]);
         if (i + j === singleArray.length) {
           break;
@@ -141,8 +142,8 @@ export class EditorNiceComponent implements OnInit {
             }
           }
         }
-      }
-    }
+      } // end 2ond loop
+    } // end 1rst loop
   }
 
   recoverThumbnails(value: number) {
