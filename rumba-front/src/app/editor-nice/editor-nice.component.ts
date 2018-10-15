@@ -21,6 +21,7 @@ import { Subject } from 'rxjs/Subject';
 export class EditorNiceComponent implements OnInit {
 
   initialRange: number = 5;
+  oldValue: number = null;
   singleList: string[] = [];
   listOfLists: any[] = [];
   allVideos: any = undefined;
@@ -106,6 +107,7 @@ export class EditorNiceComponent implements OnInit {
       // when user is zooming out
      this.recoverThumbnailsZoomOut(value);
     }
+    this.oldValue = this.initialRange;
     this.initialRange = value;
   }
 
@@ -117,12 +119,13 @@ export class EditorNiceComponent implements OnInit {
       const images = document.querySelectorAll(`#${id} img`);
       imagesByVideo.push(images);
     });
-    const modul = this.getZoomLevel(value);
+    const newModul = this.getZoomLevel(value);
+    const oldModul = this.getZoomLevel(this.oldValue);
 
-    this.selectUncollapsedIframes(imagesByVideo[1], modul);
+    this.selectUncollapsedIframes(imagesByVideo[1], oldModul, newModul);
   }
 
-  selectUncollapsedIframes(singleArray, zoom: number) {
+  selectUncollapsedIframes(singleArray, oldzoom: number, zoom: number) {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
       console.log('current i', i);
       let isSelected: boolean = null;
