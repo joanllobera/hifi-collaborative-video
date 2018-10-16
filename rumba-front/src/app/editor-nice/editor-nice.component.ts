@@ -339,7 +339,7 @@ export class EditorNiceComponent implements OnInit {
     console.log('videoJson length:::', this.videoJson.length);
   }
 
-  onSelectFrame(event, videoIndex: number, blobIndex: number): void {
+  onSelectFrame(event, videoIndex: number): void {
     event.target.classList.toggle('selectedImg');
 
     if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {

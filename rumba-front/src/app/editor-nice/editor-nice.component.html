@@ -55,7 +55,7 @@
             <img appClaudatorLeft height="80px" class="absolute" src="assets/logo/left-yellow.png" alt="">
             <img appClaudatorMove height="80px" class="absolute" src="assets/logo/right-yellow.png" alt="">
           </div> -->
-          <div appMargindelta [deltasize]="delta[i]" #iframe (click)="onSelectFrame($event, i, ii)" class="iframe" [id]="'test' + (i)">
+          <div appMargindelta [deltasize]="delta[i]" #iframe (click)="onSelectFrame($event, i)" class="iframe" [id]="'test' + (i)">
             <span [class.hidden]="ii % videoZoomValues[initialRange-1] != 0" class="thumb-wrapper" *ngFor="let one of oneList; let ii = index;">
               <!-- <img *ngIf="ii % videoZoomValues[initialRange-1] == 0" appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" /> -->            
               
