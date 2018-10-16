@@ -304,7 +304,8 @@ export class EditorNiceComponent implements OnInit {
 
       [].forEach.call(videoImages, (each, index) => {
         if (index >= blobIndex && index < blobIndex + secondsGap) {
-          each.classList.add('selectedImg');
+          this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+          this.onSelectFrame(event, videoIndex);
         }
       });
     }
