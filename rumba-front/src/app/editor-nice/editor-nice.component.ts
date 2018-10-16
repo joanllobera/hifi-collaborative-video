@@ -298,6 +298,7 @@ export class EditorNiceComponent implements OnInit {
   selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
     if (this.initialRange === 5) {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+      this.onSelectFrame(event, videoIndex);
     } else  {
       console.log('zoomLevel higher than 1s/thumbnail');
     }
