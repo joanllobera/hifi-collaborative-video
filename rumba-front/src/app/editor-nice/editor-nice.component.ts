@@ -298,14 +298,13 @@ export class EditorNiceComponent implements OnInit {
     } else  {
       const secondsGap = this.getZoomLevel(this.initialRange);
 
-      const videoImages = document.querySelectorAll('#test' + videoIndex + 'img');
-
+      const videoId = '#test' + videoIndex + ' img';
+      const videoImages = document.querySelectorAll(videoId);
       console.log(videoImages);
 
       [].forEach.call(videoImages, (each, index) => {
         console.log(each);
       });
-
     }
   }
 
