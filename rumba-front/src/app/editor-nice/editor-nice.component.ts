@@ -297,9 +297,9 @@ export class EditorNiceComponent implements OnInit {
       this.onSelectFrame(event, videoIndex);
     } else  {
       const secondsGap = this.getZoomLevel(this.initialRange);
-      console.log(this.listOfLists[videoIndex]);
 
-      const videoImages = document.querySelectorAll('test' + videoIndex);
+      const videoImages = document.querySelectorAll('#test' + videoIndex + 'img');
+
       console.log(videoImages);
 
       [].forEach.call(videoImages, (each, index) => {
