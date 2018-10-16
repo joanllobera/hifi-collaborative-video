@@ -298,6 +298,7 @@ export class EditorNiceComponent implements OnInit {
     } else  {
       const secondsGap = this.getZoomLevel(this.initialRange);
       console.log(this.listOfLists[videoIndex]);
+      console.log(this.listOfLists[videoIndex][blobIndex]);
       // for (let i = 0; i < secondsGap; i++) {
       // }
     }
