@@ -111,10 +111,6 @@ export class EditorNiceComponent implements OnInit {
     this.initialRange = value;
   }
 
-  selectAllChilds(singleArray, position: number, oldZoom: number, newZoom: number) {
-    console.log(singleArray[position]);
-  }
-
   recoverThumbnailsZoomOut(value: number) {
     const iframe = document.querySelectorAll('.iframe');
     const imagesByVideo = [];
@@ -300,8 +296,15 @@ export class EditorNiceComponent implements OnInit {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
       this.onSelectFrame(event, videoIndex);
     } else  {
-      console.log('zoomLevel higher than 1s/thumbnail');
+      const secondsGap = this.getZoomLevel(this.initialRange);
+      console.log(this.listOfLists[videoIndex]);
+      // for (let i = 0; i < secondsGap; i++) {
+      // }
     }
+  }
+
+  selectAllChilds(singleArray, position: number, oldZoom: number, newZoom: number) {
+    console.log(singleArray[position]);
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
