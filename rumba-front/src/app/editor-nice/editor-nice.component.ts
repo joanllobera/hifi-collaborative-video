@@ -303,7 +303,9 @@ export class EditorNiceComponent implements OnInit {
       console.log(videoImages);
 
       [].forEach.call(videoImages, (each, index) => {
-        console.log(each);
+        if (index >= blobIndex && index < blobIndex + secondsGap) {
+          each.classList.add('selectedImg');
+        }
       });
     }
   }
