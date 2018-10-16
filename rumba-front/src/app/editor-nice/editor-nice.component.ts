@@ -222,7 +222,7 @@ export class EditorNiceComponent implements OnInit {
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              const dif = each.ts - this.allVideosOk[index-1].ts;
+              const dif = each.ts - this.allVideosOk[index - 1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
@@ -298,9 +298,14 @@ export class EditorNiceComponent implements OnInit {
     } else  {
       const secondsGap = this.getZoomLevel(this.initialRange);
       console.log(this.listOfLists[videoIndex]);
-      console.log(this.listOfLists[videoIndex][blobIndex]);
-      // for (let i = 0; i < secondsGap; i++) {
-      // }
+
+      const videoImages = document.querySelectorAll('test' + videoIndex);
+      console.log(videoImages);
+
+      [].forEach.call(videoImages, (each, index) => {
+        console.log(each);
+      });
+
     }
   }
 
