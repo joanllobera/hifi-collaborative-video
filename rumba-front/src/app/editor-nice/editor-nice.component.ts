@@ -111,10 +111,6 @@ export class EditorNiceComponent implements OnInit {
     this.initialRange = value;
   }
 
-  selectAllChilds(singleArray, position: number, oldZoom: number, newZoom: number) {
-    console.log(singleArray[position]);
-  }
-
   recoverThumbnailsZoomOut(value: number) {
     const iframe = document.querySelectorAll('.iframe');
     const imagesByVideo = [];
@@ -226,7 +222,7 @@ export class EditorNiceComponent implements OnInit {
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              const dif = each.ts - this.allVideosOk[index-1].ts;
+              const dif = each.ts - this.allVideosOk[index - 1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
@@ -296,10 +292,22 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
-    if (this.initialRange === 1) {
+    if (this.initialRange === 5) {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+      this.onSelectFrame(event, videoIndex);
     } else  {
-      console.log('zoomLevel higher than 1s/thumbnail');
+      const secondsGap = this.getZoomLevel(this.initialRange);
+
+      const videoId = '#test' + videoIndex + ' img';
+      const videoImages = document.querySelectorAll(videoId);
+      console.log(videoImages);
+
+      [].forEach.call(videoImages, (each, index) => {
+        if (index >= blobIndex && index < blobIndex + secondsGap) {
+          // this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+          // this.onSelectFrame(event, videoIndex);
+        }
+      });
     }
   }
 
@@ -339,7 +347,7 @@ export class EditorNiceComponent implements OnInit {
     console.log('videoJson length:::', this.videoJson.length);
   }
 
-  onSelectFrame(event, videoIndex: number, blobIndex: number): void {
+  onSelectFrame(event, videoIndex: number): void {
     event.target.classList.toggle('selectedImg');
 
     if (event.target.classList.contains('first') && !event.target.classList.contains('selectedImg')) {
