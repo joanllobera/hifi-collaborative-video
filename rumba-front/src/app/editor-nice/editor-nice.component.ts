@@ -20,7 +20,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class EditorNiceComponent implements OnInit {
 
-  initialRange: number = 5;
+  initialRange = 5;
   oldValue: number = null;
   singleList: string[] = [];
   listOfLists: any[] = [];
@@ -292,7 +292,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
-    if (this.initialRange === 5) {
+    if (this.initialRange == 5) {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
       this.onSelectFrame(event, videoIndex);
     } else  {
