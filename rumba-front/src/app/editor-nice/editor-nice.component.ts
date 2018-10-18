@@ -305,7 +305,7 @@ export class EditorNiceComponent implements OnInit {
       [].forEach.call(videoImages, (each, index) => {
         if (index >= blobIndex && index < blobIndex + secondsGap) {
           this.getThumbInfo(each, videoIndex, blobIndex, marginDelta);
-          // this.onSelectFrame(each, videoIndex);
+          this.onSelectFrameIMG(each, videoIndex);
         }
       });
     }
@@ -362,6 +362,26 @@ export class EditorNiceComponent implements OnInit {
       this.videoJson.push(thumbnail);
     }
     console.log('videoJson length:::', this.videoJson.length);
+  }
+
+  onSelectFrameIMG(img, videoIndex: number): void {
+    img.classList.toggle('selectedImg');
+
+    if (img.classList.contains('first') && !img.classList.contains('selectedImg')) {
+      img.classList.remove('first');
+    }
+    const video = document.querySelector('#test' + videoIndex);
+    const image = video.querySelector('img.selectedImg');
+    if (image) {
+      image.classList.add('first');
+    }
+    if (img.classList.contains('last') && !img.classList.contains('selectedImg')) {
+      img.classList.remove('last');
+    }
+    const imgLast = video.querySelectorAll('img.selectedImg');
+    if (imgLast.length > 0) {
+      imgLast[imgLast.length-1].classList.add('last');
+    }
   }
 
   onSelectFrame(event, videoIndex: number): void {
