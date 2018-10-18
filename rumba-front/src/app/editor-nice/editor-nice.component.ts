@@ -304,7 +304,7 @@ export class EditorNiceComponent implements OnInit {
 
       [].forEach.call(videoImages, (each, index) => {
         if (index >= blobIndex && index < blobIndex + secondsGap) {
-          // this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+          this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
           // this.onSelectFrame(event, videoIndex);
         }
       });
@@ -312,8 +312,14 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
-    const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-    const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+    let pos: number;
+    // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+    if (event['clientX']) {
+      pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+    } else {
+      pos = Math.trunc((event.x - 10) / (8 * 10));
+    }
+
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
