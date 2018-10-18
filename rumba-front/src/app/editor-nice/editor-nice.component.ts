@@ -313,10 +313,13 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
     let pos: number;
+    let isEvent: boolean;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
     if (event['clientX']) {
+      isEvent = true;
       pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
     } else {
+      isEvent = false;
       pos = Math.trunc((event.x - 10) / (8 * 10));
     }
 
@@ -331,7 +334,11 @@ export class EditorNiceComponent implements OnInit {
       if (img) {
         img.classList.remove('first');
       }
-      event.target.classList.add('first');
+      if (event.target) {
+        event.target.classList.add('first');
+      } else {
+        event.classList.add('first');
+      }
     }
     if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
@@ -339,7 +346,11 @@ export class EditorNiceComponent implements OnInit {
       if (img) {
         img.classList.remove('last');
       }
-      event.target.classList.add('last');
+      if (event.target) {
+        event.target.classList.add('last');
+      } else {
+      event.classList.add('last');
+      }
     }
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
     if (this.duplicates(this.videoJson, thumbnail)) {
