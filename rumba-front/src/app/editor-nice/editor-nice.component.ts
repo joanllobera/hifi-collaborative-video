@@ -304,15 +304,11 @@ export class EditorNiceComponent implements OnInit {
 
       [].forEach.call(videoImages, (each, index) => {
         if (index >= blobIndex && index < blobIndex + secondsGap) {
-          this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
-          this.onSelectFrame(event, videoIndex);
+          // this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
+          // this.onSelectFrame(event, videoIndex);
         }
       });
     }
-  }
-
-  selectAllChilds(singleArray, position: number, oldZoom: number, newZoom: number) {
-    console.log(singleArray[position]);
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
