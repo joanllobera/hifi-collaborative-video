@@ -339,6 +339,7 @@ export class EditorNiceComponent implements OnInit {
         if (!this.duplicates(this.videoJson, thumbnail)) {
           this.videoJson.push(thumbnail);
         }
+        console.log(this.videoJson);
       }
 
       // get first and last of selected Thumbs
