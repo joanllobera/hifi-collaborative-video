@@ -272,7 +272,7 @@ export class EditorNiceComponent implements OnInit {
     return _index;
   }
 
-  isFirstItem(array, object) {
+  isFirstItem(array, object): boolean {
     let first: boolean = true;
     array.forEach((each, index) => {
       if (each.thumb < object.thumb && each.id === object.id) {
@@ -282,7 +282,7 @@ export class EditorNiceComponent implements OnInit {
     return first;
   }
 
-  isLastItem(array, object) {
+  isLastItem(array, object): boolean {
     let last: boolean = true;
     array.forEach((each, index) => {
       if (each.thumb > object.thumb && each.id === object.id) {

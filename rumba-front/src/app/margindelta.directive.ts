@@ -27,15 +27,8 @@ export class MargindeltaDirective implements OnInit {
         }
       );
 
-    this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
+    // this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
 
-    // this.videoSrv.rangeValue
-    //   .subscribe(
-    //     (zoomLevel: number) => {
-    //       this.thumbnailSize = 8 * zoomLevel;
-    //       this.elementRef.nativeElement.style.marginLeft = (this.deltasize * this.thumbnailSize) + 'px';
-    //     }
-    //   );
   }
 
 }
