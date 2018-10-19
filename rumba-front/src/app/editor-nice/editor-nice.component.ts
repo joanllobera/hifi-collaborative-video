@@ -326,6 +326,19 @@ export class EditorNiceComponent implements OnInit {
 
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex + q].classList.add('selectedImg');
+
+        // add thumbnail to array
+        // const pos = Math.trunc( ((videoImages[blobIndex + q].x - 10) / (8 * 10)) * secondsGap );
+
+        // const thumbnail = {
+        //   id: this.allVideosOk[videoIndex].video_id,
+        //   thumb: blobIndex,
+        //   position: pos
+        // };
+
+        // if (!this.duplicates(this.videoJson, thumbnail)) {
+        //   this.videoJson.push(thumbnail);
+        // }
       }
 
       // get first and last of selected Thumbs
@@ -342,21 +355,6 @@ export class EditorNiceComponent implements OnInit {
           break;
         }
       }
-
-      // add thumbnail to array
-
-      const pos = Math.trunc(((event['clientX'] - 10) / (8 * 10)) * secondsGap);
-
-      const thumbnail = {
-        id: this.allVideosOk[videoIndex].video_id,
-        thumb: blobIndex,
-        position: pos
-      };
-
-
-
-
-
     }
   }
 
