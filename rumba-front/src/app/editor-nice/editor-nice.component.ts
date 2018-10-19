@@ -322,8 +322,8 @@ export class EditorNiceComponent implements OnInit {
         }
       }
 
-      for (let z = videoImages.length - 1; z = 0; z--) {
-        if (videoImages[z].classList.contains('slectedImg')) {
+      for (let z = videoImages.length - 1; z >= 0; z--) {
+        if (videoImages[z].classList.contains('selectedImg')) {
           videoImages[z].classList.add('last');
           break;
         }
