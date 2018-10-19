@@ -322,7 +322,7 @@ export class EditorNiceComponent implements OnInit {
         }
       }
 
-      for (let z = videoImages.length; z > 0; z--) {
+      for (let z = videoImages.length; z = 0; z--) {
         if (videoImages[z].classList.contains('slectedImg')) {
           videoImages[z].classList.add('last');
           break;
