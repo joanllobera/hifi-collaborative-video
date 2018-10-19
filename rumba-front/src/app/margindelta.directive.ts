@@ -26,9 +26,6 @@ export class MargindeltaDirective implements OnInit {
           this.elementRef.nativeElement.style.marginLeft = ((this.deltasize * (8 * 10)) / data) + 'px';
         }
       );
-
-    // this.elementRef.nativeElement.style.marginLeft = (this.deltasize * (8 * 10)) + 'px';
-
   }
 
 }

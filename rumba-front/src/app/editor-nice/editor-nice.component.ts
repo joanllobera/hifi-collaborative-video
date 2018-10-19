@@ -342,6 +342,21 @@ export class EditorNiceComponent implements OnInit {
           break;
         }
       }
+
+      // add thumbnail to array
+
+      const pos = Math.trunc(((event['clientX'] - 10) / (8 * 10)) * secondsGap);
+
+      const thumbnail = {
+        id: this.allVideosOk[videoIndex].video_id,
+        thumb: blobIndex,
+        position: pos
+      };
+
+
+
+
+
     }
   }
 
