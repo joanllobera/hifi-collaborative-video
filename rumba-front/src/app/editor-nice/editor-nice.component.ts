@@ -303,12 +303,16 @@ export class EditorNiceComponent implements OnInit {
       const videoImages = document.querySelectorAll(videoId);
       console.log(videoImages);
 
-      [].forEach.call(videoImages, (each, index) => {
-        if (index >= blobIndex && index < blobIndex + secondsGap) {
-          this.getThumbInfo(each, videoIndex, blobIndex, marginDelta);
-          this.onSelectFrameIMG(each, videoIndex);
-        }
-      });
+      // [].forEach.call(videoImages, (each, index) => {
+      //   if (index >= blobIndex && index < blobIndex + secondsGap) {
+      //     this.getThumbInfo(each, videoIndex, blobIndex, marginDelta);
+      //     this.onSelectFrameIMG(each, videoIndex);
+      //   }
+      // });
+
+      videoImages[blobIndex].classList.add('selectedImg');
+
+
     }
   }
 
