@@ -348,7 +348,7 @@ export class EditorNiceComponent implements OnInit {
       //   }
       //   console.log(this.videoJson);
       //   blobIndex += 1;
-      // }
+      }
 
       // get first and last of selected Thumbs
       for (let k = 0; k < videoImages.length; k++) {
