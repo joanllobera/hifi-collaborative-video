@@ -328,7 +328,15 @@ export class EditorNiceComponent implements OnInit {
         videoImages[blobIndex + q].classList.add('selectedImg');
 
         // add thumbnail to array
-        const pos = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+        let pos = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+
+        if (videoImages[blobIndex + q]['x'] !== 0) {
+          this.lastThumbPos = pos;
+        }
+
+        if (videoImages[blobIndex + q]['x'] === 0) {
+          pos = this.lastThumbPos + 1;
+        }
 
         const thumbnail = {
           id: this.allVideosOk[videoIndex].video_id,
@@ -364,13 +372,8 @@ export class EditorNiceComponent implements OnInit {
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
     if (event['clientX']) {
       pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-      this.lastThumbPos = pos;
     } else {
-      if (event.x !== 0) {
-        pos = Math.trunc((event.x - 10) / (8 * 10));
-      } else {
-        pos = this.lastThumbPos + 1;
-      }
+      pos = Math.trunc((event.x - 10) / (8 * 10));
     }
 
     const thumbnail = {
