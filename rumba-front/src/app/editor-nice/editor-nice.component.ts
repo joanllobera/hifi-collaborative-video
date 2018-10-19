@@ -327,29 +327,28 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex + q].classList.add('selectedImg');
 
-        // add thumbnail to array
-        let pos = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+      //   let pos = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
 
-        if (videoImages[blobIndex + q]['x'] !== 0) {
-          this.lastThumbPos = pos;
-        }
+      //   if (videoImages[blobIndex + q]['x'] !== 0) {
+      //     this.lastThumbPos = pos;
+      //   }
 
-        if (videoImages[blobIndex + q]['x'] === 0) {
-          pos = this.lastThumbPos + 1;
-        }
+      //   if (videoImages[blobIndex + q]['x'] === 0) {
+      //     pos = this.lastThumbPos + 1;
+      //   }
 
-        const thumbnail = {
-          id: this.allVideosOk[videoIndex].video_id,
-          thumb: blobIndex,
-          position: pos
-        };
+      //   const thumbnail = {
+      //     id: this.allVideosOk[videoIndex].video_id,
+      //     thumb: blobIndex,
+      //     position: pos
+      //   };
 
-        if (!this.duplicates(this.videoJson, thumbnail)) {
-          this.videoJson.push(thumbnail);
-        }
-        console.log(this.videoJson);
-        blobIndex += 1;
-      }
+      //   if (!this.duplicates(this.videoJson, thumbnail)) {
+      //     this.videoJson.push(thumbnail);
+      //   }
+      //   console.log(this.videoJson);
+      //   blobIndex += 1;
+      // }
 
       // get first and last of selected Thumbs
       for (let k = 0; k < videoImages.length; k++) {
