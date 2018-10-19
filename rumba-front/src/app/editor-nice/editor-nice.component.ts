@@ -314,7 +314,20 @@ export class EditorNiceComponent implements OnInit {
         videoImages[blobIndex + q].classList.add('selectedImg');
       }
 
+      // get first and last of selected Thumbs
+      for (let k = 0; k < videoImages.length; k++) {
+        if (videoImages[k].classList.contains('selectedImg')) {
+          videoImages[k].classList.add('first');
+          break;
+        }
+      }
 
+      for (let z = videoImages.length; z > 0; z--) {
+        if (videoImages[z].classList.contains('slectedImg')) {
+          videoImages[z].classList.add('last');
+          break;
+        }
+      }
     }
   }
 
