@@ -20,6 +20,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class EditorNiceComponent implements OnInit {
 
+  lastThumbPos: number = null;
   initialRange = 5;
   oldValue: number = null;
   singleList: string[] = [];
@@ -313,14 +314,16 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
     let pos: number;
-    let isEvent: boolean;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
     if (event['clientX']) {
-      isEvent = true;
       pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      this.lastThumbPos = pos;
     } else {
-      isEvent = false;
-      pos = Math.trunc((event.x - 10) / (8 * 10));
+      if (event.x !== 0) {
+        pos = Math.trunc((event.x - 10) / (8 * 10));
+      } else {
+        pos = this.lastThumbPos + 1;
+      }
     }
 
     const thumbnail = {
