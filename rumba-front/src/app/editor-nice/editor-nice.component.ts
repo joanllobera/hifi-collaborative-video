@@ -310,7 +310,9 @@ export class EditorNiceComponent implements OnInit {
       //   }
       // });
 
-      videoImages[blobIndex].classList.add('selectedImg');
+      for (let q = 0; q < secondsGap; q++) {
+        videoImages[blobIndex + q].classList.add('selectedImg');
+      }
 
 
     }
