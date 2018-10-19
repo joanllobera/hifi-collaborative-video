@@ -310,6 +310,20 @@ export class EditorNiceComponent implements OnInit {
       //   }
       // });
 
+      for (let j = 0; j < videoImages.length; j++) {
+        if (videoImages[j].classList.contains('first')) {
+          videoImages[j].classList.remove('first');
+          break;
+        }
+      }
+
+      for (let z = videoImages.length - 1; z >= 0; z--) {
+        if (videoImages[z].classList.contains('last')) {
+          videoImages[z].classList.remove('last');
+          break;
+        }
+      }
+
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex + q].classList.add('selectedImg');
       }
