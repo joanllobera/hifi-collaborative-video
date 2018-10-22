@@ -345,11 +345,13 @@ export class EditorNiceComponent implements OnInit {
 
         console.log(thumbnail);
 
-        //   if (!this.duplicates(this.videoJson, thumbnail)) {
-      //     this.videoJson.push(thumbnail);
-      //   }
-      //   console.log(this.videoJson);
-      //   blobIndex += 1;
+        if (!this.duplicates(this.videoJson, thumbnail)) {
+          this.videoJson.push(thumbnail);
+        }
+
+        console.log(this.videoJson);
+        blobIndex += 1;
+        this.lastThumbPos += 1;
       }
 
       // get first and last of selected Thumbs
