@@ -329,21 +329,23 @@ export class EditorNiceComponent implements OnInit {
 
       let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
 
-      //   if (videoImages[blobIndex + q]['x'] !== 0) {
-      //     this.lastThumbPos = pos;
-      //   }
+        if (videoImages[blobIndex + q]['x'] !== 0 && videoImages[blobIndex + q]['x'] !== -0) {
+          this.lastThumbPos = pos;
+        }
 
-      //   if (videoImages[blobIndex + q]['x'] === 0) {
-      //     pos = this.lastThumbPos + 1;
-      //   }
+        if (videoImages[blobIndex + q]['x'] === 0) {
+          pos = this.lastThumbPos + 1;
+        }
 
-      //   const thumbnail = {
-      //     id: this.allVideosOk[videoIndex].video_id,
-      //     thumb: blobIndex,
-      //     position: pos
-      //   };
+        const thumbnail = {
+          id: this.allVideosOk[videoIndex].video_id,
+          thumb: blobIndex,
+          position: pos
+        };
 
-      //   if (!this.duplicates(this.videoJson, thumbnail)) {
+        console.log(thumbnail);
+
+        //   if (!this.duplicates(this.videoJson, thumbnail)) {
       //     this.videoJson.push(thumbnail);
       //   }
       //   console.log(this.videoJson);
