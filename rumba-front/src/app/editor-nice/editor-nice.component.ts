@@ -331,10 +331,9 @@ export class EditorNiceComponent implements OnInit {
 
         if (videoImages[blobIndex + q]['x'] !== 0 && videoImages[blobIndex + q]['x'] !== -0) {
           this.lastThumbPos = pos;
-        }
-
-        if (videoImages[blobIndex + q]['x'] === 0) {
-          pos = this.lastThumbPos + 1;
+        } else {
+          this.lastThumbPos += 1;
+          pos = this.lastThumbPos;
         }
 
         const thumbnail = {
@@ -351,7 +350,6 @@ export class EditorNiceComponent implements OnInit {
 
         console.log(this.videoJson);
         blobIndex += 1;
-        this.lastThumbPos += 1;
       }
 
       // get first and last of selected Thumbs
