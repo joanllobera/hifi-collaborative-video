@@ -329,7 +329,7 @@ export class EditorNiceComponent implements OnInit {
 
         let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
 
-        if (videoImages[blobIndex + q]['x'] !== 0 || videoImages[blobIndex + q]['x'] !== -0) {
+        if (videoImages[blobIndex + q]['x'] !== 0) {
           this.lastThumbPos = pos;
         } else {
           this.lastThumbPos += 1;
