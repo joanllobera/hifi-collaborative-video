@@ -106,7 +106,8 @@ export class EditorNiceComponent implements OnInit {
       this.recoverThumbnails(value);
     } else {
       // when user is zooming out
-     this.recoverThumbnailsZoomOut(value);
+      // this.recoverThumbnailsZoomOut(value);
+      this.recoverThumbnails(value);
     }
     this.oldValue = this.initialRange;
     this.initialRange = value;
