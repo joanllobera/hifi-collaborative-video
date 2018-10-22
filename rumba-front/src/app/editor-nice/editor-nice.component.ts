@@ -383,10 +383,10 @@ export class EditorNiceComponent implements OnInit {
 
 
     if (event['clientX']) {
-      pos = Math.trunc((event['clientX'] + (40 - diff) - 10) / (8 * 10));
+      pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
       // pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
     } else {
-      pos = Math.trunc((event.x + (40 - diff) - 10) / (8 * 10));
+      pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
       // pos = Math.trunc((event.x - 10) / (8 * 10));
     }
 
