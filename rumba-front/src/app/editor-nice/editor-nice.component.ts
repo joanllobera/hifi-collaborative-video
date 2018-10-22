@@ -325,7 +325,7 @@ export class EditorNiceComponent implements OnInit {
       }
 
       for (let q = 0; q < secondsGap; q++) {
-        videoImages[blobIndex + q].classList.add('selectedImg');
+        videoImages[blobIndex].classList.add('selectedImg');
 
         // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
         let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
