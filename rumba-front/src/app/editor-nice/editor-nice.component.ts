@@ -327,9 +327,10 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex + q].classList.add('selectedImg');
 
-        let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+        // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
 
-        if (videoImages[blobIndex + q]['x'] !== 0) {
+        if (videoImages[blobIndex]['x'] !== 0) {
           this.lastThumbPos = pos;
         } else {
           this.lastThumbPos += 1;
