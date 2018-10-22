@@ -371,9 +371,17 @@ export class EditorNiceComponent implements OnInit {
     }
   }
 
+  getImageMiddle(offsetX: number): number {
+    return 80 - offsetX;
+  }
+
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
     let pos: number;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+
+    const diff: number = this.getImageMiddle(event.offsetX);
+
+
     if (event['clientX']) {
       pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
     } else {
