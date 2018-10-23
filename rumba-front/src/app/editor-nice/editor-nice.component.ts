@@ -308,6 +308,7 @@ export class EditorNiceComponent implements OnInit {
       const currentVideo = document.getElementById('test' + videoIndex);
       const videoMargin = +currentVideo.style.marginLeft.replace('px', '');
 
+      const finalMargin = videoMargin * secondsGap;
 
       // [].forEach.call(videoImages, (each, index) => {
       //   if (index >= blobIndex && index < blobIndex + secondsGap) {
