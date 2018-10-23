@@ -302,7 +302,7 @@ export class EditorNiceComponent implements OnInit {
 
       const videoId = '#test' + videoIndex + ' img';
       const videoImages = document.querySelectorAll(videoId);
-      console.log(videoImages);
+
       //  mew way to get thumb position
       const container = document.getElementsByClassName('video-container');
       const currentVideo = document.getElementById('test' + videoIndex);
@@ -403,9 +403,7 @@ export class EditorNiceComponent implements OnInit {
     // this.showEventValues(event);
 
     let pos: number;
-
     const diff: number = this.getImageMiddle(event.offsetX);
-
     const div = document.getElementsByClassName('video-container');
 
     let posOk: number;
@@ -425,6 +423,9 @@ export class EditorNiceComponent implements OnInit {
       thumb: blobIndex,
       position: posOk
     };
+
+    console.log(thumbnail);
+
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.first');
