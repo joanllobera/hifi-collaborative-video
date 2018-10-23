@@ -302,7 +302,13 @@ export class EditorNiceComponent implements OnInit {
 
       const videoId = '#test' + videoIndex + ' img';
       const videoImages = document.querySelectorAll(videoId);
-      console.log(videoImages);
+
+      //  mew way to get thumb position
+      const container = document.getElementsByClassName('video-container');
+      const currentVideo = document.getElementById('test' + videoIndex);
+      const videoMargin = +currentVideo.style.marginLeft.replace('px', '');
+
+      const finalMargin = videoMargin * secondsGap;
 
       // [].forEach.call(videoImages, (each, index) => {
       //   if (index >= blobIndex && index < blobIndex + secondsGap) {
@@ -328,23 +334,23 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex].classList.add('selectedImg');
 
-        const diff: number = this.getImageMiddle(event.offsetX);
+        // this is the good one
+        let posOk = Math.trunc((container[0].scrollLeft + event['offsetX'] + finalMargin) / 80);
 
-        // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
         // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
-        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
+        // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
 
         if (videoImages[blobIndex]['x'] !== 0) {
-          this.lastThumbPos = pos;
+          this.lastThumbPos = posOk;
         } else {
           this.lastThumbPos += 1;
-          pos = this.lastThumbPos;
+          posOk = this.lastThumbPos;
         }
 
         const thumbnail = {
           id: this.allVideosOk[videoIndex].video_id,
           thumb: blobIndex,
-          position: pos
+          position: posOk
         };
 
         console.log(thumbnail);
@@ -378,26 +384,48 @@ export class EditorNiceComponent implements OnInit {
     return 40 - offsetX;
   }
 
+  showEventValues(evt) {
+    alert(
+      'x value: ' + evt.x + '\n' +
+      'y value: ' + evt.y + '\n\n' +
+      'clientX value: ' + evt.clientX + '\n' +
+      'clientY value: ' + evt.clientY + '\n\n' +
+      'screenX value: ' + evt.screenX + '\n' +
+      'screenY value: ' + evt.screenY + '\n\n' +
+      'pageX value: ' + evt.pageX + '\n' +
+      'pageY value: ' + evt.pageY + '\n' +
+      'offsetX value: ' + evt.offsetX + '\n' +
+      'offsetY value: ' + evt.offsetY + '\n\n'
+    );
+  }
+
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
+    // this.showEventValues(event);
+
     let pos: number;
-    // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
-
     const diff: number = this.getImageMiddle(event.offsetX);
+    const div = document.getElementsByClassName('video-container');
 
+    let posOk: number;
 
     if (event['clientX']) {
       // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
-      pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      // pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      posOk = Math.trunc((div[0].scrollLeft + event['clientX']) / 80);
     } else {
       // pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
-      pos = Math.trunc((event.x - 10) / (8 * 10));
+      // pos = Math.trunc((event.x - 10) / (8 * 10));
+      posOk = Math.trunc((div[0].scrollLeft + event['x']) / 80);
     }
 
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
-      position: pos
+      position: posOk
     };
+
+    console.log(thumbnail);
+
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.first');
