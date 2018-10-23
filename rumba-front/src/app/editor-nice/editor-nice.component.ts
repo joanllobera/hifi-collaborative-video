@@ -20,7 +20,8 @@ import { Subject } from 'rxjs/Subject';
 })
 export class EditorNiceComponent implements OnInit {
 
-  initialRange: number = 5;
+  lastThumbPos: number = null;
+  initialRange = 5;
   oldValue: number = null;
   singleList: string[] = [];
   listOfLists: any[] = [];
@@ -105,7 +106,8 @@ export class EditorNiceComponent implements OnInit {
       this.recoverThumbnails(value);
     } else {
       // when user is zooming out
-     this.recoverThumbnailsZoomOut(value);
+      // this.recoverThumbnailsZoomOut(value);
+      this.recoverThumbnails(value);
     }
     this.oldValue = this.initialRange;
     this.initialRange = value;
@@ -271,7 +273,7 @@ export class EditorNiceComponent implements OnInit {
     return _index;
   }
 
-  isFirstItem(array, object) {
+  isFirstItem(array, object): boolean {
     let first: boolean = true;
     array.forEach((each, index) => {
       if (each.thumb < object.thumb && each.id === object.id) {
@@ -281,7 +283,7 @@ export class EditorNiceComponent implements OnInit {
     return first;
   }
 
-  isLastItem(array, object) {
+  isLastItem(array, object): boolean {
     let last: boolean = true;
     array.forEach((each, index) => {
       if (each.thumb > object.thumb && each.id === object.id) {
@@ -292,7 +294,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
-    if (this.initialRange === 5) {
+    if (this.initialRange == 5) {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
       this.onSelectFrame(event, videoIndex);
     } else  {
@@ -302,18 +304,95 @@ export class EditorNiceComponent implements OnInit {
       const videoImages = document.querySelectorAll(videoId);
       console.log(videoImages);
 
-      [].forEach.call(videoImages, (each, index) => {
-        if (index >= blobIndex && index < blobIndex + secondsGap) {
-          // this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
-          // this.onSelectFrame(event, videoIndex);
+      // [].forEach.call(videoImages, (each, index) => {
+      //   if (index >= blobIndex && index < blobIndex + secondsGap) {
+      //     this.getThumbInfo(each, videoIndex, blobIndex, marginDelta);
+      //     this.onSelectFrameIMG(each, videoIndex);
+      //   }
+      // });
+
+      for (let j = 0; j < videoImages.length; j++) {
+        if (videoImages[j].classList.contains('first')) {
+          videoImages[j].classList.remove('first');
+          break;
         }
-      });
+      }
+
+      for (let z = videoImages.length - 1; z >= 0; z--) {
+        if (videoImages[z].classList.contains('last')) {
+          videoImages[z].classList.remove('last');
+          break;
+        }
+      }
+
+      for (let q = 0; q < secondsGap; q++) {
+        videoImages[blobIndex].classList.add('selectedImg');
+
+        const diff: number = this.getImageMiddle(event.offsetX);
+
+        // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
+        // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
+        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
+
+        if (videoImages[blobIndex]['x'] !== 0) {
+          this.lastThumbPos = pos;
+        } else {
+          this.lastThumbPos += 1;
+          pos = this.lastThumbPos;
+        }
+
+        const thumbnail = {
+          id: this.allVideosOk[videoIndex].video_id,
+          thumb: blobIndex,
+          position: pos
+        };
+
+        console.log(thumbnail);
+
+        if (!this.duplicates(this.videoJson, thumbnail)) {
+          this.videoJson.push(thumbnail);
+        }
+
+        console.log(this.videoJson);
+        blobIndex += 1;
+      }
+
+      // get first and last of selected Thumbs
+      for (let k = 0; k < videoImages.length; k++) {
+        if (videoImages[k].classList.contains('selectedImg')) {
+          videoImages[k].classList.add('first');
+          break;
+        }
+      }
+
+      for (let z = videoImages.length - 1; z >= 0; z--) {
+        if (videoImages[z].classList.contains('selectedImg')) {
+          videoImages[z].classList.add('last');
+          break;
+        }
+      }
     }
   }
 
+  getImageMiddle(offsetX: number): number {
+    return 40 - offsetX;
+  }
+
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
-    const pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
-    const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+    let pos: number;
+    // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
+
+    const diff: number = this.getImageMiddle(event.offsetX);
+
+
+    if (event['clientX']) {
+      // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
+      pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+    } else {
+      // pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
+      pos = Math.trunc((event.x - 10) / (8 * 10));
+    }
+
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
@@ -325,7 +404,11 @@ export class EditorNiceComponent implements OnInit {
       if (img) {
         img.classList.remove('first');
       }
-      event.target.classList.add('first');
+      if (event.target) {
+        event.target.classList.add('first');
+      } else {
+        event.classList.add('first');
+      }
     }
     if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
@@ -333,7 +416,11 @@ export class EditorNiceComponent implements OnInit {
       if (img) {
         img.classList.remove('last');
       }
-      event.target.classList.add('last');
+      if (event.target) {
+        event.target.classList.add('last');
+      } else {
+      event.classList.add('last');
+      }
     }
     console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
     if (this.duplicates(this.videoJson, thumbnail)) {
@@ -345,6 +432,26 @@ export class EditorNiceComponent implements OnInit {
       this.videoJson.push(thumbnail);
     }
     console.log('videoJson length:::', this.videoJson.length);
+  }
+
+  onSelectFrameIMG(img, videoIndex: number): void {
+    img.classList.toggle('selectedImg');
+
+    if (img.classList.contains('first') && !img.classList.contains('selectedImg')) {
+      img.classList.remove('first');
+    }
+    const video = document.querySelector('#test' + videoIndex);
+    const image = video.querySelector('img.selectedImg');
+    if (image) {
+      image.classList.add('first');
+    }
+    if (img.classList.contains('last') && !img.classList.contains('selectedImg')) {
+      img.classList.remove('last');
+    }
+    const imgLast = video.querySelectorAll('img.selectedImg');
+    if (imgLast.length > 0) {
+      imgLast[imgLast.length-1].classList.add('last');
+    }
   }
 
   onSelectFrame(event, videoIndex: number): void {
