@@ -381,9 +381,11 @@ export class EditorNiceComponent implements OnInit {
   showEventValues(evt) {
     alert(
       'clientX value: ' + evt.clientX + '\n' +
-      'clientY value: ' + evt.clientY + '\n' +
+      'clientY value: ' + evt.clientY + '\n\n' +
       'screenX value: ' + evt.screenX + '\n' +
-      'screenY value: ' + evt.screenY + '\n'
+      'screenY value: ' + evt.screenY + '\n\n' +
+      'pageX value: ' + evt.pageX + '\n' +
+      'pageY value: ' + evt.pageY + '\n'
     );
   }
 
