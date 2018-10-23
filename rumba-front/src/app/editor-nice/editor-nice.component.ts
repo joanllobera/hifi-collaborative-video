@@ -389,7 +389,7 @@ export class EditorNiceComponent implements OnInit {
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
     this.showEventValues(event);
-    
+
     let pos: number;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
 
