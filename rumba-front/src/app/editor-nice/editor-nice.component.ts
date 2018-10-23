@@ -303,6 +303,11 @@ export class EditorNiceComponent implements OnInit {
       const videoId = '#test' + videoIndex + ' img';
       const videoImages = document.querySelectorAll(videoId);
       console.log(videoImages);
+      //  mew way to get thumb position
+      const container = document.getElementsByClassName('video-container');
+      const currentVideo = document.getElementById('test' + videoIndex);
+      const videoMargin = currentVideo.style.marginLeft;
+
 
       // [].forEach.call(videoImages, (each, index) => {
       //   if (index >= blobIndex && index < blobIndex + secondsGap) {
@@ -328,11 +333,10 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex].classList.add('selectedImg');
 
-        //  mew way to get thumb position
-        const div = document.getElementsByClassName('video-container');
+        const posOk = (container[0].scrollLeft + event['clientX']) / 80;
 
-        const posOk = (div[0].scrollLeft + event['clientX']) / 80;
-        const posOkZoom = ((div[0].scrollLeft + event['clientX']) / 80) * secondsGap;
+        // aquí secondsGap debería ser el valor del marginLeft del .oneVideo div
+        const posOkZoom = ((container[0].scrollLeft + event['clientX']) / 80) + videoMargin;
         console.log('posOK::', posOk);
         console.log('posOKZoom::', posOkZoom);
 
