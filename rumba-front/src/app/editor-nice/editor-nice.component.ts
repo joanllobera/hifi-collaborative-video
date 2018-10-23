@@ -331,7 +331,8 @@ export class EditorNiceComponent implements OnInit {
         const diff: number = this.getImageMiddle(event.offsetX);
 
         // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
-        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
+        // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
+        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
 
         if (videoImages[blobIndex]['x'] !== 0) {
           this.lastThumbPos = pos;
@@ -385,11 +386,11 @@ export class EditorNiceComponent implements OnInit {
 
 
     if (event['clientX']) {
-      pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
-      // pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
+      pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
     } else {
-      pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
-      // pos = Math.trunc((event.x - 10) / (8 * 10));
+      // pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
+      pos = Math.trunc((event.x - 10) / (8 * 10));
     }
 
     const thumbnail = {
