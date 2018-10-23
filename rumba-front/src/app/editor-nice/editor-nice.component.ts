@@ -306,7 +306,7 @@ export class EditorNiceComponent implements OnInit {
       //  mew way to get thumb position
       const container = document.getElementsByClassName('video-container');
       const currentVideo = document.getElementById('test' + videoIndex);
-      const videoMargin = currentVideo.style.marginLeft.replace('px', '');
+      const videoMargin = +currentVideo.style.marginLeft.replace('px', '');
 
 
       // [].forEach.call(videoImages, (each, index) => {
@@ -336,7 +336,7 @@ export class EditorNiceComponent implements OnInit {
         const posOk = (container[0].scrollLeft + event['clientX']) / 80;
 
         // aquí secondsGap debería ser el valor del marginLeft del .oneVideo div
-        const posOkZoom = ((container[0].scrollLeft + event['clientX']) / 80) + videoMargin;
+        const posOkZoom = ((container[0].scrollLeft + event['clientX']) + videoMargin / 80);
         console.log('posOK::', posOk);
         console.log('posOKZoom::', posOkZoom);
 
