@@ -334,17 +334,10 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex].classList.add('selectedImg');
 
-        const posOk = (container[0].scrollLeft + event['clientX']) / 80;
+        const posOk = (container[0].scrollLeft + event['offsetX'] + finalMargin) / 80;
 
-        // aquí secondsGap debería ser el valor del marginLeft del .oneVideo div
-        const posOkZoom = ((container[0].scrollLeft + event['clientX']) + videoMargin / 80);
-        console.log('posOK::', posOk);
-        console.log('posOKZoom::', posOkZoom);
-
-        // old way to get thumb position
         const diff: number = this.getImageMiddle(event.offsetX);
 
-        // let pos: number = Math.trunc( ((videoImages[blobIndex + q]['x'] - 10) / (8 * 10)) * secondsGap );
         // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
         let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
 
