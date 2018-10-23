@@ -394,13 +394,17 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
-    this.showEventValues(event);
+    // this.showEventValues(event);
 
     let pos: number;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
 
     const diff: number = this.getImageMiddle(event.offsetX);
 
+    const div = document.getElementsByClassName('video-container');
+
+    let posOk = (div[0].scrollLeft + event['clientX']) / 80;
+    console.log(posOk);
 
     if (event['clientX']) {
       // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
