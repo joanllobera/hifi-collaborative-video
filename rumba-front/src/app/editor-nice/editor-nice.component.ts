@@ -378,7 +378,18 @@ export class EditorNiceComponent implements OnInit {
     return 40 - offsetX;
   }
 
+  showEventValues(evt) {
+    alert(
+      'clientX value: ' + evt.clientX + '\n' +
+      'clientY value: ' + evt.clientY + '\n' +
+      'screenX value: ' + evt.screenX + '\n' +
+      'screenY value: ' + evt.screenY + '\n'
+    );
+  }
+
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
+    this.showEventValues(event);
+    
     let pos: number;
     // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
 
