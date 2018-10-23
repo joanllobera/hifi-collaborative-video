@@ -306,7 +306,7 @@ export class EditorNiceComponent implements OnInit {
       //  mew way to get thumb position
       const container = document.getElementsByClassName('video-container');
       const currentVideo = document.getElementById('test' + videoIndex);
-      const videoMargin = currentVideo.style.marginLeft;
+      const videoMargin = currentVideo.style.marginLeft.replace('px', '');
 
 
       // [].forEach.call(videoImages, (each, index) => {
