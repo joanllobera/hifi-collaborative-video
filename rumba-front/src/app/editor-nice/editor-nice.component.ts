@@ -334,24 +334,23 @@ export class EditorNiceComponent implements OnInit {
       for (let q = 0; q < secondsGap; q++) {
         videoImages[blobIndex].classList.add('selectedImg');
 
-        const posOk = (container[0].scrollLeft + event['offsetX'] + finalMargin) / 80;
-
-        const diff: number = this.getImageMiddle(event.offsetX);
+        // this is the good one
+        let posOk = (container[0].scrollLeft + event['offsetX'] + finalMargin) / 80;
 
         // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
-        let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
+        // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
 
         if (videoImages[blobIndex]['x'] !== 0) {
-          this.lastThumbPos = pos;
+          this.lastThumbPos = posOk;
         } else {
           this.lastThumbPos += 1;
-          pos = this.lastThumbPos;
+          posOk = this.lastThumbPos;
         }
 
         const thumbnail = {
           id: this.allVideosOk[videoIndex].video_id,
           thumb: blobIndex,
-          position: pos
+          position: posOk
         };
 
         console.log(thumbnail);
@@ -404,27 +403,27 @@ export class EditorNiceComponent implements OnInit {
     // this.showEventValues(event);
 
     let pos: number;
-    // const posWithDelta = Math.trunc( ((event['clientX'] - marginDelta) - 10) / (8 * 10) );
 
     const diff: number = this.getImageMiddle(event.offsetX);
 
     const div = document.getElementsByClassName('video-container');
 
-    let posOk = (div[0].scrollLeft + event['clientX']) / 80;
-    console.log(posOk);
+    let posOk: number;
 
     if (event['clientX']) {
       // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
-      pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      // pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
+      posOk = (div[0].scrollLeft + event['clientX']) / 80;
     } else {
       // pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
-      pos = Math.trunc((event.x - 10) / (8 * 10));
+      // pos = Math.trunc((event.x - 10) / (8 * 10));
+      posOk = (div[0].scrollLeft + event['x']) / 80;
     }
 
     const thumbnail = {
       id: this.allVideosOk[videoIndex].video_id,
       thumb: blobIndex,
-      position: pos
+      position: posOk
     };
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
