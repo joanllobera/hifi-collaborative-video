@@ -102,13 +102,7 @@ export class EditorNiceComponent implements OnInit {
     const values: number[] = [30, 10, 5, 2, 1];
     this.editorSrv.newZoomValue.next(values[value - 1]);
     this.removeClass('orange');
-    if (value < this.initialRange) {
-      this.recoverThumbnails(value);
-    } else {
-      // when user is zooming out
-      // this.recoverThumbnailsZoomOut(value);
-      this.recoverThumbnails(value);
-    }
+    this.recoverThumbnails(value);
     this.oldValue = this.initialRange;
     this.initialRange = value;
   }
@@ -309,13 +303,6 @@ export class EditorNiceComponent implements OnInit {
       const videoMargin = +currentVideo.style.marginLeft.replace('px', '');
 
       const finalMargin = videoMargin * secondsGap;
-
-      // [].forEach.call(videoImages, (each, index) => {
-      //   if (index >= blobIndex && index < blobIndex + secondsGap) {
-      //     this.getThumbInfo(each, videoIndex, blobIndex, marginDelta);
-      //     this.onSelectFrameIMG(each, videoIndex);
-      //   }
-      // });
 
       for (let j = 0; j < videoImages.length; j++) {
         if (videoImages[j].classList.contains('first')) {
