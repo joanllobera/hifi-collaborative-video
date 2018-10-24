@@ -325,8 +325,7 @@ export class EditorNiceComponent implements OnInit {
             videoImages[blobIndex].classList.remove('selectedImg');
           }
 
-          // this is the good one
-          let posOk = Math.trunc((container[0].scrollLeft + event['offsetX'] + finalMargin) / 80);
+          let posOk: number = Math.trunc((container[0].scrollLeft + event['offsetX'] + finalMargin) / 80);
 
           // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
           // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
@@ -361,7 +360,7 @@ export class EditorNiceComponent implements OnInit {
           videoImages[blobIndex].classList.add('selectedImg');
 
           // this is the good one
-          let posOk = Math.trunc((container[0].scrollLeft + event['offsetX'] + finalMargin) / 80);
+          let posOk = Math.trunc((container[0].scrollLeft + event['clientX'] + finalMargin) / 80);
 
           // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
           // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
