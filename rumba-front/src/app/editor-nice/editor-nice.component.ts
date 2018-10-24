@@ -359,11 +359,12 @@ export class EditorNiceComponent implements OnInit {
         for (let q = 0; q < secondsGap; q++) {
           videoImages[blobIndex].classList.add('selectedImg');
 
-          // this is the good one
-          let posOk = Math.trunc((container[0].scrollLeft + event['clientX'] + finalMargin) / 80);
+          let eventClientX: number = (80 * blobIndex) + 40;
 
-          // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
-          // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
+          // this is the good one
+          // let posOk = Math.trunc((container[0].scrollLeft + event['clientX'] + finalMargin) / 80);
+
+          let posOk = Math.trunc((container[0].scrollLeft + eventClientX + finalMargin) / 80);
 
           if (videoImages[blobIndex]['x'] !== 0) {
             this.lastThumbPos = posOk;
