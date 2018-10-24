@@ -359,7 +359,7 @@ export class EditorNiceComponent implements OnInit {
         for (let q = 0; q < secondsGap; q++) {
           videoImages[blobIndex].classList.add('selectedImg');
 
-          let eventClientX: number = (80 * blobIndex) + 40;
+          const eventClientX: number = (80 * blobIndex) + 40;
 
           // this is the good one
           // let posOk = Math.trunc((container[0].scrollLeft + event['clientX'] + finalMargin) / 80);
