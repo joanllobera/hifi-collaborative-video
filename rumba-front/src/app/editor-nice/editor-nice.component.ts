@@ -579,12 +579,12 @@ export class EditorNiceComponent implements OnInit {
             (zip) => {
               const zipFiles: any = zip.files;
               const ordered = {};
-              // Object.keys(zipFiles).sort().forEach(function(key) {
-              //   ordered[key] = zipFiles[key];
-              // });
-              for (const prop in zipFiles) {
-                if (zipFiles.hasOwnProperty(prop)) {
-                  const blob = new Blob( [ zipFiles[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+              Object.keys(zipFiles).sort().forEach(function(key) {
+                ordered[key] = zipFiles[key];
+              });
+              for (const prop in ordered) {
+                if (ordered.hasOwnProperty(prop)) {
+                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
                   reader.addEventListener('load', () => {
                     if (reader.result !== '') {
