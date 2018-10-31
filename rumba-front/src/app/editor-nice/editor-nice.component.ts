@@ -233,9 +233,12 @@ export class EditorNiceComponent implements OnInit {
             //   }, 2000);
             // }
 
-            
+            if (index === 0) {
+               this.onGetThumbnailsManySync(each.video_id);
+            }
+
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
-            this.onGetThumbnailsManySync(each.video_id);
+            // this.onGetThumbnailsManySync(each.video_id);
           });
           // console.log('this.delta:::', this.delta);
         }
