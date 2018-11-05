@@ -580,7 +580,7 @@ export class EditorNiceComponent implements OnInit {
             (zip) => {
               const zipFiles: any = zip.files;
               const ordered = {};
-              Object.keys(zipFiles).sort().forEach(function(key) {
+              Object.keys(zipFiles).sort().forEach( (key) => {
                 ordered[key] = zipFiles[key];
               });
               for (const prop in ordered) {
