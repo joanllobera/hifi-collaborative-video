@@ -568,6 +568,7 @@ export class EditorNiceComponent implements OnInit {
         }
       );
   }
+  
 
   onGetThumbnailsMany(id:string): void {
     const temp = [];
