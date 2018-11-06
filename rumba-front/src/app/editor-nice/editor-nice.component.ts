@@ -593,21 +593,6 @@ export class EditorNiceComponent implements OnInit {
               console.log('ordered::', ordered);
               console.log('allKeys::', allKeys);
 
-              // for (const prop in ordered) {
-              //   if (ordered.hasOwnProperty(prop)) {
-              //     const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
-              //     const reader = new FileReader();
-              //     reader.addEventListener('load', () => {
-              //       if (reader.result !== '') {
-              //         temp.push(reader.result);
-              //       }
-              //     }, false);
-              //     if (blob) {
-              //       reader.readAsDataURL(blob);
-              //     }
-              //   }
-              // }
-
               for (const prop in ordered) {
                 if (ordered.hasOwnProperty(prop)) {
                   const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
@@ -622,10 +607,6 @@ export class EditorNiceComponent implements OnInit {
                   }
                 }
               }
-
-
-
-
               this.listOfLists.push(temp);
           });
           // download the zip
