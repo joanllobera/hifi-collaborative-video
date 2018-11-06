@@ -588,13 +588,9 @@ export class EditorNiceComponent implements OnInit {
               const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
               const allKeys: string[] = [];
               Object.keys(zipFiles).sort(collator.compare).forEach( (key) => {
-                console.log(key);
                 allKeys.push(key);
                 ordered[key] = zipFiles[key];
               });
-              console.log('ordered::', ordered);
-              console.log('allKeys::', allKeys);
-
 
               allKeys.forEach((each, index) => {
                 if (ordered.hasOwnProperty(each)) {
@@ -604,7 +600,6 @@ export class EditorNiceComponent implements OnInit {
                     reader.readAsDataURL(blob);
                   }
                   reader.addEventListener('load', (result) => {
-                    console.log('result::::', result);
                     if (reader.result !== '') {
                       // temp.push(reader.result);
                       temp[index] = reader.result;
