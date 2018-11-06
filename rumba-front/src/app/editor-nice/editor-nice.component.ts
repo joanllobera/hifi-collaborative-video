@@ -597,7 +597,8 @@ export class EditorNiceComponent implements OnInit {
 
 
               allKeys.forEach((each) => {
-                const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
+                if (ordered.hasOwnProperty(each)) {
+                  const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
                   reader.addEventListener('load', () => {
                     if (reader.result !== '') {
@@ -607,6 +608,7 @@ export class EditorNiceComponent implements OnInit {
                   if (blob) {
                     reader.readAsDataURL(blob);
                   }
+                }
               });
 
               // for (const prop in ordered) {
