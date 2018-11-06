@@ -645,7 +645,7 @@ export class EditorNiceComponent implements OnInit {
             (zip, index) => {
               // return zip.files;
               this.zipList.push(zip.files);
-              this.listOfLists.push(zip.files);
+              // this.listOfLists.push(zip.files);
           });
           // console.log('zip.files::::::::', a);
         },
