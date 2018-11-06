@@ -213,16 +213,14 @@ export class EditorNiceComponent implements OnInit {
           // console.log(response);
           this.allVideos = response;
 
-          // this.allVideosOk = this.allVideos.filter(function (each, index) {
-          //   return each.ts > 0;
-          // });
+          this.allVideosOk = this.allVideos.filter(function (each, index) {
+            return each.ts > 0;
+          });
 
-          // this.allVideosOk.forEach((each, index) => {
-            this.allVideos.forEach((each, index) => {
+          this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              // const dif = each.ts - this.allVideosOk[index - 1].ts;
-              const dif = each.ts - this.allVideos[index - 1].ts;
+              const dif = each.ts - this.allVideosOk[index - 1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
