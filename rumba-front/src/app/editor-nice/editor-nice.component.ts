@@ -226,7 +226,8 @@ export class EditorNiceComponent implements OnInit {
             }
 
             if (index === 0) {
-              this.onGetThumbnailsMany(each.video_id);
+              // this.onGetThumbnailsMany(each.video_id);
+              this.onGetThumbnailsManySync(each.video_id);
             } else {
               setTimeout(() => {
                 this.onGetThumbnailsMany(each.video_id);
@@ -615,10 +616,10 @@ export class EditorNiceComponent implements OnInit {
                     if (reader.result !== '') {
                       temp.push(reader.result);
                     }
-                    if (blob) {
-                      reader.readAsDataURL(blob);
-                    }
                   }, false);
+                  if (blob) {
+                    reader.readAsDataURL(blob);
+                  }
                 }
               }
 
@@ -643,7 +644,7 @@ export class EditorNiceComponent implements OnInit {
           .then(
             (zip, index) => {
               // return zip.files;
-              // this.zipList.push(zip.files);
+              this.zipList.push(zip.files);
               this.listOfLists.push(zip.files);
           });
           // console.log('zip.files::::::::', a);
