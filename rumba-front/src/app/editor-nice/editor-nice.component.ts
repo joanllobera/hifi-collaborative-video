@@ -600,14 +600,15 @@ export class EditorNiceComponent implements OnInit {
                 if (ordered.hasOwnProperty(each)) {
                   const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
+                  if (blob) {
+                    reader.readAsDataURL(blob);
+                  }
                   reader.addEventListener('load', () => {
                     if (reader.result !== '') {
                       temp.push(reader.result);
                     }
                   }, false);
-                  if (blob) {
-                    reader.readAsDataURL(blob);
-                  }
+
                 }
               });
 
