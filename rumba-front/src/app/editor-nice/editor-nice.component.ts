@@ -603,7 +603,8 @@ export class EditorNiceComponent implements OnInit {
                   if (blob) {
                     reader.readAsDataURL(blob);
                   }
-                  reader.addEventListener('load', () => {
+                  reader.addEventListener('load', (result) => {
+                    console.log('result::::', result);
                     if (reader.result !== '') {
                       temp.push(reader.result);
                     }
