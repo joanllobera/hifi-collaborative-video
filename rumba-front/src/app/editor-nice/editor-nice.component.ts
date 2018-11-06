@@ -226,8 +226,8 @@ export class EditorNiceComponent implements OnInit {
             }
 
             if (index === 0) {
-              // this.onGetThumbnailsMany(each.video_id);
-              this.onGetThumbnailsManySync(each.video_id);
+              this.onGetThumbnailsMany(each.video_id);
+              // this.onGetThumbnailsManySync(each.video_id);
             } else {
               setTimeout(() => {
                 this.onGetThumbnailsMany(each.video_id);
