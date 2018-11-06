@@ -568,7 +568,6 @@ export class EditorNiceComponent implements OnInit {
         }
       );
   }
-  
 
   onGetThumbnailsMany(id:string): void {
     const temp = [];
@@ -580,9 +579,11 @@ export class EditorNiceComponent implements OnInit {
           .then(
             (zip) => {
               const zipFiles: any = zip.files;
+              console.log(zipFiles);
               const ordered = {};
               Object.keys(zipFiles).sort().forEach( (key) => {
                 ordered[key] = zipFiles[key];
+                console.log(ordered[key]);
               });
               for (const prop in ordered) {
                 if (ordered.hasOwnProperty(prop)) {
