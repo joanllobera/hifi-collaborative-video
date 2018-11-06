@@ -584,13 +584,13 @@ export class EditorNiceComponent implements OnInit {
               //   ordered[key] = zipFiles[key];
               // });
               const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-
+              const allKeys: string[] = [];
               Object.keys(zipFiles).sort(collator.compare).forEach( (key) => {
-                console.log(key);
+                allKeys.push(key);
                 ordered[key] = zipFiles[key];
               });
-              console.log('ordered::', ordered)
-
+              console.log('ordered::', ordered);
+              console.log('allKeys::', allKeys);
 
               for (const prop in ordered) {
                 if (ordered.hasOwnProperty(prop)) {
