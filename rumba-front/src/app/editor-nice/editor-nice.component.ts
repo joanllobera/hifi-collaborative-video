@@ -597,7 +597,7 @@ export class EditorNiceComponent implements OnInit {
 
 
               allKeys.forEach((each) => {
-                const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+                const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
                   reader.addEventListener('load', () => {
                     if (reader.result !== '') {
@@ -626,8 +626,8 @@ export class EditorNiceComponent implements OnInit {
               this.listOfLists.push(temp);
           });
           // download the zip
-          const fileName = 'RumbaZip.zip';
-          FileSaver.saveAs(response, fileName);
+          // const fileName = 'RumbaZip.zip';
+          // FileSaver.saveAs(response, fileName);
         },
         (error) => {
           console.log('error::::', error);
