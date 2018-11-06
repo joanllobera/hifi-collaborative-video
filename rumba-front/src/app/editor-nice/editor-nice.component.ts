@@ -221,7 +221,8 @@ export class EditorNiceComponent implements OnInit {
             this.allVideos.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              const dif = each.ts - this.allVideosOk[index - 1].ts;
+              // const dif = each.ts - this.allVideosOk[index - 1].ts;
+              const dif = each.ts - this.allVideos[index - 1].ts;
               this.delta.push(dif);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
