@@ -212,11 +212,13 @@ export class EditorNiceComponent implements OnInit {
         (response) => {
           // console.log(response);
           this.allVideos = response;
-          this.allVideosOk = this.allVideos.filter(function (each, index) {
-            return each.ts > 0;
-          });
 
-          this.allVideosOk.forEach((each, index) => {
+          // this.allVideosOk = this.allVideos.filter(function (each, index) {
+          //   return each.ts > 0;
+          // });
+
+          // this.allVideosOk.forEach((each, index) => {
+            this.allVideos.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
               const dif = each.ts - this.allVideosOk[index - 1].ts;
