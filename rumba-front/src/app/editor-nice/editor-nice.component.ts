@@ -596,7 +596,7 @@ export class EditorNiceComponent implements OnInit {
               console.log('allKeys::', allKeys);
 
 
-              allKeys.forEach((each) => {
+              allKeys.forEach((each, index) => {
                 if (ordered.hasOwnProperty(each)) {
                   const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
@@ -606,10 +606,10 @@ export class EditorNiceComponent implements OnInit {
                   reader.addEventListener('load', (result) => {
                     console.log('result::::', result);
                     if (reader.result !== '') {
-                      temp.push(reader.result);
+                      // temp.push(reader.result);
+                      temp[index] = reader.result;
                     }
                   }, false);
-
                 }
               });
 
