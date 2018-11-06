@@ -581,10 +581,12 @@ export class EditorNiceComponent implements OnInit {
               const zipFiles: any = zip.files;
               console.log(zipFiles);
               const ordered = {};
+              const orderedThumbs: any[] = [];
               Object.keys(zipFiles).sort().forEach( (key) => {
                 ordered[key] = zipFiles[key];
-                console.log(ordered[key]);
+                orderedThumbs.push(ordered[key]);
               });
+              console.log('orderedThumbs', orderedThumbs);
               for (const prop in ordered) {
                 if (ordered.hasOwnProperty(prop)) {
                   const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
