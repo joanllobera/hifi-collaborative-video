@@ -615,10 +615,10 @@ export class EditorNiceComponent implements OnInit {
                     if (reader.result !== '') {
                       temp.push(reader.result);
                     }
+                    if (blob) {
+                      reader.readAsDataURL(blob);
+                    }
                   }, false);
-                  // if (blob) {
-                  //   reader.readAsDataURL(blob);
-                  // }
                 }
               }
 
