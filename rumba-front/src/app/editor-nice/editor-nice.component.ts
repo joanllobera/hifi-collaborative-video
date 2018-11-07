@@ -217,7 +217,7 @@ export class EditorNiceComponent implements OnInit {
             return each.ts > 0;
           });
 
-          const initialTime: number = this.allVideosOk[0]['ts'];
+          const initialTime: number = this.allVideosOk[0]['ts'].toFixed(1);
 
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
