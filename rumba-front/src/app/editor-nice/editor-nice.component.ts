@@ -225,11 +225,12 @@ export class EditorNiceComponent implements OnInit {
               // const dif = each.ts - this.allVideosOk[index - 1].ts;
               const difFirst: number = Number(each.ts) - initialTime;
               this.delta.push(difFirst);
-              console.log('eachVideo::::', each);
-              console.log('index::::::', index);
             } else {
               this.delta.push(0);
             }
+
+            console.log('eachVideo::::', each);
+            console.log('index::::::', index);
 
             if (index === 0) {
               this.onGetThumbnailsMany(each.video_id);
