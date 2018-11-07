@@ -225,7 +225,8 @@ export class EditorNiceComponent implements OnInit {
               // const dif = each.ts - this.allVideosOk[index - 1].ts;
               const difFirst: number = Number(each.ts) - initialTime;
               this.delta.push(difFirst);
-              // console.log('videoNum '+index+' amb dif de ', dif);
+              console.log('eachVideo::::', each);
+              console.log('index::::::', index);
             } else {
               this.delta.push(0);
             }
