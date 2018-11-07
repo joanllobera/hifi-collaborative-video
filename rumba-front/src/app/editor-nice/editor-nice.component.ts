@@ -233,21 +233,14 @@ export class EditorNiceComponent implements OnInit {
             console.log('index::::::', index);
 
             if (index === 0) {
-              this.onGetThumbnailsMany(each.video_id);
+              this.onGetThumbnailsMany(each.video_id, index);
               // this.onGetThumbnailsManySync(each.video_id);
             } else {
               setTimeout(() => {
-                this.onGetThumbnailsMany(each.video_id);
+                this.onGetThumbnailsMany(each.video_id, index);
               }, 3000);
-
-             // this.onGetThumbnailsMany(each.video_id);
-
             }
-
-            // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
-            // this.onGetThumbnailsManySync(each.video_id);
           });
-          // console.log('this.delta:::', this.delta);
         }
       );
   }
@@ -580,7 +573,7 @@ export class EditorNiceComponent implements OnInit {
       );
   }
 
-  onGetThumbnailsMany(id:string): void {
+  onGetThumbnailsMany(id: string, index: number): void {
     const temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
@@ -631,7 +624,12 @@ export class EditorNiceComponent implements OnInit {
               //     }
               //   }
               // }
-              this.listOfLists.push(temp);
+
+
+
+
+              // this.listOfLists.push(temp);
+              this.listOfLists[index] = temp;
           });
           // download the zip
           // const fileName = 'RumbaZip.zip';
