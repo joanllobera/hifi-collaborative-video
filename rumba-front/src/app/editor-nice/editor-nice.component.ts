@@ -11,6 +11,7 @@ import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -211,6 +212,7 @@ export class EditorNiceComponent implements OnInit {
         (response) => {
           // console.log(response);
           this.allVideos = response;
+
           this.allVideosOk = this.allVideos.filter(function (each, index) {
             return each.ts > 0;
           });
@@ -227,11 +229,13 @@ export class EditorNiceComponent implements OnInit {
 
             if (index === 0) {
               this.onGetThumbnailsMany(each.video_id);
+              // this.onGetThumbnailsManySync(each.video_id);
             } else {
               setTimeout(() => {
                 this.onGetThumbnailsMany(each.video_id);
               }, 2000);
             }
+
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
             // this.onGetThumbnailsManySync(each.video_id);
           });
@@ -579,25 +583,51 @@ export class EditorNiceComponent implements OnInit {
             (zip) => {
               const zipFiles: any = zip.files;
               const ordered = {};
-              Object.keys(zipFiles).sort().forEach(function(key) {
+              // Object.keys(zipFiles).sort().forEach( (key) => {
+              //   ordered[key] = zipFiles[key];
+              // });
+              const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+              const allKeys: string[] = [];
+              Object.keys(zipFiles).sort(collator.compare).forEach( (key) => {
+                allKeys.push(key);
                 ordered[key] = zipFiles[key];
               });
-              for (const prop in ordered) {
-                if (ordered.hasOwnProperty(prop)) {
-                  const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+
+              allKeys.forEach((each, index) => {
+                if (ordered.hasOwnProperty(each)) {
+                  const blob = new Blob( [ ordered[each]._data.compressedContent ], { type: 'image/jpeg' } );
                   const reader = new FileReader();
-                  reader.addEventListener('load', () => {
-                    if (reader.result !== '') {
-                      temp.push(reader.result);
-                    }
-                  }, false);
                   if (blob) {
                     reader.readAsDataURL(blob);
                   }
+                  reader.addEventListener('load', (result) => {
+                    if (reader.result !== '') {
+                      // temp.push(reader.result);
+                      temp[index] = reader.result;
+                    }
+                  }, false);
                 }
-              }
+              });
+
+              // for (const prop in ordered) {
+              //   if (ordered.hasOwnProperty(prop)) {
+              //     const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
+              //     const reader = new FileReader();
+              //     reader.addEventListener('load', () => {
+              //       if (reader.result !== '') {
+              //         temp.push(reader.result);
+              //       }
+              //     }, false);
+              //     if (blob) {
+              //       reader.readAsDataURL(blob);
+              //     }
+              //   }
+              // }
               this.listOfLists.push(temp);
           });
+          // download the zip
+          // const fileName = 'RumbaZip.zip';
+          // FileSaver.saveAs(response, fileName);
         },
         (error) => {
           console.log('error::::', error);
@@ -615,6 +645,7 @@ export class EditorNiceComponent implements OnInit {
             (zip, index) => {
               // return zip.files;
               this.zipList.push(zip.files);
+              // this.listOfLists.push(zip.files);
           });
           // console.log('zip.files::::::::', a);
         },
