@@ -236,9 +236,12 @@ export class EditorNiceComponent implements OnInit {
               this.onGetThumbnailsMany(each.video_id);
               // this.onGetThumbnailsManySync(each.video_id);
             } else {
-              setTimeout(() => {
-                this.onGetThumbnailsMany(each.video_id);
-              }, 2000);
+              // setTimeout(() => {
+              //   this.onGetThumbnailsMany(each.video_id);
+              // }, 2000);
+
+              this.onGetThumbnailsMany(each.video_id);
+
             }
 
             // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
