@@ -217,13 +217,13 @@ export class EditorNiceComponent implements OnInit {
             return each.ts > 0;
           });
 
-          const initialTime: number = this.allVideosOk[0]['ts'].toFixed(1);
+          const initialTime: number = this.allVideosOk[0]['ts'];
 
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
               // const dif = each.ts - this.allVideosOk[index - 1].ts;
-              const difFirst = each.ts - initialTime;
+              const difFirst:number = Number(each.ts) - initialTime;
               this.delta.push(difFirst);
               // console.log('videoNum '+index+' amb dif de ', dif);
             } else {
