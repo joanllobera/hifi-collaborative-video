@@ -232,14 +232,19 @@ export class EditorNiceComponent implements OnInit {
             console.log('eachVideo::::', each);
             console.log('index::::::', index);
 
-            if (index === 0) {
-              this.onGetThumbnailsMany(each.video_id, index);
-              // this.onGetThumbnailsManySync(each.video_id);
-            } else {
-              setTimeout(() => {
-                this.onGetThumbnailsMany(each.video_id, index);
-              }, 3000);
-            }
+            // if (index === 0) {
+            //   this.onGetThumbnailsMany(each.video_id, index);
+            //   // this.onGetThumbnailsManySync(each.video_id);
+            // } else {
+            //   setTimeout(() => {
+            //     this.onGetThumbnailsMany(each.video_id, index);
+            //   }, 3000);
+            // }
+
+            this.onGetThumbnailsMany(each.video_id, index);
+
+
+
           });
         }
       );
