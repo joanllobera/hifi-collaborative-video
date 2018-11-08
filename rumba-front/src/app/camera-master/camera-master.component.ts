@@ -66,8 +66,7 @@ export class CameraMasterComponent implements OnInit {
         }
       }
     });
-    console.log(window);
-    console.log(window['move']);
+
   }
 
   toggleFullScreen() {
