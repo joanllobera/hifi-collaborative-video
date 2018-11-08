@@ -97,10 +97,15 @@ export class SessionCloseComponent implements OnInit {
   }
 
   goToMasterCamera() {
-    window.open(
-                this.currentSession['master_url'],
-                '_blank'
-              );
+    const move = window.open(
+      this.currentSession['master_url'],
+      '_blank'
+    );
+
+    move['sessionIdParam'] = this.sessionId;
+
+    // this.router.navigate([this.currentSession['master_url']]);
+
   }
 
   onCloseSession() {
