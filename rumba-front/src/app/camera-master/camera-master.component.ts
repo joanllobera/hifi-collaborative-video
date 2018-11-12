@@ -21,6 +21,7 @@ export class CameraMasterComponent implements OnInit {
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
+  sessionId: string;
   iidd = undefined;
   janus = undefined;
 
@@ -96,7 +97,7 @@ export class CameraMasterComponent implements OnInit {
   startRecording() {
     console.log('str record');
     this.sessionService.getSession().subscribe(data => {
-      console.log(data);
+      this.sessionId = data['id'];
       this.record.initializeRumbaSession(data['id'])
         .subscribe(
           (data) => {
@@ -123,12 +124,13 @@ export class CameraMasterComponent implements OnInit {
         (response) => {
         }
       );
-    // this.sessionService.closeSession(this.sessionId)
-    // .subscribe(
-    //   (response) => {
-    //     console.log('close session', response);
-    //   }
-    // );
+
+    this.sessionService.closeSession(this.sessionId)
+    .subscribe(
+      (response) => {
+        console.log('close session', response);
+      }
+    );
 
     this.janus.destroy();
   }
