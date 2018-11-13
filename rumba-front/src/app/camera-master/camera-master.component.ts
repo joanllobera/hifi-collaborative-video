@@ -3,6 +3,7 @@ import {RecordService} from '../record.service';
 import '../../assets/serverdate/ServerDate.js';
 import {AppConfig} from '../app-config';
 import {SessionService} from "../session/session.service";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var Janus: any;
 declare var janus: any;
@@ -20,6 +21,7 @@ export class CameraMasterComponent implements OnInit {
   videoId: string = undefined;
   @ViewChild('fullVideo') videoElem: ElementRef;
   fullScreen: boolean = false;
+  sessionId: string;
   iidd = undefined;
   janus = undefined;
 
@@ -65,6 +67,7 @@ export class CameraMasterComponent implements OnInit {
         }
       }
     });
+
   }
 
   toggleFullScreen() {
@@ -94,7 +97,7 @@ export class CameraMasterComponent implements OnInit {
   startRecording() {
     console.log('str record');
     this.sessionService.getSession().subscribe(data => {
-      console.log(data);
+      this.sessionId = data['id'];
       this.record.initializeRumbaSession(data['id'])
         .subscribe(
           (data) => {
@@ -106,14 +109,11 @@ export class CameraMasterComponent implements OnInit {
                   this
                     .videoId = response['id'];
                   this
-                    .configureJanus(this
-
-                      .videoPath
-                    );
+                    .configureJanus(this.videoPath);
                 }
-              )
-            //this.router.navigate([this.currentSession['master_url']]);
-          })
+              );
+            // this.router.navigate([this.currentSession['master_url']]);
+          });
     });
 
   }
@@ -124,6 +124,14 @@ export class CameraMasterComponent implements OnInit {
         (response) => {
         }
       );
+
+    this.sessionService.closeSession(this.sessionId)
+    .subscribe(
+      (response) => {
+        console.log('close session', response);
+      }
+    );
+
     this.janus.destroy();
   }
 

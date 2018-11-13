@@ -98,9 +98,12 @@ export class SessionCloseComponent implements OnInit {
 
   goToMasterCamera() {
     window.open(
-                this.currentSession['master_url'],
-                '_blank'
-              );
+      this.currentSession['master_url'],
+      '_blank'
+    );
+
+    // this.router.navigate([this.currentSession['master_url']]);
+
   }
 
   onCloseSession() {

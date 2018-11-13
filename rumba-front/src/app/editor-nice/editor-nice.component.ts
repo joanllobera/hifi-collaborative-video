@@ -217,29 +217,35 @@ export class EditorNiceComponent implements OnInit {
             return each.ts > 0;
           });
 
+          const initialTime: number = Number(this.allVideosOk[0]['ts']);
+
           this.allVideosOk.forEach((each, index) => {
             // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              const dif = each.ts - this.allVideosOk[index - 1].ts;
-              this.delta.push(dif);
-              // console.log('videoNum '+index+' amb dif de ', dif);
+              // const dif = each.ts - this.allVideosOk[index - 1].ts;
+              const difFirst: number = Number(each.ts) - initialTime;
+              this.delta.push(difFirst);
             } else {
               this.delta.push(0);
             }
 
-            if (index === 0) {
-              this.onGetThumbnailsMany(each.video_id);
-              // this.onGetThumbnailsManySync(each.video_id);
-            } else {
-              setTimeout(() => {
-                this.onGetThumbnailsMany(each.video_id);
-              }, 2000);
-            }
+            console.log('eachVideo::::', each);
+            console.log('index::::::', index);
 
-            // this.onGetThumbnailsMany(each.video_id); //this works asynchronous
-            // this.onGetThumbnailsManySync(each.video_id);
+            // if (index === 0) {
+            //   this.onGetThumbnailsMany(each.video_id, index);
+            //   // this.onGetThumbnailsManySync(each.video_id);
+            // } else {
+            //   setTimeout(() => {
+            //     this.onGetThumbnailsMany(each.video_id, index);
+            //   }, 3000);
+            // }
+
+            this.onGetThumbnailsMany(each.video_id, index);
+
+
+
           });
-          // console.log('this.delta:::', this.delta);
         }
       );
   }
@@ -572,7 +578,7 @@ export class EditorNiceComponent implements OnInit {
       );
   }
 
-  onGetThumbnailsMany(id:string): void {
+  onGetThumbnailsMany(id: string, index: number): void {
     const temp = [];
     this.videoService.getThunmbnailsFromVideo(id)
       .subscribe(
@@ -623,7 +629,12 @@ export class EditorNiceComponent implements OnInit {
               //     }
               //   }
               // }
-              this.listOfLists.push(temp);
+
+
+
+
+              // this.listOfLists.push(temp);
+              this.listOfLists[index] = temp;
           });
           // download the zip
           // const fileName = 'RumbaZip.zip';
