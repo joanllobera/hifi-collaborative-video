@@ -4,15 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer} from '@angular/platform-browser';
 import * as JSZip from 'jszip';
 import { VideosServiceService } from '../videos-service.service';
-
-import * as FileSaver from 'file-saver';
 import { ToasterService } from 'angular5-toaster/dist/src/toaster.service';
 import { EditorService } from '../editor.service';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
-import { forEach } from '@angular/router/src/utils/collection';
-
 
 @Component({
   selector: 'app-editor-nice',
@@ -53,26 +48,11 @@ export class EditorNiceComponent implements OnInit {
     private toasterService: ToasterService,
     private videoSrv: VideosServiceService,
     private editorSrv: EditorService) {
-
-    this.route.params.subscribe(res => this.session_id = res.session_id);
+      this.route.params.subscribe(res => this.session_id = res.session_id);
   }
 
   ngOnInit() {
     this.getAllVideos(this.session_id);
-    // this.startPolling();
-  }
-
-  startPolling() {
-    TimerObservable.create(0, this.pollInterval)
-      .takeWhile(() => this.activePoll)
-      .subscribe(() => {
-        // alert('EDITOR POLLING');
-
-        // this.sessionService.getVideoWhenReady()
-        //   .subscribe((data) => {
-        //
-        //   });
-      });
   }
 
   unMarcAll() {
@@ -124,11 +104,8 @@ export class EditorNiceComponent implements OnInit {
 
   selectUncollapsedIframes(singleArray, oldzoom: number, zoom: number) {
     for (let i = 0; i < singleArray.length; i = i + oldzoom) {
-      console.log('current i', i);
       let isSelected: boolean = null;
       for (let k = 0; k < zoom; k++) {
-        console.log('current k', k);
-        console.log('current k+i', k + i);
         if (i + k === singleArray.length) {
           break;
         }
@@ -141,10 +118,8 @@ export class EditorNiceComponent implements OnInit {
             }
           }
         }
-        console.log(singleArray[i + k]);
-        console.log('--------------------------------------------------------');
-      } // end 2ond loop
-    } // end 1rst loop
+      }
+    }
   }
 
   recoverThumbnails(value: number) {
@@ -178,7 +153,6 @@ export class EditorNiceComponent implements OnInit {
 
   getAllAreSame(singleArray, zoom: number) {
     for (let i = 0; i < singleArray.length; i = i + zoom) {
-      // console.log('currentI', i);
       let isSelected: boolean = null;
       for (let j = 0; j < zoom; j++) {
         if (i + j === singleArray.length) {
@@ -210,40 +184,20 @@ export class EditorNiceComponent implements OnInit {
     this.videoService.getAllVideos(session_id)
       .subscribe(
         (response) => {
-          // console.log(response);
           this.allVideos = response;
-
           this.allVideosOk = this.allVideos.filter(function (each, index) {
             return each.ts > 0;
           });
-
           const initialTime: number = Number(this.allVideosOk[0]['ts']);
-
           this.allVideosOk.forEach((each, index) => {
-            // console.log('eachVideo :::' + index, each);
             if (index > 0) {
-              // const dif = each.ts - this.allVideosOk[index - 1].ts;
               const difFirst: number = Number(each.ts) - initialTime;
               this.delta.push(difFirst);
             } else {
               this.delta.push(0);
             }
 
-            console.log('eachVideo::::', each);
-            console.log('index::::::', index);
-
-            // if (index === 0) {
-            //   this.onGetThumbnailsMany(each.video_id, index);
-            //   // this.onGetThumbnailsManySync(each.video_id);
-            // } else {
-            //   setTimeout(() => {
-            //     this.onGetThumbnailsMany(each.video_id, index);
-            //   }, 3000);
-            // }
-
             this.onGetThumbnailsMany(each.video_id, index);
-
-
 
           });
         }
@@ -252,7 +206,6 @@ export class EditorNiceComponent implements OnInit {
 
   duplicates(arr, obj): boolean {
     return arr.some(function (each, index) {
-      // return each.id === obj.id && each.thumb === obj.thumb && each.position === obj.position;
       return each.id === obj.id && each.thumb === obj.thumb;
     });
   }
@@ -298,7 +251,7 @@ export class EditorNiceComponent implements OnInit {
   }
 
   selectThumbnails (event, videoIndex: number, blobIndex: number, marginDelta: number) {
-    if (this.initialRange == 5) {
+    if (this.initialRange === 5) {
       this.getThumbInfo(event, videoIndex, blobIndex, marginDelta);
       this.onSelectFrame(event, videoIndex);
     } else  {
@@ -337,9 +290,6 @@ export class EditorNiceComponent implements OnInit {
 
           let posOk: number = Math.trunc((container[0].scrollLeft + event['offsetX'] + finalMargin) / 80);
 
-          // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] + (diff) - 10) / (8 * 10)) * secondsGap );
-          // let pos: number = Math.trunc( ((videoImages[blobIndex]['x'] - 10) / (8 * 10)) * secondsGap );
-
           if (videoImages[blobIndex]['x'] !== 0) {
             this.lastThumbPos = posOk;
           } else {
@@ -353,8 +303,6 @@ export class EditorNiceComponent implements OnInit {
             position: posOk
           };
 
-          console.log(thumbnail);
-
           if (this.duplicates(this.videoJson, thumbnail)) {
             const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
             const index = this.getDuplicateIndex(this.videoJson, removeme[0]);
@@ -365,14 +313,10 @@ export class EditorNiceComponent implements OnInit {
           blobIndex += 1;
         }
       } else {
-        // select all
         for (let q = 0; q < secondsGap; q++) {
           videoImages[blobIndex].classList.add('selectedImg');
 
           const eventClientX: number = (80 * blobIndex) + 40;
-
-          // this is the good one
-          // let posOk = Math.trunc((container[0].scrollLeft + event['clientX'] + finalMargin) / 80);
 
           let posOk = Math.trunc((container[0].scrollLeft + eventClientX + finalMargin) / 80);
 
@@ -437,21 +381,14 @@ export class EditorNiceComponent implements OnInit {
   }
 
   getThumbInfo(event, videoIndex: number, blobIndex: number, marginDelta: number): void {
-    // this.showEventValues(event);
-
-    let pos: number;
     const diff: number = this.getImageMiddle(event.offsetX);
     const div = document.getElementsByClassName('video-container');
 
     let posOk: number;
 
     if (event['clientX']) {
-      // pos = Math.trunc((event['clientX'] + (diff) - 10) / (8 * 10));
-      // pos = Math.trunc((event['clientX'] - 10) / (8 * 10));
       posOk = Math.trunc((div[0].scrollLeft + event['clientX']) / 80);
     } else {
-      // pos = Math.trunc((event.x + (diff) - 10) / (8 * 10));
-      // pos = Math.trunc((event.x - 10) / (8 * 10));
       posOk = Math.trunc((div[0].scrollLeft + event['x']) / 80);
     }
 
@@ -460,8 +397,6 @@ export class EditorNiceComponent implements OnInit {
       thumb: blobIndex,
       position: posOk
     };
-
-    console.log(thumbnail);
 
     if (this.isFirstItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
@@ -475,6 +410,7 @@ export class EditorNiceComponent implements OnInit {
         event.classList.add('first');
       }
     }
+
     if (this.isLastItem(this.videoJson, thumbnail) || this.videoJson.length === 0) {
       const video = document.querySelector('#test' + videoIndex);
       const img = video.querySelector('img.last');
@@ -487,21 +423,17 @@ export class EditorNiceComponent implements OnInit {
       event.classList.add('last');
       }
     }
-    console.log('this.duplicates:::', this.duplicates(this.videoJson, thumbnail));
     if (this.duplicates(this.videoJson, thumbnail)) {
-      // remove duplicates
       const removeme = this.getDuplicatedObject(this.videoJson, thumbnail);
       const index = this.getDuplicateIndex(this.videoJson, removeme[0]);
       this.videoJson.splice(index, 1);
     } else {
       this.videoJson.push(thumbnail);
     }
-    console.log('videoJson length:::', this.videoJson.length);
   }
 
   onSelectFrameIMG(img, videoIndex: number): void {
     img.classList.toggle('selectedImg');
-
     if (img.classList.contains('first') && !img.classList.contains('selectedImg')) {
       img.classList.remove('first');
     }
@@ -515,7 +447,7 @@ export class EditorNiceComponent implements OnInit {
     }
     const imgLast = video.querySelectorAll('img.selectedImg');
     if (imgLast.length > 0) {
-      imgLast[imgLast.length-1].classList.add('last');
+      imgLast[imgLast.length - 1].classList.add('last');
     }
   }
 
@@ -615,30 +547,8 @@ export class EditorNiceComponent implements OnInit {
                 }
               });
 
-              // for (const prop in ordered) {
-              //   if (ordered.hasOwnProperty(prop)) {
-              //     const blob = new Blob( [ ordered[prop]._data.compressedContent ], { type: 'image/jpeg' } );
-              //     const reader = new FileReader();
-              //     reader.addEventListener('load', () => {
-              //       if (reader.result !== '') {
-              //         temp.push(reader.result);
-              //       }
-              //     }, false);
-              //     if (blob) {
-              //       reader.readAsDataURL(blob);
-              //     }
-              //   }
-              // }
-
-
-
-
-              // this.listOfLists.push(temp);
               this.listOfLists[index] = temp;
           });
-          // download the zip
-          // const fileName = 'RumbaZip.zip';
-          // FileSaver.saveAs(response, fileName);
         },
         (error) => {
           console.log('error::::', error);
@@ -671,53 +581,40 @@ export class EditorNiceComponent implements OnInit {
       this.toasterService.pop('info', 'Crear Video', 'No hi ha cap thumbnail sel·leccionat.');
       return;
     }
-    // this.videoService.buildVideo(this.videoJson, this.session_id)
-    //   .subscribe(
-    //     (response) => {
-    //       this.createVideoFromBlob(response); // httpClient
-    //       this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
-    //     }, (error) => {
-    //       console.log(error);
-    //        if (error.status === 409) {
-    //          this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
-    //        }
-    //     }
-    //   );
+    this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
+      .subscribe(
+        (response: HttpResponse<Object>) => {
+          console.log(response);
+          if (response['status'] === 202) {
+            this.videoId = response['body']['videoID'];
+            this.toasterService.pop('info', 'Processant video', 'Dades enviades correctament');
+            this.showSpinner = true;
+          }
 
-      this.videoService.sendVideoToBuild(this.videoJson, this.session_id)
-        .subscribe(
-          (response: HttpResponse<Object>) => {
-            console.log(response);
-            if (response['status'] === 202) {
-              this.videoId = response['body']['videoID'];
-              this.toasterService.pop('info', 'Processant video', 'Dades enviades correctament');
-              this.showSpinner = true;
-            }
-
-            TimerObservable.create(5, this.pollInterval)
-            .takeWhile(() => this.activePoll)
-            .subscribe(() => {
-              this.videoService.getVideoIsReady(this.videoId)
-                .subscribe(
-                  (response) => {
-                    if (response['status'] === 200) {
-                      console.log('Video retrieved');
-                      this.createVideoFromBlob(response['body']); // httpClient
-                      // this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
-                      this.activePoll = false;
-                      this.showSpinner = false;
-                    } else {
-                      console.log('Video not ready');
-                    }
-                  }, (error) => {
-                    console.log(error);
-                  });
+          TimerObservable.create(5, this.pollInterval)
+          .takeWhile(() => this.activePoll)
+          .subscribe(() => {
+            this.videoService.getVideoIsReady(this.videoId)
+              .subscribe(
+                (response) => {
+                  if (response['status'] === 200) {
+                    console.log('Video retrieved');
+                    this.createVideoFromBlob(response['body']); // httpClient
+                    // this.toasterService.pop('success', 'Dades enviades', 'Les dades s\'han enviat correctament.');
+                    this.activePoll = false;
+                    this.showSpinner = false;
+                  } else {
+                    console.log('Video not ready');
+                  }
+                }, (error) => {
+                  console.log(error);
                 });
-          }, (error) => {
-            if (error.status === 409) {
-              this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
-            }
-          });
+              });
+        }, (error) => {
+          if (error.status === 409) {
+            this.toasterService.pop('error', 'Sessió oberta', 'És necessari tancar la sessió per poder editar el video.');
+          }
+        });
 
   }
 

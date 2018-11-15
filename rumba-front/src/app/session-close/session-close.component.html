@@ -5,30 +5,22 @@
 
       <div class="form-group top1">
         <label for="banda" class="bmd-label-floating">Banda *</label>
-        <!-- <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.band }}</p> -->
         <input type="text" [(ngModel)]="currentSession.band" class="form-control" type="text" />
       </div>
 
       <div class="form-group">
         <label for="concert" class="bmd-label-floating">Concert</label>
-        <!-- <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.concert }}</p> -->
         <input type="text" [(ngModel)]="currentSession.concert" class="form-control" type="text" />
       </div>
 
       <div *ngIf="imageToShow" class="form-group top1">
         <label for="logo" class="bmd-label-floating">Logo</label><br/>
-        <!-- <div>
-          <img width="100" src="assets/logo/rumba_logo-v2.png" alt="">
-          <img width="100" [src]="binaryData" alt="">
-        </div> -->
-        <!-- <input type="text" class="form-control" id="logo" /><br/> -->
         <img class="img-thumbnail" [src]="imageToShow" width="150" height="auto" alt="">
       </div>
 
       <div class="form-group">
         <label for="data" class="bmd-label-floating">Data *</label><br/>
         <input type="text" class="form-control" id="date" [(ngModel)]="formatedDate" name="date" required />
-        <!-- <p *ngIf="currentSession" class="bodytext bottomline">{{ currentSession.date | date:'dd-MM-yyyy'}}</p> -->
       </div>
 
       <div class="form-group top1">
@@ -55,11 +47,6 @@
       <button class="btn btn-xs btn-raised btn-warning btn-block" type="button" name="button" ngxClipboard [cbContent]="editorLink" (click)="onCopyToClipboard()">COMPARTIR ENLLAÇ D'EDICIÓ</button>
     </div>
   </div>
-  <!-- <div class="row top1">
-    <div class="col-12">
-      <button class="btn btn-xs btn-raised btn-danger btn-block" type="button" name="button" (click)="onCloseSession()">TANCAR LA SESSIÓ</button>
-    </div>
-  </div> -->
 </div>
 
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

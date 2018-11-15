@@ -5,7 +5,6 @@
   <div class="loader"></div>
 </div>
 <div>
-  <!-- <video controls autoplay loop controlsList="nodownload"> -->
     <div class="margin"></div>
   <video controls autoplay loop>
       <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
@@ -48,23 +47,13 @@
   <div class="col">
     <div class="allVideos top1">
       <div class="video-container">
-
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo">
-          <!-- <div appThumbSize appSelectorSize class="selector"></div> -->
-          <!-- <div class="claudator">
-            <img appClaudatorLeft height="80px" class="absolute" src="assets/logo/left-yellow.png" alt="">
-            <img appClaudatorMove height="80px" class="absolute" src="assets/logo/right-yellow.png" alt="">
-          </div> -->
           <div appMargindelta [deltasize]="delta[i]" #iframe class="iframe" [id]="'test' + (i)">
-            <span [class.hidden]="ii % videoZoomValues[initialRange-1] != 0" class="thumb-wrapper" *ngFor="let one of oneList; let ii = index;">
-              <!-- <img *ngIf="ii % videoZoomValues[initialRange-1] == 0" appThumbSize (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" /> -->            
-              
-              <!-- <img appThumbSize (click)="getThumbInfo($event, i, ii, delta[i])" [src]="one" alt="dynamic foto" /> -->
+            <span [class.hidden]="ii % videoZoomValues[initialRange-1] != 0" class="thumb-wrapper" *ngFor="let one of oneList; let ii = index;">              
               <img appThumbSize (click)="selectThumbnails($event, i, ii, delta[i])" [src]="one" alt="dynamic foto" />
             </span>
           </div>
         </div>
-
       </div>
     </div>
   </div>

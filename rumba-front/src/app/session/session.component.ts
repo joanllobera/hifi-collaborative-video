@@ -4,12 +4,7 @@ import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs';
-
 import { SessionService } from './session.service';
-
-import { AppConfig } from '../app-config';
 
 import * as moment from 'moment';
 
@@ -64,7 +59,7 @@ export class SessionComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('response::', response);
-          var a = response.json();
+          const a = response.json();
 
           if (this.selectedFile) {
               this.onUploadLogo(a.id);
@@ -72,7 +67,7 @@ export class SessionComponent implements OnInit {
           this.router.navigate(['/sessionClose', a.id]);
         },
         (error) => {
-          console.log('error::',error);
+          console.log('error::', error);
         }
       );
   }
