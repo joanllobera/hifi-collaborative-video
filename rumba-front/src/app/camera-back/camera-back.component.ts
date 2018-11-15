@@ -2,8 +2,8 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {RecordService} from '../record.service';
 import '../../assets/serverdate/ServerDate.js';
 import {AppConfig} from '../app-config';
-import {TimerObservable} from "rxjs/observable/TimerObservable";
-import {SessionService} from "../session/session.service";
+import {TimerObservable} from 'rxjs/observable/TimerObservable';
+import {SessionService} from '../session/session.service';
 import * as RecordRTC from 'recordrtc';
 
 declare var Janus: any;
@@ -37,16 +37,13 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   constructor(
     private record: RecordService,
     private sessionService: SessionService,
-  ) {
-  }
+  ) { }
 
   setCameraToVideo() {
     const constraints = {
       deviceId: {ideal: this.iidd},
     };
     const video = document.getElementById('myvideo');
-    // Get access to the camera!
-    // Not adding `{ audio: true }` since we only want video now
     navigator.mediaDevices.getUserMedia({video: constraints}).then((stream) => {
       video['srcObject'] = stream;
     });
@@ -62,17 +59,15 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       .then(devices => {
         this.setCameraID(devices[0].deviceId);
         devices.forEach((device) => {
-          console.log(device.kind + ": " + device.label + " id = " + device.deviceId);
-          if (device.kind == "videoinput" && device.label.match('back')) {
+          console.log(device.kind + ': ' + device.label + ' id = ' + device.deviceId);
+          if (device.kind === 'videoinput' && device.label.match('back')) {
             this.setCameraID(device.deviceId);
           }
         });
-        this.setCameraToVideo()
+        this.setCameraToVideo();
       });
     Janus.init({
-      debug: "all", callback: function () {
-        // Use a button to start the demo
-        // Make sure the browser supports WebRTC
+      debug: 'all', callback: function () {
         if (!Janus.isWebrtcSupported()) {
           return;
         }
@@ -83,7 +78,7 @@ export class CameraBackComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.sessionService.getSession()
           .subscribe((data) => {
-            if (data['state'] === "Active") {
+            if (data['state'] === 'Active') {
               this.allowRecording = true;
             }
           });
@@ -95,54 +90,37 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   toggleFullScreen() {
-    // document.documentElement.webkitRequestFullScreen();
     this.fullScreen = true;
 
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen();
-    } else if (document.documentElement.webkitRequestFullscreen) {
-      document.documentElement.webkitRequestFullScreen();
     }
   }
 
   exitFullScreen() {
-    //document.webkitExitFullscreen();
     this.fullScreen = false;
-
     if (document.exitFullscreen) {
       document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
     }
   }
 
-  checkButton() {
-  }
-
-
   successCallback(stream: MediaStream) {
-    var options = {
-      mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
+    const options = {
+      mimeType: 'video/webm',
       audioBitsPerSecond: 2280000,
       videoBitsPerSecond: 2280000,
-      bitsPerSecond: 2280000, // if this line is provided, skip above two
+      bitsPerSecond: 2280000
     };
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
-    // const video = document.getElementById('myvideo');
-    // video['src'] = window.URL.createObjectURL(stream);
-    // this.toggleControls();
   }
 
   errorCallback(error) {
-    console.log(error)
+    console.log(error);
   }
 
   startRecording() {
-    // const supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-    // console.log('supportedConstraints', supportedConstraints)
-
     const mediaConstraints = {
       video: {
         mandatory: {
@@ -180,18 +158,12 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   processVideo(audioVideoWebMURL) {
-    // let video: HTMLVideoElement = this.video.nativeElement;
-    // let recordRTC = this.recordRTC;
-    // video.src = audioVideoWebMURL;
-    // this.toggleControls();
-    // var recordedBlob = recordRTC.getBlob();
-    // recordRTC.getDataURL(function (dataURL) {});
     this.download();
     this.setCameraToVideo();
   }
 
   toggleControls() {
-    let video: HTMLVideoElement = this.video.nativeElement;
+    const video: HTMLVideoElement = this.video.nativeElement;
     video.muted = !video.muted;
     video.controls = !video.controls;
     video.autoplay = !video.autoplay;
@@ -202,11 +174,9 @@ export class CameraBackComponent implements OnInit, OnDestroy {
   }
 
   stopRecording() {
-    console.log("STOP RECORDING");
-
-    let recordRTC = this.recordRTC;
+    const recordRTC = this.recordRTC;
     recordRTC.stopRecording(this.processVideo.bind(this));
-    let stream = this.stream;
+    const stream = this.stream;
     stream.getAudioTracks().forEach(track => track.stop());
     stream.getVideoTracks().forEach(track => track.stop());
 
@@ -419,6 +389,6 @@ export class CameraBackComponent implements OnInit, OnDestroy {
         }
       });
     this.janus = janus;
-    return janus
+    return janus;
   }
 }

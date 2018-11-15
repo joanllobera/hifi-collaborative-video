@@ -28,7 +28,7 @@ export class SessionCloseComponent implements OnInit {
   recordLink: string = undefined;
 
   currentSession: {concert: string, band: string, date:number, is_public: boolean, location: string, vimeo: Vimeo} = undefined;
-  public toasterconfig : ToasterConfig = new ToasterConfig({animation: 'fade'});
+  public toasterconfig: ToasterConfig = new ToasterConfig({animation: 'fade'});
 
   isImageLoading: boolean = false;
   imageToShow: any;
@@ -40,11 +40,9 @@ export class SessionCloseComponent implements OnInit {
     private toasterService: ToasterService,
     private recordSrv: RecordService) { }
 
-
-
   createImageFromBlob(image: Blob) {
-     let reader = new FileReader();
-     reader.addEventListener("load", () => {
+     const reader = new FileReader();
+     reader.addEventListener('load', () => {
         this.imageToShow = reader.result;
      }, false);
 
@@ -67,33 +65,24 @@ export class SessionCloseComponent implements OnInit {
           console.log(response);
           this.currentSession = response.json();
 
-          let dateOk = new Date(this.currentSession.date);
-          let niceDate = moment(dateOk).locale('es').format('L');
+          const dateOk = new Date(this.currentSession.date);
+          const niceDate = moment(dateOk).locale('es').format('L');
 
           this.formatedDate = niceDate;
-          // this.vimeouser = this.currentSession.vimeo['username'];
-          // this.vimeopassword = this.currentSession.vimeo['password'];
           this.editorLink = this.currentSession['edition_url'];
           this.recordLink = this.currentSession['record_url'];
 
-
           this.toasterService.pop('success', 'Crear sessió', 'Sessió creada correctament');
-
         }
       );
 
     this.sessionSrv.getLogoById(this.sessionId)
       .subscribe(
         (response) => {
-          console.log('getLogoById::', response);
-          // this.binaryData = response['_body'];
           this.binaryData = response.blob();
           this.createImageFromBlob(this.binaryData);
-        },
-        (error) => {
-          console.log('getLogoById::error::', error);
         }
-      )
+      );
   }
 
   goToMasterCamera() {
@@ -101,9 +90,6 @@ export class SessionCloseComponent implements OnInit {
       this.currentSession['master_url'],
       '_blank'
     );
-
-    // this.router.navigate([this.currentSession['master_url']]);
-
   }
 
   onCloseSession() {
@@ -117,7 +103,6 @@ export class SessionCloseComponent implements OnInit {
   }
 
   onCopyToClipboard() {
-    console.log("Edition link saved to clipboard.");
     this.toasterService.pop('info', 'Enllaç creat', 'l\'Enllaç s\'ha copiat al portaretalls');
   }
 

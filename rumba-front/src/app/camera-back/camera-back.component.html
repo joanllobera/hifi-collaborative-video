@@ -5,17 +5,12 @@
 </div>
 
 <div class="black flex-wrap">
-  <!-- <div class="timer">
-    <p>{{counter}}</p>
-  </div> -->
   <div>
-    <!-- <div *ngIf="!isRecording" (click)="startRecording();checkButton()" class="record"></div>
-    <div *ngIf="isRecording" (click)="stopRecording();checkButton()" id="stop" class="stop"></div> -->
     <div *ngIf="allowRecording">
-      <div *ngIf="!isRecording" (click)="startRecording();checkButton()">
+      <div *ngIf="!isRecording" (click)="startRecording();">
         <img class="start-img" src="assets/logo/record.png" alt="">
       </div>
-      <div *ngIf="isRecording" (click)="stopRecording();checkButton()">
+      <div *ngIf="isRecording" (click)="stopRecording();">
         <img class="stop-img" src="assets/logo/stop.png" alt="">
       </div>
     </div>
@@ -29,15 +24,3 @@
   <img *ngIf="!fullScreen" src="assets/logo/fullscreen-white.png" (click)="toggleFullScreen()" width="30" alt="" />
   <img *ngIf="fullScreen" src="assets/logo/fullscreen-white.png" (click)="exitFullScreen()" width="30" alt="" />
 </div>
-
-<!-- <div class="counter-container">
-  <div class="counter">
-    <p id="counter">{{counter}}</p>
-  </div>
-</div> -->
-
-<!-- <div class="feedback" *ngIf="!allowRecording">
-  <div class="camera">
-    <img class="camera-feedback" src="assets/logo/NoCameraIconRed.png" width="60" alt="" />
-  </div>
-</div> -->

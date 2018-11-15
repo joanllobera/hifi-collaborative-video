@@ -5,9 +5,7 @@ video {
   min-width: 100%;
   min-height: 100%;
   z-index: -1000;
-
   background-color: #000;
-  /* background:transparent url('/assets/logo/kyle-goetsch.jpg') no-repeat top left; */
   -webkit-background-size:cover;
   -moz-background-size:cover;
   -o-background-size:cover;
@@ -24,12 +22,6 @@ video {
   justify-content: center;
   align-items: center;
 }
-
-/* .timer p {
-  position:absolute;
-  color: #fff;
-  top: 30px;
-} */
 
 .record-buttons {
   justify-content: flex-start;

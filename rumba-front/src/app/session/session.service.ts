@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { Http , Response, ResponseContentType } from "@angular/http";
+import { Injectable } from '@angular/core';
+import { Http , Response, ResponseContentType } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
-import 'rxjs/Rx';  //needed for .map()
+import 'rxjs/Rx';  // needed for .map()
 
 import { AppConfig } from '../app-config';
 
@@ -36,19 +36,15 @@ export class SessionService {
   }
 
   getLogoById (id: string) {
-    // return this.http.get(AppConfig.API_ENDPOINT + '/sessions/' + id + '/logo')
-    //   .map(
-    //     (response: Response) => {
-    //       return response;
-    //     }
-    //   );
-    return this.http.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/sessions/' + id + '/logo', { responseType: ResponseContentType.Blob });
+    return this.http.get(
+      AppConfig.API_ENDPOINT + AppConfig.API_VERSION +
+      '/sessions/' + id + '/logo',
+      { responseType: ResponseContentType.Blob}
+    );
   }
 
   getAudioStatus () {
     return this.httpClient.get(AppConfig.API_ENDPOINT + AppConfig.API_VERSION + '/audio/microphone/state');
   }
-
-
 
 }
