@@ -1,0 +1,24 @@
+# variables.yml. YAML file containing the values of the variables
+# used by the Ansible playbooks.
+
+# Folder where the Rumba code would be cloned
+- rumba_src_folder: /vagrant
+
+# HTTP port used by the Rumba GUI and the Rumba backend.
+- frontend_port: 4200
+- backend_port: 8081
+
+# Version of FFMPEG to be used.
+- ffmpeg_version: 3.2.3
+
+# Directory where the Janus would be installed
+- janus_dir: /opt/janus
+
+# Ubuntu username
+- ubuntu_user: vagrant
+
+# Bitbucket section
+- bitbucket_user:
+- bitbucket_pass:
+
+- node_version: "8.10.0"

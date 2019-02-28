@@ -1,15 +1,45 @@
+<div class="loader-bg" *ngIf="showSpinner">
+  <div class="spinner-message animation">
+      <i class="fas fa-exclamation-circle"></i>&nbsp;Aquesta acció pot trigar uns minuts 
+  </div>
+  <div class="loader"></div>
+</div>
 <div>
-  <!-- <video controls autoplay loop controlsList="nodownload"> -->
+    <div class="margin"></div>
   <video controls autoplay loop>
       <source *ngIf="videoStream" [src]="videoStream.changingThisBreaksApplicationSecurity" type="video/mp4">
   </video>
 
-  <div class="row">
-    <div class="col">
-
-      <button type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1" (click)="sendVideoToServer()">SEGÜENT</button>
+  <div class="row top1">
+    <div class="col-6">
+      <div class="row">
+          <div class="col">
+              <input type="range" class="form-control left1 slider" name="zoomRange" [value]="initialRange" min="1" max="5" step="1" #zoomRange (change)="changeZoom(zoomRange.value)">
+          </div>
+      </div>
+      <div class="row">
+          <div class="col top1">
+              <span *ngIf="initialRange == 5" class="badge badge-danger left1"> 1s / Thumb </span>
+              <span *ngIf="initialRange == 4" class="badge badge-danger left1"> 2s / Thumb </span>
+              <span *ngIf="initialRange == 3" class="badge badge-danger left1"> 5s / Thumb </span>
+              <span *ngIf="initialRange == 2" class="badge badge-danger left1"> 10s / Thumb </span>
+              <span *ngIf="initialRange == 1" class="badge badge-danger left1"> 30s / Thumb </span>
+            </div>
+      </div>
 
     </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col">
+                <button [disabled]="videoJson.length === 0" type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-warning float-right right1" (click)="unMarcAll()">Desmarcar Tots</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button [disabled]="videoJson.length === 0 || !sendVideo" type="BUTTON" style="padding:1px 3px;border-radius:3px" class="btn btn-xs btn-danger float-right right1 top1" (click)="sendVideoToServer()">Crear Video</button>
+            </div> 
+        </div>
+    </div>   
   </div>
 </div>
 
@@ -17,15 +47,16 @@
   <div class="col">
     <div class="allVideos top1">
       <div class="video-container">
-
         <div *ngFor="let oneList of listOfLists; let i = index;" class="oneVideo">
-          <div appMargindelta [deltasize]="delta[i]" (click)="onSelectFrame($event)" class="iframe">
-            <img (click)="getThumbInfo($event, i, ii)" [src]="one" alt="dynamic foto" *ngFor="let one of oneList; let ii = index;">
+          <div appMargindelta [deltasize]="delta[i]" #iframe class="iframe" [id]="'test' + (i)">
+            <span [class.hidden]="ii % videoZoomValues[initialRange-1] != 0" class="thumb-wrapper" *ngFor="let one of oneList; let ii = index;">              
+              <img appThumbSize (click)="selectThumbnails($event, i, ii, delta[i])" [src]="one" alt="dynamic foto" />
+            </span>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </div>
+
 <toaster-container></toaster-container>

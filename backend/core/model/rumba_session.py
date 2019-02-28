@@ -4,6 +4,8 @@ instance.
 """
 from mongoengine import Document, StringField, LongField, BooleanField, DictField
 
+from core.model.session_status import SessionStatus
+
 
 class RumbaSession(Document):
     """
@@ -19,9 +21,10 @@ class RumbaSession(Document):
     band = StringField(required=True, null=False, max_length=50)
     date = LongField(required=True, null=False)
     folder_url = StringField(required=False, null=True, max_length=255)
-    is_public = BooleanField(required=True, null=False, default=True)
-    active = BooleanField(required=True, null=False, default=True)
-    vimeo = DictField(required=False)
+    state = StringField(required=True, null=False, max_length=20, default=SessionStatus.CREATED.value)
     location = StringField(required=False, null=True, max_length=255)
     audio_timestamp = StringField(required=False, default="0")
     edition_url = StringField(required=False, max_length=255)
+    record_url = StringField(required=False, max_length=255)
+    master_url = StringField(required=False, max_length=255)
+

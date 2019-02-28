@@ -1,32 +1,75 @@
 video {
   width: 100%;
   height: auto;
-
-  background:transparent url('/assets/logo/rumba-home.png') no-repeat center center;
+  background:transparent url('/assets/logo/visual-studio.jpeg') no-repeat top left;
   -webkit-background-size:cover;
   -moz-background-size:cover;
   -o-background-size:cover;
   background-size:cover;
 }
 
+.margin {
+ width: 100%;
+ height: 25px;
+}
+
+@media only screen and (orientation: landscape) {
+  video {
+    display: none;
+  }
+  div.margin {
+    display: block;
+  }
+}
+
+@media only screen and (orientation: portrait) {
+  video {
+    display: block;
+  }
+  div.margin {
+    display: none;
+  }
+}
+
 .video-disabled {
   opacity: .7;
 }
 
-.oneVideo > div.iframe > img {
+.hidden {
+  visibility: hidden;
+}
+
+.orange {
+  border: solid #ff4500 6px;
+  border-top: 6px solid #ff4500 !important;
+  border-bottom: 6px solid #ff4500 !important;
+}
+
+.oneVideo > div.iframe > img, .oneVideo > div.iframe > span.thumb-wrapper > img {
   display: inline-block;
   width:80px;
   height: 80px;
   transition: opacity .3s;
   cursor:pointer;
+}¡
+
+.absolute {
+  position:absolute;
 }
 
-.selectedImg {
-  border-left:#fff 2px solid;
-  border-right:#fff 2px solid;
+img.selectedImg {
+  /* opacity: .5; */
+  border-top: 6px solid #0d9e00;
+  border-bottom: 6px solid #0d9e00;
 
-  opacity: .5;
-  background-color: red;
+}
+
+.first {
+  border-left: 6px solid #0d9e00;
+}
+
+.last {
+  border-right: 6px solid #0d9e00;
 }
 
 .oneVideo {
@@ -39,8 +82,151 @@ video {
 }
 
 .video-container {
-
+  margin: .3em;
   padding: .3em;
   overflow-x: auto;
-   white-space: nowrap;
+  white-space: nowrap;
+  /* border-radius: 5px;
+  border: solid lightgrey 5px; */
+}
+
+input, input:active, input:focus {
+  outline: 0;
+  outline: none;
+}
+
+div.selector {
+  border: 4px solid yellow;
+  margin: 0;
+  padding:0;
+  z-index: 1000;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+}
+
+div.claudator {
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+}
+
+/* range slider for video zoom */
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #bd2130;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #bd2130;
+  cursor: pointer;
+}
+
+
+/*  spinner    */
+
+.loader-bg {
+  position: absolute;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height:100vh;
+}
+
+.loader {
+  margin: 45vh auto;
+  border: 7px solid #cfcbcb;
+  border-radius: 50%;
+  border-top: 7px solid #dc3545;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 3s linear infinite;
+  -moz-animation: spin 3s linear infinite;
+  animation: spin 3s linear infinite;
+}
+
+.loader_custom {
+  margin: 45vh auto;
+  width: 120px;
+  height: 120px;
+  /*
+  border: 7px solid #cfcbcb;
+  border-radius: 50%;
+  border-top: 7px solid #dc3545;
+  -webkit-animation: spin 3s linear infinite;
+  -moz-animation: spin 3s linear infinite;
+  animation: spin 3s linear infinite;
+  */
+  background: transparent url('/assets/logo/loading_spinner.gif');
+  background-size: cover;  
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+.animation {
+  -webkit-animation: fadeInFromNone 1.5s infinite;
+  animation: fadeInFromNone 1.5s infinite;
+}
+
+.spinner-message {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin-top: 3em;
+  color: #c9c7c7;
+  font-size: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeInFromNone {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+      opacity: 1;
+  }
+}
+
+@media screen and (min-width : 500px) {
+  .spinner-message {
+    font-size: 18px;
+  }
 }

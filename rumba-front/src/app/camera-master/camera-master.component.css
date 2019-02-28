@@ -1,0 +1,145 @@
+video {
+  position: fixed;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1000;
+  background-color: #000;
+  /* background:transparent url('/assets/logo/visual-studio.jpeg') no-repeat top left; */
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+}
+
+.black {
+  position: fixed;
+  background-color: rgba(0,0,0,.4);
+  display: flex;
+}
+
+.feedback {
+  display: flex;           /* establish flex container */
+    flex-direction: column;  /* make main axis vertical */
+    justify-content: center; /* center items vertically, in this case */
+    align-items: center;     /* center items horizontally, in this case */
+    height: 100vh;
+}
+
+.camera {
+  flex-wrap:wrap;
+  justify-content: center;
+  align-items: center;
+  -webkit-animation: fadeInFromNone 1.5s infinite;
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.full-button {
+  position: fixed;
+  color: white;
+  left: 40px;
+  top: 40px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.flex-wrap, .border {
+	flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.record-button {
+  height: 50px;
+}
+
+.border {
+  width: 75px;
+  height: 75px;
+  border: 5px lightgrey solid;
+  border-radius: 50%;
+  text-align: center;
+  padding: .35em;
+
+}
+
+.record, .stop {
+  cursor:pointer;
+}
+
+.record {
+  width: 55px;
+  height: 55px;
+  background-color: red;
+  border-radius: 50%;
+  text-align: center;
+}
+
+
+.stop {
+  margin: 10px;
+  width: 35px;
+  height: 35px;
+  background-color: red;
+  border-radius:0;
+  text-align: center;
+}
+
+.start-img, .stop-img {
+  width: 60px;
+  height:60px;
+}
+
+.start-img:hover, .stop-img:hover {
+  cursor:pointer;
+}
+
+@media screen and (orientation: portrait) {
+  .black {
+    height:10%;
+    bottom:0;
+    width: 100%;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .black {
+    height: 100%;
+    width: 9%;
+    right: 0;
+  }
+}
+
+@media screen and (max-width : 500px) {
+  .black {
+    height: 10%;
+  }
+  .start-img, .stop-img {
+    width: 40px;
+    height:40px;
+  }
+}
+
+@media screen and (min-width : 500px) and (max-width : 600px) {
+  .start-img, .stop-img {
+    width: 40px;
+    height:40px;
+  }
+}
+
+@media screen and (min-width : 601px) and (max-width : 800px) {
+  .start-img, .stop-img {
+    width: 48px;
+    height:48px;
+  }
+}

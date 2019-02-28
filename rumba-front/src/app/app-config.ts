@@ -3,7 +3,8 @@ export class AppConfig {
   public static START_SESSON  = '/sessions/';
   public static API_VERSION = '/api';
 
-  public static JANUS_DEV = 'https://192.168.10.252:8080/janus';
-  public static JANUS_PROD = 'https://192.168.1.120:8080/janus';
+  public static JANUS_DEV = 'https://192.168.100.100/janus';
+
+  public static JANUS_PROD = 'https://192.168.1.120/janus';
 
 }

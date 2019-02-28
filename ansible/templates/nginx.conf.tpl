@@ -75,7 +75,7 @@ http {
 
 	## server
 	server {
-		listen {{ nginx_port }} ssl;
+		listen 443 ssl;
 		server_name             rumba;
 		ssl_certificate		    "{{ janus_dir }}/share/janus/certs/mycert.pem";
 		ssl_certificate_key 	"{{ janus_dir }}/share/janus/certs/mycert.key";
@@ -92,6 +92,14 @@ http {
 
 
     }
+
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        return 301 https://$host$request_uri;
+    }
+
 
 }
 

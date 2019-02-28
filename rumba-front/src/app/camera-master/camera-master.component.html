@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-12">
+    <video #fullVideo class="rounded centered" id="myvideo" autoplay muted="muted" ></video>
+  </div>
+</div>
+
+<div class="black flex-wrap">
+  <div class="">
+    <div *ngIf="!isRecording" (click)="startRecording();checkButton()">
+      <img class="start-img" src="assets/logo/record.png" alt="">
+    </div>
+    <div *ngIf="isRecording" (click)="stopRecording();checkButton()">
+      <img class="stop-img" src="assets/logo/stop.png" alt="">
+    </div>
+  </div>
+</div>
+
+<div class="full-button">
+  <img *ngIf="!fullScreen" src="assets/logo/fullscreen-white.png" (click)="toggleFullScreen()" width="30" alt="" />
+  <img *ngIf="fullScreen" src="assets/logo/fullscreen-white.png" (click)="exitFullScreen()" width="30" alt="" />
+</div>

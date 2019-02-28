@@ -14,3 +14,11 @@ venv/*
 
 ## logs
 */logs
+*.log
+
+package-lock.json
+.vagrant
+venv
+*.retry
+variables.yml
+backend.cfg

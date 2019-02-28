@@ -4,7 +4,9 @@ Module containing the HTTP endpoionts for the management of videos.
 This module contains a Flask Blueprint exposing methods for managing the videos of the users,
 in terms of starting/stopping the record of video and downloading them.
 """
+from time import sleep
 
+from core.model.rumba_session import RumbaSession
 from flask import Blueprint, send_file, session, jsonify
 from pymongo import MongoClient
 from werkzeug.exceptions import Conflict, BadRequest, NotFound
@@ -90,8 +92,8 @@ def stop_video(video_id):
     """
     LOGGER.info("Received request for stopping video.")
     try:
-        VideoManager.get_instance().stop_video(video_id=video_id)
-        VideoEditor.get_instance().merge_user_video(video_id=video_id)
+        #VideoManager.get_instance().stop_video(video_id=video_id)
+        #VideoEditor.get_instance().merge_user_video(video_id=video_id)
         LOGGER.info("Request for stopping a video successfully finished.")
         return "",204
     except ValueError as ve:
@@ -118,8 +120,11 @@ def download_mixed_video(video_id):
     """
     LOGGER.info("Received request for downloading mixed video.")
     try:
-        video_path = VideoManager.get_instance().get_mixed_video_path(video_id)
-        return send_file(video_path, mimetype="video/mp4"),200
+        # path = VideoManager.get_instance().get_mixed_video_path(video_id)
+        session = RumbaSession.objects.order_by('-id')[0]
+        output_file = "/var/rumba/sessions/{}/__edited-video-{}.mp4".format(session['band'], video_id)
+        # return None, 204
+        return send_file(output_file, mimetype="video/mp4"), 200
     except ValueError as ve:
         LOGGER.exception("Request for downloading mixed video finished with errors.")
         raise BadRequest(ve)

@@ -2,6 +2,7 @@
 TODO license
 """
 import configparser
+from time import sleep
 
 from core.exceptions.generic_exceptions import NotExistingResource, IllegalResourceState
 from core.exceptions.session_exceptions import IllegalSessionStateException
@@ -11,6 +12,7 @@ from core.helpers.mongo import MongoHelper
 from core.helpers.validators import GenericValidator
 from core.helpers.video_helper import VideoEditorHelper
 from core.model.rumba_session import RumbaSession
+from core.model.session_status import SessionStatus
 from core.model.video import Video
 from core.services.fs_manager import FileSystemService
 from core.services.session_manager import SessionManager
@@ -51,8 +53,8 @@ class VideoManager(object):
         :return:
         """
         LOGGER.info("Adding video to active session.")
-        session = SessionManager.get_instance().get_active_session()
-        if session is None:
+        session = SessionManager.get_instance().get_current_session()
+        if session is None or session['state'] != SessionStatus.ACTIVE.value:
             raise IllegalSessionStateException("There's no active session.")
         video_id = self.add_video(session_id=session['id'], user_id=user_id)
         video_mongo = Video.objects(id=video_id).first()
@@ -71,7 +73,7 @@ class VideoManager(object):
         """
         LOGGER.info("Adding video to session.")
         session = SessionManager.get_instance().get_session(session_id=session_id)
-        if not session['active']:
+        if session['state'] != SessionStatus.ACTIVE.value:
             raise IllegalSessionStateException("Can only add videos to active sessions.")
         user_videos = Video.objects(session=session['id'], user_id=user_id).count()
         video_name = "video{}".format(user_videos)

@@ -19,9 +19,7 @@ import { SessionService } from './session/session.service';
 import { SessionCloseComponent } from './session-close/session-close.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { CameraComponent } from './camera/camera.component';
 import { RecordService } from './record.service';
-import { EditorComponent } from './editor/editor.component';
 import { CameraBackComponent } from './camera-back/camera-back.component';
 import { EditorNiceComponent } from './editor-nice/editor-nice.component';
 
@@ -30,6 +28,13 @@ import { MargindeltaDirective } from './margindelta.directive';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToasterModule } from 'angular5-toaster/dist/src/toaster.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CameraMasterComponent } from './camera-master/camera-master.component';
+import { ThumbSizeDirective } from './thumbSize.directive';
+import { SelectorSizeDirective } from './selectorSize.directive';
+import { EditorService } from './editor.service';
+import { ClaudatorMoveDirective } from './claudator-move.directive';
+import { ClaudatorLeftDirective } from './claudator-left.directive';
+
 
 
 @NgModule({
@@ -42,11 +47,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OrientationComponent,
     VideosComponent,
     SessionCloseComponent,
-    CameraComponent,
-    EditorComponent,
     CameraBackComponent,
     EditorNiceComponent,
-    MargindeltaDirective
+    MargindeltaDirective,
+    CameraMasterComponent,
+    ThumbSizeDirective,
+    SelectorSizeDirective,
+    ClaudatorMoveDirective,
+    ClaudatorLeftDirective
   ],
   imports: [
     BrowserModule,
@@ -65,7 +73,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [
     SessionService,
     RecordService,
-    VideosServiceService
+    VideosServiceService,
+    EditorService
   ],
   bootstrap: [AppComponent]
 })

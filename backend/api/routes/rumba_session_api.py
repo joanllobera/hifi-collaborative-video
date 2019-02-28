@@ -6,11 +6,10 @@ helpers methods required by the frontend.
 
 This API has been implemented using Flask Blueprints.
 """
-import json
 
 from flask import Blueprint, request, send_file, session
 from flask.json import jsonify
-from werkzeug.exceptions import BadRequest, NotFound, Conflict
+from werkzeug.exceptions import BadRequest, NotFound, Conflict, InternalServerError
 
 from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
@@ -68,6 +67,32 @@ def create_session():
         raise BadRequest(ve)
 
 
+@SESSION_MANAGER_API.route("/<session_id>", methods=["PUT"])
+def initialize_session(session_id):
+    """
+    Endpoint for initialzing an existing Rumba session.
+    :param session_id: Id of the session to initialize
+    :return:
+        - HTTP 204, if the session could be successfully initialized.
+        - HTTP 404, if the session does not exist.
+        - HTTP 409, if the session is not in the expected state before initializing it.
+
+    """
+    LOGGER.info("Received request for initializing a session")
+    try:
+        SessionManager.get_instance().initialize_session(session_id=session_id)
+        LOGGER.info("Session sucessfully initialized.")
+        return "", 204
+    except IllegalSessionStateException as ie:
+        LOGGER.exception("Session initialization request finished with errors.")
+        raise Conflict(ie)
+    except NotExistingResource as ne:
+        LOGGER.exception("Session initialization request finished with errors.")
+        raise NotFound(ne)
+    except Exception as ex:
+        raise InternalServerError(ex)
+
+
 @SESSION_MANAGER_API.route("/<session_id>", methods=["GET"])
 def get_session(session_id):
     """
@@ -99,7 +124,7 @@ def get_session(session_id):
     except ValueError as ve:
         LOGGER.exception("Session creation request finished with errors: ")
         raise BadRequest(ve)
-    except SessionValidationException as sv:
+    except NotExistingResource as sv:
         LOGGER.exception("Session creation request finished with errors: ")
         raise NotFound(sv)
 
@@ -175,25 +200,29 @@ def stop_session(session_id):
     except ValueError as ve:
         LOGGER.exception("Stop request finished with errors: ")
         raise BadRequest(ve)
-    except IllegalSessionStateException as ie:
+    except NotExistingResource as ie:
         LOGGER.exception("Stop request finished with errors: ")
-        raise Conflict(ie)
+        raise NotFound(ie)
+    except IllegalSessionStateException as ise:
+        LOGGER.exception("Stop request finished with errors: ")
+        raise Conflict(ise)
+
 
 @SESSION_MANAGER_API.route("/active", methods=['GET'])
-def get_active_session():
+def get_current_session():
     """
-    HTTP endpoint for retrieving the current active session.
+    HTTP endpoint for retrieving the current session.
     :return:
         - HTTP 200 with the id in the body.
-        - HTTP 404, if there's no active session.
+        - HTTP 404, if there's no created nor initialized session.
     """
-    LOGGER.info("Received request for getting active session.")
+    LOGGER.info("Received request for getting current session.")
     try:
-        active_session = SessionManager.get_instance().get_active_session()
-        LOGGER.info("Get active session request succesfully finished.")
-        return jsonify(active_session), 200
+        current_session = SessionManager.get_instance().get_current_session()
+        LOGGER.info("Get current session request succesfully finished.")
+        return jsonify(current_session), 200
     except NotExistingResource as ne:
-        LOGGER.exception("Get active session request finished with errors: ")
+        LOGGER.exception("Get current session request finished with errors: ")
         raise NotFound(ne)
 
 @SESSION_MANAGER_API.route("/<session_id>/logo", methods=["POST"])

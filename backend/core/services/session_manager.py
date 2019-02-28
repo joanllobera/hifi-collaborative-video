@@ -1,11 +1,13 @@
 import configparser
 
+from core.exceptions.generic_exceptions import NotExistingResource
 from core.exceptions.session_exceptions import SessionValidationException, \
     IllegalSessionStateException
 from core.helpers.loggers import LoggerHelper
 from core.helpers.mongo import MongoHelper
 from core.helpers.validators import SessionValidator, GenericValidator, FilesValidator
 from core.model.rumba_session import RumbaSession
+from core.model.session_status import SessionStatus
 from core.services.audio_manager import AudioManager
 from core.services.fs_manager import FileSystemService
 
@@ -42,7 +44,7 @@ class SessionManager(object):
         A session is composed by information about the event, such as the concert name, the band
         and the concert's date.
 
-        A session can only be created if there's no other active session. If the session could be
+        A session can only be created if there's no other active or created session. If the session could be
         successfully created, a directory will be created in the FS for storing all the files
         associated to this new RUMBA session.
         
@@ -63,25 +65,26 @@ class SessionManager(object):
             # First we validate user input
             SessionValidator.validate_new_session(session_info)
             LOGGER.info("Checking if there's any active sessions..")
-            active_sessions = RumbaSession.objects(active=True).count()
-            if active_sessions > 0:
+            created_sessions = RumbaSession.objects(state=SessionStatus.CREATED.value).count()
+            active_sessions = RumbaSession.objects(state=SessionStatus.ACTIVE.value).count()
+            if active_sessions > 0 or created_sessions > 0:
                 LOGGER.error("Error creating session: There's already an active session.")
                 raise SessionValidationException("There's already an active session.")
             # Secondly we create the working directory.
             dir_path = FileSystemService.get_instance().create_session_directory(
                 band=session_info['band'])
-            # we start to record audio
-            initial_timestmap = AudioManager.get_instance().record_audio(dir_path)
+
         except Exception as ex:
             LOGGER.exception("Error creating session  - ")
             raise ex
         try:
             # Store the information int the DB.
             session = RumbaSession(concert=session_info['concert'], band=session_info['band'],
-                                   date=session_info['date'], is_public=session_info['is_public'],
-                                   folder_url=dir_path, active=True, vimeo=session_info['vimeo'],
-                                   location=session_info['location'], audio_timestamp=str(initial_timestmap)).save()
-            session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL,str(session['id'])))
+                                   date=session_info['date'], folder_url=dir_path, location=session_info['location']
+                                   ).save()
+            session.update(set__edition_url="{}editor-nice/{}".format(SERVER_URL, str(session['id'])))
+            session.update(set__record_url="{}camera-back".format(SERVER_URL))
+            session.update(set__master_url="{}master-camera".format(SERVER_URL))
             LOGGER.info(
                 "Session successfully created: [id={0}, band={1}]".format(str(session['id']),
                                                                           session['band']))
@@ -92,25 +95,54 @@ class SessionManager(object):
                 band=session_info['band'])
             raise ex
 
+    def initialize_session(self, session_id):
+        """
+        Initialize a created session.
+
+        A session can only be initialized from the "Created" state. When a session is initialized,
+        it starts to record the audio and its state is modified to "Active" state.
+
+        :param session_id: Session to be created
+        :raises:
+        - IllegalSessionStateException, if the session is no in the "Created" state.
+        - NotExistingResource, if there's no session with such id.
+        """
+        LOGGER.info("Initializing session. [session_id={}]".format(session_id))
+        GenericValidator.validate_id(session_id)
+        session = RumbaSession.objects(id=session_id).first()
+        if session is None:
+            raise NotExistingResource("There's no session with such id.")
+        if session['state'] != SessionStatus.CREATED.value:
+            raise IllegalSessionStateException("Session can only be initialized from 'Created' state")
+        LOGGER.debug("Initializing audio record.")
+        initial_timestmap = AudioManager.get_instance().record_audio(session['folder_url'])
+        try:
+            LOGGER.debug("Updating session state.")
+            session.update(set__state=SessionStatus.ACTIVE.value, set__audio_timestamp=str(initial_timestmap))
+        except Exception as ex:
+            LOGGER.exception("Could not update session state. Stopping audio recording...")
+            AudioManager.get_instance().stop_audio()
+            raise ex
+
     def get_session(self, session_id):
         """
         Retrieves and returns the session identified with the given id.
 
         This method check if there's a session in the database with the provided id. If so, the
         information of the session is returned in a dictionary. If not, the method raises a
-        SessionValidationException.
+        IllegalSessionStateException.
         :return: Dictionary containing the information of the session identified with the id given
         as parameter.
         :raises:
-        - SessionValidationException, if there's no session with such id.
+        - NotExistingResource, if there's no session with such id.
         - ValueError, if the provided id is not a valid id.
         """
         LOGGER.info("Retrieveing session: [id={}].".format(session_id))
         GenericValidator.validate_id(session_id)
         session = RumbaSession.objects(id=session_id).first()
         if session is None:
-            raise SessionValidationException("There's no session with such id.")
-        LOGGER.info("Session sucessfully retrieved: [id={}]".format(session_id))
+            raise NotExistingResource("There's no session with such id.")
+        LOGGER.info("Session successfully retrieved: [id={}]".format(session_id))
         LOGGER.debug("Session information: {}".format(session))
         view_sess = MongoHelper.to_dict(session)
         view_sess.pop('folder_url')
@@ -143,14 +175,14 @@ class SessionManager(object):
         stopped. In order to remove a live session, it is mandatory to remove it first.
         :param session_id: Id of the session to remove.
         :raises:
-            - SessionValidationException, if the session does not exist.
+            - IllegalSessionStateException, if the session does not exist.
             - IlegalSessionStateException, if the session is active.
             - ValueError, if the provided id is not a valid id.
         """
         LOGGER.info("Removing session: [id={}]".format(session_id))
         GenericValidator.validate_id(session_id)
         session = self.get_session(session_id)
-        if session['active']:
+        if session['state'] == SessionStatus.ACTIVE.value:
             raise IllegalSessionStateException("Session is active: it should be stopped first.")
         FileSystemService.get_instance().delete_session_directory(band=session['band'])
         RumbaSession.objects(id=session_id).delete()
@@ -170,20 +202,24 @@ class SessionManager(object):
         LOGGER.info("Stopping session: [id={}]".format(session_id))
         GenericValidator.validate_id(session_id)
         session = self.get_session(session_id)
-        if not session['active']:
-            raise IllegalSessionStateException("Only active sessions can be stopped.")
+        valid_states = [SessionStatus.CREATED.value, SessionStatus.ACTIVE.value]
+        if session['state'] not in valid_states:
+            raise IllegalSessionStateException("Only active and initialized sessions can be stopped.")
         db_session = RumbaSession.objects(id=session_id).first()
-        AudioManager.get_instance().stop_audio()
-        db_session.update(set__active=False)
+        if  session['state'] == SessionStatus.ACTIVE.value:
+            LOGGER.info("Stopping audio recording.")
+            AudioManager.get_instance().stop_audio()
+        db_session.update(set__state=SessionStatus.FINISHED.value)
         LOGGER.info("Session successfully stopped: [id={}]".format(session_id))
 
-    def get_active_session(self):
+    def get_current_session(self):
         """
 
         :return:
         """
-        LOGGER.info("Retrieveing active session")
-        session = RumbaSession.objects(active=True).first()
+        LOGGER.info("Retrieveing current session")
+        states = [SessionStatus.ACTIVE.value, SessionStatus.CREATED.value]
+        session = RumbaSession.objects.filter(state__in=states).first()
         if session is None:
             return None
         LOGGER.info("Session sucessfully retrieved: [id={}]".format(session['id']))
