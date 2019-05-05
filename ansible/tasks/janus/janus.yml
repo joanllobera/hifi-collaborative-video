@@ -12,7 +12,8 @@
       state: directory
   - name: Download Janus code
     git:
-      repo: https://{{ bitbucket_user }}:{{ bitbucket_pass }}@bitbucket.i2cat.net/scm/rum/janus.git
+            #      repo: https://{{ bitbucket_user }}:{{ bitbucket_pass }}@bitbucket.i2cat.net/scm/rum/janus.git
+      repo: https://github.com/meetecho/janus-gateway
       dest: /tmp/janus
   - name: Create directory for Janus
     become: true
@@ -34,6 +35,7 @@
     args:
       chdir: /tmp/janus/
     with_items:
+      - make -j8
       - make install
       - make configs
   - name: Enable HTTPs in Janus

@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
     config.vm.provider :virtualbox do |vb|
-        vb.customize ["modifyvm", :id, "--memory", "2048"]
+        vb.customize ["modifyvm", :id, "--memory", "8192", "--cpus", "8"]
     end
     config.vm.box = "ubuntu/trusty64"
     config.vm.synced_folder ".", "/vagrant/rumba"

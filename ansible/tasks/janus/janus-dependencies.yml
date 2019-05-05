@@ -9,6 +9,7 @@
       - libmicrohttpd-dev
       - libjansson-dev
       - libnice-dev
+      - libconfig-dev
       - libssl-dev
       - libsrtp-dev
       - libsofia-sip-ua-dev

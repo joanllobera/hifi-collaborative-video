@@ -52,7 +52,8 @@
     args:
       chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
   - name: Compile ffmpeg
-    command: make
+    #command: make -j $(cat /proc/cpuinfo | grep processor | wc -l)
+    command: make -j8
     args:
       chdir: "/tmp/ffmpeg/code/ffmpeg-{{ ffmpeg_version }}"
   - name: Install ffmpeg
