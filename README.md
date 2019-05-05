@@ -14,7 +14,7 @@ The original idea for this software arose in a meeting of the parents associatio
 
 
 ## Roadmap
-**todo: ** There are still several technical issues to be solved (see known issues section)
+**todo:** There are still several technical issues to be solved (see known issues section)
 
 Once the previous issues are solved, the following step will be to implement a service that suggests video edits, in order that by default the cuts between the different sources are already suggested. Thus the editor will only have to check the suggestion, and change it if needed. This will further accelerate the edition process.
 
@@ -46,7 +46,7 @@ Once the dependencies are installed, to run the project you  will also need to c
 
 ```console
 
-$ sudo vagrant ssh
+$sudo vagrant ssh
 
 vagrant@vagrant-ubuntu-trusty-64:~$ sudo cp -R /vagrant/rumba/janus/certs/   /opt/janus/share/janus/.` 
 
@@ -72,7 +72,7 @@ There are different ways to start and stop the virtual machine created. Specific
 - Since vagrant sets up the folder  `/vagrant/rumba` at the end of the initialization, starting the services is problematic because it does not have the right folder available. In this case, the simplest is to enter into the virtual machine and restart all the services. This can be done by doing:  
   ```console
 
-  $ vagrant ssh
+  $vagrant ssh
   sudo supervisorctl reload
 
   ```
