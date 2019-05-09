@@ -10,7 +10,11 @@
 
 ## Credits
 
-The original idea for this software arose in a meeting of the parents association of the school La Concepció. Editing videos of the concerts was a daunting task. We would like to thank  The Institut de Cultura de Barcelona (ICUB) for supporting the technical development of this app.
+
+The original idea for this software arose in a meeting of the parents association of the public school La Concepció, in Barcelona. Editing videos of the concerts of the students was a daunting task. We conceived a better, simpler way to do this with mobile phones, and named such a software with the school's transversal topic of that year: the musical style known as **Rumba** . Thanks to a program on citizen innovation run by Victor Jiménez and the support of the Institut de Cultura de Barcelona (ICUB), we managed to develop the prototype found in this code repository. 
+
+The software was designed by Dr Joan Llobera. The graphical layout was designed by Ms Gemma Solana. The software was implemented mainly by Mr Adrián Rosselló (backend) and Mr Enric Alminyana (Front-end).
+
 
 
 ## Roadmap
