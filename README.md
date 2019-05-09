@@ -80,6 +80,8 @@ There are different ways to start and stop the virtual machine created. Specific
 
 PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                        
  2505 vagrant   20   0 1603788 451032  13432 S 133.4  5.5  58:28.60 ng  
+possible solutions, depending on the OS used, can be found here:
+https://github.com/angular/angular-cli/issues/2748
 
 - The app has only been tested with android devices as clients. It is likely that the editing mode will not work with ios due to the fact that mpeg-dash is not supported on ios.  
 
