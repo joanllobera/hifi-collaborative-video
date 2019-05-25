@@ -126,8 +126,14 @@ In order to install and deploy it, the following software should be already inst
 
 
 </ul>
+2) set up the hosts file in the file /etc/ansible/hosts
+```
+$ echo "localhost" > /etc/ansible/hosts
+```
+you can also replace the localhost, with the ip where you want to install all this, always in double quotes
 
-2) Execute Ansible playbook for installing the software and its dependencies
+
+3) Execute Ansible playbook for installing the software and its dependencies
 
 ``` 
 $ ansible-playbook ansible/installation.yml --ask-become-pass
