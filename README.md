@@ -127,11 +127,30 @@ In order to install and deploy it, the following software should be already inst
 
 </ul>
 
-2) Execute Ansible playbook for installing the software and its dependencies
+2) set up the hosts file in the file /etc/ansible/hosts
 
-``` 
+```console
+$ echo "localhost" > /etc/ansible/hosts
+```
+you can also replace the localhost, with the ip where you want to install all this, always in double quotes
+
+
+3) Execute Ansible playbook for installing the software and its dependencies
+
+```console 
 $ ansible-playbook ansible/installation.yml --ask-become-pass
 ``` 
+
+The previous instruction may require different changes, depending on the configuration of the device. For example, it may not be able to access the machine through .ssh. In this case it will give an error like::
+
+```console
+fatal: [localhost]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Permission denied (publickey).", "unreachable": true}
+```
+
+A solution from ansible is to not connect, do a local connection:
+```console
+$ sudo ansible-playbook ansible/installation.yml --connection=local
+```
 
 Please be patient, this command takes a while, since it needs to download, compile and/or install the software and all its dependencies.
 
