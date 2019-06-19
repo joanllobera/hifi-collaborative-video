@@ -8,9 +8,10 @@
     with_items:
       - build-essential
       - python3-dev
-      - python-dev
+      #- python-dev
       - python3-pip
-      - python-pip
+      - python3.4-venv
+      #- python-pip
       - libasound-dev
       - portaudio19-dev
 
@@ -21,6 +22,7 @@
   - name: Install pymongo
     pip:
       name: pymongo
+      executable: pip3
     become: true
   - name: Prepare mongodb installation
     become: true
@@ -39,12 +41,14 @@
     ## Backend installation ##
     ##########################
 
-  - name: Install virtualenv
-    become: true
-    pip:
-      name: virtualenv
+  #- name: Install virtualenv
+  #  become: true
+  #  pip:
+  #    name: virtualenv
+  #    executable: pip3
   - name: Create virtual environment
-    command: "virtualenv {{ rumba_src_folder }}//rumba/backend/venv -p python3.4"
+    #command: "virtualenv {{ rumba_src_folder }}//rumba/backend/venv -p python3"
+    command: "python3 -m venv {{ rumba_src_folder }}/rumba/backend/venv --clear"
   - name: Install python dependencies
     become: true
     pip:

@@ -1,3 +1,26 @@
+require 'yaml'
+
+config = YAML.load(<<-EOF)
+box:
+    url: "ubuntu/trusty64"
+    check_update: false
+
+provider:
+    name: "ubuntu14.04-docker"
+    memory: 1024
+    window: false
+
+mount:
+    from: #{Dir.home}
+    to: "/mnt/host"
+
+network:
+    ip: "10.0.0.10"
+
+    forwarded_port:
+      - guest: 80
+        host: 8080
+EOF
 
 
 
@@ -18,53 +41,20 @@ Vagrant.configure("2") do |config|
     config.vm.provision "ansible_local" do |run|
         run.playbook = "rumba/ansible/supervisor_deployment.yml"
     end
+    config.vm.provider "virtualbox" do |vbox|
+    #    vbox.name   = config["provider"]["name"]
+    #    vbox.memory = config["provider"]["memory"]
+    #    vbox.gui    = config["provider"]["window"]
+    #    #vbox.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda']
+        vbox.customize ["modifyvm", :id, '--audiocontroller', 'hda']
+    end
 
-
-require 'yaml'
-
-config = YAML.load(<<-EOF)
-box:
-    url: "ubuntu/trusty64"
-    check_update: false
-
-provider:
-    name: "ubuntu14.04-docker"
-    memory: 1024
-    window: false
-
-mount:
-    from: #{Dir.home}
-    to: "/mnt/host" 
-
-network:
-    ip: "10.0.0.10"
-
-    forwarded_port:
-      - guest: 80
-        host: 8080
-EOF
-
-Vagrant.configure(2) do |vagrant|
-  vagrant.vm.box              = config["box"]["url"]
-  vagrant.vm.box_check_update = config["box"]["check_update"]
   
-  forwarded_port = config["network"]["forwarded_port"]
-  forwarded_port.each do |mapping|
-    vagrant.vm.network "forwarded_port", guest: mapping["guest"], host: mapping["host"]
-  end
-  vagrant.vm.network "private_network", ip: config["network"]["ip"], id: "default-network"
-
-  vagrant.vm.synced_folder config["mount"]["from"], config["mount"]["to"]
-  vagrant.vm.provider "virtualbox" do |vbox|
-    vbox.name   = config["provider"]["name"]
-    vbox.memory = config["provider"]["memory"]
-    vbox.gui    = config["provider"]["window"]
     #vbox.customize ["modifyvm", :id, '--audio', 'coreaudio', '--audiocontroller', 'hda'] 
-    vbox.customize ["modifyvm", :id, '--audiocontroller', 'hda'] 
-  end
+    #vbox.customize ["modifyvm", :id, '--audiocontroller', 'hda'] 
 
-  vagrant.ssh.forward_x11 = true  
-  vagrant.vm.provision "shell", inline: <<-EOF
+  config.ssh.forward_x11 = true  
+  config.vm.provision "shell", inline: <<-EOF
     apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
     echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' | tee /etc/apt/sources.list.d/docker.list
     apt-get update && apt-cache policy docker-engine
@@ -87,13 +77,10 @@ Vagrant.configure(2) do |vagrant|
     modprobe snd
     modprobe snd-hda-intel
     alsa force-reload
-    service pulseaudio restart
+    ## service pulseaudio restart
 
-    #docker run hello-world
-  EOF
-end
-
-
-
+    ## docker run hello-world
+EOF
 
 end
+
