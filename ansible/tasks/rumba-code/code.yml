@@ -7,6 +7,6 @@
     become: true
   - name: Clone Rumba repository
     git:
-      repo: https://github.com/ua-i2cat/rumba
+      repo: https://github.com/joanllobera/hifi-collaborative-video
       dest: "{{ rumba_src_folder }}/rumba"
-      version: develop
+      version: master

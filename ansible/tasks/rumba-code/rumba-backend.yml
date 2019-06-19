@@ -31,7 +31,7 @@
   - name: Install mongodb
     become: true
     apt:
-      package: mongodb-org
+      package: mongodb
       state: present
       update_cache: true
 
@@ -44,7 +44,7 @@
     pip:
       name: virtualenv
   - name: Create virtual environment
-    command: "virtualenv {{ rumba_src_folder }}//rumba/backend/venv -p python3.4"
+    command: "virtualenv {{ rumba_src_folder }}//rumba/backend/venv -p python3"
   - name: Install python dependencies
     become: true
     pip:
@@ -76,35 +76,7 @@
     ## Microphone detection ##
     ##########################
 
-  - name: Register to microphone events
-    become: true
-    copy:
-      src: "{{ rumba_src_folder }}/rumba/utils/scripts/microphone/microphone_state.sh"
-      dest: /etc/acpi/microphone_state.sh
-      owner: root
-      group: root
-      mode: 0755
-      remote_src: yes
-  - name: Add microphone_plug event
-    become: true
-    copy:
-      src: "{{ rumba_src_folder }}/rumba/utils/scripts/microphone/mic_pluged"
-      dest: /etc/acpi/events/mic_pluged
-      owner: root
-      group: root
-      mode: 0644
-      remote_src: yes
-  - name: Add microphone_unplug event
-    become: true
-    copy:
-      src: "{{ rumba_src_folder }}/rumba/utils/scripts/microphone/mic_unpluged"
-      dest: /etc/acpi/events/mic_unpluged
-      owner: root
-      group: root
-      mode: 0644
-      remote_src: yes
-  - name: Restart ACPID service
-    become: true
-    service:
-      name: acpid
-      state: restarted
+ # after installation, execute this once to tell mobgo that the microphone is always plugged
+ # /rumba/utils/scripts/microphone/microphone_state.sh on
+ #
+ #
